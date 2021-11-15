@@ -11,3 +11,16 @@ nature FluidFlow
      abstol= 1u;
 endnature
 
+nature Concentration
+     units = ppm;
+     access= C;
+     abstol= 1;
+endnature
+
+discipline fluidDynamics
+     domain continous;
+     potential Pressure;
+     flow FluidFlow;
+enddiscipline
+
+
