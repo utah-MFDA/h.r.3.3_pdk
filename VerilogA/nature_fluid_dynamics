@@ -1,0 +1,13 @@
+
+nature Pressure
+     units = "Pa";
+     access= P;
+     abstol= 1;
+endnature
+
+nature FluidFlow
+     units = "L/s";
+     access= Q;
+     abstol= 1u;
+endnature
+
