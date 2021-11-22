@@ -2,4 +2,9 @@
 'include nature_fluid_dynamics
 
 
-module CirValve(p,n);
+module CirValve(p,n,g);
+
+parameter real ch_h, pn_h, dia, mem_th;
+fluidDynamics p,n
+
+endmodule
