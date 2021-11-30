@@ -2,9 +2,23 @@
 'include nature_fluid_dynamics
 
 
-module CirValve(p,n,g);
+module CirValve(fl_in,fl_out,air_in);
+    input air_in;
+    inout 
 
 parameter real ch_h, pn_h, dia, mem_th;
-fluidDynamics p,n
+parameter real thershold = 15; //PSI
+fluidDynamics fl_in,fl_out;
+
+
+
+// output
+analog begin
+    if (P(air_in) > theshold)
+        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve; 
+    else
+       Q(fl_in, fl_out) <+ 0;
+end
+
 
 endmodule

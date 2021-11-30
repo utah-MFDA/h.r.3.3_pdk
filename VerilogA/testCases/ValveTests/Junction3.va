@@ -1,0 +1,31 @@
+
+`include nature_fluid_dynamics
+
+// Test junction for valve testing only
+// Connects 3 channels with a specified length between each of them
+
+module Junction3(port1, port2, port3);
+fluidDynamics port1, port2, port3;
+input port1, port2;
+output port3;
+
+// it is assumed in this test module that all the channels have the same
+// cross-section.
+// All of the dimensions are in mm
+parameter real H=0.5, W=0.5, L1=2, L2=2, L3=2;
+
+//hydrodynamic resistance calculation
+real R_hyd1 = (12*nu*L1)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+real R_hyd2 = (12*nu*L2)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+real R_hyd3 = (12*nu*L3)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+
+//real R_hyd_in1 = R_hyd1*R_hyd2 / (R_hyd1 + R_hyd2);
+//real R_hyd_in1 = R_hyd1*R_hyd2 / (R_hyd1 + R_hyd2);
+
+analog begin
+    Q(port1, port2) = P(port1, port3) / (R_hyd1 + R_hyd2);
+    Q(port1, port3) = P(port1, port3) / (R_hyd1 + R_hyd3);
+end
+
+endmodule
+   
