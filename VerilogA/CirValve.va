@@ -1,23 +1,23 @@
 
-`include nature_fluid_dynamics
+`include "nature_fluid_dynamics"
 
 
-module CirValve(fl_in,fl_out,air_in);
-    input air_in;
-    inout 
+module CirValve(fl_port1,fl_port2,air_in);
+input air_in;
+inout fl_port1, fl_port2; 
 
-parameter real ch_h, pn_h, dia, mem_th;
+parameter real ch_h = 0.05, pn_h=0.05, dia=0.2, mem_th = 0.02;
 parameter real thershold = 15; //PSI
-fluidDynamics fl_in,fl_out;
+fluidDynamics fl_port1,fl_port2;
 
 
 
 // output
 analog begin
     if (P(air_in) > theshold)
-        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve; 
+        Q(fl_port1, fl_port2) <+ P(fl_port1, fl_port2)/R_valve; 
     else
-       Q(fl_in, fl_out) <+ 0;
+       Q(fl_port1, fl_port2) <+ 0;
 end
 
 

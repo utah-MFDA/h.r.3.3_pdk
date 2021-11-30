@@ -1,5 +1,5 @@
 
-`include nature_fluid_dynamics
+`include "./../../nature_fluid_dynamics"
 
 // Test junction for valve testing only
 // Connects 3 channels with a specified length between each of them
@@ -23,8 +23,8 @@ real R_hyd3 = (12*nu*L3)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
 //real R_hyd_in1 = R_hyd1*R_hyd2 / (R_hyd1 + R_hyd2);
 
 analog begin
-    Q(port1, port2) = P(port1, port3) / (R_hyd1 + R_hyd2);
-    Q(port1, port3) = P(port1, port3) / (R_hyd1 + R_hyd3);
+    Q(port1, port2) <+ P(port1, port3) / (R_hyd1 + R_hyd2);
+    Q(port1, port3) <+ P(port1, port3) / (R_hyd1 + R_hyd3);
 end
 
 endmodule
