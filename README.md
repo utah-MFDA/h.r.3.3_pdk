@@ -4,7 +4,7 @@ Library of basic microfluidic components
 # List of components
 
 <ul>
-  <li>Valves of different sizes</li>
+  <li>Valves of different sizes </li>
   <li>Pumps</li>
   <li>Diffusion mixing channel? (tall high aspect ratio channel - see <a href=https://www.nature.com/articles/s41467-021-25788-w>Spatially and optically tailored 3D printin for highly miniaturized and integrated microfluidics</a></li>
   <li>Chip to chip interconnects? <a href=https://pubs.rsc.org/en/content/articlelanding/2018/lc/c7lc01113j>3D printed high density, reversible, chip-to-chip microfluidic interconnects</a></li>

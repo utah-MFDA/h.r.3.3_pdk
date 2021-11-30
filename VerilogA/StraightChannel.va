@@ -1,16 +1,23 @@
+//
 
-'include nature_fluid_dynamics 
+`include "nature_fluid_dynamics"
+//'include "disciplines.vams"
 
-
-module StraighChannel(p,n);
+module StraightChannel(p,n);
+// fluid input Pa - potential L/s
+// p - input of channel
+// n - outputs of the channel 
 
 // H-height, W-width, L-length, nu-viscosity
 parameter real H=1.0, W=1.0, L=1.0, nu=0.8891;
 fluidDynamics p,n;
+//electrical p,n;
 
 // hydrodynamic resistance calculation
 real R_hyd = (12*nu*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/w);
-analog I(p,n) <+ P(p,n)/R_hyd;
+analog Q(p,n) <+ P(p,n)/R_hyd;
+//analog I(p,n) <+ V(p,n)/R_hyd;
+
 
 endmodule
 

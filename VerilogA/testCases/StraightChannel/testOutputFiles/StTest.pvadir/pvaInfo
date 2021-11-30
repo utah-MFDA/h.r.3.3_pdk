@@ -1,0 +1,18 @@
+libepva built by carlgu synmake_pva_build  on Mon Mar  9 17:07:09 PDT 2020 - p4:6187459
+
+======================================
+HVA Verilog-A Modules (filename:line#)
+--------------------------------------
+ N  StraightChannel (../../StraightChannel.va:6)
+--------------------------------------
+Total 1 module(s) loaded.
+======================================
+
+======================================
+Lists of Used Modules during GMD Setup
+--------------------------------------
+    StraightChannel
+--------------------------------------
+Total 1 module(s) used.
+======================================
+
