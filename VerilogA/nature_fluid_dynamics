@@ -12,13 +12,13 @@ nature FluidFlow
 endnature
 
 nature Concentration
-     units = ppm;
+     units = "ppm";
      access= C;
      abstol= 1;
 endnature
 
 discipline fluidDynamics
-     domain continous;
+     domain continuous;
      potential Pressure;
      flow FluidFlow;
 enddiscipline
