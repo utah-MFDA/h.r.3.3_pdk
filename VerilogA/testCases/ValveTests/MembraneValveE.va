@@ -1,0 +1,24 @@
+
+//`include "nature_fluid_dynamics"
+`include "disciplines.vams"
+
+module MembraneValve(fl_port1,fl_port2,air_in);
+input air_in;
+inout fl_port1, fl_port2; 
+
+parameter real ch_h = 0.05, pn_h=0.05, dia=0.2, mem_th = 0.02;
+parameter real thershold = 15; //PSI
+//fluidDynamics fl_port1,fl_port2;
+electrical fl_port1, fl_port2;
+
+
+// output
+analog begin
+    if (air_in > theshold)
+        I(fl_port1, fl_port2) <+ V(fl_port1, fl_port2)/R_valve; 
+    else
+        I(fl_port1, fl_port2) <+ 0;
+end
+
+
+endmodule
