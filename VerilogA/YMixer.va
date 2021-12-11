@@ -1,0 +1,68 @@
+// Sophia Nielsen, sophi.nieslen@utah.edu
+`include "nature_fluid_dynamics"
+
+module YMixer(fl_1,fl_2,fl_out,c_1,c_2,c_out)
+  // input and output ports of channel
+
+  // fl_1 - first input port for pressure and flow, conservative
+  // fl_2 - second input port for pressure and flow, conservative
+  // fl_out - output port for for pressure and flow, conservative
+
+  // c_1 - frist input port for concentration, potential
+  // c_2 - second input port for concentration, potential
+  // c_3 - output port for concentration, potential
+  input fl_1, fl_2, c_1, c_2;
+  output fl_out, c_out;
+
+  // define port disciplines
+  fluidDynamics fl_1, fl_2, fl_out;
+  concentration c_1, c_2, c_out;
+
+  // define branches, i.e. connections between ports
+  branch (fl_1, fl_out) fl_branch_1
+  branch (fl_2, fl_out) fl_branch_2
+  branch (c_1, c_out) c_branch_1
+  branch (c_2, c_out) c_branch_2
+
+  // channel length (l - length (m)), single segment  length
+  // fluid viscosity (nu - dynamic viscosity)
+  // CROSS_SECTION - 1 for default channel, 2 for small channel
+  parameter real L;
+  parameter  real NU;
+  parameter real CROSS_SECTION;
+
+  initial begin
+    if (CROSS_SECTION == 1) {
+      real width_pixels = 14;
+      real hieght_layers = 8;
+    }
+    else if(CROSS_SECTION == 2){
+      real width_pixels = 6;
+      real hieght_layers = 5;
+    }
+
+    real microns_per_pixel = 7.6;
+    real microns_per_layer = 10;
+    real meters_per_micron = .000001;
+
+    real W = width_pixels*microns_per_pixel*meters_per_micron;
+    real H = hieght_layers*microns_per_layer*meters_per_micron;
+
+    // Channel cross section (w - width, h - hieght),
+    // resistence of individual channel segment
+    real R_ch = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+  end
+
+  analog begin
+    // TODO define flow rate behavior
+    // flow/pressure for input ports
+    Q(fl_1) <+ P(fl_1)/R_ch
+    Q(fl_2) <+ P(fl_2)/R_ch
+    // flow/ pressure for output ports
+    
+
+    // TODO define concentration behavior
+  end
+
+
+end module

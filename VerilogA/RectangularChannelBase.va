@@ -2,7 +2,7 @@
 `include "nature_fluid_dynamics"
 
 // this module is an example for other rectangualr channel modules
-// do not instantiate this module as its own component, instead use the wrapper
+// do not instantiate this module as its own component, instead use the
 // components RectangularChannelDefault and RectangularChannelSmall
 module RectangularChannelBase
 // Channel cross section (w - width, h - hieght), channel length (l - length)

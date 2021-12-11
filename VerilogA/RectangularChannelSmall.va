@@ -8,8 +8,8 @@
 module RectangularChannelSmall
 // channel length (l - length (m))
 // fluid viscosity (nu - dynamic viscosity)
-# (parameter L,
-  parameter NU)
+# (parameter real L,
+  parameter real NU = 0.8891)
 
 // input and output ports of channel
 // p - input port for pressure and flow, conservative
@@ -17,15 +17,15 @@ module RectangularChannelSmall
 (input p
   output n)
 
-  real width_pixels = 6
-  real hieght_layers = 5
+  real width_pixels = 6;
+  real hieght_layers = 5;
 
-  real microns_per_pixel = 7.6
-  real microns_per_layer = 10
-  real meters_per_micron = .000001
+  real microns_per_pixel = 7.6;
+  real microns_per_layer = 10;
+  real meters_per_micron = .000001;
 
-  real W = width_pixels*microns_per_pixel*meters_per_micron
-  real H = hieght_layers*microns_per_layer*meters_per_micron
+  real W = width_pixels*microns_per_pixel*meters_per_micron;
+  real H = hieght_layers*microns_per_layer*meters_per_micron;
 
   // Channel cross section (w - width, h - hieght),
   real R_hyd = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);

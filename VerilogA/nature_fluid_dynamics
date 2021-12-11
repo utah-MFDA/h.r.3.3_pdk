@@ -23,4 +23,7 @@ discipline fluidDynamics
      flow FluidFlow;
 enddiscipline
 
-
+discipline concentration
+    domain continuous;
+    potential Concentration;
+enddiscipline
