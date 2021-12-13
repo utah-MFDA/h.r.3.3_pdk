@@ -1,0 +1,11 @@
+
+*.sw*
+*.tr*
+*.valog
+sxcmd.*
+*.pa*
+*.st*
+*.pvadir*
+*.ic*
+*MOSFET_Example*
+*sx_crash.sx
