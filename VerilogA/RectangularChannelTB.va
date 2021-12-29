@@ -1,0 +1,27 @@
+
+`include "RectangularChannel.va"
+//`include "nature_fluid_dynamics"
+
+module RectangularChannelTB;
+  reg CLK = 0;
+  //reg [10:0] QIN;
+  //wire QOUT;
+  input QIN;
+  output QOUT;
+  fluidDynamics QIN, QOUT;
+  real qin;
+
+  always
+  #10 CLK = ~CLK;
+
+  initial
+  qin = 1;
+
+  analog
+  Q(QIN) <+ qin;
+  RectangularChannel ch1(.fluid_port_1(QIN), .fluid_port_2(QOUT));
+
+  initial
+  $monitor("simtime = %g, CLK = %b, QIN = %b, QOUT  = %b", $time, CLK, QIN, QOUT);
+
+endmodule // RectangularChannelTB
