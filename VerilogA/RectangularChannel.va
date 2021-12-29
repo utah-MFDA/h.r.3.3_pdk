@@ -63,12 +63,12 @@ module RectangularChannel (fluid_port_1, fluid_port_2);
     R_hyd = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
   end
 
-  //analog
-    //Q(fluid_port_1,fluid_port_2) <+ 1/R_hyd*P(fluid_port_1,fluid_port_2);
+  analog
+    Q(fluid_port_1,fluid_port_2) <+ 1/R_hyd*P(fluid_port_1,fluid_port_2);
     //I(fluid_port_1,fluid_port_2) <+ V(fluid_port_1,fluid_port_2)/R_hyd;
 
-  analog
-    Q(fluid_port_1,fluid_port_2) <+ Q(fluid_port_1,fluid_port_2);
+  //analog
+    //Q(fluid_port_1,fluid_port_2) <+ Q(fluid_port_1,fluid_port_2);
 
   //analog
     //P(fluid_port_1) <+ P(fluid_port_2);
