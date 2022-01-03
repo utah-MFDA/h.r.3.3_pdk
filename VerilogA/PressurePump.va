@@ -1,0 +1,23 @@
+
+//
+// Pressure pump source
+// Acts like a constant voltage source
+
+`include "nature_fluid_dynamics"
+
+module PressurePump(out1, out2);
+
+output out1, out2;
+
+fluidDynamics out1, out2;
+
+// pressure of source
+parameter real pressure=10;
+
+//TODO implment ramprate for pump 
+
+analog begin
+    P(out1, out2) <+ pressure;
+end
+
+endmodule

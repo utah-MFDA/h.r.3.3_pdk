@@ -1,0 +1,22 @@
+
+//
+// Syringe pump source
+// Acts like a constant current source
+
+`include "nature_fluid_dynamics"
+
+module syringePump(output out1, output gnd)
+
+fluidDynamics out1, gnd;
+
+// flow rate of syringe pump
+parameter real fr;
+parameter real rampRate;
+
+//TODO implment ramprate for pump 
+
+analog begin
+    Q(out1, gnd) <+ flowrate;
+end
+
+endmodule
