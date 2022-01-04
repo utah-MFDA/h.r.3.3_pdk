@@ -11,17 +11,18 @@ module RectangularChannelTB;
   fluidDynamics QIN, QOUT;
   real qin;
 
-  always
-  #10 CLK = ~CLK;
+  always begin
+    #10 CLK = ~CLK;
+  end
 
-  initial
-  qin = 1;
+  initial begin
+    qin = 1;
+    $monitor("simtime = %g, CLK = %b, QIN = %b, QOUT  = %b", $time, CLK, QIN, QOUT);
+  end
 
   analog
-  Q(QIN) <+ qin;
-  RectangularChannel ch1(.fluid_port_1(QIN), .fluid_port_2(QOUT));
+    Q(QIN) <+ qin;
 
-  initial
-  $monitor("simtime = %g, CLK = %b, QIN = %b, QOUT  = %b", $time, CLK, QIN, QOUT);
+  RectangularChannel ch1(.fluid_port_1(QIN), .fluid_port_2(QOUT));
 
 endmodule // RectangularChannelTB
