@@ -68,4 +68,4 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2);
     Q(fluid_port_1,fluid_port_2) <+ P(fluid_port_1,fluid_port_2)/R_hyd;
   end
 
-end module
+endmodule
