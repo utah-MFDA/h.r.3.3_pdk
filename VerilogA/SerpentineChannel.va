@@ -56,7 +56,7 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2);
     //recalculate effective footprint width based on number of BENDS
     //there can be no partial BENDS
 
-    effective_footprint_width = bends*(W+channel_spacing)
+    effective_footprint_width = bends*(W+channel_spacing);
 
     L = bends*effective_footprint_width + effective_footprint_width;
 
