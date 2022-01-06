@@ -13,9 +13,9 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2)
   // B - number of bends in serpentine channel
   // fluid viscosity (nu - dynamic viscosity)
   // CROSS_SECTION - 1 for default channel, 2 for small channel
-  parameter real FOOTPRINT_WIDTH;
-  parameter real NU;
-  parameter real CROSS_SECTION;
+  parameter real FOOTPRINT_WIDTH = 0.001064; // preset  for 5 BENDS
+  parameter real NU = 0.8891;
+  parameter real CROSS_SECTION = 1;
 
   // initialize cross section variables: width in pixels, hieght in layers
   real width_pixels;
