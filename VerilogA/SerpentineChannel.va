@@ -6,39 +6,62 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2)
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
-  input fluid_port_1;
-  output fluid_port_2;
+  inout fluid_port_1, fluid_port_2;
+  fluidDynamics fluid_port_1, fluid_port_2;
 
   // FW - footprint width, defines square footprint of serpentine channel
   // B - number of bends in serpentine channel
   // fluid viscosity (nu - dynamic viscosity)
   // CROSS_SECTION - 1 for default channel, 2 for small channel
   parameter real FOOTPRINT_WIDTH;
-  parameter real BENDS;
   parameter real NU;
   parameter real CROSS_SECTION;
 
+  // initialize cross section variables: width in pixels, hieght in layers
+  real width_pixels;
+  real hieght_layers;
+  real channel_spacing;
+
+  real microns_per_pixel = 7.6;
+  real microns_per_layer = 10;
+  real meters_per_micron = 0.000001;
+
+  real channel_spacing_pixels = 14;
+
+  real W;
+  real H;
+  real L;
+  integer bends;
+  real effective_footprint_width;
+
+  real R_hyd;
+
   initial begin
     if(CROSS_SECTION == 1) {
-      real width_pixels = 14;
-      real hieght_layers = 8;
+      width_pixels = 14;
+      hieght_layers = 8;
     }
 
     else if(CROSS_SECTION  == 2) {
-      real width_pixels = 6;
-      real hieght_layers = 5;
+      width_pixels = 6;
+      hieght_layers = 5;
     }
 
-    real microns_per_pixel = 7.6;
-    real microns_per_layer = 10;
-    real meters_per_micron = .000001;
+    channel_spacing = channel_spacing_pixels*microns_per_pixel*meters_per_micron;
 
-    real W = width_pixels*microns_per_pixel*meters_per_micron;
-    real H = hieght_layers*microns_per_layer*meters_per_micron;
-    real L = BENDS*FOOTPRINT_WIDTH + FOOTPRINT_WIDTH;
+    W = width_pixels*microns_per_pixel*meters_per_micron;
+    H = hieght_layers*microns_per_layer*meters_per_micron;
+
+    bends = FOOTPRINT_WIDTH/(W+channel_spacing);
+    //recalculate effective footprint width based on number of BENDS
+    //there can be no partial BENDS
+
+    effective_footprint_width = bends*(W+channel_spacing)
+
+    L = bends*effective_footprint_width + effective_footprint_width;
 
     // Channel cross section (w - width, h - hieght),
-    real R_hyd = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+    R_hyd = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
   end
 
   analog begin

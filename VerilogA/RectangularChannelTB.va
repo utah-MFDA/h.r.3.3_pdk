@@ -6,10 +6,11 @@ module RectangularChannelTB;
   reg CLK = 0;
   //reg [10:0] QIN;
   //wire QOUT;
-  input QIN;
-  output QOUT;
-  fluidDynamics QIN, QOUT;
+  input IN;
+  output OUT;
+  fluidDynamics IN, OUT;
   real qin;
+  real vin;
 
   always begin
     #10 CLK = ~CLK;
@@ -17,12 +18,15 @@ module RectangularChannelTB;
 
   initial begin
     qin = 1;
+    vin = 1;
     $monitor("simtime = %g, CLK = %b, QIN = %b, QOUT  = %b", $time, CLK, QIN, QOUT);
   end
 
-  analog
-    Q(QIN) <+ qin;
+  analog begin
+    Q(IN) <+ qin;
+    V(IN) <+ vin;
+  end
 
-  RectangularChannel ch1(.fluid_port_1(QIN), .fluid_port_2(QOUT));
+  RectangularChannel ch1(.fluid_port_1(IN), .fluid_port_2(OUT));
 
 endmodule // RectangularChannelTB
