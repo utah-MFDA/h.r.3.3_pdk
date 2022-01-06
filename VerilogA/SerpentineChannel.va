@@ -2,7 +2,7 @@
 `include "nature_fluid_dynamics"
 
 // serpentine
-module SerpentineChannel (fluid_port_1,  fluid_port_2)
+module SerpentineChannel (fluid_port_1,  fluid_port_2);
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
