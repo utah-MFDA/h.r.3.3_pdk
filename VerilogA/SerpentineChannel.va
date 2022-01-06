@@ -37,15 +37,15 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2);
   real R_hyd;
 
   initial begin
-    if(CROSS_SECTION == 1) {
+    if(CROSS_SECTION == 1) begin
       width_pixels = 14;
       hieght_layers = 8;
-    }
+    end
 
-    else if(CROSS_SECTION  == 2) {
+    else if(CROSS_SECTION  == 2) begin
       width_pixels = 6;
       hieght_layers = 5;
-    }
+    end
 
     channel_spacing = channel_spacing_pixels*microns_per_pixel*meters_per_micron;
 
