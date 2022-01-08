@@ -3,7 +3,7 @@
 
 // TJunction with two inputs
 
-module TJunction2(fl_1,fl_2,fl_out,c_1,c_2,c_out);
+module TJunction(fl_1,fl_2,fl_out,c_1,c_2,c_out);
   // input and output ports of channel
 
   // fl_1 - first input port for pressure and flow, conservative
