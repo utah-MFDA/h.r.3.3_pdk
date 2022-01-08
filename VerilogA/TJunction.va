@@ -70,10 +70,10 @@ module TJunction2(fl_1,fl_2,fl_out,c_1,c_2,c_out);
   analog begin
     // ----- define flow rate behavior --------
     // flow/pressure for input ports
-    Q(fl_1) <+ P(fl_1)/R_ch;
-    Q(fl_2) <+ P(fl_2)/R_ch;
+    Q(fl_1,fl_out) <+ 2*P(fl_1,fl_out)/R_ch;
+    Q(fl_2,fl_out) <+ 2*P(fl_2,fl_out)/R_ch;
     // flow/ pressure for output ports
-    Q(fl_out) <+ 2*P(fl_out)/R_ch;
+    //Q(fl_out) <+ 2*P(fl_out)/R_ch;
 
     // ----- define concentration behavior ------
     // -set flow rate flow rate factors for concentration calculations-
