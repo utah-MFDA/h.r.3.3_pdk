@@ -12,16 +12,17 @@
 // 5 layers tall, 6 pixels wide
 // pixel size:  7.6 microns, layer size:  10  microns
 
-module RectangularChannel (fluid_port_1, fluid_port_2);
+module RectangularChannel (fl_in, fl_out, c_in, c_out);
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
   //inout fluid_port_1, fluid_port_2;
   //input fluid_port_1;
   //output fluid_port_2;
-  inout fluid_port_1, fluid_port_2;
+  inout fl_in, fl_out, c_in, c_out;
   // declared  wiith fluidDynamics discipline
-  fluidDynamics fluid_port_1, fluid_port_2;
+  fluidDynamics fl_in, fl_out;
+  concentration c_in, c_out;
   //electrical fluid_port_1, fluid_port_2;
   //branch (fluid_port_1 fluid_port_2) branch1;
 
@@ -62,9 +63,11 @@ module RectangularChannel (fluid_port_1, fluid_port_2);
     R_hyd = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
   end
 
-  analog
-    Q(fluid_port_1,fluid_port_2) <+ 1/R_hyd*P(fluid_port_1,fluid_port_2);
+  analog begin
+    Q(fl_in,fl_out) <+ 1/R_hyd*P(fl_in,fl_out);
     //I(fluid_port_1,fluid_port_2) <+ V(fluid_port_1,fluid_port_2)/R_hyd;
+    C(c_in,c_out) <+ C(c_in,c_out);
+  end
 
   //analog
     //Q(fluid_port_1,fluid_port_2) <+ Q(fluid_port_1,fluid_port_2);

@@ -2,12 +2,13 @@
 `include "nature_fluid_dynamics"
 
 // serpentine
-module SerpentineChannel (fluid_port_1,  fluid_port_2);
+module SerpentineChannel (fl_in, fl_out, c_in, c_out);
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
-  inout fluid_port_1, fluid_port_2;
-  fluidDynamics fluid_port_1, fluid_port_2;
+  inout fl_in, fl_out, c_in, c_out;
+  fluidDynamics fl_in, fl_out;
+  concentration c_in, c_out;
 
   // FW - footprint width, defines square footprint of serpentine channel
   // B - number of bends in serpentine channel
@@ -65,7 +66,8 @@ module SerpentineChannel (fluid_port_1,  fluid_port_2);
   end
 
   analog begin
-    Q(fluid_port_1,fluid_port_2) <+ P(fluid_port_1,fluid_port_2)/R_hyd;
+    Q(fl_in,fl_out) <+ P(fl_in,fl_out)/R_hyd;
+    C(c_in,c_out)  <+ C(c_in,c_out);
   end
 
 endmodule
