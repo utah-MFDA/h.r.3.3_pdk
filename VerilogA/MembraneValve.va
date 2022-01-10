@@ -2,7 +2,7 @@
 `include "nature_fluid_dynamics"
 
 
-module CirValve(fl_port1,fl_port2,air_in);
+module MembraneValve(fl_port1,fl_port2,air_in);
 input air_in;
 inout fl_port1, fl_port2; 
 
@@ -14,10 +14,10 @@ fluidDynamics fl_port1,fl_port2;
 
 // output
 analog begin
-    if (P(air_in) > theshold)
+    if (air_in > theshold)
         Q(fl_port1, fl_port2) <+ P(fl_port1, fl_port2)/R_valve; 
     else
-       Q(fl_port1, fl_port2) <+ 0;
+        Q(fl_port1, fl_port2) <+ 0;
 end
 
 
