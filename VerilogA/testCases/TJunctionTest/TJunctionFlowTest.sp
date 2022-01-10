@@ -1,5 +1,4 @@
-*In this test circuit the concentration and resistance are constant but
-*	the pressure is different.
+* pressure test,
 .hdl ./../../TJunction.va
 
 .options post=1
