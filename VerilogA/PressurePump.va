@@ -8,7 +8,6 @@
 module PressurePump(out1, out2);
 
 output out1, out2;
-
 fluidDynamics out1, out2;
 
 // pressure of source
