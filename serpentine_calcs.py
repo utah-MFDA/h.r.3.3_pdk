@@ -55,4 +55,5 @@ def footprint_from_resistence():
 
     print(footprint_width)
 
-footprint_from_resistence()
+#footprint_from_resistence()
+calc_resistence()
