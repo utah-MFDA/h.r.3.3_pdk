@@ -15,7 +15,7 @@ module SerpentineChannel (fl_in, fl_out, c_in, c_out);
   // fluid viscosity (nu - dynamic viscosity)
   // CROSS_SECTION - 1 for default channel, 2 for small channel
   parameter real FOOTPRINT_WIDTH = 0.001064; // preset  for 5 BENDS
-  parameter real NU = 0.8891;
+  parameter real NU = 0.0010016; // water at 20 deg C, [Pa s], [N s/m2]
   parameter real CROSS_SECTION = 1;
 
   // initialize cross section variables: width in pixels, hieght in layers
