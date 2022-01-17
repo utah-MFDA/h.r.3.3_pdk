@@ -69,7 +69,7 @@ module SerpentineChannel (fl_in, fl_out, c_in, c_out);
 
   analog begin
     Q(fl_in,fl_out) <+ P(fl_in,fl_out)/R_hyd;
-    C(c_in,c_out)  <+ C(c_in,c_out);
+    C(c_in)  <+ C(c_out);
   end
 
 endmodule
