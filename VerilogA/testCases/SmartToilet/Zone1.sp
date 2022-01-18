@@ -11,7 +11,7 @@ VS pA 0 PWL(0 34450V 8ms 34450V)
 IcA cA cD1 PWL(0s 1amp 8ms 1amp)
 
 .probe tran I(X1.pA)
-.probe tran I(X1.cA)
-.probe tran I(X1.cD1)
+.print tran I(X1.cA)
+.print tran I(X1.cD1)
 .tran 0.01ms 8ms
 .end
