@@ -10,8 +10,8 @@ VS pA 0 PWL(0 34450V 8ms 34450V)
 *input concentration
 IcA cA cD1 PWL(0s 1amp 8ms 1amp)
 
-.probe I(cA)
-.probe I(cD1)
+.probe Ix(X1:cA)
+.probe Ix(X1:cD1)
 .print
 *.tran 0.01ms 8ms
 .end
