@@ -1,0 +1,36 @@
+
+
+`include "nature_fluid_dynamics"
+
+
+module PneumaticSwitch(out1, gnd);
+
+output out1, gnd;
+fluidDynamics out1, gnd;
+
+parameter real pressure=16;
+
+// state 1 - open
+// state 0 - closed
+//initial begin
+//    integer state = 1;
+//end
+integer state = 1;
+
+parameter real sw_time = 0.5;
+
+analog begin
+    @(timer(0, sw_time)) begin
+	if (state == 1)
+	   state = 0;
+	else
+	   state = 1;
+    end
+	
+    if (state == 1)
+	P(out1) <+ pressure;
+    else
+        P(out1) <+ 0;
+end
+
+endmodule

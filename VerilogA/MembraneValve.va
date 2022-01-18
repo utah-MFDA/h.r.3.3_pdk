@@ -2,19 +2,24 @@
 `include "nature_fluid_dynamics"
 
 
-module MembraneValve(fl_port1,
-		     fl_port2,
+module MembraneValve(fl_port_1,
+		     fl_port_2,
 		     air_in,
 		     air_out);
 
-inout fl_port1, fl_port2;
+inout fl_port_1, fl_port_2;
 input air_in;
 output air_out;
+
+//Define connections
+branch (fl_port_1, fl_port_2) fl_res;
+branch (air_in, air_out) a_res;
+
 
 //input fl_port1; tried
 //output fl_port2;
 
-fluidDynamics fl_port1,fl_port2, air_in, air_out;
+fluidDynamics fl_port_1,fl_port_2, air_in, air_out;
 // tried declaring air port electrical
 
 // Valve dimensional properties in pixels
@@ -67,9 +72,10 @@ end
 // output
 analog begin
     if (P(air_in, air_out) > theshold)
-        Q(fl_port1, fl_port2) <+ P(fl_port1, fl_port2)/R_valve; 
+        //Q(fl_port1, fl_port2) <+ P(fl_port1, fl_port2)/R_valve; 
+	Q(fl_res) <+ P(fl_port_1, fl_port_2)/R_valve; 
     else
-        Q(fl_port1, fl_port2) <+ 0;
+        Q(fl_port_1, fl_port_2) <+ 0;
 end
 
 endmodule
