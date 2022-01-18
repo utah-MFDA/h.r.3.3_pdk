@@ -8,8 +8,10 @@ X1 pA 0 cA cD1 SerpentineChannel
 VS pA 0 PWL(0 34450V 8ms 34450V)
 
 *input concentration
-VcA cA cD1 PWL(0s 1V 8ms 1V)
+IcA cA cD1 PWL(0s 1amp 8ms 1amps)
 
 .probe tran I(X1.pA)
+.probe tran I(X1.cA)
+.probe tran I(X1.cD1)
 .tran 0.01ms 8ms
 .end
