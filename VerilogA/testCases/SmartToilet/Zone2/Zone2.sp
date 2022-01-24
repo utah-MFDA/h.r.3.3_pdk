@@ -1,6 +1,6 @@
 *serpentine channel test
 
-.hdl ./../../RectangularChannel.va
+.hdl ./../../../RectangularChannel.va
 .options post=1
 X1 pB 0 cB cD2 RectangularChannel L=0.00071
 
