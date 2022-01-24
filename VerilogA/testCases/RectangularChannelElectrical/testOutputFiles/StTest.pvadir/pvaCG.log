@@ -1,0 +1,33 @@
+
+Begin of pVA compiling on Tue Nov 23 10:32:22 2021	GTM/In-use: 0.2500/0.1541 MB
+
+Parsing '../../StraightChannel.va'
+Parsing include file '../../nature_fluid_dynamics'
+
+End of pVA compiling on Tue Nov 23 10:32:22 2021	GTM/In-use: 0.3750/0.2300 MB
+
+
+End of build pVA DB on Tue Nov 23 10:32:22 2021	GTM/In-use: 1.3750/1.3496 MB
+
+*pvaI* Module (StraightChannel): 2 unexpanded port, 0 init, 1 behav, 1 contrib, 26/0 expr(s)
+*pvaW*        Variable 'w' is used without declaration, set to real. To error out, setenv PVA_AUTO_DECLARE 0 (../../StraightChannel.va:17)
+*pvaI*        Has DIS(ST), 0/0 afCount, 0 MT, dlg, IO(0/0/1/0)
+*pvaI*        0 gmdIsThreadSafe (ST)
+*pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+*pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+*pvaI*        Port direction <unknown> of 'p' is coerced to inout (../../StraightChannel.va:13)
+*pvaI*        Port direction <unknown> of 'n' is coerced to inout (../../StraightChannel.va:13)
+*pvaI*        generated 0 flow node(s) during compilation.
+
+End of pVA genC on Tue Nov 23 10:32:22 2021	GTM/In-use: 1.7500/1.4760 MB
+
+*pvaI* #### Total 145 line-size(s), 26/0 expr(s), 1 contr(s), 0 init(s), 1 behav(s), 2 port(s)
+
+Generating StTest.pvadir/pvaRTL_linux64.so
+
+
+End of submitting pVA StTest.pvadir/pvaRTL.mak on Tue Nov 23 10:32:23 2021	GTM/In-use: 1.7500/1.4762 MB
+
+
+End of pVA elaboration on Tue Nov 23 10:32:23 2021	GTM/In-use: 1.7500/1.3502 MB
+

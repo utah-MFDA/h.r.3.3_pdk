@@ -1,0 +1,29 @@
+****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******
+Input File: StTest.sp
+lic:
+lic: FLEXlm: SDK_12.6
+lic: USER:   u1146591             HOSTNAME: lab2-11.eng.utah.edu
+lic: HOSTID: 18c04d8cd52e         PID:      3574473
+lic: Using FLEXlm license file:
+lic: 27000@chickasaw.eng.utah.edu
+lic: Checkout 1 hspice
+lic: License/Maintenance for hspice will expire on 14-mar-2022/2020.03
+lic: 2(in_use)/50(total) FLOATING license(s) on SERVER 27000@chickasaw.eng.utah.edu
+lic:
+
+ init: begin read circuit files, cpu clock= 3.72E-02
+       option search = /uusoc/facility/cad_tools/Synopsys/lnis_tools/hs
+                         pice/Q-2020.03-2/hspice/parts/ad
+       option post =     1.00
+ init: end read circuit files, cpu clock= 7.51E-01 peak memory=     427 mb
+ init: begin check errors, cpu clock= 7.51E-01
+ init: end check errors, cpu clock= 7.60E-01 peak memory=     430 mb
+ init: begin setup matrix, pivot=     0 cpu clock= 7.60E-01
+       establish matrix -- done, cpu clock= 7.60E-01 peak memory=     430 mb
+       re-order matrix -- done, cpu clock= 7.60E-01 peak memory=     430 mb
+ init: end setup matrix, cpu clock= 7.83E-01 peak memory=     430 mb
+ output: StTest.sw0
+ sweep: dc dc0    begin, #sweeps=  11 cpu clock= 7.90E-01
+ sweep: dc dc0    end, cpu clock= 7.94E-01 peak memory=     430 mb
+>info:         ***** hspice job concluded
+ lic: Release hspice token(s)
