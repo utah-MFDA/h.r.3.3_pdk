@@ -27,7 +27,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
   // channel length (l - length (m))
   // fluid viscosity (nu - dynamic viscosity)
   // CROSS_SECTION - 1 for default channel, 2 for small channel
-  parameter real L = 0.005, NU = 0.8891, CROSS_SECTION = 1;
+  parameter real L = 0.005, NU = 0.0010016, CROSS_SECTION = 1;
 
   // initialize cross section variables: width in pixels, hieght in layers
   real width_pixels;
