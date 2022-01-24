@@ -6,9 +6,8 @@ module SerpentineChannel (fl_in, fl_out, c_in, c_out);
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
-  inout fl_in, fl_out;
-  input c_in;
-  output c_out;
+  input fl_in, c_in;
+  output fl_out, c_out;
   fluidDynamics fl_in, fl_out;
   concentration c_in, c_out;
 
