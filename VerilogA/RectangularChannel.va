@@ -19,7 +19,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
 
   input fl_in, c_in;
   output fl_out, c_out;
-  
+
   // declared  wiith fluidDynamics discipline
   fluidDynamics fl_in, fl_out;
   concentration c_in, c_out;
@@ -63,7 +63,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
 
   analog begin
     Q(fl_in,fl_out) <+ 1/R_hyd*P(fl_in,fl_out);
-    C(c_in,c_out) <+ C(c_in,c_out);
+    C(c_in) <+ C(c_out);
   end
 
 endmodule
