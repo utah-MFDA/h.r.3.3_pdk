@@ -16,15 +16,13 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
   // input and output ports of channel
   // fluid_port_1 - input port for pressure and flow, conservative
   // fluid_port_2 - output port for pressure and flow, conservative
-  //inout fluid_port_1, fluid_port_2;
-  //input fluid_port_1;
-  //output fluid_port_2;
-  inout fl_in, fl_out, c_in, c_out;
+
+  input fl_in, c_in;
+  output fl_out, c_out;
+  
   // declared  wiith fluidDynamics discipline
   fluidDynamics fl_in, fl_out;
   concentration c_in, c_out;
-  //electrical fluid_port_1, fluid_port_2;
-  //branch (fluid_port_1 fluid_port_2) branch1;
 
   // channel length (l - length (m))
   // fluid viscosity (nu - dynamic viscosity)
@@ -65,14 +63,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
 
   analog begin
     Q(fl_in,fl_out) <+ 1/R_hyd*P(fl_in,fl_out);
-    //I(fluid_port_1,fluid_port_2) <+ V(fluid_port_1,fluid_port_2)/R_hyd;
     C(c_in,c_out) <+ C(c_in,c_out);
   end
-
-  //analog
-    //Q(fluid_port_1,fluid_port_2) <+ Q(fluid_port_1,fluid_port_2);
-
-  //analog
-    //P(fluid_port_1) <+ P(fluid_port_2);
 
 endmodule
