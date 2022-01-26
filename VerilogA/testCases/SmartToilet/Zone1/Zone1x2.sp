@@ -14,7 +14,7 @@ IcA cA cD1 PWL(0s 1 8ms 1)
 .tran 0.01ms 8ms
 .probe tran I(X1.c_in)
 .probe tran I(X1.c_out)
-.print tran I(X1.c_in)
-.print tran I(X1.c_out)
+.probe tran I(X2.c_in)
+.probe tran I(X2.c_out)
 
 .end
