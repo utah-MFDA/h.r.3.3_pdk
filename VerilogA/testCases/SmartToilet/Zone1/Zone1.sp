@@ -1,6 +1,6 @@
 *serpentine channel test
 
-.hdl ./../../SerpentineChannel.va
+.hdl ./../../../SerpentineChannel.va
 .options post=1
 X1 pA 0 cA cD1 SerpentineChannel
 
