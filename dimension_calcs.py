@@ -91,4 +91,5 @@ def flow_rate(R_hyd, del_P):
 #footprint_from_resistence()
 #length_from_resistence(3366.29, 0.0010016, 14, 8)
 #straight_channel_resistence(0.0007093338693968819, 0.001, 14, 8)
-flow_rate(3366.29, 34450)
+flow_rate(30770.4, 34450)
+#straight_channel_resistence(0.0001, 0.001, 14, 8)
