@@ -8,7 +8,7 @@
 
 X1 s1 0  PressurePump       pressure=10
 X2 s1 s2 RectangularChannel
-X3 s2 0  
+X3 s2 0 RectangularChannel  
 *X2 s1 s2 StraightChannel
 *X3 s2 0  StraightChannel
 
