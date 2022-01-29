@@ -10,7 +10,6 @@ V2 pB 0 PWL(0 34450V 8ms 34450V)
 
 *input concentration
 IcA cD1 cDout PWL(0s 1 8ms 1)
-IcA cD2 cDout PWL(0s 0 8ms 0)
 
 .tran 0.01ms 8ms
 .probe tran I(X1.c_1)
