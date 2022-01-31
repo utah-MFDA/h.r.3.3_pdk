@@ -2,7 +2,7 @@
 
 .hdl ./../../../TJunction.va
 .options post=1
-X1 pA pB pi 0 cD1 cD2 cDout TJunction L=0.0001
+X1 pA2 pB pi 0 cD1 cD2 cDout TJunction L=0.0001
 
 *input pressure
 V1 pA 0 PWL(0 34450V 8ms 34450V)
