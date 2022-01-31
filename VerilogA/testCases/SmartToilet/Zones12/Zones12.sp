@@ -6,7 +6,7 @@
 .options post=1
 X1 pA pD1 cA cD1 SerpentineChannel
 X2 pB pD2 cB cD2 RectangularChannel L=0.00071
-X3 pA2 pB pi 0 cD1 cD2 cDout TJunction L=0.0001
+X3 pA pB pi 0 cD1 cD2 cDout TJunction L=0.0001
 
 *input pressures
 VA pA 0 PWL(0 34450V 8ms 34450V)
