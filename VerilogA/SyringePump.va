@@ -5,20 +5,26 @@
 
 `include "nature_fluid_dynamics"
 
-module syringePump(out1, gnd);
+module syringePump(out1, gnd, c_out, c_gnd);
 
 output out1, gnd;
 fluidDynamics out1, gnd;
+concentration c_out, c_gnd;
 
 // flow rate of syringe pump
 parameter real flowrate = 1m;
 parameter real rampRate = 1m;
 
-ground gnd;
+parameter real chem_concentration = 100m;
+
+ground gnd, c_gnd;
 //TODO implment ramprate for pump 
 
+
+
 analog begin
-    Q(out1) <+ flowrate;
+    Q(out1 , gnd) <+ flowrate;
+    C(c_out, c_gnd)<+ chem_concentration;
 end
 
 endmodule
