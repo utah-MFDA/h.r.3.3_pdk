@@ -63,7 +63,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
 
   analog begin
     Q(fl_in,fl_out) <+ 1/R_hyd*P(fl_in,fl_out);
-    C(c_in) <+ C(c_out);
+    C(c_out)  <+ C(c_in);
   end
 
 endmodule

@@ -5,18 +5,21 @@
 
 `include "nature_fluid_dynamics"
 
-module PressurePump(out1, out2);
+module PressurePump(out1, gnd, c_out, c_outg);
 
-output out1, out2;
+output out1, gnd, c_out, c_outg;
 fluidDynamics out1, out2;
+concentration c_out, c_outg;
 
 // pressure of source
 parameter real pressure=10;
+parameter real chem_concentration=100;
 
 //TODO implment ramprate for pump 
 
 analog begin
-    P(out1, out2) <+ pressure;
+    P(out1, gnd) <+ pressure;
+    C(c_out, c_outg) <+ chem_concentration;
 end
 
 endmodule
