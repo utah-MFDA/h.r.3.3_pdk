@@ -12,15 +12,15 @@ endnature
 
 nature ConcentrationP;
      units = "ppm";
-     access= Cp;
+     access = Cp;
      abstol = 1;
 endnature
 
 nature Concentration;
-     units = "ppm/s"
+     units = "ppm/s";
      access= C;
      abstol= 1;
-end nature
+endnature
 
 discipline fluidDynamics;
      domain continuous;
@@ -31,5 +31,5 @@ enddiscipline
 discipline concentration;
     domain continuous;
     potential ConcentrationP;
-    flow Concentation;
+    flow Concentration;
 enddiscipline

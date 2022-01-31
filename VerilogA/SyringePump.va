@@ -3,13 +3,13 @@
 // Syringe pump source
 // Acts like a constant current source
 
-`include "nature_fluid_dynamics"
+`include "nature_fluid_dynamics.vams"
 
-module syringePump(out1, gnd, c_out, c_gnd);
+module syringePump(fl_out, c_out);
 
-output out1, gnd;
-fluidDynamics out1, gnd;
-concentration c_out, c_gnd;
+output fl_out, c_out;
+fluidDynamics fl_out;
+concentration c_out;
 
 // flow rate of syringe pump
 parameter real flowrate = 1m;
@@ -17,14 +17,13 @@ parameter real rampRate = 1m;
 
 parameter real chem_concentration = 100m;
 
-ground gnd, c_gnd;
+//ground gnd, c_gnd;
 //TODO implment ramprate for pump 
 
 
-
 analog begin
-    Q(out1 , gnd) <+ flowrate;
-    C(c_out, c_gnd)<+ chem_concentration;
+    Q(fl_out) <+ flowrate;
+    C(c_out)  <+ chem_concentration;
 end
 
 endmodule

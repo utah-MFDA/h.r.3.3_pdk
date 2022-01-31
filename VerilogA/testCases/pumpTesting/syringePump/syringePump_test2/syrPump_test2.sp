@@ -9,5 +9,6 @@ X2 s1 0  RectangularChannel
 X3 s1 0  RectangularChannel
 
 .tran 0.01ms 1s
+*Needs to be renamed
 .probe tran i(X2.fluid_port_1)
 .probe tran i(X3.fluid_port_2)

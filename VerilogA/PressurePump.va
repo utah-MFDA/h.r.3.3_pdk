@@ -3,7 +3,7 @@
 // Pressure pump source
 // Acts like a constant voltage source
 
-`include "nature_fluid_dynamics"
+`include "nature_fluid_dynamics.vams"
 
 module PressurePump(out1, gnd, c_out, c_outg);
 
@@ -13,7 +13,7 @@ concentration c_out, c_outg;
 
 // pressure of source
 parameter real pressure=10;
-parameter real chem_concentration=100;
+parameter real chem_concentration=100m;
 
 //TODO implment ramprate for pump 
 

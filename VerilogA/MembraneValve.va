@@ -1,11 +1,13 @@
 
-`include "nature_fluid_dynamics"
+`include "nature_fluid_dynamics.vams"
 
 
 module MembraneValve(fl_port_1,
 		     fl_port_2,
 		     air_in,
-		     air_out);
+		     air_out, 
+             c_in,
+             c_out);
 
 inout fl_port_1, fl_port_2;
 input air_in;
@@ -62,6 +64,9 @@ real Lm = L,
      Wm = W*px_size;
 real R_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
 
+// Create branches
+
+
 initial begin
 $display("nu = %f, L = %f, H = %f, W = %f", nu, Lm, Hm, Wm);
 $display("R = %f", R_valve);
@@ -73,9 +78,13 @@ end
 analog begin
     if (P(air_in, air_out) > theshold)
         //Q(fl_port1, fl_port2) <+ P(fl_port1, fl_port2)/R_valve; 
-	Q(fl_res) <+ P(fl_port_1, fl_port_2)/R_valve; 
+	    Q(fl_res) <+ P(fl_port_1, fl_port_2)/R_valve;
+        C(c_out)  <+ C(c_in)
     else
         Q(fl_port_1, fl_port_2) <+ 0;
+        // todo
+        // This will be dependent on likely the previous state
+        C(c_out) <+ 0;
 end
 
 endmodule

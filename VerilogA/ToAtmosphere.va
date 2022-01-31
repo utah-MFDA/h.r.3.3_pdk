@@ -1,0 +1,17 @@
+
+
+`include "nature_fluid_dynamics.vams"
+
+module ToAtmosphere(fl_out, c_out);
+
+input fl_out, c_out;
+fluidDynamics fl_out;
+concentration c_out;
+//ground fl_out;
+
+analog begin
+    P(fl_out) <+ 0;
+    //Cp(c_out) <+ 0;
+end
+
+endmodule

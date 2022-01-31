@@ -1,6 +1,6 @@
 
 
-`include "nature_fluid_dynamics"
+`include "nature_fluid_dynamics.vams"
 
 
 module PneumaticSwitch(out1, gnd);
