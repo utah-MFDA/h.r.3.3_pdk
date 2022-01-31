@@ -4,7 +4,9 @@
 .hdl ./../../../../SyringePump.va
 *.hdl ./../../../../StraightChannel.va
 .hdl ./../../../../RectangularChannel.va
-.hdl ./../../../../ToAtmosphere.va
+* This does not add access functions to probe
+*.hdl ./../../../../nature_fluid_dynamics.vams
+*.hdl ./../../../../ToAtmosphere.va
 * Saves in ACSII format
 .option post=2
 *.option cds=2

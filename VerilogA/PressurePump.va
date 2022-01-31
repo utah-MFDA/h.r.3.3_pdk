@@ -5,11 +5,12 @@
 
 `include "nature_fluid_dynamics.vams"
 
-module PressurePump(out1, gnd, c_out, c_outg);
+module PressurePump(fl_out, c_out);
+//module PressurePump(out1, gnd, c_out, c_outg);
 
-output out1, gnd, c_out, c_outg;
-fluidDynamics out1, out2;
-concentration c_out, c_outg;
+output fl_out, c_out;
+fluidDynamics fl_out;
+concentration c_out;
 
 // pressure of source
 parameter real pressure=10;
@@ -18,8 +19,8 @@ parameter real chem_concentration=100m;
 //TODO implment ramprate for pump 
 
 analog begin
-    P(out1, gnd) <+ pressure;
-    C(c_out, c_outg) <+ chem_concentration;
+    P(fl_out) <+ pressure;
+    C(c_out) <+ chem_concentration;
 end
 
 endmodule
