@@ -3,7 +3,7 @@
 
 // TJunction with two inputs
 
-module TJunction(fl_1,fl_2,fl_out,c_1,c_2,c_out);
+module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
   // input and output ports of channel
 
   // fl_1 - first input port for pressure and flow, conservative
@@ -14,15 +14,17 @@ module TJunction(fl_1,fl_2,fl_out,c_1,c_2,c_out);
   // c_2 - second input port for concentration, potential
   // c_3 - output port for concentration, potential
   input fl_1, fl_2, c_1, c_2;
+  inout fl_internal;
   output fl_out, c_out;
 
   // define port disciplines
-  fluidDynamics fl_1, fl_2, fl_out;
+  fluidDynamics fl_1, fl_2, fl_out, fl_internal;
   concentration c_1, c_2, c_out;
 
   // define branches, i.e. connections between ports
-  branch (fl_1, fl_out) fl_branch_1;
-  branch (fl_2, fl_out) fl_branch_2;
+  branch (fl_1, fl_internal) fl_branch_1;
+  branch (fl_2, fl_internal) fl_branch_2;
+  branch (fl_internal, fl_out) fl_branch_out;
   branch (c_1, c_out) c_branch_1;
   branch (c_2, c_out) c_branch_2;
 
@@ -70,8 +72,9 @@ module TJunction(fl_1,fl_2,fl_out,c_1,c_2,c_out);
   analog begin
     // ----- define flow rate behavior --------
     // flow/pressure for input ports
-    Q(fl_1,fl_out) <+ 2*P(fl_1,fl_out)/R_ch;
-    Q(fl_2,fl_out) <+ 2*P(fl_2,fl_out)/R_ch;
+    Q(fl_1,fl_internal) <+ P(fl_1,fl_internal)/R_ch;
+    Q(fl_2,fl_internal) <+ P(fl_2,fl_internal)/R_ch;
+    Q(fl_internal,fl_out) <+ P(fl_internal,fl_out)/R_ch;
     // flow/ pressure for output ports
     //Q(fl_out) <+ 2*P(fl_out)/R_ch;
 
