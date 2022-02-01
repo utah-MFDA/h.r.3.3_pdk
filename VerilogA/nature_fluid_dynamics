@@ -12,7 +12,7 @@ endnature
 
 nature ConcentrationP;
      units = "ppm";
-     access = Cp;
+     access = K;
      abstol = 1;
 endnature
 
