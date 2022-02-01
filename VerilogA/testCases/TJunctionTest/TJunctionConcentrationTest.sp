@@ -11,8 +11,8 @@ VS1 p1 0 PWL(0 100V 8ms 100V)
 VS2 p2 0 PWL(0 100V 8ms 100V)
 
 * concentration implementation
-Vc1 c1 0 PWL(0s 0V 8ms 0V)
-Vc2 c2 0 PWL(0s 100V 8ms 100V)
+Vc1 c1 co PWL(0s 0V 8ms 0V)
+Vc2 c2 co PWL(0s 1 8ms 1)
 
 
 .tran 0.01ms 8ms
