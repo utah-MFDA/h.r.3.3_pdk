@@ -6,8 +6,8 @@
 .hdl ./../../../PressurePump.va
 .options post=1
 
-X1 A 0 cPA cA PressurePump pressure=34450 chem_concentration=1
-X2 B 0 cPB cB PressurePump pressure=34450 chem_concentration=0
+X1 A 0 cA cD1 PressurePump pressure=34450 chem_concentration=1
+X2 B 0 cB cD2 PressurePump pressure=34450 chem_concentration=0
 
 X3 A D1 cA cD1 SerpentineChannel
 X4 B D2 cB cD2 RectangularChannel L=0.00071
