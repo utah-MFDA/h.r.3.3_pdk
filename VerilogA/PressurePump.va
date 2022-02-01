@@ -21,6 +21,7 @@ parameter real chem_concentration=100m;
 analog begin
     P(fl_out) <+ pressure;
     C(c_out) <+ chem_concentration;
+    //K(c_out)<+ 1;
 end
 
 endmodule
