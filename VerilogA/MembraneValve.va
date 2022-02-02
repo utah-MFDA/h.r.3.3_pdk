@@ -6,10 +6,11 @@ module MembraneValve(fl_in,
 		     fl_out,
 		     air_in,
 		     air_out, 
-             c_in,
-             c_out);
+             	c_in,
+             	c_out);
 
 inout fl_in, fl_out;
+inout c_in, c_out;
 input air_in;
 output air_out;
 
@@ -71,6 +72,7 @@ real R_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
 initial begin
 $display("nu = %f, L = %f, H = %f, W = %f", nu, Lm, Hm, Wm);
 $display("R = %f", R_valve);
+$display("P_a_br = %f", P(a_br));
 end
 // ground delcaration
 //ground gnd;
@@ -80,7 +82,7 @@ end
 analog begin
     if (P(a_br) < theshold)
         //Q(fl_br) <+ P(fl_br)/R_valve; 
-	    Q(fl_br) <+ P(fl_br)/R_valve;// 
+	Q(fl_br) <+ P(fl_br)/R_valve;// 
     else
         Q(fl_br) <+ 0; 
 
