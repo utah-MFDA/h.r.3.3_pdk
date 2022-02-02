@@ -82,14 +82,14 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
     // -set flow rate flow rate factors for concentration calculations-
     // flow rate factor for flow 1
     begin
-    if (Q(<fl_1>) >= 0)
+    if (Q(<fl_1>) != 0)
       flow_rate_factor_1 = Q(<fl_1>);
     else
       flow_rate_factor_1 = 0;
     end
     // flow rate factor for flow 2
     begin
-    if (Q(<fl_2>) >= 0)
+    if (Q(<fl_2>) != 0)
       flow_rate_factor_2 = Q(<fl_2>);
     else
       flow_rate_factor_1 = 0;
