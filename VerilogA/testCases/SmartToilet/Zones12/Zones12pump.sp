@@ -22,6 +22,8 @@ X5 D1 D2 Di 0 cD1 cD2 0 TJunction L=0.0001
 .probe tran I(X3.c_out)
 .probe tran I(X4.c_out)
 
+.probe tran I(X5.c_1)
+.probe tran I(X5.c_2)
 .probe tran I(X5.c_out)
 .probe tran I(X5.fl_1)
 .probe tran I(X5.fl_2)
