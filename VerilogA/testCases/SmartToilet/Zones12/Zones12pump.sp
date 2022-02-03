@@ -16,6 +16,8 @@ X5 D1 D2 Di 0 cD1 cD2 0 TJunction L=0.0001
 
 .tran 0.01ms 8ms
 
+.prbe  tran I(cD1)
+
 .probe tran I(X1.c_out)
 .probe tran I(X2.c_out)
 
