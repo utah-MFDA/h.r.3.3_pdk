@@ -1,0 +1,14 @@
+
+`include "nature_fluid_dynamics.vams"
+
+
+module ValvePump(fl_in, fl_out, air_1, air_2, air_3);
+
+inout fl_in, fl_out;
+input air_1, air_2, air_3;
+
+
+
+
+analog begin
+

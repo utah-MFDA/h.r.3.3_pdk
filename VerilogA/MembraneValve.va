@@ -37,7 +37,7 @@ parameter real nu = 0.8891m;
 parameter real L = 1.0m;
 
 // Valve threshold for closing
-parameter real theshold = 15; //PSI
+parameter real theshold = 103k; //Pa // 15 PSI
 
 // Standard pixel sizes
 parameter real px_size = 7.6u, layer_h = 10u;
