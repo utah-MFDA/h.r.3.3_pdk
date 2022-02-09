@@ -25,8 +25,8 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
   branch (fl_1, fl_internal) fl_branch_1;
   branch (fl_2, fl_internal) fl_branch_2;
   branch (fl_internal, fl_out) fl_branch_out;
-  //branch (c_1, c_out) c_branch_1;
-  //branch (c_2, c_out) c_branch_2;
+  branch (c_1, c_out) c_branch_1;
+  branch (c_2, c_out) c_branch_2;
 
   // channel length (l - length (m)), single segment  length
   // fluid viscosity (nu - dynamic viscosity)
