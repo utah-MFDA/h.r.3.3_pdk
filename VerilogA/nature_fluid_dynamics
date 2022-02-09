@@ -16,6 +16,12 @@ nature Concentration;
      abstol = 1;
 endnature
 
+nature MassFlow;
+    units = "kg/s";
+    access = "M";
+    abstol = 1;
+endnature
+
 discipline fluidDynamics;
      domain continuous;
      potential Pressure;
@@ -25,4 +31,9 @@ enddiscipline
 discipline concentration;
     domain continuous;
     flow Concentration;
+enddiscipline
+
+discipline massflow;
+    domain continuous;
+    flow  MassFlow;
 enddiscipline
