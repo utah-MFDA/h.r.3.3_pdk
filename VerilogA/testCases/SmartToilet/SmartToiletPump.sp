@@ -18,7 +18,8 @@ X7 D1 D2 Di Dout cD1 cD2 cDout TJunction L=0.0001
 
 X8 Dout E1 cDout cE1 SerpentineChannel
 
-X9 E1 E2 Ei 0 cE1 cE2 cEout TJunction L=0.0001
+X9 E1 E2 Ei Eout cE1 cE2 cEout TJunction L=0.0001
+X10 Eout F cEout cF SerpentineChannel
 
 .tran 0.01ms 8ms
 
