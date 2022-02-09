@@ -1,9 +1,9 @@
 *serpentine channel test
 
-.hdl ./../../../SerpentineChannel.va
-.hdl ./../../../RectangularChannel.va
-.hdl ./../../../TJunction.va
-.hdl ./../../../PressurePump.va
+.hdl ./../../SerpentineChannel.va
+.hdl ./../../RectangularChannel.va
+.hdl ./../../TJunction.va
+.hdl ./../../PressurePump.va
 .options post=1
 
 X1 A 0 cA cD1 PressurePump pressure=34450 chem_concentration=0
