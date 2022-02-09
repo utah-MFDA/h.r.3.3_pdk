@@ -13,6 +13,7 @@ parameter real H=1.0, W=1.0, L=1.0, nu=0.8891;
 fluidDynamics fl_port_1, fl_port_2;
 //electrical p,n;
 inout fl_port_1, fl_port_2;
+branch (fl_port_1, fl_port_2) res;
 
 // hydrodynamic resistance calculation
 real R_hyd = (12*nu*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
