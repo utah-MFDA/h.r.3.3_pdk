@@ -1,19 +1,16 @@
 *serpentine channel test
 
 .hdl ./../../../SerpentineChannel.va
+.hdl ./../../../PressurePump.va
+
 .options post=1
-X1 pA 0 cA cD1 SerpentineChannel
-
-*input pressure
-VS pA 0 PWL(0 34450V 8ms 34450V)
-
-*input concentration
-IcA cA cD1 PWL(0s 1 8ms 1)
+X1 A cA PressurePump pressure=34450
+X2 A 0 cA cD1 SerpentineChannel
 
 .tran 0.01ms 8ms
-.probe tran I(X1.c_in)
-.probe tran I(X1.c_out)
-.print tran I(X1.c_in)
-.print tran I(X1.c_out)
+.probe tran I(X1.m_in)
+.probe tran I(X1.m_out)
+.probe tran I(X2.m_in)
+.probe tran I(X2.m_out)
 
 .end
