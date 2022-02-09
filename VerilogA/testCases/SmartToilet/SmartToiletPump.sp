@@ -21,5 +21,10 @@ X8 Dout E1 cDout cE1 SerpentineChannel
 X9 E1 E2 Ei 0 cE1 cE2 cEout TJunction L=0.0001
 
 .tran 0.01ms 8ms
+.probe tran I(X1.fl_in)
+.probe tran I(X2.fl_in)
+.probe tran I(X3.fl_in)
+
+.probe tran I(X9.fl_out)
 
 .end
