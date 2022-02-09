@@ -27,6 +27,6 @@ X10 Eout F cEout cF SerpentineChannel
 .probe tran I(X5.fl_in)
 .probe tran I(X6.fl_in)
 
-.probe tran I(X9.fl_out)
+.probe tran I(X10.fl_out)
 
 .end
