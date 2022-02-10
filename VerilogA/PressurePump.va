@@ -3,7 +3,7 @@
 // Pressure pump source
 // Acts like a constant voltage source
 
-`include "nature_fluid_dynamics.vams"
+`include "nature_fluid_dynamics"
 
 module PressurePump(fl_out, m_out);
 //module PressurePump(out1, gnd, c_out, c_outg);
