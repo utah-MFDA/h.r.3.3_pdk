@@ -1,5 +1,5 @@
 // Sophia Nielsen, sophi.nieslen@utah.edu
-`include "nature_fluid_dynamics.vams"
+`include "nature_fluid_dynamics"
 //`include "disciplines.vams"
 
 // preset channel cross section
