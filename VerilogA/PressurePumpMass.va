@@ -19,8 +19,6 @@ parameter real pressure=10;
 //parameter real weight_concentration = 1.0;
 parameter real mass_flow_in = 1.0;
 
-
-
 //TODO implment ramprate for pump
 
 analog begin
