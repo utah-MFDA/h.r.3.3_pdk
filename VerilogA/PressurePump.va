@@ -8,10 +8,9 @@
 module PressurePump(fl_out, c_out);
 //module PressurePump(out1, gnd, c_out, c_outg);
 
-output fl_out, m_out;
+output fl_out, c_out;
 fluidDynamics fl_out;
-//concentration c_out;
-massflow m_out;
+concentration c_out;
 
 // pressure of source
 parameter real pressure=10;
