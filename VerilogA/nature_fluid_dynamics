@@ -41,6 +41,6 @@ discipline concentration;
 enddiscipline
 
 discipline massflow;
-    domain continuous;
+    domain discete;
     flow MassFLow;
 enddiscipline
