@@ -1,7 +1,7 @@
 *serpentine channel test
 
-.hdl ./../../../SerpentineChannelMass.va
-.hdl ./../../../PressurePumpMass.va
+.hdl ./../../../SerpentineChannel.va
+.hdl ./../../../PressurePump.va
 
 .options post=1
 X1 A cA PressurePumpMass pressure=34450
