@@ -21,8 +21,8 @@ IcB cB cD2 PWL(0s 0 8ms 0)
 .probe tran I(X1.c_out)
 .probe tran I(X2.c_in)
 .probe tran I(X2.c_out)
-.probe tran I(X1.c_1)
-.probe tran I(X1.c_2)
-.probe tran I(X1.c_out)
+.probe tran I(X3.c_1)
+.probe tran I(X3.c_2)
+.probe tran I(X3.c_out)
 
 .end
