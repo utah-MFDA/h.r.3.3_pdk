@@ -99,8 +99,9 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,m_1,m_2,m_out);
     // calculate and assign concentration
     //C(c_out) <+ (C(<c_1>)*flow_rate_factor_1 + C(<c_2>)*flow_rate_factor_2)/(flow_rate_factor_1 + flow_rate_factor_2);
 
-    M(m_out) <+  M(<m_1>) + M(<m_2>);
+    //M(m_out) <+  M(<m_1>) + M(<m_2>);
   end
 
+  assign m_out = ~(m_1 + m_2);
 
 endmodule

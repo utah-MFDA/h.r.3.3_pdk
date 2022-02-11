@@ -24,9 +24,10 @@ parameter real mass_flow_in = 1.0;
 
 analog begin
     P(fl_out) <+ pressure;
-    //C(c_out) <+ chem_concentration;
-    M(m_out) <+ mass_flow_in;
+    //C(c_out) <+ chem_concentration
     //K(c_out)<+ 1;
 end
+
+assign m_out =  ~mass_flow_in;
 
 endmodule
