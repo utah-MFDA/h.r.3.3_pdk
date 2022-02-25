@@ -1,17 +1,21 @@
 * pressure test,
 .hdl ./../../TJunction.va
+.hdl ./../../PressurePump.va
 
 .options post=1
-X1 p1 p2 0 c1 c2 co TJunction
+X1 D1 PressurePump pressure=34450
+X2 D2 PressurePump pressure=34450
 
-* pressure tests
-VS1 p1 0 PWL(0 200V 8ms 200V)
-VS2 p2 0 PWL(0 300V 8ms 300V)
-
-* concentration implementation
-Vc1 c1 0 PWL(0s 100V 8ms 100V)
-Vc2 c2 0 PWL(0s 100V 8ms 100V)
-
+X3 D1 D2 Di 0 TJunction L=0.0001
 
 .tran 0.01ms 8ms
+
+.probe tran I(X1.fl_out)
+.probe tran I(X2.fl_out)
+
+.probe tran I(X3.fl_1)
+.probe tran I(X3.fl_2)
+.probe tran I(X3.fl_internal)
+.probe tran I(X3.fl_out)
+
 .end
