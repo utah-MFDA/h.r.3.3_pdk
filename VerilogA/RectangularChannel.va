@@ -66,6 +66,4 @@ module RectangularChannel (fl_in, fl_out);
     //M(m_out) <+ M(m_in);
   end
 
-  assign m_out = ~m_in;
-
 endmodule
