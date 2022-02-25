@@ -6,13 +6,12 @@
 
 `include "nature_fluid_dynamics"
 
-module PressurePump(fl_out, m_out);
+module PressurePump(fl_out);
 //module PressurePump(out1, gnd, c_out, c_outg);
 
-output fl_out, m_out;
+output fl_out;
 fluidDynamics fl_out;
 //concentration c_out;
-massflow m_out;
 
 // pressure of source
 parameter real pressure=10;
@@ -24,10 +23,6 @@ parameter real mass_flow_in = 1.0;
 
 analog begin
     P(fl_out) <+ pressure;
-    //C(c_out) <+ chem_concentration
-    //K(c_out)<+ 1;
 end
-
-assign m_out =  ~mass_flow_in;
 
 endmodule

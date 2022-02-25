@@ -3,7 +3,7 @@
 
 // TJunction with two inputs
 
-module TJunction(fl_1,fl_2,fl_internal,fl_out,m_1,m_2,m_out);
+module TJunction(fl_1,fl_2,fl_internal,fl_out);
   // input and output ports of channel
 
   // fl_1 - first input port for pressure and flow, conservative
@@ -13,14 +13,12 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,m_1,m_2,m_out);
   // c_1 - frist input port for concentration, potential
   // c_2 - second input port for concentration, potential
   // c_3 - output port for concentration, potential
-  input fl_1, fl_2, m_1, m_2;
+  input fl_1, fl_2;
   inout fl_internal;
-  output fl_out, m_out;
+  output fl_out;
 
   // define port disciplines
   fluidDynamics fl_1, fl_2, fl_out, fl_internal;
-  //concentration c_1, c_2, c_out;
-  massflow m_1, m_1, m_out;
 
   // define branches, i.e. connections between ports
   branch (fl_1, fl_internal) fl_branch_1;
@@ -101,7 +99,5 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,m_1,m_2,m_out);
 
     //M(m_out) <+  M(<m_1>) + M(<m_2>);
   end
-
-  assign m_out = ~(m_1 + m_2);
 
 endmodule
