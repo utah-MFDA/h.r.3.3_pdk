@@ -22,7 +22,6 @@ module RectangularChannel (fl_in, fl_out);
 
   // declared  wiith fluidDynamics discipline
   fluidDynamics fl_in, fl_out;
-  massflow m_in, m_out;
 
   // channel length (l - length (m))
   // fluid viscosity (nu - dynamic viscosity)
