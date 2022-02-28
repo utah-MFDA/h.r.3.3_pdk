@@ -1,10 +1,12 @@
-Ra = 30770.4;
-Rb = 3840.1;
+Rch = 474.5706000000002;
+
+Ra = 30296.58710400001 + Rch;
+Rb = 3369.4512600000007 + Rch;
+
+%% resistence values below not verified
 Rc = 4201600.56;
 Rd = 31244.21;
 Re = 30770.4;
-
-Rch = 473.81;
 
 Pa = 34450;
 
@@ -18,16 +20,32 @@ A_m = [[Rch, 0, 0, 1];
 B_m = [Pa; Pa; 0; 0];
 
 x_m = linsolve(A_m, B_m)
-%% Zones 1 and  2  test
+%% Simplified Zones 1 and 2 test
+A12 = [[Ra, 0, 0, 1];
+       [0, Rb, 0, 1];
+       [0, 0, Rch, -1];
+       [1, 1, -1, 0]
+       ];
+   
+B12 = [Pa; Pa; 0; 0];
 
-A1 = [[Ra, 0, 0, 1];
-    [0, Rb, 0, 1];
-    [0, 0, Rch, -1];
-    [1, 1, -1, 0]];
+x12 = linsolve(A12, B12)
 
-B1 = [Pa; Pa; 0; 0];
+%% Zones 1 and  2  test complex
 
-x1 = linsolve(A1, B1)
+% A12 = [[Ra,  0, 0,  1, 0, 0];
+%        [0,  Rb, 0,  0, 1, 0];
+%        [Rch, 0, 0, -1, 0, 1];
+%        [0, Rch, 0, 0, -1, 1];
+%        [0, 0, Rch, 0,  0, -1];
+%        [1, 1, -1, 0, 0, 0];
+%        ];
+% 
+% B12 = [Pa; Pa; 0; 0; 0; 0];
+% 
+% x12 = linsolve(A12, B12)
+
+%% Full chip test
 
 A = [[Ra, 0, 0, 0, 0, 1, 0];
     [0, Rb, 0, 0, 0, 1, 0];
@@ -40,3 +58,9 @@ A = [[Ra, 0, 0, 0, 0, 1, 0];
 B = [Pa; Pa; Pa; 0; 0; 0; 0];
 
 %linsolve(A, B)
+
+%% percent error
+
+actual = [1, 7.9, 8.9, 4201];
+simulated = [26.1, 27.7, 53.8, 22700];
+error = (abs(actual - simulated)./actual).*100

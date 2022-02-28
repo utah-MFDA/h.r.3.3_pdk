@@ -3,7 +3,7 @@
 .hdl ./../../../SerpentineChannel.va
 .hdl ./../../../RectangularChannel.va
 .hdl ./../../../TJunction.va
-.options post=1
+.options POST_VERSION=2001
 X1 pA pD1 cA cD1 SerpentineChannel
 X2 pB pD2 cB cD2 RectangularChannel L=0.00071
 X3 pA pB pi 0 cD1 cD2 cDout TJunction L=0.0001

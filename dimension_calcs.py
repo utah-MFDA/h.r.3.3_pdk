@@ -1,9 +1,13 @@
 import math
 
-def straight_channel_resistence(L, nu, width_pixels, hieght_layers):
+def straight_channel_resistence(L, nu):
     microns_per_pixel = 7.6
     microns_per_layer = 10
     meters_per_micron = 0.000001
+
+    # for cross section 1
+    width_pixels = 14;
+    hieght_layers = 8;
 
     W = width_pixels*microns_per_pixel*meters_per_micron;
     H = hieght_layers*microns_per_layer*meters_per_micron;
@@ -84,5 +88,6 @@ def flow_rate(R_hyd, del_P):
     print(flow_rate)
     return flow_rate
 
-serpentine_channel_resistence(0.013619199999999998, 0.0010016)
-footprint_from_resistence(4165780, 0.0010016, 14, 8)
+serpentine_channel_resistence(0.001064, 0.0010016)
+straight_channel_resistence(0.0001, 0.0010016)
+straight_channel_resistence(0.00071, 0.0010016)
