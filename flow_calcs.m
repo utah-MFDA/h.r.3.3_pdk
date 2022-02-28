@@ -63,4 +63,4 @@ B = [Pa; Pa; Pa; 0; 0; 0; 0];
 
 actual = [1, 7.9, 8.9, 4201];
 simulated = [26.1, 27.7, 53.8, 22700];
-error = (abs(actual - simulated)./actual).*100
+error = (abs(actual - simulated)./actual).*100;
