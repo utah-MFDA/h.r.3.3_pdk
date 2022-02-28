@@ -18,4 +18,14 @@ X3 D1 D2 Di 0 TJunction L=0.0001
 .probe tran I(X3.fl_internal)
 .probe tran I(X3.fl_out)
 
+.print tran I(X1.fl_out)
+.print tran I(X2.fl_out)
+
+.print tran I(X3.fl_1)
+.print tran I(X3.fl_2)
+.print tran I(X3.fl_internal)
+.print tran I(X3.fl_out)
+
+.print tran V(X3.fl_internal)
+
 .end
