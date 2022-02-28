@@ -2,7 +2,7 @@
 .hdl ./../../TJunction.va
 .hdl ./../../PressurePump.va
 
-.options POST_VERSION=2001 RELTOL=1e-20
+.options POST_VERSION=2001 RELTOL=1e-20 KCLTEST=1
 X1 D1 PressurePump pressure=34450
 X2 D2 PressurePump pressure=34450
 
