@@ -2,7 +2,7 @@
 .hdl ./../../TJunction.va
 .hdl ./../../PressurePump.va
 
-.options POST_VERSION=2001 RUNLVL=6
+.options POST_VERSION=2001 ABSTOL=1e-25
 X1 D1 PressurePump pressure=34450
 X2 D2 PressurePump pressure=34450
 
