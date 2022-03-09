@@ -2,7 +2,6 @@
 `include "nature_fluid_dynamics"
 
 // TJunction with two inputs
-
 module TJunction(fl_1,fl_2,fl_internal,fl_out);
   // input and output ports of channel
 
@@ -14,7 +13,7 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out);
   // c_2 - second input port for concentration, potential
   // c_3 - output port for concentration, potential
   input fl_1, fl_2;
-  inout fl_internal;
+  inout fl_internal;// change this declaration
   output fl_out;
 
   // define port disciplines
@@ -73,7 +72,7 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out);
     // flow/pressure for input ports
     Q(fl_1,fl_internal) <+ P(fl_1,fl_internal)/R_ch;
     Q(fl_2,fl_internal) <+ P(fl_2,fl_internal)/R_ch;
-    Q(fl_internal,fl_out) <+ P(fl_internal,fl_out)/R_ch;
+    Q(fl_internal,fl_out) <+ P(fl_internal,fl_out)/R_ch; //simplify
     // flow/ pressure for output ports
     //Q(fl_out) <+ 2*P(fl_out)/R_ch;
 

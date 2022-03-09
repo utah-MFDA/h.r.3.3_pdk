@@ -10,6 +10,11 @@ Re = 30770.4;
 
 Pa = 34450;
 
+%% double serpentine test
+
+Q_s = Pa/(2*(Ra-Rch))
+Pb_s = Q_s*(Ra-Rch)
+
 %% Mixer test
 
 A_m = [[Rch, 0, 0, 1];
@@ -61,6 +66,6 @@ B = [Pa; Pa; Pa; 0; 0; 0; 0];
 
 %% percent error
 
-actual = [1, 7.9, 8.9, 4201];
-simulated = [26.1, 27.7, 53.8, 22700];
-error = (abs(actual - simulated)./actual).*100;
+actual = [0.5685, 17225];
+simulated = [0.569, 17200];
+error = (abs(actual - simulated)./actual).*100
