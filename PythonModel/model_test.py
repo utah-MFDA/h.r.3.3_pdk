@@ -1,25 +1,29 @@
 import mf_components as mf
 
-# define node objects
-n1 = mf.Node("node 1")
-n2 = mf.Node("node 2")
-n3 = mf.Node("node 3")
+# instantiate Model
+model = mf.Model()
+
+# add nodes to model
+model.addNodes(3)
 
 # set initial conditions
-n1.setPressure(34450)
-#n1.setFlow(10)
-n3.setPressure(0)
+model.setNodePressure(0, 34450)
+#model.setNodeFlow(0, 10)
+model.setNodePressure(2, 0)
 
-system_unknowns = n1.detUnknowns() + n2.detUnknowns() + n3.detUnknowns()
-print(system_unknowns)
+model.findSysUnknowns()
 
 # define components
-sc_1 = mf.StraightChannel(0.0010016, 0.00071, n1, n2)
-sc_2 = mf.StraightChannel(0.0010016, 0.00071, n2, n3)
+model.addStraightChannel([0],[1], 0.00071, 0.0010016)
+model.addStraightChannel([1],[2], 0.00071, 0.0010016)
+model.dispComp()
+model.dispSysValues()
 
-#calc calcValues
-#sc_1.calcValues()
-#sc_2.calcValues()
+# generate system of equations
+model.genSysEq()
 
-n1.dispValues()
-n2.dispValues()
+
+# solve system of equations
+
+model.solveSysEq()
+model.dispSysValues()
