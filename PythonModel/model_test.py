@@ -7,23 +7,17 @@ model = mf.Model()
 model.addNodes(3)
 
 # set initial conditions
-model.setNodePressure(0, 34450)
-#model.setNodeFlow(0, 10)
+#model.setNodePressure(0, 34450)
+model.setNodeFlow(0, 10)
 model.setNodePressure(2, 0)
-
-model.findSysUnknowns()
 
 # define components
 model.addStraightChannel([0],[1], 0.00071, 0.0010016)
 model.addStraightChannel([1],[2], 0.00071, 0.0010016)
-model.dispComp()
-model.dispSysValues()
 
 # generate system of equations
 model.genSysEq()
 
-
 # solve system of equations
 
-model.solveSysEq()
-model.dispSysValues()
+model.solveModel()

@@ -88,7 +88,7 @@ class StraightChannel(Component):
 
     def calcFlow(self):
         self.nodes_in[0].setFlow((self.nodes_in[0].pressure-self.nodes_out[0].pressure)/self.r_hyd)
-        self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+
 
     def calcValues(self):
         if self.node_in.flow ==  "unknown":
@@ -137,31 +137,106 @@ class StraightChannel(Component):
         return(eq)
 
     def genEq(self, eq_id):
-        #print("here")
-        if self.nodes_in[0].flow != "unknown":
-            if self.nodes_in[0].pressure != "unknown":
-                if self.node_out[0].pressure != "unknown":
-                    self.nodes_out[0].setFlow(self.nodes_in[0].flow)
-        elif self.nodes_out[0].flow != "unknown":
-                if self.nodes_in[0].pressure != "unknown":
-                    if self.node_out[0].pressure != "unknown":
-                        self.nodes_in[0].setFlow(self.nodes_out[0].flow)
-        elif self.nodes_in[0].pressure != "unknown":
-            if self.nodes_out[0].pressure != "unknown":
-                self.calcFlow()
-                return("nodes solved")
-            else:
-                eq = self.genEqPressInKnown(eq_id)
-                return(eq)
-        elif self.nodes_out[0].pressure != "unknown":
-            if self.nodes_in[0].flow != "unknown":
-                self.calcPressureIn()
-                return("nodes solved")
-            else:
-                eq = self.genEqPressOutKnown(eq_id)
-                return(eq)
+        val = "case not set"
+        case_id = [0,0,0,0]
+        p_in = self.nodes_in[0].pressure
+        p_out = self.nodes_out[0].pressure
+        f_in = self.nodes_in[0].flow
+        f_out = self.nodes_out[0].flow
+
+        # set case id (p_in, f_in, p_out, f_out)
+        # 1 = known, 0 = unknown
+        if p_in != "unknown":
+            case_id[0] = 1
+        if f_in != "unknown":
+            case_id[1] = 1
+        if p_out != "unknown":
+            case_id[2] = 1
+        if f_out != "unknown":
+            case_id[2]= 1
+
+        if case_id == [1,1,1,1]:
+            val = "nodes solved"
+        # pressure in unknown
+        elif case_id == [0,1,1,1]:
+            self.calcPressureIn()
+            val = "nodes solves"
+        # flow in unknown
+        elif case_id == [1,0,1,1]:
+            self.nodes_in[0].setFlow(self.nodes_out[0].flow)
+            val = "nodes solved"
+        # pressure out unknown
+        elif case_id == [1,1,0,1]:
+            self.calcPressureOut()
+            val = "nodes solved"
+        # flow out unknown
+        elif case_id == [1,1,1,0]:
+            self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+            val = "nodes solved"
+        elif case_id == [0,0,1,1]:
+            self.nodes_in[0].setFlow(self.nodes_out[0].flow)
+            self.calcPressureIn()
+            val = "nodes solves"
+        elif case_id == [0,1,0,1]:
+            val = "case not defined " + str(case_id)
+        elif case_id == [0,1,1,0]:
+            self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+            self.calcPressureIn()
+            val = "nodes solves"
+        elif case_id == [1,0,0,1]:
+            self.nodes_in[0].setFlow(self.nodes_out[0].flow)
+            self.calcPressureOut()
+            val = "nodes solved"
+        elif case_id == [1,0,1,0]:
+            self.calcFlow()
+            self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+            val = "nodes solved"
+        elif case_id == [1,1,0,0]:
+            self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+            self.calcPressureOut()
+            val = "nodes solved"
+        elif case_id == [1,0,0,0]:
+            val = self.genEqPressInKnown(eq_id)
+        elif case_id == [0,1,0,0]:
+            val = "case not defined " + str(case_id)
+        elif case_id == [0,0,1,0]:
+            val = self.genEqPressOutKnown(eq_id)
+        elif case_id == [0,0,0,1]:
+            vval = "case not defined " + str(case_id)
+        elif case_id == [0,0,0,0]:
+            val = "case not defined " + str(case_id)
         else:
-            return("case not defined")
+            val = "case does not exist"
+
+        # if self.nodes_in[0].flow != "unknown":
+        #     if self.nodes_in[0].pressure != "unknown":
+        #         if self.nodes_out[0].pressure != "unknown":
+        #             if self.nodes_in[0].pressure != "unknown":
+        #                 self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+        #                 val = "nodes solved"
+        #             else:
+        #                 self.calcFlow()
+        #                 val = "nodes solved"
+        # elif self.nodes_out[0].flow != "unknown":
+        #         if self.nodes_in[0].pressure != "unknown":
+        #             if self.nodes_out[0].pressure != "unknown":
+        #                 self.nodes_in[0].setFlow(self.nodes_out[0].flow)
+        #                 val = "nodes solved"
+        # elif self.nodes_in[0].pressure != "unknown":
+        #     if self.nodes_out[0].pressure != "unknown":
+        #         self.calcFlow()
+        #         val = "nodes solved"
+        #     else:
+        #         val = self.genEqPressInKnown(eq_id)
+        # elif self.nodes_out[0].pressure != "unknown":
+        #     if self.nodes_in[0].flow != "unknown":
+        #         self.calcPressureIn()
+        #         val  = "nodes solved"
+        #     else:
+        #         val = self.genEqPressOutKnown(eq_id)
+        # else:
+        #     val = "case not defined"
+        return(val)
 
 #TODO
 class SerpentineChannel(object):
@@ -193,18 +268,15 @@ class SerpentineChannel(object):
         self.r_hyd = (12*self.eta*self.len)/(1 - 0.63*(hieght_meters/width_meters)) * 1/(hieght_meters**3/width_meters)
 
     def calcPressureOut(self):
+        # calculated based on flow in
         self.node_out.pressure = float(self.node_in.pressure - self.node_in.flow*self.r_hyd)
 
-        #self.node_out.flow = self.node_in.flow
-
     def calcPressureIn(self):
+        # calculated based on flow in
         self.node_in.pressure = float(self.node_out.pressure + self.node_in.flow*self.r_hyd)
-
-        #self.node_out.flow = self.node_in.flow
 
     def calcFlow(self):
         self.node_in.flow = float((self.node_in.pressure-self.node_out.pressure)/self.r_hyd)
-
 
     def calcValues(self):
         if self.node_in.flow ==  "unknown":
@@ -255,36 +327,40 @@ class Model(object):
     def findSysUnknowns(self):
         self.unknowns = []
         for node in self.node_list:
-            self.unknowns.append(node.detUnknowns())
+            self.unknowns += node.detUnknowns()
         for comp in self.component_list:
             comp.getCompUnknowns()
 
         self.component_list.sort(key=lambda x: x.unknowns)
 
     def genSysEq(self):
+        self.equation_count = 0
         self.findSysUnknowns()
 
         a_dict = {}
         b_dict = {}
 
         for comp in self.component_list:
+            print("solving component: ", comp.comp_id, comp.component_name)
             comp_eqs = comp.genEq(self.equation_count)
-            if comp_eqs != "nodes solved":
-                comp_a_dict = comp_eqs[0]
-                comp_b_dict = comp_eqs[1]
+            if isinstance(comp_eqs, str) :
+                print("exception:", comp_eqs)
+                self.exception = True
+            else:
+                if comp_eqs != "nodes solved":
+                    comp_a_dict = comp_eqs[0]
+                    comp_b_dict = comp_eqs[1]
 
-                self.equation_count += comp_eqs[2]
-                self.nodes_calced += comp_eqs[3]
+                    self.equation_count += comp_eqs[2]
+                    self.nodes_calced += comp_eqs[3]
 
-                a_dict |= comp_a_dict
-                b_dict |= comp_b_dict
+                    a_dict |= comp_a_dict
+                    b_dict |= comp_b_dict
 
-        self.nodes_calced = set(self.nodes_calced)
-        print(self.nodes_calced)
+        self.nodes_calced = list(set(self.nodes_calced))
 
         A = np.zeros((self.equation_count,len(self.nodes_calced)*2))
         B = np.zeros(self.equation_count)
-
 
         for node in self.nodes_calced:
             nodes_calced_id = 0
@@ -295,7 +371,7 @@ class Model(object):
             nodes_calced_id += 1
 
         for key in b_dict.keys():
-            B[key:key+1] = b_dict[key]
+            B[key] = b_dict[key]
 
         self.A = A
         self.B = B
@@ -316,9 +392,11 @@ class Model(object):
     def solveModel(self):
         self.findSysUnknowns()
 
-        while len(self.unknowns) > 0:
-            self.genSysEq(
-            )
-            self.solveSysEq()
+        self.exception = False
+        while len(self.unknowns) > 0 & self.exception == False:
+            self.genSysEq()
+            if self.equation_count > 0:
+                self.solveSysEq()
             self.findSysUnknowns()
-            print(len(self.unknowns))
+
+        self.dispSysValues()
