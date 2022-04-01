@@ -127,7 +127,6 @@ class StraightChannel(Component):
         node_in_id = self.nodes_in[0].node_id
 
         a_dict[(eq_id, node_in_id)] = np.array([1, -self.r_hyd])
-
         b_dict[eq_id] = np.array([self.nodes_out[0].pressure])
 
         nodes_calced = [self.nodes_in[0]]
@@ -135,6 +134,19 @@ class StraightChannel(Component):
 
         eq = [a_dict, b_dict, num_eq, nodes_calced]
         return(eq)
+
+    def genEqFlowKnown(self, eq_id, flow):
+        # generate equations for when flow is unknown
+
+        a_dict = {}
+        b_dict = {}
+
+        node_in_id = self.nodes_in[0].node_id
+        node_out_id = self.nodes_out[0].node_id
+
+        a_dict[(eq_id, node_in_id)] = np.array([1, 0])
+        b_dict[eq_id] = np.array([self.r_hyd*flow])
+
 
     def genEq(self, eq_id):
         val = "case not set"
@@ -176,13 +188,13 @@ class StraightChannel(Component):
         elif case_id == [0,0,1,1]:
             self.nodes_in[0].setFlow(self.nodes_out[0].flow)
             self.calcPressureIn()
-            val = "nodes solves"
+            val = "nodes solved"
         elif case_id == [0,1,0,1]:
             val = "case not defined " + str(case_id)
         elif case_id == [0,1,1,0]:
             self.nodes_out[0].setFlow(self.nodes_in[0].flow)
             self.calcPressureIn()
-            val = "nodes solves"
+            val = "nodes solved"
         elif case_id == [1,0,0,1]:
             self.nodes_in[0].setFlow(self.nodes_out[0].flow)
             self.calcPressureOut()
@@ -198,7 +210,9 @@ class StraightChannel(Component):
         elif case_id == [1,0,0,0]:
             val = self.genEqPressInKnown(eq_id)
         elif case_id == [0,1,0,0]:
-            val = "case not defined " + str(case_id)
+            #val = "case not defined " + str(case_id)
+            self.nodes_out[0].setFlow(self.nodes_in[0].flow)
+            val = "nodes solved"
         elif case_id == [0,0,1,0]:
             val = self.genEqPressOutKnown(eq_id)
         elif case_id == [0,0,0,1]:
@@ -343,9 +357,10 @@ class Model(object):
         for comp in self.component_list:
             print("solving component: ", comp.comp_id, comp.component_name)
             comp_eqs = comp.genEq(self.equation_count)
-            if isinstance(comp_eqs, str) :
-                print("exception:", comp_eqs)
-                self.exception = True
+            if isinstance(comp_eqs, str):
+                if comp_eqs != "nodes solved":
+                    print("exception:", comp_eqs)
+                    self.exception = True
             else:
                 if comp_eqs != "nodes solved":
                     comp_a_dict = comp_eqs[0]

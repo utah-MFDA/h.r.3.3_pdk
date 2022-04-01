@@ -19,5 +19,4 @@ model.addStraightChannel([1],[2], 0.00071, 0.0010016)
 model.genSysEq()
 
 # solve system of equations
-
 model.solveModel()
