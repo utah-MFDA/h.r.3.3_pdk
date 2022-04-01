@@ -9,3 +9,4 @@ sxcmd.*
 *.ic*
 *MOSFET_Example*
 *sx_crash.sx
+*.nfs*
