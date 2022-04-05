@@ -6,28 +6,26 @@
 .hdl ./../../../PressurePump.va
 .options post=1
 
-X1 A 0 cA cD1 PressurePump pressure=34450 chem_concentration=1
-X2 B 0 cB cD2 PressurePump pressure=34450 chem_concentration=0
+X1 A PressurePump pressure=34450
+X2 B PressurePump pressure=34450
 
-X3 A D1 cA cD1 SerpentineChannel
-X4 B D2 cB cD2 RectangularChannel L=0.00071
+X3 A D1 SerpentineChannel
+X4 B D2 RectangularChannel L=0.00071
 
-X5 D1 D2 Di 0 cD1 cD2 0 TJunction L=0.0001
+X5 D1 D2 Di 0 TJunction L=0.0001
 
 .tran 0.01ms 8ms
 
-.prbe  tran I(cD1)
+.probe tran I(X1.fl_out)
+.probe tran I(X2.fl_out)
 
-.probe tran I(X1.c_out)
-.probe tran I(X2.c_out)
+.probe tran I(X3.fl_in)
+.probe tran I(X3.fl_out)
+.probe tran I(X4.fl_in)
+.probe tran I(X4.fl_out)
 
-.probe tran I(X3.c_out)
-.probe tran I(X4.c_out)
-
-.probe tran I(X5.c_1)
-.probe tran I(X5.c_2)
-.probe tran I(X5.c_out)
 .probe tran I(X5.fl_1)
 .probe tran I(X5.fl_2)
-
+.probe tran I(X5.fl_internal)
+.probe tran I(X5.fl_out)
 .end
