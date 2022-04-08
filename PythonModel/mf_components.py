@@ -1,3 +1,5 @@
+# Sophia Nielsen, sophi.nielsen@utah.edu
+
 import numpy as np
 
 class Node(object):
@@ -50,35 +52,17 @@ class Component(object):
 
 #class Channel(Component)
 
-class StraightChannel(Component):
+class Channel(Component):
     """docstring for straight_channel."""
 
     def __init__(self, comp_id, nodes_in, nodes_out, len, eta):
         super().__init__(comp_id, nodes_in, nodes_out)
 
-        self.len = len
         self.eta = eta
 
         # node connects added when component defined
         self.nodes_in[0].connects_out.append(self.nodes_out[0])
         self.nodes_out[0].connects_in.append(self.nodes_in[0])
-
-        self.component_name = "Straight Channel"
-
-        self.calcResistence()
-
-    def calcResistence(self):
-        width_pixels = 14
-        hieght_layers = 8
-
-        microns_per_pixel = 7.6
-        microns_per_layer = 10
-        meters_per_micron = 0.000001
-
-        width_meters = width_pixels*microns_per_pixel*meters_per_micron
-        hieght_meters = hieght_layers*microns_per_layer*meters_per_micron
-
-        self.r_hyd = (12*self.eta*self.len)/(1 - 0.63*(hieght_meters/width_meters)) * 1/(hieght_meters**3/width_meters)
 
     def calcPressureOut(self):
         self.nodes_out[0].setPressure(self.nodes_in[0].pressure - self.nodes_in[0].flow*self.r_hyd)
@@ -252,20 +236,13 @@ class StraightChannel(Component):
         #     val = "case not defined"
         return(val)
 
-#TODO
-class SerpentineChannel(object):
-    """docstring for straight_channel."""
+class StraightChannel(Channel):
+    def __init__(self, comp_id, nodes_in, nodes_out, len, eta):
+        super().__init__(comp_id, nodes_in, nodes_out, len, eta)
 
-    def __init__(self, len, eta, node_in, node_out):
         self.len = len
-        self.eta = eta
-        self.node_in = node_in
-        self.node_out = node_out
 
-        # node connects added when component defined
-        self.node_in.connects_out.append(self.node_out)
-        self.node_out.connects_in.append(self.node_in)
-
+        self.component_name = "Straight Channel"
         self.calcResistence()
 
     def calcResistence(self):
@@ -280,24 +257,42 @@ class SerpentineChannel(object):
         hieght_meters = hieght_layers*microns_per_layer*meters_per_micron
 
         self.r_hyd = (12*self.eta*self.len)/(1 - 0.63*(hieght_meters/width_meters)) * 1/(hieght_meters**3/width_meters)
+#TODO
+class SerpentineChannel(Channel):
+    """docstring for straight_channel."""
 
-    def calcPressureOut(self):
-        # calculated based on flow in
-        self.node_out.pressure = float(self.node_in.pressure - self.node_in.flow*self.r_hyd)
+    def __init__(self, comp_id, nodes_in, nodes_out, footprint_width, eta):
 
-    def calcPressureIn(self):
-        # calculated based on flow in
-        self.node_in.pressure = float(self.node_out.pressure + self.node_in.flow*self.r_hyd)
+        super().__init__(comp_id, nodes_in, nodes_out, len, eta)
 
-    def calcFlow(self):
-        self.node_in.flow = float((self.node_in.pressure-self.node_out.pressure)/self.r_hyd)
+        self.footprint_width = footprint_width
+        self.component_name = "Serpentine Channel"
+        self.calcResistence()
 
-    def calcValues(self):
-        if self.node_in.flow ==  "unknown":
-            self.calcFlow()
-        elif self.node_in.pressure == "unknown":
-            self.calcPressureIn()
-        self.node_out.flow = float(self.node_in.flow)
+    def calcResistence(self):
+
+        microns_per_pixel = 7.6
+        microns_per_layer = 10
+        meters_per_micron = 0.000001
+
+        channel_spacing_pixels = 14
+
+        # for cross section 1
+        width_pixels = 14;
+        hieght_layers = 8;
+
+        channel_spacing = channel_spacing_pixels*microns_per_pixel*meters_per_micron
+
+        width_meters = width_pixels*microns_per_pixel*meters_per_micron
+        hieght_meters = hieght_layers*microns_per_layer*meters_per_micron
+
+        bends = self.footprint_width/(width_meters+channel_spacing)
+
+        self.effective_footprint_width = bends*(width_meters+channel_spacing)
+
+        self.len = bends*self.effective_footprint_width + self.effective_footprint_width
+
+        self.r_hyd = (12*self.eta*self.len)/(1 - 0.63*(hieght_meters/width_meters)) * 1/(hieght_meters**3/width_meters)
 
 class Model(object):
     def __init__(self):
@@ -333,6 +328,17 @@ class Model(object):
         straightChannel = StraightChannel(comp_id, nodes_in, nodes_out, len, eta)
 
         self.component_list.append(straightChannel)
+
+    def addSerpentineChannel(self, node_ids_in, node_ids_out, footprint_width, eta):
+        self.component_count += 1
+        comp_id = self.component_count - 1
+
+        nodes_in = [self.node_list[node_ids_in[0]]]
+        nodes_out = [self.node_list[node_ids_out[0]]]
+
+        serpentineChannel = SerpentineChannel(comp_id, nodes_in, nodes_out, footprint_width, eta)
+
+        self.component_list.append(serpentineChannel)
 
     def dispComp(self):
         for comp in self.component_list:
