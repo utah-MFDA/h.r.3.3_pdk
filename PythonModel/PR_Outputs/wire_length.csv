@@ -1,0 +1,5 @@
+tool net total_wl #pins #vias li1_wl met1_wl met2_wl met3_wl met4_wl met5_wl 
+drt: a_fluid 11.778 2 2 0 2 0 2 4.76 2 7.018 2 0 2 0
+drt: b_fluid 14.946 2 2 0 2 0 2 0.76 2 14.186 2 0 2 0
+drt: out_fluid 87.65 2 4 0 4 33.792 4 0.76 4 53.098 4 0 4 0
+drt: connect0 5.568 2 4 0 4 2.048 4 3.52 4 0 4 0 4 0
