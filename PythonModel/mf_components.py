@@ -1,7 +1,10 @@
 import numpy as np
 
+# Node Class ---------------------------------------------------------------------
+
 class Node(object):
     def __init__(self, node_id):
+        # I think the ID is set to be a number
         self.node_id = node_id
 
         self.pressure = "unknown"
@@ -23,8 +26,10 @@ class Node(object):
         print("Pressure(Pa) ",self.pressure)
         print("Flow(m^3/s) ",self.flow)
 
+
     def detUnknowns(self):
         self.unknowns = []
+        # returns list of node unknowns
         if self.pressure == "unknown":
             self.unknowns.append("node " + str(self.node_id) + " " + "pressure")
         if self.flow == "unknown":
@@ -48,7 +53,7 @@ class Component(object):
 
         self.num_unknowns = len(self.unknowns)
 
-#class Channel(Component)
+#class Channel(Component) ---------------------------------------------------------------------
 
 class StraightChannel(Component):
     """docstring for straight_channel."""
@@ -99,7 +104,7 @@ class StraightChannel(Component):
         self.node_out.setFlow(self.node_in.flow)
 
     def genEqPressInKnown(self, eq_id):
-        #generate equations for when input pressure is known
+        # generate equations for when input pressure is known
         # equations are returned as dictionaries
 
         a_dict = {}
@@ -268,6 +273,7 @@ class SerpentineChannel(object):
 
         self.calcResistence()
 
+    # Calculated the reistance of the channel
     def calcResistence(self):
         width_pixels = 14
         hieght_layers = 8
@@ -323,6 +329,7 @@ class Model(object):
     def setNodeFlow(self, node_id, flow):
         self.node_list[node_id].setFlow(flow)
 
+    # Adds a straight channel object to the list of components
     def addStraightChannel(self, node_ids_in, node_ids_out, len, eta):
         self.component_count += 1
         comp_id = self.component_count - 1
@@ -334,21 +341,30 @@ class Model(object):
 
         self.component_list.append(straightChannel)
 
+    
     def dispComp(self):
         for comp in self.component_list:
             print(comp.component_name, comp.comp_id)
 
+
     def findSysUnknowns(self):
         self.unknowns = []
+        # appends unknowns to list
         for node in self.node_list:
+            
             self.unknowns += node.detUnknowns()
+        
         for comp in self.component_list:
             comp.getCompUnknowns()
 
+        # What does this sort mean?
+        # 
         self.component_list.sort(key=lambda x: x.unknowns)
 
+    # generates system of equations
     def genSysEq(self):
         self.equation_count = 0
+        
         self.findSysUnknowns()
 
         a_dict = {}
@@ -357,18 +373,22 @@ class Model(object):
         for comp in self.component_list:
             print("solving component: ", comp.comp_id, comp.component_name)
             comp_eqs = comp.genEq(self.equation_count)
+            # checks if the comp eq is a string
             if isinstance(comp_eqs, str):
                 if comp_eqs != "nodes solved":
                     print("exception:", comp_eqs)
                     self.exception = True
+            #
             else:
                 if comp_eqs != "nodes solved":
                     comp_a_dict = comp_eqs[0]
                     comp_b_dict = comp_eqs[1]
 
+                    
                     self.equation_count += comp_eqs[2]
                     self.nodes_calced += comp_eqs[3]
 
+                    # Update operator
                     a_dict |= comp_a_dict
                     b_dict |= comp_b_dict
 
