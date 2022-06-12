@@ -286,8 +286,8 @@ class Junction(Component):
         self.calcResistence()
 
     def calcResistence(self):
-        width_meters = self.width_pixels*self.microns_per_pixel*self.meters_per_micron;
-        hieght_meters = self.hieght_layers*self.microns_per_layer*self.meters_per_micron;
+        width_meters = self.width_pixels*self.microns_per_pixel*self.meters_per_micron#;
+        hieght_meters = self.hieght_layers*self.microns_per_layer*self.meters_per_micron#;
 
         self.r_ch = (12*self.eta*self.len)/(1 - 0.63*(hieght_meters/width_meters)) * 1/(hieght_meters**3/width_meters)
 
@@ -571,6 +571,7 @@ class Model(object):
         self.A = A
         self.B = B
 
+    # This does not seem to be used
     def solveSysEq(self):
         self.C = np.linalg.solve(self.A, self.B)
 
