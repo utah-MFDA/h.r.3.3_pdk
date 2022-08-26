@@ -1,0 +1,12 @@
+.hdl
+
+
+
+*netlist
+
+
+
+
+*probes
+
+.probe
