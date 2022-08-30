@@ -9,6 +9,7 @@ module OutletPort (fl_in, c_in);
   concentration c_in;
 
   analog begin
-    Q(fl_in) <+ gnd;
+    P(fl_in) <+ gnd;
+    K(c_in) <+ gnd;
   end
 endmodule

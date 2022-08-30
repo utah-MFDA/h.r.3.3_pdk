@@ -1,9 +1,9 @@
 // Sophia Nielsen, sophi.nieslen@utah.edu
-`include "nature_fluid_dynamics"
+`include "nature_fluid_dynamics.vams"
 
 // TJunction with two inputs
 
-module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
+module TJunction(fl_1, fl_2, fl_out, c_1, c_2, c_out);
   // input and output ports of channel
 
   // fl_1 - first input port for pressure and flow, conservative
@@ -14,20 +14,21 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
   // c_2 - second input port for concentration, potential
   // c_3 - output port for concentration, potential
   input fl_1, fl_2, c_1, c_2;
-  inout fl_internal;
+  //inout fl_internal;
   output fl_out, c_out;
 
   // define port disciplines
-  fluidDynamics fl_1, fl_2, fl_out, fl_internal;
+  fluidDynamics fl_1, fl_2, fl_out;//, fl_internal;
   concentration c_1, c_2, c_out;
 
   // define branches, i.e. connections between ports
+  /*
   branch (fl_1, fl_internal) fl_branch_1;
   branch (fl_2, fl_internal) fl_branch_2;
   branch (fl_internal, fl_out) fl_branch_out;
   branch (c_1, c_out) c_branch_1;
   branch (c_2, c_out) c_branch_2;
-
+  */
   // channel length (l - length (m)), single segment  length
   // fluid viscosity (nu - dynamic viscosity)
   // CROSS_SECTION - 1 for default channel, 2 for small channel
@@ -39,9 +40,9 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
   real width_pixels;
   real hieght_layers;
 
-  real microns_per_pixel = 7.6;
-  real microns_per_layer = 10;
-  real meters_per_micron = 0.000001;
+  real microns_per_pixel = 7.6u;
+  real microns_per_layer = 10u;
+  //real meters_per_micron = 0.000001;
 
   real W;
   real H;
@@ -61,26 +62,28 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
       hieght_layers = 5;
     end
 
-    W = width_pixels*microns_per_pixel*meters_per_micron;
-    H = hieght_layers*microns_per_layer*meters_per_micron;
+    W = width_pixels*microns_per_pixel;
+    H = hieght_layers*microns_per_layer;
 
     // Channel cross section (w - width, h - hieght),
     // resistence of individual channel segment
-    R_ch = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H/W);
+    R_ch = (12*NU*L)/(1 - 0.63*(H/W)) * 1/(H*H*H*W);
   end
 
   analog begin
     // ----- define flow rate behavior --------
     // flow/pressure for input ports
-    Q(fl_1,fl_internal) <+ P(fl_1,fl_internal)/R_ch;
-    Q(fl_2,fl_internal) <+ P(fl_2,fl_internal)/R_ch;
-    Q(fl_internal,fl_out) <+ P(fl_internal,fl_out)/R_ch;
+    //Q(fl_1,fl_internal) <+ P(fl_1,fl_internal)/R_ch;
+    //Q(fl_2,fl_internal) <+ P(fl_2,fl_internal)/R_ch;
+    //Q(fl_internal,fl_out) <+ P(fl_internal,fl_out)/R_ch;
     // flow/ pressure for output ports
     //Q(fl_out) <+ 2*P(fl_out)/R_ch;
 
+    Q(fl_out) <+ Q(fl_1) + Q(fl_2);
     // ----- define concentration behavior ------
     // -set flow rate flow rate factors for concentration calculations-
     // flow rate factor for flow 1
+    /*
     begin
     if (Q(<fl_1>) != 0)
       flow_rate_factor_1 = Q(<fl_1>);
@@ -94,9 +97,10 @@ module TJunction(fl_1,fl_2,fl_internal,fl_out,c_1,c_2,c_out);
     else
       flow_rate_factor_1 = 0;
     end
-
+    */
     // calculate and assign concentration
-    C(c_out) <+ (C(<c_1>)*flow_rate_factor_1 + C(<c_2>)*flow_rate_factor_2)/(flow_rate_factor_1 + flow_rate_factor_2);
+    C(c_out) <+ C(c_1)*Q(fl_1)/Q(fl_out) + C(c_2)*Q(fl_2)/Q(fl_out);
+    //C(c_out) <+ (C(<c_1>)*flow_rate_factor_1 + C(<c_2>)*flow_rate_factor_2)/(flow_rate_factor_1 + flow_rate_factor_2);
 
   end
 
