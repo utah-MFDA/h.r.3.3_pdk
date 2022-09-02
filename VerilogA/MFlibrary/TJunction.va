@@ -104,7 +104,7 @@ module TJunction(fl_1, fl_2, fl_out, c_1, c_2, c_out);
     C(c_2, c_out) <+ C(c_2,c_2)* P(fl_2)/R_ch /(P(fl_1, fl_out)/R_ch+P(fl_2,fl_out)/R_ch);
     //C(c_out) <+ (C(<c_1>)*flow_rate_factor_1 + C(<c_2>)*flow_rate_factor_2)/(flow_rate_factor_1 + flow_rate_factor_2);
 
+    //M(m_out) <+  M(<m_1>) + M(<m_2>);
   end
-
 
 endmodule

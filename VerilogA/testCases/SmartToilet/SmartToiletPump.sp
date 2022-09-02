@@ -6,27 +6,45 @@
 .hdl ./../../PressurePump.va
 .options post=1
 
-X1 A 0 cA cD1 PressurePump pressure=34450 chem_concentration=0
-X2 B 0 cB cD2 PressurePump pressure=34450 chem_concentration=0
-X3 C 0 cC cE2 PressurePump pressure=34450 chem_concentration=0
+X1 A PressurePump pressure=34450 chem_concentration=0
+X2 B PressurePump pressure=34450 chem_concentration=0
+X3 C PressurePump pressure=34450 chem_concentration=0
 
-X4 A D1 cA cD1 SerpentineChannel
-X5 B D2 cB cD2 RectangularChannel L=0.00071
-X6 C E2 cC cE2 SerpentineChannel FOOTPRINT_WIDTH = 0.01362
+X4 A D1 SerpentineChannel
+X5 B D2 RectangularChannel L=0.00071
+X6 C E2 SerpentineChannel FOOTPRINT_WIDTH = 0.01362
 
-X7 D1 D2 Di Dout cD1 cD2 cDout TJunction L=0.0001
+X7 D1 D2 Di Dout TJunction L=0.0001
 
-X8 Dout E1 cDout cE1 SerpentineChannel
+X8 Dout E1 SerpentineChannel
 
-X9 E1 E2 Ei Eout cE1 cE2 cEout TJunction L=0.0001
-X10 Eout 0 cEout cF SerpentineChannel
+X9 E1 E2 Ei Eout TJunction L=0.0001
+X10 Eout 0 SerpentineChannel
 
 .tran 0.01ms 8ms
 
-.probe tran I(X4.fl_in)
-.probe tran I(X5.fl_in)
-.probe tran I(X6.fl_in)
+.probe tran I(X1.fl_out)
+.probe tran I(X2.fl_out)
+.probe tran I(X3.fl_out)
 
+.probe tran I(X4.fl_in)
+.probe tran I(X4.fl_out)
+.probe tran I(X5.fl_in)
+.probe tran I(X5.fl_out)
+.probe tran I(X6.fl_in)
+.probe tran I(X6.fl_out)
+
+.probe tran I(X7.fl_1)
+.probe tran I(X7.fl_2)
+.probe tran I(X7.fl_internal)
+.probe tran I(X7.fl_out)
+
+.probe tran I(X9.fl_1)
+.probe tran I(X9.fl_2)
+.probe tran I(X9.fl_internal)
+.probe tran I(X9.fl_out)
+
+.probe tran I(X10.fl_in)
 .probe tran I(X10.fl_out)
 
 .end

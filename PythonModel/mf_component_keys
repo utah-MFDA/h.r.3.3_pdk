@@ -1,0 +1,4 @@
+input::1
+output::1
+serp0:addStraightChannel:2
+mix0:addMixer:3
