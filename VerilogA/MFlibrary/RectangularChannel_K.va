@@ -1,5 +1,5 @@
 // Sophia Nielsen, sophi.nieslen@utah.edu
-`include "nature_fluid_dynamics.vams"
+`include "nature_fluid_dynamics_2.vams"
 //`include "disciplines.vams"
 
 // preset channel cross section
@@ -64,7 +64,7 @@ module RectangularChannel (fl_in, fl_out, c_in, c_out);
 
   analog begin
     Q(fl_in,fl_out) <+ 1/R_hyd*P(fl_in,fl_out);
-    C(c_out)  <+ C(c_in);
+    //C(c_out)  <+ C(c_in);
     K(c_out)  <+ K(c_in);
   end
 
