@@ -1,0 +1,35 @@
+
+
+//`include
+
+module Channel(fl_in, fl_out, c_in, c_out);
+
+parameter LENGTH=5m, CROSS_SECTION=1, NU=0.0010016;
+
+real pixel_size = 7.6u, layer_height = 10u;
+real W, H, L;
+
+initial begin
+   begin 
+   if (CROSS_SECTION == 1) begin
+      width_pixels = 14;
+      height_layers= 10;
+   end
+   else if(CROSS_SECTION == 2) begin
+      width_pixels = 6;
+      height_layers= 5;
+   end
+end
+
+W = pixel_size * width_pixels;
+H = layer_height*height_layers;
+L = Length
+
+real R= (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+analog begin
+    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
+    V(c_out) <+ V(c_in);
+end
+
+end module

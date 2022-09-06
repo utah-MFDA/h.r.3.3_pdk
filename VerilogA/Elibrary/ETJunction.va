@@ -1,0 +1,28 @@
+
+
+
+//`include
+
+module TJunction(fl_i1, fl_i2, fl_out, c_1i, c2i, c_out);
+
+input fl_i1, fl_i2, c_i1, c_i2;
+output c_i1, c_i2, c_out;
+
+electrical fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out;
+
+parameter CROSS_SECTION=1;
+parameter LENGTH1=5m, LENGTH2=5m, LENGTH3=5m;
+
+
+real R1_3 =
+real R2_3 = 
+
+analog begin
+    I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3
+    I(fl_i2, fl_out) <+ V(fl_i2, fl_out)/R2_3
+    //Concentration signals
+    V(c_i1, c_out) <+ V(c_i1) * R1_3*V(fl_i1, fl_out)/(V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3)
+    V(c_i2, c_out) <+ V(c_i2) * R2_3*V(fl_i2, fl_out)/(V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3)
+end
+
+endmodule

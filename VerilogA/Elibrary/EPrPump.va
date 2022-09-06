@@ -1,0 +1,18 @@
+
+
+//`include
+
+module PressurePump(fl_out, c_out);
+
+output fl_out, c_out;
+electrical fl_out, c_out;
+
+parameter pressure=34k;
+parameter chemConcentration=0;
+
+begin analog
+    V(fl_out) <+ pressure;
+    V(c_out)  <+ chemConcentration;
+end
+
+endmodule
