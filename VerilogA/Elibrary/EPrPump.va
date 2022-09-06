@@ -10,7 +10,7 @@ electrical fl_out, c_out;
 parameter pressure=34k;
 parameter chemConcentration=0;
 
-begin analog
+analog begin
     V(fl_out) <+ pressure;
     V(c_out)  <+ chemConcentration;
 end

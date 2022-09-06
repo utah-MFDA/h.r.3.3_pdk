@@ -4,10 +4,11 @@
 
 module Channel(fl_in, fl_out, c_in, c_out);
 
-parameter LENGTH=5m, CROSS_SECTION=1, NU=0.0010016;
+parameter real length=5m, CROSS_SECTION=1, NU=0.0010016;
 
 real pixel_size = 7.6u, layer_height = 10u;
 real W, H, L;
+real R;
 
 initial begin
    begin 
@@ -23,9 +24,9 @@ end
 
 W = pixel_size * width_pixels;
 H = layer_height*height_layers;
-L = Length
+L = length;
 
-real R= (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
 analog begin
     I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
