@@ -2,17 +2,17 @@
 
 //`include
 
-module Channel(fl_in, fl_out, c_in, c_out);
+module Channel(fl_in, fl_out);//, c_in, c_out);
 
-inout fl_in, fl_out, c_in, c_out;
-electrical fl_in, fl_out, c_in, c_out;
+inout fl_in, fl_out;//, c_in, c_out;
+electrical fl_in, fl_out;//, c_in, c_out;
 
 
 parameter real length=5m, CROSS_SECTION=1, NU=0.0010016;
 
 real pixel_size = 7.6u, layer_height = 10u;
 real W, H, L;
-real R;
+real R_h;
 real ch_width_pixels, ch_height_layers;
 
 initial begin
@@ -31,14 +31,14 @@ initial begin
    H = layer_height*ch_height_layers;
    L = length;
 
-   R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   R_h = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
    $display("resistance:");
-   $display(R);
+   $display(R_h);
 end
 
 analog begin
-    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
-    V(c_out) <+ V(c_in);
+    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R_h;
+    //V(c_out) <+ V(c_in);
 end
 
 endmodule

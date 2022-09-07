@@ -1,15 +1,14 @@
 *Basic channel and pump test
 
-.hdl ./../../Elibrary/EPrPump_flow.va
-.hdl ./../../Elibrary/EChannel_flow.va
+.hdl ./../../Elibrary/EPrPump.va
+.hdl ./../../Elibrary/EChannel.va
 
 .options POST_VERSION=2001
 .option post=1
 
-X1 p1 PressurePump pressure=100k 
-*chemConcentration=100m
+X1 p1 c1 PressurePump pressure=100k chemConcentration=100m
 
-X2 p1 0 Channel
+X2 p1 0 c1 co Channel
 
 .tran 0.01ms 8ms
 

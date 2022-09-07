@@ -5,13 +5,13 @@
   with the terms and conditions of a written license agreement with
   Synopsys, Inc. All other use, reproduction, or distribution of
   this software is strictly prohibited.
-  Input File: PumpCh_Test_001.sp                                                
-  Command line options: /uusoc/facility/cad_tools/Synopsys/hspice_Q-2020.03-2/hspice/linux64/hspice PumpCh_Test_001.sp -o PumpCh_Test_001/PumpCh_Test_001_o
-  Start time: Tue Sep  6 14:01:08 2022
+  Input File: PumpCh_Test_002.sp                                                
+  Command line options: /uusoc/facility/cad_tools/Synopsys/hspice_Q-2020.03-2/hspice/linux64/hspice PumpCh_Test_002.sp -o PumpCh_Test_002/PumpCh_Test_002_o
+  Start time: Tue Sep  6 14:02:41 2022
  lic:  
  lic: FLEXlm: SDK_12.6 
  lic: USER:   u1146591             HOSTNAME: lab2-21.eng.utah.edu 
- lic: HOSTID: 18c04d8e31bd         PID:      955045 
+ lic: HOSTID: 18c04d8e31bd         PID:      955093 
  lic: Using FLEXlm license file: 
  lic: 27000@chickasaw.eng.utah.edu 
  lic: Checkout 1 hspice 
@@ -20,7 +20,37 @@
  lic:   
  **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
 
- Loading pVA library PumpCh_Test_001/PumpCh_Test_001_o.pvadir/pvaRTL_linux64.so...
+ **info** *pvaI* Module (PressurePump): 2 unexpanded port, 0 init, 2 behav, 2 contrib, 6/0 expr(s)
+
+ **info** *pvaI*        No DIS, 0/0 afCount, 0 MT, dlg, IO(0/0/0/0)
+
+ **info** *pvaI*        0 gmdIsThreadSafe 
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction output of 'fl_out' is coerced to inout (../../Elibrary/EPrPump.va:8)
+
+ **info** *pvaI*        Port direction output of 'c_out' is coerced to inout (../../Elibrary/EPrPump.va:8)
+
+ **info** *pvaI*        generated 2 flow node(s) during compilation.
+
+ **info** *pvaI* Module (Channel): 4 unexpanded port, 10 init, 2 behav, 2 contrib, 25/0 expr(s)
+
+ **info** *pvaI*        Has DIS(AE ST IB SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        generated 1 flow node(s) during compilation.
+
+ **info** *pvaI* #### Total 239 line-size(s), 31/0 expr(s), 4 contr(s), 10 init(s), 4 behav(s), 6 port(s)
+
+ Loading pVA library PumpCh_Test_002/PumpCh_Test_002_o.pvadir/pvaRTL_linux64.so...
 1****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
  ******  
  *basic channel and pump test
@@ -33,16 +63,16 @@
         2 x2.                             Channel(va)        1.00 
  **info** *pvaI* Creating VA module (Channel) for instance X2 with gmd reduction
 
- **info** *pvaI*        termCount=2 diwSize=5 probeSize=13 Qsize=0 Isize=1
+ **info** *pvaI*        termCount=5 diwSize=14 probeSize=17 Qsize=0 Isize=3
 
- End of GMD creation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5399 MB
+ End of GMD creation on Tue Sep  6 14:02:41 2022	GTM/In-use: 2.8750/0.5316 MB
 
 
  **info** *pvaI* Creating VA module (PressurePump) for instance X1 with gmd reduction
 
- **info** *pvaI*        termCount=2 diwSize=7 probeSize=3 Qsize=0 Isize=2
+ **info** *pvaI*        termCount=4 diwSize=14 probeSize=7 Qsize=0 Isize=4
 
- End of GMD creation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5789 MB
+ End of GMD creation on Tue Sep  6 14:02:41 2022	GTM/In-use: 2.8750/0.5721 MB
 
 
   
@@ -52,12 +82,12 @@
  ******
  runlvl  = 3         bypass  = 2.0000    
   Opening plot unit= 15
- file=PumpCh_Test_001/PumpCh_Test_001_o.pa0
+ file=PumpCh_Test_002/PumpCh_Test_002_o.pa0
 
- End of pVA setup    on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5769 MB
+ End of pVA setup    on Tue Sep  6 14:02:41 2022	GTM/In-use: 2.8750/0.5700 MB
 
 
- Begin of pVA simulation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5769 MB
+ Begin of pVA simulation on Tue Sep  6 14:02:41 2022	GTM/In-use: 2.8750/0.5700 MB
 
 
  **info** dc convergence successful at Newton-Raphson method 
@@ -66,9 +96,9 @@
 
  ****** operating point information tnom=  25.000 temp=  25.000 ******
  ****** operating point status is voltage   simulation time is     0.     
-    node    =voltage
+    node    =voltage      node    =voltage      node    =voltage
 
- +0:p1      = 100.0000k
+ +0:c1      = 100.0000m 0:co      = 100.0000m 0:p1      = 100.0000k
 
  resistance:
 1.3847e+12
@@ -99,7 +129,7 @@
 
 
   ******  Circuit Statistics  ******
-  # nodes       =       2 # elements   =       2
+  # nodes       =       4 # elements   =       2
   # resistors   =       0 # capacitors =       0 # inductors   =       0
   # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
   # cccs        =       0 # ccvs       =       0 # volt_srcs   =       0
@@ -113,20 +143,20 @@
   ******  Runtime Statistics (seconds)  ******
 
   analysis           time    # points   tot. iter  conv.iter
-  op point           0.02           1         103
+  op point           0.01           1         103
   transient          0.00         801          50          25 rev=         0
-  readin             0.10
-  errchk             0.01
-  setup              0.01
+  readin             0.59
+  errchk             0.00
+  setup              0.02
   output             0.00
 
 
-           peak memory used        431.77 megabytes
-           total cpu time            0.13 seconds
-           total elapsed time        0.28 seconds
-           job started at     14:01:08 09/06/2022
-           job ended   at     14:01:08 09/06/2022
-           job total runtime         0.28 seconds
+           peak memory used        427.12 megabytes
+           total cpu time            0.62 seconds
+           total elapsed time        0.76 seconds
+           job started at     14:02:41 09/06/2022
+           job ended   at     14:02:41 09/06/2022
+           job total runtime         0.76 seconds
 
 
  lic: Release hspice token(s) 
