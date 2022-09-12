@@ -14,7 +14,7 @@ electrical fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out;
 //output c_in1, c_in2;
 electrical c_in1, c_in2;
 
-parameter real CROSS_SECTION=2;
+parameter real CROSS_SECTION=1;
 parameter real LENGTH1=0.19m, LENGTH2=0.269m, LENGTH3=0.190m;
 parameter real NU = 0.001006;
 
@@ -69,8 +69,12 @@ analog begin
     I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3;
     I(fl_i2, fl_out) <+ V(fl_i2, fl_out)/R2_3;
     //Concentration signals
-    V(c_i1, c_in1) <+ V(c_i1) * V(fl_i1, fl_out)/R2_3 / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-    V(c_i2, c_in2) <+ V(c_i2) * V(fl_i2, fl_out)/R2_3 / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+    //V(c_i1, c_in1) <+ V(c_i1) * V(fl_i1, fl_out)/R2_3 / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+    //V(c_i2, c_in2) <+ V(c_i2) * V(fl_i2, fl_out)/R2_3 / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+
+    V(c_i1, c_in1) <+ V(c_i1) * V(fl_i1, fl_out)*R1_3 / (V(fl_i1, fl_out)*R1_3 + V(fl_i2, fl_out)*R2_3);
+    V(c_i2, c_in2) <+ V(c_i2) * V(fl_i2, fl_out)*R2_3 / (V(fl_i1, fl_out)*R1_3 + V(fl_i2, fl_out)*R2_3);
+
     V(c_out) <+ V(c_in1) + V(c_in2);
 end
 

@@ -1,0 +1,350 @@
+ ****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+  Copyright (c) 1986 - 2022 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: smartT_Test_004.sp                                                
+  Command line options: /uusoc/facility/cad_tools/Synopsys/hspice_Q-2020.03-2/hspice/linux64/hspice smartT_Test_004.sp -o smartT_Test_004/smartT_Test_004_o
+  Start time: Mon Sep 12 17:06:58 2022
+ lic:  
+ lic: FLEXlm: SDK_12.6 
+ lic: USER:   u1146591             HOSTNAME: lab2-22.eng.utah.edu 
+ lic: HOSTID: 18c04d88fc69         PID:      1222147 
+ lic: Using FLEXlm license file: 
+ lic: 27000@chickasaw.eng.utah.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 14-mar-2024/2021.09 
+ lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 27000@chickasaw.eng.utah.edu 
+ lic:   
+ **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
+
+ **info** *pvaI* Module (PressurePump): 2 unexpanded port, 0 init, 2 behav, 2 contrib, 6/0 expr(s)
+
+ **info** *pvaI*        No DIS, 0/0 afCount, 0 MT, dlg, IO(0/0/0/0)
+
+ **info** *pvaI*        0 gmdIsThreadSafe 
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction output of 'fl_out' is coerced to inout (../../Elibrary/EPrPump.va:8)
+
+ **info** *pvaI*        Port direction output of 'c_out' is coerced to inout (../../Elibrary/EPrPump.va:8)
+
+ **info** *pvaI*        generated 2 flow node(s) during compilation.
+
+ **info** *pvaI* Module (serpentine_300px_0): 4 unexpanded port, 10 init, 2 behav, 2 contrib, 25/0 expr(s)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'fl_in' (../../Elibrary/standardCells/Eserpentine_300px_0.va:36)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_out' (../../Elibrary/standardCells/Eserpentine_300px_0.va:37)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_in' (../../Elibrary/standardCells/Eserpentine_300px_0.va:37)
+
+ **info** *pvaI*        Has DIS(AE ST IB SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_in' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_in' is coerced to input (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        generated 1 flow node(s) during compilation.
+
+ **info** *pvaI* Module (serpentine_50px_0): 4 unexpanded port, 10 init, 2 behav, 2 contrib, 25/0 expr(s)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'fl_in' (../../Elibrary/standardCells/Eserpentine_50px_0.va:36)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_out' (../../Elibrary/standardCells/Eserpentine_50px_0.va:37)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_in' (../../Elibrary/standardCells/Eserpentine_50px_0.va:37)
+
+ **info** *pvaI*        Has DIS(AE ST IB SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_in' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_in' is coerced to input (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        generated 1 flow node(s) during compilation.
+
+ **info** *pvaI* Module (serpentine_150px_0): 4 unexpanded port, 10 init, 2 behav, 2 contrib, 25/0 expr(s)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'fl_in' (../../Elibrary/standardCells/Eserpentine_150px_0.va:36)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_out' (../../Elibrary/standardCells/Eserpentine_150px_0.va:37)
+
+ **info** *pvaI* set default discipline 'electrical' for port 'c_in' (../../Elibrary/standardCells/Eserpentine_150px_0.va:37)
+
+ **info** *pvaI*        Has DIS(AE ST IB SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_in' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_in' is coerced to input (NULL:0)
+
+ **info** *pvaI*        Port direction <unknown> of 'c_out' is coerced to inout (NULL:0)
+
+ **info** *pvaI*        generated 1 flow node(s) during compilation.
+
+ **info** *pvaI* Module (diffmix_25px_0): 6 unexpanded port, 21 init, 5 behav, 5 contrib, 25/0 expr(s)
+
+ **info** *pvaI*        Has DIS(AE ST IB SB), 0/0 afCount, 0 MT, dlg, IO(0/1/1/1)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB SB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction input of 'fl_i1' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        Port direction input of 'fl_i2' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        Port direction <unknown> of 'fl_out' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        Port direction output of 'c_i1' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        Port direction output of 'c_i2' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        Port direction output of 'c_out' is coerced to inout (../../Elibrary/standardCells/Ediffmix_25px_0.va:11)
+
+ **info** *pvaI*        generated 3 flow node(s) during compilation.
+
+ **info** *pvaI* #### Total 784 line-size(s), 106/0 expr(s), 13 contr(s), 51 init(s), 13 behav(s), 20 port(s)
+
+ Loading pVA library smartT_Test_004/smartT_Test_004_o.pvadir/pvaRTL_linux64.so...
+1****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+ ******  
+ *smart toilet test 001
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 x1.                             PressurePump(va)   1.00 
+        2 x2.                             PressurePump(va)   1.00 
+        3 x3.                             PressurePump(va)   1.00 
+        4 x4.                             serpentine_300px_0(va)
+                                                                 1.00 
+        5 x5.                             serpentine_50px_0(va)
+                                                                 1.00 
+        6 x6.                             serpentine_150px_0(va)
+                                                                 1.00 
+        7 x7.                             diffmix_25px_0(va)
+                                                                 1.00 
+        8 x8.                             serpentine_300px_0(va)
+                                                                 1.00 
+        9 x9.                             serpentine_300px_0(va)
+                                                                 1.00 
+       10 x10.                            serpentine_300px_0(va)
+                                                                 1.00 
+       11 x11.                            diffmix_25px_0(va)
+                                                                 1.00 
+       12 x12.                            serpentine_300px_0(va)
+                                                                 1.00 
+ **info** *pvaI* Creating VA module (serpentine_300px_0) for instance X12 with gmd reduction
+
+ **info** *pvaI*        termCount=5 diwSize=14 probeSize=17 Qsize=0 Isize=3
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.1327 MB
+
+
+ **info** *pvaI* Creating VA module (diffmix_25px_0) for instance X11 with gmd reduction
+
+ **info** *pvaI*        termCount=11 diwSize=42 probeSize=34 Qsize=0 Isize=8
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.1791 MB
+
+
+ **warning** *pvaW* (31) FPE: Encountered numerical NaN with node (c_i1,c_in1) (../../Elibrary/standardCells/Ediffmix_25px_0.va:72)
+
+ **warning** *pvaW*           in N/A-instname(diffmix_25px_0)
+
+ **warning** *pvaW* (31)      For a complete list of FPE warnings, please setenv PVA_ENABLE_FPE3 2
+
+ **warning** *pvaW* (31)      For debugging, please use $strobe to print the value of signal.
+
+
+ **info** *pvaI* Creating VA module (serpentine_150px_0) for instance X6 with gmd reduction
+
+ **info** *pvaI*        termCount=5 diwSize=14 probeSize=17 Qsize=0 Isize=3
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.1880 MB
+
+
+ **info** *pvaI* Creating VA module (serpentine_50px_0) for instance X5 with gmd reduction
+
+ **info** *pvaI*        termCount=5 diwSize=14 probeSize=17 Qsize=0 Isize=3
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.1955 MB
+
+
+ **info** *pvaI* Creating VA module (PressurePump) for instance X3 with gmd reduction
+
+ **info** *pvaI*        termCount=4 diwSize=14 probeSize=7 Qsize=0 Isize=4
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.2024 MB
+
+
+ **info** *pvaI* Creating VA module (PressurePump) for instance X2 with gmd reduction
+
+ **info** *pvaI*        termCount=4 diwSize=14 probeSize=7 Qsize=0 Isize=4
+
+ End of GMD creation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.2025 MB
+
+
+  
+      
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=smartT_Test_004/smartT_Test_004_o.pa0
+
+ End of pVA setup    on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.2004 MB
+
+
+ Begin of pVA simulation on Mon Sep 12 17:07:01 2022	GTM/In-use: 6.6250/1.2004 MB
+
+
+ **info** dc convergence successful at Newton-Raphson method 
+ ******  
+ *smart toilet test 001
+
+ ****** operating point information tnom=  25.000 temp=  25.000 ******
+ ****** operating point status is voltage   simulation time is     0.     
+     node    =voltage       node    =voltage       node    =voltage
+
+ + 0:c0      =  81.9920k  0:c0c     =   0.       0:c1      =  97.8297k
+ + 0:c1c     = 100.0000   0:c2      =  82.6378k  0:c2c     = 100.0000 
+ + 0:c3      =  81.7601k  0:c3c     =  24.1928   0:c4      =  93.6336k
+ + 0:c4c     =   0.       0:c5      =  87.2671k  0:c5c     =   0.     
+ + 0:c6      =  80.9007k  0:c6c     =   0.       0:c7      =  80.8016k
+ + 0:c7c     =   5.7420   0:coc     =   5.7420   0:sol1    = 100.0000k
+ + 0:sol1c   =   0.       0:sol2    = 100.0000k  0:sol2c   = 100.0000 
+ + 0:sol3    = 100.0000k  0:sol3c   =   0.     
+
+ resistance:
+8.2085e+12
+
+ resistance:
+3.15712e+11
+
+ resistance:
+2.20998e+12
+
+ resistance Mixer:
+5.28498e+10
+7.48241e+10
+5.28498e+10
+ 
+1.057e+11
+1.27674e+11
+
+ resistance:
+8.2085e+12
+
+ resistance:
+8.2085e+12
+
+ resistance:
+8.2085e+12
+
+ resistance Mixer:
+5.28498e+10
+7.48241e+10
+5.28498e+10
+ 
+1.057e+11
+1.27674e+11
+
+ resistance:
+8.2085e+12
+
+ **info** *pvaI* minimum timestep = 1e-14
+
+
+          ***** job concluded
+ ******  
+ *smart toilet test 001
+
+ ****** job statistics summary tnom=  25.000 temp=  25.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+ cpu MHz	: 2900.000
+  
+ OS:
+ Linux version 4.18.0-372.19.1.el8_6.x86_64 (mockbuild@x86-vm-07.build.eng.bos.redhat.com) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-10) (GCC)) #1 SMP Mon Jul 18 11:14:02 EDT 2022
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    16
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =      28 # elements   =      12
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       0
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       0 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =      12
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.02           1         103
+  transient          0.00         101          48          24 rev=         0
+  readin             2.40
+  errchk             0.01
+  setup              0.02
+  output             0.00
+
+
+           peak memory used        431.13 megabytes
+           total cpu time            2.45 seconds
+           total elapsed time        2.62 seconds
+           job started at     17:06:58 09/12/2022
+           job ended   at     17:07:01 09/12/2022
+           job total runtime         2.62 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.11(s)
