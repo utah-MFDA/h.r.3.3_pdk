@@ -1,3 +1,6 @@
 [submodule "V2Va"]
     path = V2Va
     url = https://github.com/bgoenner/V2Va_Parser.git
+[submodule "V2Va_Parser"]
+	path = V2Va_Parser
+	url = https://github.com/bgoenner/V2Va_Parser.git
