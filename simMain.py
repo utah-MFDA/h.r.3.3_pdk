@@ -1,11 +1,24 @@
 import subprocess
 import sys
 
-
 sys.path.append('./V2Va_Parser')
 
 import V2Va_Parser.Verilog2VerilogA as Verilog2VerilogA
 import V2Va_Parser.spiceExtract as spiceExtract
+
+#
+# Configuration strings
+#
+
+remoteComDir = "./remoteComFiles"
+
+remoteShellScript = remoteComDir + "/sendFileHSpice.bash"
+runSimScript = remoteComDir + "/runSimsRemote.bash"
+getFileScript = remoteComDir + "/getFileHSpice.bash"
+
+#
+# methods --------------------------------------------------------------------------------
+#
 
 def buildSPfile(fullFilePath, configFile, solnFile, remoteTestPath):
     print("\n\nstart builing sp file\n")
@@ -16,7 +29,7 @@ def buildSPfile(fullFilePath, configFile, solnFile, remoteTestPath):
 
 def sendFiles(filePath, fullPath):
     # execute shell script
-    remoteShellScript = "./src/sendFileHSpice.bash"
+    #remoteShellScript = remoteComDir + "/sendFileHSpice.bash"
 
     # read list file
     # the spiceFiles is created by the V2Va parser
@@ -44,7 +57,7 @@ def sendFiles(filePath, fullPath):
 def runSimFiles(filePath):
     print("\nrun simulations\n")
 
-    runSimCommand = "./src/runSimsRemote.bash" + " " + filePath.replace('./', '') + "/spiceFiles"
+    runSimCommand = runSimScript + " " + filePath.replace('./', '') + "/spiceFiles"
 
     subprocess.call(runSimCommand, shell=True)
 
@@ -55,8 +68,6 @@ def downloadFiles(filePath, fullPath):
     # the spiceFiles is created by the V2Va parser
     spiceFilePath = fullPath + '/spiceFiles/spiceList'
     spiceListFile = open(spiceFilePath)
-
-    getFileScript = "./src/getFileHSpice.bash "
     
     print("\nDownloading file\n")
     
@@ -64,7 +75,7 @@ def downloadFiles(filePath, fullPath):
         # Construct command path
         line = line.replace('\n', '')
         remotePath = fullPath.replace('./', '') + "/spiceFiles/" + line.split('/')[-1].replace(".sp", "") + ""
-        getFileCommand = getFileScript + line.split('/')[-1].replace(".sp", "_o") + " " + remotePath + " " + fullPath + "/spiceFiles " + fullPath + "/spiceFiles "# + filePath.replace('./', '')
+        getFileCommand = getFileScript + " " + line.split('/')[-1].replace(".sp", "_o") + " " + remotePath + " " + fullPath + "/spiceFiles " + fullPath + "/spiceFiles "# + filePath.replace('./', '')
         #sendFileCommand = sendFileCommand     
         subprocess.call(getFileCommand, shell=True)
 
@@ -78,7 +89,9 @@ def extractChemData(fullPath):
 
     print("\nDone extracting data\n\n")
 
+#
 # main -------------------------------------------
+#
 
 if __name__ == "__main__":
     
