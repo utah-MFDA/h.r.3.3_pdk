@@ -6,6 +6,8 @@ sys.path.append('./V2Va_Parser')
 import V2Va_Parser.Verilog2VerilogA as Verilog2VerilogA
 import V2Va_Parser.spiceExtract as spiceExtract
 
+import pandas as pd
+
 #
 # Configuration strings
 #
@@ -34,16 +36,16 @@ def sendFiles(filePath, fullPath):
     # read list file
     # the spiceFiles is created by the V2Va parser
     spiceFilePath = fullPath + '/spiceFiles/spiceList'
-    spiceListFile = open(spiceFilePath)
+    spiceListFile = pd.read_csv(spiceFilePath)
 
     # Construct command path
     #sendFileCommand = remoteShellScript + " " + fileName + " " + filePath
     #sendFileCommand = sendFileCommand.replace("./", localPathRoute)
 
     print("start send file\n")
-    for line in spiceListFile:
+    for line in spiceListFile.iterrows():
         # Construct command path
-        line = line.replace('\n', '')
+        line = line[1]['OutputFile']
         sendFileCommand = remoteShellScript + " " + line.split('/')[-1] + " " + fullPath + "/spiceFiles "# + filePath.replace('./', '')
         #sendFileCommand = sendFileCommand     
         subprocess.call(sendFileCommand, shell=True)
@@ -67,13 +69,13 @@ def downloadFiles(filePath, fullPath):
     
     # the spiceFiles is created by the V2Va parser
     spiceFilePath = fullPath + '/spiceFiles/spiceList'
-    spiceListFile = open(spiceFilePath)
+    spiceListFile = pd.read_csv(spiceFilePath)
     
     print("\nDownloading file\n")
     
-    for line in spiceListFile:
+    for line in spiceListFile.iterrows():
         # Construct command path
-        line = line.replace('\n', '')
+        line = line[1]['OutputFile']
         remotePath = fullPath.replace('./', '') + "/spiceFiles/" + line.split('/')[-1].replace(".sp", "") + ""
         getFileCommand = getFileScript + " " + line.split('/')[-1].replace(".sp", "_o") + " " + remotePath + " " + fullPath + "/spiceFiles " + fullPath + "/spiceFiles "# + filePath.replace('./', '')
         #sendFileCommand = sendFileCommand     
@@ -105,7 +107,8 @@ if __name__ == "__main__":
 
     configFile = "./V2Va_Parser/VMF_template.json"
 
-    solnFile   = "./V2Va_Parser/testFiles/smart_toilet_test2/solutionFile.csv"
+    #solnFile   = "./V2Va_Parser/testFiles/smart_toilet_test2/solutionFile.csv"
+    solnFile   = fullFilePath[:-2] + "_spec.csv"
 
     remoteTestPath = "~/Verilog_Tests/"
 
