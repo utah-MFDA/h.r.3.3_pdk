@@ -1,6 +1,6 @@
 * pressure test,
-.hdl ./../../TJunction.va
-.hdl ./../../PressurePump.va
+.hdl ./../../MFlibrary/TJunction.va
+.hdl ./../../MFlibrary/PressurePump.va
 
 .options POST_VERSION=2001 ABSTOL=1e-25
 X1 D1 PressurePump pressure=34450

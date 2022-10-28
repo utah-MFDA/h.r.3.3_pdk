@@ -9,13 +9,13 @@
 module PressurePump(fl_out);
 //module PressurePump(out1, gnd, c_out, c_outg);
 
-output fl_out;
+output fl_out, c_out;
 fluidDynamics fl_out;
-//concentration c_out;
+concentration c_out;
 
 // pressure of source
 parameter real pressure=10;
-//parameter real chem_concentration=100m;
+parameter real chem_concentration=100m;
 //parameter real weight_concentration = 1.0;
 parameter real mass_flow_in = 1.0;
 
@@ -23,6 +23,8 @@ parameter real mass_flow_in = 1.0;
 
 analog begin
     P(fl_out) <+ pressure;
+    C(c_out) <+ chem_concentration;
+    //K(c_out)<+ 1;
 end
 
 endmodule

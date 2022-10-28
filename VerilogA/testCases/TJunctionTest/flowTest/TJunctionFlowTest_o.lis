@@ -1,0 +1,185 @@
+ ****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+  Copyright (c) 1986 - 2022 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: TJunctionFlowTest.sp                                              
+  Command line options: /uusoc/facility/cad_tools/Synopsys/hspice_Q-2020.03-2/hspice/linux64/hspice TJunctionFlowTest.sp -o flowTest/TJunctionFlowTest_o
+  Start time: Tue Aug 30 12:01:39 2022
+ lic:  
+ lic: FLEXlm: SDK_12.6 
+ lic: USER:   u1146591             HOSTNAME: lab2-2.eng.utah.edu 
+ lic: HOSTID: 18c04d8fca54         PID:      1000213 
+ lic: Using FLEXlm license file: 
+ lic: 27000@chickasaw.eng.utah.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 14-mar-2024/2021.09 
+ lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 27000@chickasaw.eng.utah.edu 
+ lic:   
+ **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
+
+ **info** *pvaI* Module (TJunction): 6 unexpanded port, 7 init, 3 behav, 3 contrib, 43/0 expr(s)
+
+ **warning** *pvaW*        node 'c_1' grounded by current reference 'C(c_1)' (../../MFlibrary/TJunction.va:103)
+
+ **warning** *pvaW*        node 'c_2' grounded by current reference 'C(c_2)' (../../MFlibrary/TJunction.va:103)
+
+ **info** *pvaI*        Has DIS(AE ST IB), 0/0 afCount, 0 MT, dlg, IO(0/0/1/0)
+
+ **info** *pvaI*        0 gmdIsThreadSafe (AE ST IB)
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction input of 'fl_1' is coerced to inout (../../MFlibrary/TJunction.va:21)
+
+ **info** *pvaI*        Port direction input of 'fl_2' is coerced to inout (../../MFlibrary/TJunction.va:21)
+
+ **info** *pvaI*        Port direction output of 'fl_out' is coerced to inout (../../MFlibrary/TJunction.va:21)
+
+ **info** *pvaI*        Port direction input of 'c_1' is coerced to inout (../../MFlibrary/TJunction.va:22)
+
+ **info** *pvaI*        Port direction input of 'c_2' is coerced to inout (../../MFlibrary/TJunction.va:22)
+
+ **info** *pvaI*        generated 2 flow node(s) during compilation.
+
+ **info** *pvaI* Module (PressurePump): 2 unexpanded port, 0 init, 2 behav, 2 contrib, 6/0 expr(s)
+
+ **info** *pvaI*        No DIS, 0/0 afCount, 0 MT, dlg, IO(0/0/0/0)
+
+ **info** *pvaI*        0 gmdIsThreadSafe 
+
+ **info** *pvaI*        0 const-G and 0 const-C, No switchBranch, 22 bypassOpt, 0 bus2scalar, 0 vwb
+
+ **info** *pvaI*        set_va_exp = 80 [80.0, 704.0] set by default
+
+ **info** *pvaI*        Port direction output of 'fl_out' is coerced to inout (../../MFlibrary/PressurePump.va:12)
+
+ **info** *pvaI*        generated 1 flow node(s) during compilation.
+
+ **info** *pvaI* #### Total 497 line-size(s), 49/0 expr(s), 5 contr(s), 7 init(s), 5 behav(s), 8 port(s)
+
+ Loading pVA library flowTest/TJunctionFlowTest_o.pvadir/pvaRTL_linux64.so...
+1****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+ ******  
+ * pressure test,
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 x1.                             TJunction(va)      1.00 
+        2 x2.                             PressurePump(va)   1.00 
+        3 x3.                             PressurePump(va)   1.00 
+ **info** *pvaI* Creating VA module (PressurePump) for instance X3 with gmd reduction
+
+ **info** *pvaI*        termCount=3 diwSize=9 probeSize=6 Qsize=0 Isize=3
+
+ End of GMD creation on Tue Aug 30 12:01:40 2022	GTM/In-use: 3.1250/0.6178 MB
+
+
+ **warning**: parameter CHEMCONCENTRATION for instance X3 does not exist in verilog-A module
+
+ **info** *pvaI* Creating VA module (TJunction) for instance X1 with gmd reduction
+
+ **info** *pvaI*        termCount=8 diwSize=30 probeSize=24 Qsize=0 Isize=7
+
+ End of GMD creation on Tue Aug 30 12:01:40 2022	GTM/In-use: 3.1250/0.6257 MB
+
+
+ **warning** *pvaW* (31) FPE: Encountered numerical NaN with node (c_out) (../../MFlibrary/TJunction.va:103)
+
+ **warning** *pvaW*           in N/A-instname(TJunction)
+
+ **warning** *pvaW* (31)      For a complete list of FPE warnings, please setenv PVA_ENABLE_FPE3 2
+
+ **warning** *pvaW* (31)      For debugging, please use $strobe to print the value of signal.
+
+
+  
+      
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=flowTest/TJunctionFlowTest_o.pa0
+
+ End of pVA setup    on Tue Aug 30 12:01:40 2022	GTM/In-use: 3.1250/0.6598 MB
+
+
+ Begin of pVA simulation on Tue Aug 30 12:01:40 2022	GTM/In-use: 3.1250/0.6598 MB
+
+
+ **info** dc convergence successful at Newton-Raphson method 
+ ******  
+ * pressure test,
+
+ ****** operating point information tnom=  25.000 temp=  25.000 ******
+ ****** operating point status is voltage   simulation time is     0.     
+    node    =voltage      node    =voltage      node    =voltage
+
+ +0:c1      =   0.      0:c2      =   0.      0:p1      = 100.0000k
+ +0:p2      = 100.0000k
+
+ **info** *pvaI* minimum timestep = 1e-14
+
+
+          ***** job concluded
+ ******  
+ * pressure test,
+
+ ****** job statistics summary tnom=  25.000 temp=  25.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+ cpu MHz	: 2900.000
+  
+ OS:
+ Linux version 4.18.0-372.19.1.el8_6.x86_64 (mockbuild@x86-vm-07.build.eng.bos.redhat.com) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-10) (GCC)) #1 SMP Mon Jul 18 11:14:02 EDT 2022
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    16
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =       5 # elements   =       3
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       0
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       0 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       3
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.03           1         103
+  transient          0.00         801          50          25 rev=         0
+  readin             0.56
+  errchk             0.01
+  setup              0.02
+  output             0.00
+
+
+           peak memory used        427.40 megabytes
+           total cpu time            0.61 seconds
+           total elapsed time        0.76 seconds
+           job started at     12:01:39 08/30/2022
+           job ended   at     12:01:40 08/30/2022
+           job total runtime         0.76 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.12(s)

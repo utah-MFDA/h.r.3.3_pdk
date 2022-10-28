@@ -10,3 +10,5 @@ sxcmd.*
 *MOSFET_Example*
 *sx_crash.sx
 *.nfs*
+
+*remoteComFiles

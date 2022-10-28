@@ -4,7 +4,8 @@
 .hdl ./../../../../PressurePump.va
 .hdl ./../../../../RectangularChannel.va
 
-.option post=1
+.option post=2
+.option POST_VERSION=2001
 
 X1 s1 0        	PressurePump pressure=10k
 X2 s1 s2       	RectangularChannel L=0.100

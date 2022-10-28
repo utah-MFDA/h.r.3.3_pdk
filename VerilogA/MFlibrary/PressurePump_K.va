@@ -1,0 +1,27 @@
+
+//
+// Pressure pump source
+// Acts like a constant voltage source
+
+`include "nature_fluid_dynamics_2.vams"
+
+module PressurePump(fl_out, c_out);
+//module PressurePump(out1, gnd, c_out, c_outg);
+
+output fl_out, c_out;
+fluidDynamics fl_out;
+concentration c_out;
+
+// pressure of source
+parameter real pressure=10;
+parameter real chem_concentration=100m;
+
+//TODO implment ramprate for pump 
+
+analog begin
+    P(fl_out) <+ pressure;
+    K(c_out) <+ chem_concentration;
+    //K(c_out) <+ 1;
+end
+
+endmodule

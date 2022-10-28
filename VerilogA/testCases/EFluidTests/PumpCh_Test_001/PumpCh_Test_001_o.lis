@@ -1,0 +1,133 @@
+ ****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+  Copyright (c) 1986 - 2022 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: PumpCh_Test_001.sp                                                
+  Command line options: /uusoc/facility/cad_tools/Synopsys/hspice_Q-2020.03-2/hspice/linux64/hspice PumpCh_Test_001.sp -o PumpCh_Test_001/PumpCh_Test_001_o
+  Start time: Tue Sep  6 14:01:08 2022
+ lic:  
+ lic: FLEXlm: SDK_12.6 
+ lic: USER:   u1146591             HOSTNAME: lab2-21.eng.utah.edu 
+ lic: HOSTID: 18c04d8e31bd         PID:      955045 
+ lic: Using FLEXlm license file: 
+ lic: 27000@chickasaw.eng.utah.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 14-mar-2024/2021.09 
+ lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 27000@chickasaw.eng.utah.edu 
+ lic:   
+ **info** *pvaI* current limit stacksize=8388608, set new limit stacksize=62914560
+
+ Loading pVA library PumpCh_Test_001/PumpCh_Test_001_o.pvadir/pvaRTL_linux64.so...
+1****** HSPICE -- Q-2020.03-2 linux64 (Apr 27 2020) ******                      
+ ******  
+ *basic channel and pump test
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 x1.                             PressurePump(va)   1.00 
+        2 x2.                             Channel(va)        1.00 
+ **info** *pvaI* Creating VA module (Channel) for instance X2 with gmd reduction
+
+ **info** *pvaI*        termCount=2 diwSize=5 probeSize=13 Qsize=0 Isize=1
+
+ End of GMD creation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5399 MB
+
+
+ **info** *pvaI* Creating VA module (PressurePump) for instance X1 with gmd reduction
+
+ **info** *pvaI*        termCount=2 diwSize=7 probeSize=3 Qsize=0 Isize=2
+
+ End of GMD creation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5789 MB
+
+
+  
+      
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=PumpCh_Test_001/PumpCh_Test_001_o.pa0
+
+ End of pVA setup    on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5769 MB
+
+
+ Begin of pVA simulation on Tue Sep  6 14:01:08 2022	GTM/In-use: 2.6250/0.5769 MB
+
+
+ **info** dc convergence successful at Newton-Raphson method 
+ ******  
+ *basic channel and pump test
+
+ ****** operating point information tnom=  25.000 temp=  25.000 ******
+ ****** operating point status is voltage   simulation time is     0.     
+    node    =voltage
+
+ +0:p1      = 100.0000k
+
+ resistance:
+1.3847e+12
+
+ **info** *pvaI* minimum timestep = 1e-14
+
+
+          ***** job concluded
+ ******  
+ *basic channel and pump test
+
+ ****** job statistics summary tnom=  25.000 temp=  25.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+ cpu MHz	: 2900.000
+  
+ OS:
+ Linux version 4.18.0-372.19.1.el8_6.x86_64 (mockbuild@x86-vm-07.build.eng.bos.redhat.com) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-10) (GCC)) #1 SMP Mon Jul 18 11:14:02 EDT 2022
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    16
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =       2 # elements   =       2
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       0
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       0 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       2
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.02           1         103
+  transient          0.00         801          50          25 rev=         0
+  readin             0.10
+  errchk             0.01
+  setup              0.01
+  output             0.00
+
+
+           peak memory used        431.77 megabytes
+           total cpu time            0.13 seconds
+           total elapsed time        0.28 seconds
+           job started at     14:01:08 09/06/2022
+           job ended   at     14:01:08 09/06/2022
+           job total runtime         0.28 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.11(s)
