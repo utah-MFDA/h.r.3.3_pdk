@@ -97,9 +97,27 @@ def extractChemData(fullPath):
 
 if __name__ == "__main__":
     
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    ap.add_argument('--platform', metavar='<platform>', dest='platform', type=str,
+                    help="Design platform.")
+    ap.add_argument('--design', metavar='<design_name>', dest='design', type=str,
+                    help="The design name.")
+    ap.add_argument('--verilog_file', metavar='<verilog_file>', dest='verilog_file', type=str,
+                    help='The name of the Verilog file')
+    ap.add_argument('--path', metavar='test_path', dest='test_path', type=str,
+                    help='Path to the test files')
+
+    args = ap.parse_args()
+
     # construct file path
-    filePath = "./V2Va_Parser/testFiles/smart_toilet_test2"#.replace("./", "./V2Va_Parser/")
-    fileName = "smart_toilet2.v"
+    #filePath = "./V2Va_Parser/testFiles/smart_toilet_test2"#.replace("./", "./V2Va_Parser/")
+    #fileName = "smart_toilet2.v"
+
+    filePath = args.test_path
+    fileName = args.verilog_file
 
     fullPath     = filePath
     fullFilePath = fullPath + "/" + fileName
