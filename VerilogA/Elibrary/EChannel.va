@@ -25,6 +25,18 @@ initial begin
       ch_width_pixels = 6;
       ch_height_layers= 5;
    end
+   else if(CROSS_SECTION == 3) begin
+      ch_width_pixels = 28;
+      ch_height_layers= 20;
+   end
+   else if(CROSS_SECTION == 4) begin
+      ch_width_pixels = 42;
+      ch_height_layers= 30;
+   end
+   else if(CROSS_SECTION == 5) begin
+      ch_width_pixels = 70;
+      ch_height_layers= 50;
+   end
    end
 
    W = pixel_size * ch_width_pixels;
