@@ -12,3 +12,5 @@ sxcmd.*
 *.nfs*
 
 *remoteComFiles
+
+tests/*
