@@ -1,0 +1,20 @@
+
+
+module PneumaticSwitch(pn_out);
+
+output pn_out;
+electrical pn_out;
+
+parameter real period = 1.0, start = 0;
+parameter real x_v = 15;
+
+real output_v = 0;
+
+analog begin
+    @(timer(start, period))
+    output_v = x_v;
+    V(pn_out) <+ transition(output_v, 0.0);
+end
+
+
+endmodule

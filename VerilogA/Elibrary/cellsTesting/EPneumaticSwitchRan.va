@@ -1,0 +1,20 @@
+
+
+module PneumaticSwitch(pn_out);
+
+output pn_out;
+electrical pn_out;
+
+parameter real period = 1.0;
+parameter real output_v = 15;
+
+real x;
+
+analog begin
+    @(timer(0, period))
+    x = $random + 0.5;
+    V(pn_out) <+ transition(output_v+x, 0.0);
+end
+
+
+endmodule
