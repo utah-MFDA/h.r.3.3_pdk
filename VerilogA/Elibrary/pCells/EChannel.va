@@ -1,12 +1,15 @@
 
 
-//`include
-
 module Channel(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 electrical fl_in, fl_out, c_in, c_out;
 
+// vector test
+parameter integer vec_size = 1;
+
+inout [0:vec_size-1] c_in;
+inout [0:vec_size-1] c_out;
 
 parameter real length=5m, CROSS_SECTION=1, NU=0.0010016;
 
@@ -14,6 +17,10 @@ real pixel_size = 7.6u, layer_height = 10u;
 real W, H, L;
 real R;
 real ch_width_pixels, ch_height_layers;
+
+integer i;
+
+//inout [vec_size:0] c_in;
 
 initial begin
    begin 
@@ -49,8 +56,11 @@ initial begin
 end
 
 analog begin
-    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
-    V(c_out) <+ V(c_in);
+   I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
+   for (i = vec_size-1; i >= 0; i = i - 1) begin
+      V(c_out[i]) <+ V(c_in[i]);
+   end // end FOR LOOP
+   //V(c_out) <+ V(c_in);
 end
 
 endmodule

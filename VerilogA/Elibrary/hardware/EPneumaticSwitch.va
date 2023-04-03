@@ -6,13 +6,15 @@ output pn_out;
 electrical pn_out;
 
 parameter real period = 1.0, start = 0;
-parameter real x_v = 15;
+parameter real input_pressure = 15;
 
 real output_v = 0;
 
 analog begin
-    @(timer(start, period))
-    output_v = x_v;
+    @(timer(start))
+        output_v = input_pressure;
+    @(timer(start+period))
+        output_v = 0;
     V(pn_out) <+ transition(output_v, 0.0);
 end
 

@@ -1,18 +1,27 @@
 
 
-//`include
 
 module PressurePump(fl_out, c_out);
 
-output fl_out, c_out;
+// vector test
+parameter integer vec_size = 1;
+
+output fl_out;
+output [0:vec_size-1] c_out;
+
 electrical fl_out, c_out;
 
 parameter real pressure=34k;
 parameter real chemConcentration=0;
 
+integer i;
+
 analog begin
    V(fl_out) <+ pressure;
-   V(c_out)  <+ chemConcentration;
+   for (i = vec_size-1; i >= 0; i = i - 1) begin
+      V(c_out[i])  <+ chemConcentration;
+   end // end FOR LOOP
+   
 end
 
 endmodule
