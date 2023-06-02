@@ -16,7 +16,7 @@ real ch_width_pixels, ch_height_layers;
 
 analog begin
 
-   @(initial_step) begin
+   //@(initial_step) begin
       
       //
       // -- print resolution definitions
@@ -45,7 +45,7 @@ analog begin
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
       $display("resistance:");
       $display(R);
-   end
+   //end //end initial_step
 
    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
    V(c_out) <+ V(c_in);
