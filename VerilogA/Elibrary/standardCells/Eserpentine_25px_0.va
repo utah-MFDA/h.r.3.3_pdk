@@ -20,8 +20,8 @@ analog begin
       //
       // -- print resolution definitions
       //
-      pixel_size = 7.6u
-      layer_height = 10u
+      pixel_size = 7.6u;
+      layer_height = 10u;
       
       //
       // -- adjust resistance based on cross section  

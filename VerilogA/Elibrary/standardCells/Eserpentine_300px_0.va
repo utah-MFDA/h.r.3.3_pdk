@@ -13,7 +13,7 @@ real W, H, L;
 real R;
 real ch_width_pixels, ch_height_layers;
 
-initial begin
+analog begin
 
    @(initial_step) begin
 
