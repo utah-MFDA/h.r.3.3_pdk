@@ -12,16 +12,18 @@ DATE = $(date '+%Y-%m-%d')
 LIBRARY_DIR = ./standardCells ./pCells ./hardware
 MERGED_FILE = stdCells_merged.va
 
+HEADER_FILE = ./mfda_header.va
 
-
-merge_std_cells: $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va)  
-
+gen_merge_file:
 	touch $(MERGED_FILE)
 	wc -c $(MERGED_FILE)
 
-	#echo "//Day merged $(DATE)\n" > $(MERGED_FILE)  
-	
-	cat $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va) > $(MERGED_FILE)
+cat_header_file:
+	cat $(HEADER_FILE) > $(MERGED_FILE)
 
 
-all: merge_std_cells
+merge_std_cells: $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va)  	
+	cat $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va) >> $(MERGED_FILE)
+
+
+all: gen_merge_file cat_header_file merge_std_cells

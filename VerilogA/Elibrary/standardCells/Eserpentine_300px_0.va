@@ -1,6 +1,5 @@
 
 
-//`include
 
 module serpentine_300px_0(fl_in, fl_out, c_in, c_out);
 

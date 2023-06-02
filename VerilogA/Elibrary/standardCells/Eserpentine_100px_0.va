@@ -1,7 +1,5 @@
 
 
-//`include
-
 module serpentine_100px_0(fl_in, fl_out, c_in, c_out);
 
 parameter real length=3.8m, CROSS_SECTION=1, NU=0.0010016;
