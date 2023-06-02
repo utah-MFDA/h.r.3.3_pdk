@@ -1,4 +1,6 @@
 
+`include "disciplines.vams"
+`include "constants.vams"
 
 module serpentine_50px_0(fl_in, fl_out, c_in, c_out);
 

@@ -1,6 +1,6 @@
 
-
-
+`include "disciplines.vams"
+`include "constants.vams"
 
 module EValve(fl_in, fl_out, c_in, c_out, pn_in, pn_out);
 

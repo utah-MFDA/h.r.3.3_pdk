@@ -1,5 +1,6 @@
 
-
+`include "disciplines.vams"
+`include "constants.vams"
 
 module diffmix_25px_0(fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out);
 

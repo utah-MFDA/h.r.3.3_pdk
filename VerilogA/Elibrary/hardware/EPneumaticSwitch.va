@@ -1,4 +1,6 @@
 
+`include "disciplines.vams"
+`include "constants.vams"
 
 module PneumaticSwitch(pn_out);
 
