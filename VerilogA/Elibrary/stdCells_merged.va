@@ -421,12 +421,6 @@ end
 
 endmodule
 
-module valve_20px_1();
-
-endmodule
-
-
-
 module Channel(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;

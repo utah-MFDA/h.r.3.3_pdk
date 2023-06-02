@@ -12,7 +12,7 @@ DATE = $(date '+%Y-%m-%d')
 LIBRARY_DIR = ./standardCells ./pCells ./hardware
 MERGED_FILE = stdCells_merged.va
 
-HEADER_FILE = ./mfda_header.va
+HEADER_FILE = ./mfda_header
 
 gen_merge_file:
 	touch $(MERGED_FILE)
