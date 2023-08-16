@@ -2,11 +2,11 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module serpentine_75px_0(fl_in, fl_out, c_in, c_out);
+module Eserpentine_75px_0(fl_in, fl_out, c_in, c_out);
 
-parameter real length=2.280m;
-parameter real CROSS_SECTION=1;
-parameter real NU=0.0010016;
+ (*desc="length", type="instance"*) parameter real length=2.280m;
+ (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1;
+ (*desc="viscosity", type="instance"*) parameter real NU=0.0010016;
 
 real pixel_size;
 real layer_height;

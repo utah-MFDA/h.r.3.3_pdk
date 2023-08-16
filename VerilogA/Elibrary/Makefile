@@ -14,6 +14,18 @@ MERGED_FILE = stdCells_merged.va
 
 HEADER_FILE = ./mfda_header
 
+
+XYCE_LIBRARY_DIR = ./xyce_lib
+
+## preperation for xyce
+
+build_standard_components:
+	
+
+
+mk_xyce: build_standard_components
+
+## HSPICE merge commands
 gen_merge_file:
 	touch $(MERGED_FILE)
 	wc -c $(MERGED_FILE)
@@ -26,4 +38,5 @@ merge_std_cells: $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va)
 	cat $(foreach LIBRARY_DIR, $(LIBRARY_DIR), $(LIBRARY_DIR)/*.va) >> $(MERGED_FILE)
 
 
-all: gen_merge_file cat_header_file merge_std_cells
+#all: gen_merge_file cat_header_file merge_std_cells
+

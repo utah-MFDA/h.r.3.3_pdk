@@ -2,11 +2,11 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module serpentine_50px_0(fl_in, fl_out, c_in, c_out);
+module Eserpentine_50px_0(fl_in, fl_out, c_in, c_out);
 
-parameter real length=1.140m;
-parameter real CROSS_SECTION=1;
-parameter real NU=0.0010016;
+ (*desc="cross-section", type="instance"*) parameter real length=1.140m;
+ (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1;
+ (*desc="cross-section", type="instance"*) parameter real NU=0.0010016;
 
 real pixel_size;
 real layer_height;
@@ -43,8 +43,8 @@ analog begin
       L = length;
 
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-      $display("resistance:");
-      $display(R);
+      //$display("resistance:");
+      //$display(R);
    //end // end initial_step
 
    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;

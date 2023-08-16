@@ -4,7 +4,9 @@
 
 module serpentine_300px_0(fl_in, fl_out, c_in, c_out);
 
-parameter real length=29.640m, CROSS_SECTION=1, NU=0.0010016;
+(*desc="length", type="instance"*) parameter real length=29.640m;
+(*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
+(*desc="length", type="instance"*) parameter real NU=0.0010016;
 
 
 real pixel_size;
