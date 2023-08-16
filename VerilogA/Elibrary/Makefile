@@ -14,14 +14,20 @@ MERGED_FILE = stdCells_merged.va
 
 HEADER_FILE = ./mfda_header
 
+## library definitions
+STANDARD_VA_DIR = ./standardCells
+
 
 XYCE_LIBRARY_DIR = ./xyce_lib
+XYCE_STD_LIB     = $(XYCE_LIBRARY_DIR)/std_lib
 
 ## preperation for xyce
 
 build_standard_components:
-	
-
+	mkdir -p $(XYCE_STD_LIB)
+	cp $(STANDARD_VA_DIR)/*.va $(XYCE_STD_LIB)
+	cd $(XYCE_STD_LIB) && buildxyceplugin.sh *.va ./ && rm *.va
+	#cd $(XYCE_LIBRARY_DIR) && buildxyceplugin.sh *.va ./ && rm *.va
 
 mk_xyce: build_standard_components
 
