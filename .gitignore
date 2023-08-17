@@ -11,6 +11,11 @@ sxcmd.*
 *sx_crash.sx
 *.nfs*
 
+*.prn
+VerilogA/xyce_lib/*
+VerilogA/Elibrary/xyce_lib/*
+VerilogA/xyce_testing/basicTest/lib/*
+
 *remoteComFiles
 
 *tests/*
