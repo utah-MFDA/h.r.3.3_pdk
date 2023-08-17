@@ -16,20 +16,33 @@ HEADER_FILE = ./mfda_header
 
 ## library definitions
 STANDARD_VA_DIR = ./standardCells
-
+HARDWARE_VA_DIR = ./hardware
 
 XYCE_LIBRARY_DIR = ./xyce_lib
+
 XYCE_STD_LIB     = $(XYCE_LIBRARY_DIR)/std_lib
+XYCE_STD_LIB_B   = $(XYCE_STD_LIB)/build
+
+XYCE_HARDWARE_LIB= $(XYCE_LIBRARY_DIR)/hardware
+XYCE_HARDWARE_LIB_B=$(XYCE_HARDWARE_LIB)/build
 
 ## preperation for xyce
 
 build_standard_components:
-	mkdir -p $(XYCE_STD_LIB)
-	cp $(STANDARD_VA_DIR)/*.va $(XYCE_STD_LIB)
-	cd $(XYCE_STD_LIB) && buildxyceplugin.sh *.va ./ && rm *.va
+	mkdir -p $(XYCE_STD_LIB_B)
+	rm -rf $(XKYCE_STD_LIB_B)/*.va
+	cp $(STANDARD_VA_DIR)/*.va $(XYCE_STD_LIB_B)
+	cd $(XYCE_STD_LIB_B) && buildxyceplugin.sh *.va ./ && rm *.va && mv *.so ./../
 	#cd $(XYCE_LIBRARY_DIR) && buildxyceplugin.sh *.va ./ && rm *.va
 
-mk_xyce: build_standard_components
+build_hardware_components:
+	mkdir -p $(XYCE_HARDWARE_LIB_B)
+	rm -rf $(XYCE_HARDWARE_LIB_B)/*.va
+	cp $(HARDWARE_VA_DIR)/*.va $(XYCE_HARDWARE_LIB_B)
+	cd $(XYCE_HARDWARE_LIB_B) && buildxyceplugin.sh *.va ./ && rm *.va && mv *.so ./../
+	
+
+mk_xyce: build_standard_components build_hardware_components
 
 ## HSPICE merge commands
 gen_merge_file:

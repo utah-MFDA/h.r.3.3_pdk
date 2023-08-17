@@ -25,15 +25,11 @@ real R1, R2, R3;
 real W, H, L1, L2, L3;
 real ch_height_layers, ch_width_pixels;
 
-real pixel_width;// = 7.6u;
-real layer_height;// = 10u;
-
-
 analog begin
 
    //@(initial_step) begin
       
-      pixel_width = 7.6u;
+      real pixel_width = 7.6u;
       layer_height = 10u;
 
       begin

@@ -1,0 +1,5 @@
+
+
+Xyce -plugin ./lib/libXyce_Plugin_channel2.so testChannel2.cir
+
+Xyce -plugin ./lib/libXyce_Plugin_channel2.so testChannel1.cir

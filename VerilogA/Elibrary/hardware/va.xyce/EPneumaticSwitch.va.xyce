@@ -1,0 +1,29 @@
+
+`include "disciplines.vams"
+`include "constants.vams"
+
+module EPneumaticSwitch(pn_out);
+
+output pn_out;
+electrical pn_out;
+
+(*desc="switching-time", type="instance"*) parameter real period = 1.0, start = 0;
+(*desc="input pressure", type="instance"*) parameter real input_pressure = 15;
+
+real output_v;
+
+analog begin
+
+    @(initial_step) begin
+        output_v = 0;
+    end
+
+    @(timer(start))
+        output_v = input_pressure;
+    @(timer(start+period))
+        output_v = 0;
+    V(pn_out) <+ transition(output_v, 0.0);
+end
+
+
+endmodule
