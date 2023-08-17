@@ -5,5 +5,5 @@ YEPressurePump prpump 1 0
 R1 1 0 50
 
 .tran 1m 10m
-.print tran I(1)
+.print tran V(1)
 .end

@@ -5,7 +5,7 @@
 module EPressurePump(fl_out, c_out);
 
 // vector test
-parameter integer vec_size = 1;
+//parameter integer vec_size = 1;
 
 output fl_out;
 //output [0:vec_size-1] c_out;
@@ -16,7 +16,7 @@ electrical fl_out, c_out;
 (*desc="input-pressure", type="instance"*) parameter real pressure=34k;
 (*desc="input chemical concentration", type="instance"*) parameter real chemConcentration=0;
 
-integer i;
+//integer i;
 
 analog begin
    V(fl_out) <+ pressure;
