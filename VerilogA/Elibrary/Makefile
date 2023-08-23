@@ -28,14 +28,14 @@ XYCE_HARDWARE_LIB_B=$(XYCE_HARDWARE_LIB)/build
 
 ## preperation for xyce
 
-build_standard_components:
+build_standard_components: $(STANDARD_VA_DIR )
 	mkdir -p $(XYCE_STD_LIB_B)
 	rm -rf $(XKYCE_STD_LIB_B)/*.va
 	cp $(STANDARD_VA_DIR)/*.va $(XYCE_STD_LIB_B)
 	cd $(XYCE_STD_LIB_B) && buildxyceplugin.sh *.va ./ && rm *.va && mv *.so ./../
 	#cd $(XYCE_LIBRARY_DIR) && buildxyceplugin.sh *.va ./ && rm *.va
 
-build_hardware_components:
+build_hardware_components: $(HARDWARE_VA_DIR)
 	mkdir -p $(XYCE_HARDWARE_LIB_B)
 	rm -rf $(XYCE_HARDWARE_LIB_B)/*.va
 	cp $(HARDWARE_VA_DIR)/*.va $(XYCE_HARDWARE_LIB_B)

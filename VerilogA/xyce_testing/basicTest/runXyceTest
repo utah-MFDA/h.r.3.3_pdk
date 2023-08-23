@@ -1,9 +1,5 @@
 
 
-#Xyce -plugin ./libXyce_Plugin_channel2.so testChannel2.cir
-
-#Xyce -plugin ./libXyce_Plugin_channel2.so testChannel1.cir
-
 Xyce -plugin ./libtest.so testChannel2.cir
 
 Xyce -plugin ./libtest.so testChannel1.cir
