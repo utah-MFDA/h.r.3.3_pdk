@@ -1,0 +1,29 @@
+MACRO "$component_name"
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN "$component_name" 0 0 ;
+  SIZE "#totalX" BY "#totalY" ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN "$in_port_name"
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT "#portX" "#portX" "#portY" "#portY" ;
+    END
+  END "$in_port_name"
+  PIN "$out_port_name"
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT "#portX" "#portX" "#portY" "#portY" ;
+    END
+  END "$out_port_name"
+  OBS
+    LAYER met1 ;
+      RECT "#compX" "#compX" "#compY" "#compY" ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END "$component_name"
