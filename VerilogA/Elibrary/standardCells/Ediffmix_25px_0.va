@@ -13,11 +13,11 @@ electrical fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out;
 //output c_in1, c_in2;
 electrical c_in1, c_in2;
 
- (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
- (*desc="length in 1", type="instance"*) parameter real LENGTH1=0.19m;
- (*desc="length in 2", type="instance"*) parameter real LENGTH2=0.269m;
- (*desc="length out 3", type="instance"*) parameter real LENGTH3=0.190m;
- (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
+(*desc="length in 1", type="instance"*) parameter real LENGTH1=0.19m;
+(*desc="length in 2", type="instance"*) parameter real LENGTH2=0.269m;
+(*desc="length out 3", type="instance"*) parameter real LENGTH3=0.190m;
+(*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
 
 real R1_3;
 real R2_3; 
@@ -33,41 +33,41 @@ analog begin
 
    //@(initial_step) begin
       
-      pixel_width = 7.6u;
-      layer_height = 10u;
+   pixel_width = 7.6u;
+   layer_height = 10u;
 
-      begin
-      if  (CROSS_SECTION == 1) begin
-         ch_height_layers = 10;
-         ch_width_pixels  = 14;
-      end
-      else if(CROSS_SECTION== 2) begin
-         ch_height_layers = 5;
-         ch_width_pixels  = 6;
-      end
-      end
+   begin
+   if  (CROSS_SECTION == 1) begin
+      ch_height_layers = 10;
+      ch_width_pixels  = 14;
+   end
+   else if(CROSS_SECTION== 2) begin
+      ch_height_layers = 5;
+      ch_width_pixels  = 6;
+   end
+   end
 
-      W  = ch_width_pixels * pixel_width;
-      H  = ch_height_layers* layer_height;
-      L1 = LENGTH1;
-      L2 = LENGTH2;
-      L3 = LENGTH3;
+   W  = ch_width_pixels * pixel_width;
+   H  = ch_height_layers* layer_height;
+   L1 = LENGTH1;
+   L2 = LENGTH2;
+   L3 = LENGTH3;
 
-      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
-      R1_3 = R1 + R3;
-      R2_3 = R2 + R3;
+   R1_3 = R1 + R3;
+   R2_3 = R2 + R3;
 
-      $display("resistance Mixer:");
-      $display(R1);
-      $display(R2);
-      $display(R3);
+   $display("resistance Mixer:");
+   $display(R1);
+   $display(R2);
+   $display(R3);
 
-      $display(" ");
-      $display(R1_3);
-      $display(R2_3);
+   $display(" ");
+   $display(R1_3);
+   $display(R2_3);
    //end // end initial_step
 
    I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3;

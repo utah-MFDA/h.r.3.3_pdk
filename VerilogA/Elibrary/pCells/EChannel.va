@@ -7,11 +7,8 @@ module Channel(fl_in, fl_out, c_in, c_out);
 inout fl_in, fl_out, c_in, c_out;
 electrical fl_in, fl_out, c_in, c_out;
 
-// vector test
-parameter integer vec_size = 1;
-
-inout [0:vec_size-1] c_in;
-inout [0:vec_size-1] c_out;
+inout c_in;
+inout c_out;
 
 parameter real length=5m;
 parameter real CROSS_SECTION=1; 
@@ -21,55 +18,52 @@ real pixel_size;
 real layer_height;
 real W, H, L;
 real R;
-real ch_width_pixels, ch_height_layers;
-
-integer i;
-
-//inout [vec_size:0] c_in;
+real ch_width_pixels;
+real ch_height_layers;
 
 analog begin
 
-   real pixel_size = 7.6u; 
+   pixel_size = 7.6u; 
    layer_height = 10u;
    
-   @(initial_step) begin
-      begin 
-      if (CROSS_SECTION == 1) begin
-         ch_width_pixels = 14;
-         ch_height_layers= 10;
-      end
-      else if(CROSS_SECTION == 2) begin
-         ch_width_pixels = 6;
-         ch_height_layers= 5;
-      end
-      else if(CROSS_SECTION == 3) begin
-         ch_width_pixels = 28;
-         ch_height_layers= 20;
-      end
-      else if(CROSS_SECTION == 4) begin
-         ch_width_pixels = 42;
-         ch_height_layers= 30;
-      end
-      else if(CROSS_SECTION == 5) begin
-         ch_width_pixels = 70;
-         ch_height_layers= 50;
-      end
-      end
-
-      W = pixel_size * ch_width_pixels;
-      H = layer_height*ch_height_layers;
-      L = length;
-
-      R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-      $display("resistance:");
-      $display(R);
+   
+   begin 
+   if (CROSS_SECTION == 1) begin
+      ch_width_pixels = 14;
+      ch_height_layers= 10;
+   end
+   else if(CROSS_SECTION == 2) begin
+      ch_width_pixels = 6;
+      ch_height_layers= 5;
+   end
+   else if(CROSS_SECTION == 3) begin
+      ch_width_pixels = 28;
+      ch_height_layers= 20;
+   end
+   else if(CROSS_SECTION == 4) begin
+      ch_width_pixels = 42;
+      ch_height_layers= 30;
+   end
+   else if(CROSS_SECTION == 5) begin
+      ch_width_pixels = 70;
+      ch_height_layers= 50;
+   end
    end
 
+   W = pixel_size * ch_width_pixels;
+   H = layer_height*ch_height_layers;
+   L = length;
+
+   R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   $display("resistance:");
+   $display(R);
+   
+
    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
-   for (i = vec_size-1; i >= 0; i = i - 1) begin
-      V(c_out[i]) <+ V(c_in[i]);
-   end // end FOR LOOP
-   //V(c_out) <+ V(c_in);
+   //for (i = vec_size-1; i >= 0; i = i - 1) begin
+   //   V(c_out[i]) <+ V(c_in[i]);
+   //end // end FOR LOOP
+   V(c_out) <+ V(c_in);
 end
 
 endmodule

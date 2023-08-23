@@ -11,9 +11,10 @@ DATE = $(date '+%Y-%m-%d')
 ELIBRARY_DIR=./Elibrary
 MFLIBRARY_DIR=./MFlibrary
 
+MAKE_ARGS=mk_xyce
 
 build_elibrary:
-	cd $(ELIBRARY_DIR) && make
+	cd $(ELIBRARY_DIR) && make $(MAKE_ARGS)
 
 
 all: build_elibrary
