@@ -60,14 +60,14 @@ analog begin
    R1_3 = R1 + R3;
    R2_3 = R2 + R3;
 
-   $display("resistance Mixer:");
-   $display(R1);
-   $display(R2);
-   $display(R3);
+   //$display("resistance Mixer:");
+   //$display(R1);
+   //$display(R2);
+   //$display(R3);
 
-   $display(" ");
-   $display(R1_3);
-   $display(R2_3);
+   //$display(" ");
+   //$display(R1_3);
+   //$display(R2_3);
    //end // end initial_step
 
    I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3;

@@ -43,8 +43,8 @@ analog begin
       L = length;
 
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-      $display("resistance:");
-      $display(R);
+      //$display("resistance:");
+      //$display(R);
    //end //end initial_step
 
    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
