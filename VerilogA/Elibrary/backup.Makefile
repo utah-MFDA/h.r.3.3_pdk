@@ -24,9 +24,17 @@ PCELL_VA_DIR    = pCells
 
 XYCE_LIBRARY_DIR = xyce_lib
 
-XYCE_ELIBRARY_LIB   = $(XYCE_LIBRARY_DIR)/Elibrary
-XYCE_ELIBRARY_LIB_B = $(XYCE_ELIBRARY_LIB)/build
-ELIBRARY_NAME       = Elibrary
+XYCE_STD_LIB      = $(XYCE_LIBRARY_DIR)/std_lib
+XYCE_STD_LIB_B    = $(XYCE_STD_LIB)/build
+STD_LIB_NAME      = stdComponents
+
+XYCE_HARDWARE_LIB  =$(XYCE_LIBRARY_DIR)/hardware
+XYCE_HARDWARE_LIB_B=$(XYCE_HARDWARE_LIB)/build
+HARDWARE_LIB_NAME  = hardware
+
+XYCE_PCELL_LIB    =$(XYCE_LIBRARY_DIR)/pCells
+XYCE_PCELL_LIB_B  =$(XYCE_PCELL_LIB)/build
+PCELL_LIB_NAME    = pCells
 
 # --------------
 
@@ -38,10 +46,37 @@ ELIB_XYCE_COMM    = Xyce --plugin $(WD)/$(XYCE_STD_LIB)/lib$(STD_LIB_NAME).so,$(
 
 ## build xyce libraries
 
+$(XYCE_STD_LIB)/lib$(STD_LIB_NAME).so: $(STANDARD_VA_DIR)/*.va
+	mkdir -p $(XYCE_STD_LIB_B)
+	rm -rf $(XYCE_STD_LIB_B)/*.va
+	
+	cp $(STANDARD_VA_DIR)/*.va $(XYCE_STD_LIB_B)
+	cp $(STANDARD_VA_DIR)/$(STD_LIB_NAME) $(XYCE_STD_LIB_B)
+	
+	cd $(XYCE_STD_LIB_B) && $(BUILD_COMMAND) $(STD_LIB_NAME) *.va ./ && rm *.va && mv *.so ./../
+
+$(XYCE_HARDWARE_LIB)/lib$(HARDWARE_LIB_NAME).so: $(HARDWARE_VA_DIR)/*.va
+	mkdir -p $(XYCE_HARDWARE_LIB_B)
+	rm -rf $(XYCE_HARDWARE_LIB_B)/*.va
+	
+	cp $(HARDWARE_VA_DIR)/*.va $(XYCE_HARDWARE_LIB_B)
+	cp $(HARDWARE_VA_DIR)/$(HARDWARE_LIB_NAME) $(XYCE_HARDWARE_LIB_B)
+
+	cd $(XYCE_HARDWARE_LIB_B) && $(BUILD_COMMAND) $(HARDWARE_LIB_NAME) *.va ./ && rm *.va && mv *.so ./../
+	
+$(XYCE_PCELL_LIB)/lib$(PCELL_LIB_NAME).so: $(PCELL_VA_DIR)/*.va
+	mkdir -p $(XYCE_PCELL_LIB_B)
+	rm -rf $(XYCE_PCELL_LIB_B)/*.va
+	ls $(XYCE_PCELL_LIB_B) | grep *.va
+
+	cp $(PCELL_VA_DIR)/*.va $(XYCE_PCELL_LIB_B)
+	cp $(PCELL_VA_DIR)/$(PCELL_LIB_NAME) $(XYCE_PCELL_LIB_B)
+	
+	cd $(XYCE_PCELL_LIB_B) && $(BUILD_COMMAND) $(PCELL_LIB_NAME) *.va ./ && rm *.va && mv *.so ./../
 
 $(XYCE_ELIBRARY_LIB)/lib$(ELIBRARY_NAME).so: $(PCELL_VA_DIR)/*.va $(HARDWARE_VA_DIR)/*.va $(STANDARD_VA_DIR)/*.va
 	mkdir -p $(XYCE_ELIBRARY_LIB_B)
-	rm -f $(XYCE_ELIBRARY_LIB_B)/*.va
+	rm -rf $(XYCE_ELIBRARY_LIB_B)/*.va
 
 	cp $(PCELL_VA_DIR)/*.va $(XYCE_ELIBRARY_LIB_B)
 	cp $(HARDWARE_VA_DIR)/*.va $(XYCE_ELIBRARY_LIB_B)

@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module EValve(fl_in, fl_out, c_in, c_out, pn_in, pn_out);
+module valve(fl_in, fl_out, c_in, c_out, pn_in, pn_out);
 
 inout fl_in, fl_out;
 inout c_in, c_out;

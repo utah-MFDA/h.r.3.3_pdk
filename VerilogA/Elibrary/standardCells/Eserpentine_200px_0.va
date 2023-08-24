@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module Eserpentine_200px_0(fl_in, fl_out, c_in, c_out);
+module serpentine_200px_0(fl_in, fl_out, c_in, c_out);
 
 (*desc="length", type="instance"*) parameter real length=13.680;
 (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;

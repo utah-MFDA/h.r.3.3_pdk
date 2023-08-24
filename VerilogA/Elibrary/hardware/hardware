@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module EPressurePump(fl_out, c_out);
+module pressurePump(fl_out, c_out);
 
 // vector test
 //parameter integer vec_size = 1;

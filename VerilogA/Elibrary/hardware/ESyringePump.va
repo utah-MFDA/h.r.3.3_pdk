@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module ESyringePump(fl_out, c_out);
+module syringePump(fl_out, c_out);
 
 
 output fl_out;

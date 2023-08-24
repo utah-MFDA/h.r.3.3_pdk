@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module Channel(fl_in, fl_out, c_in, c_out);
+module channel(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 electrical fl_in, fl_out, c_in, c_out;
