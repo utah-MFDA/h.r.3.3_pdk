@@ -1,8 +1,8 @@
 *Test of the pump object
 
-YEPressurePump prpump 1 0
+VCC 1 0 5V
 
-R1 1 0 50
+YChannel chan1 1 0 0 0 length=50m
 
 .tran 1m 10m
 .print tran V(1)
