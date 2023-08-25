@@ -7,7 +7,8 @@ module diffmix_25px_0(fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out);
 inout fl_i1, fl_i2, c_i1, c_i2;
 inout c_i1, c_i2, c_out;
 
-electrical fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out;
+electrical fl_i1, fl_i2, fl_out;
+electrical c_i1, c_i2, c_out;
 
 //internal nodes
 //output c_in1, c_in2;
@@ -74,9 +75,10 @@ analog begin
    I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3;
    I(fl_i2, fl_out) <+ V(fl_i2, fl_out)/R2_3;
    //Concentration signals
-   V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
+   //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
+   V(c_out, gnd) <+ (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3) + (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
 end
 
 endmodule
