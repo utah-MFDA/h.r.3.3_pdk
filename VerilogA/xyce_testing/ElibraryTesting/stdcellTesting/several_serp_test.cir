@@ -1,6 +1,6 @@
 
 
-YPressurePump prPump 1 2 pressure=100k chemConcentration=10
+YPressurePump prPump 1 2 pressure=100k
 
 Yserpentine_100px_0 serp1 1 3 2 4
 Yserpentine_100px_0 serp2 3 0 4 6
