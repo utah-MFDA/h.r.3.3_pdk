@@ -13,8 +13,14 @@ MFLIBRARY_DIR=./MFlibrary
 
 MAKE_ARGS=mk_xyce
 
+DIFF_TEST_DIR=xyce_testing/ElibraryTesting/stdcellTesting/
+DIFF_TEST_COMM= ./xyceLocal.sh diffMix_test1.cir
+
 build_elibrary:
 	cd $(ELIBRARY_DIR) && make $(MAKE_ARGS)
+
+run_diff_test1: build_elibrary
+	cd $(DIFF_TEST_DIR) && $(DIFF_TEST_COMM)
 
 
 all: build_elibrary

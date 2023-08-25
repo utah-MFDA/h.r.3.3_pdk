@@ -2,17 +2,20 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module diffmix_25px_0(fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out);
+module diffmix_25px_0_fl(fl_i1, fl_i2, fl_out);
+//, c_i1, c_i2, c_out);
 
 inout fl_i1, fl_i2, fl_out;
-inout c_i1, c_i2, c_out;
+//inout c_i1, c_i2, c_out;
 
 electrical fl_i1, fl_i2, fl_out;
-electrical c_i1, c_i2, c_out;
+//electrical c_i1, c_i2, c_out;
+
+electrical int_1;
 
 //internal nodes
 //output c_in1, c_in2;
-electrical c_in1, c_in2;
+//electrical c_in1, c_in2;
 
 (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
 (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
@@ -34,6 +37,10 @@ real layer_height;// = 10u;
 //real fl_c2;
 
 ground gnd;
+
+//branch (fl_i1, int_1) int_br1;
+//branch (fl_i2, int_1) int_br2;
+//branch (fl_out,int_1) int_bro;
 
 analog begin
 
@@ -83,12 +90,19 @@ analog begin
    //fl_c1 = (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
    //fl_c2 = (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
 
-   I(fl_i1, fl_out) <+ V(fl_i1, fl_out)/R1_3;
-   I(fl_i2, fl_out) <+ V(fl_i2, fl_out)/R2_3;
+   //I(fl_out) <+ V(fl_i1, fl_out)/R1_3;
+   //I(fl_out) <+ V(fl_i2, fl_out)/R2_3;
+   //I(fl_out) <+  V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3;
+   //I(fl_out) <+  V(fl_i1, fl_out) + V(fl_i2, fl_out);
+
+   I(int_1) <+ V(fl_i1, fl_out)/R1;
+   I(int_1) <+ V(fl_i2, fl_out)/R2;
+
+   I(fl_out)<+ V(int_1)/R3;
    //Concentration signals
-   V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
+   //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
    //V(c_out, gnd) <+ V(c_i1, gnd)*fl_c1 + V(c_i1, gnd)*fl_c2; 
 end
 
