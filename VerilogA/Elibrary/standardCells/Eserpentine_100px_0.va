@@ -48,7 +48,7 @@ analog begin
    //end // end initial_step
 
    I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
-   V(c_out) <+ V(c_in);
+   V(c_out, 0) <+ V(c_in, 0);
 end
 
 endmodule
