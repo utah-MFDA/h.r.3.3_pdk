@@ -10,6 +10,7 @@ sxcmd.*
 *MOSFET_Example*
 *sx_crash.sx
 *.nfs*
+*.so
 
 *.prn
 VerilogA/xyce_lib/*
