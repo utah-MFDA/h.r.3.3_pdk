@@ -7,8 +7,7 @@ module channel(fl_in, fl_out, c_in, c_out);
 inout fl_in, fl_out, c_in, c_out;
 electrical fl_in, fl_out, c_in, c_out;
 
-inout c_in;
-inout c_out;
+inout c_in, c_out;
 
 (*desc="cross-section", type="instance"*) parameter real length=5m;
 (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1; 
@@ -20,6 +19,8 @@ real W, H, L;
 real R;
 real ch_width_pixels;
 real ch_height_layers;
+
+ground gnd;
 
 analog begin
 
@@ -63,7 +64,7 @@ analog begin
    //for (i = vec_size-1; i >= 0; i = i - 1) begin
    //   V(c_out[i]) <+ V(c_in[i]);
    //end // end FOR LOOP
-   V(c_out) <+ V(c_in);
+   V(c_out, gnd) <+ V(c_in, gnd);
 end
 
 endmodule
