@@ -12,7 +12,7 @@ electrical c_i1, c_i2, c_out;
 
 //internal nodes
 electrical int_1;
-electrical c_in1, c_in2;
+//electrical c_in1, c_in2;
 
 (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
 (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
@@ -31,6 +31,8 @@ real pixel_width;// = 7.6u;
 real layer_height;// = 10u;
 
 ground gnd;
+
+real Vc1, Vc2;
 
 analog begin
 
@@ -68,10 +70,15 @@ analog begin
    R2_3 = R2 + R3;
 
    //$display("resistance Mixer:");
-   //$display(R1);
-   //$display(R2);
-   //$display(R3);
+   $display(R1);
+   $display(R2);
+   $display(R3);
 
+   Vc1 = V(int_1, gnd);
+   Vc2 = V(fl_i1, gnd);
+
+   $display(Vc1);
+   $display(Vc2);
    //$display(" ");
    //$display(R1_3);
    //$display(R2_3);
@@ -87,9 +94,9 @@ analog begin
    //Concentration signals
    //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
    //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(fl_i1, int_1)/R1 + V(fl_i2, int_1)/R2);
-   V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, int_1)/R2) / (V(fl_i1, int_1)/R1 + V(fl_i2, int_1)/R2);
-   V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
+   V(c_out, gnd) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(int_1, fl_out)/R3);
+   V(c_out, gnd) <+ V(c_i2, gnd) * (V(fl_i2, int_1)/R2) / (V(int_1, fl_out)/R3);
+   //V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
    //V(c_out, gnd) <+ V(c_i1, gnd)*fl_c1 + V(c_i1, gnd)*fl_c2; 
 end
 
