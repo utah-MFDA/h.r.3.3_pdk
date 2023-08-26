@@ -95,8 +95,8 @@ analog begin
    //I(fl_out) <+  V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3;
    //I(fl_out) <+  V(fl_i1, fl_out) + V(fl_i2, fl_out);
 
-   I(int_1) <+ V(fl_i1, fl_out)/R1;
-   I(int_1) <+ V(fl_i2, fl_out)/R2;
+   I(int_1) <+ V(fl_i1,int_1)/R1;
+   I(int_1) <+ V(fl_i2,int_1)/R2;
 
    I(fl_out)<+ V(int_1)/R3;
    //Concentration signals
