@@ -83,10 +83,12 @@ analog begin
    I(fl_i1, int_1) <+ V(fl_i1, int_1)/R1;
    I(fl_i2, int_1) <+ V(fl_i2, int_1)/R2;
 
-   I(int_1, fl_out) <+ V(int_1, fl_out)/R3
+   I(int_1, fl_out) <+ V(int_1, fl_out)/R3;
    //Concentration signals
-   V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
+   V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(fl_i1, int_1)/R1 + V(fl_i2, int_1)/R2);
+   V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, int_1)/R2) / (V(fl_i1, int_1)/R1 + V(fl_i2, int_1)/R2);
    V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
    //V(c_out, gnd) <+ V(c_i1, gnd)*fl_c1 + V(c_i1, gnd)*fl_c2; 
 end

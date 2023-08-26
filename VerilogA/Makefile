@@ -22,5 +22,9 @@ build_elibrary:
 run_diff_test1: build_elibrary
 	cd $(DIFF_TEST_DIR) && $(DIFF_TEST_COMM)
 
+run_diff_test2: build_elibrary
+	cd $(DIFF_TEST_DIR) && ./xyceLocal.sh diffMix_test2.cir
+
+
 
 all: build_elibrary
