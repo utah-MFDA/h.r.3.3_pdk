@@ -34,9 +34,6 @@ ground gnd;
 //branch (fl_i1, int_1) int_br1;
 //branch (fl_i2, int_1) int_br2;
 //branch (fl_out,int_1) int_bro;
-
-real fl_1, fl_2;
-
 analog begin
 
       
@@ -68,9 +65,9 @@ analog begin
    R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
    R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
-   $display(R1);
-   $display(R2);
-   $display(R3);
+   //$display(R1);
+   //$display(R2);
+   //$display(R3);
 
    //fl_1 = V(fl_i1, int_1)/R1;
    //fl_2 = V(fl_i2, int_1)/R2;
