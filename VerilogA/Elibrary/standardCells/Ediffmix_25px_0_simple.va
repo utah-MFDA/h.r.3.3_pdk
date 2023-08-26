@@ -6,16 +6,11 @@ module diffmix_25px_0_fl(fl_i1, fl_i2, fl_out);
 //, c_i1, c_i2, c_out);
 
 inout fl_i1, fl_i2, fl_out;
-//inout c_i1, c_i2, c_out;
 
 electrical fl_i1, fl_i2, fl_out;
-//electrical c_i1, c_i2, c_out;
 
 electrical int_1;
 
-//internal nodes
-//output c_in1, c_in2;
-//electrical c_in1, c_in2;
 
 (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
 (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
@@ -30,11 +25,9 @@ real R1, R2, R3;
 real W, H, L1, L2, L3;
 real ch_height_layers, ch_width_pixels;
 
-real pixel_width;// = 7.6u;
-real layer_height;// = 10u;
+real pixel_width;
+real layer_height;
 
-//real fl_c1;
-//real fl_c2;
 
 ground gnd;
 
@@ -44,7 +37,6 @@ ground gnd;
 
 analog begin
 
-   //@(initial_step) begin
       
    pixel_width = 7.6u;
    layer_height = 10u;
@@ -74,21 +66,18 @@ analog begin
    R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
    R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
+   $display(R1);
+   $display(R2);
+   $display(R3);
+
+   fl_1 = V(fl_i1, int_1)/R1;
+   fl_2 = V(fl_i2, int_1)/R2;
+
+   $display(fl_2);
+   $display(fl_1);
+
    R1_3 = R1 + R3;
    R2_3 = R2 + R3;
-
-   //$display("resistance Mixer:");
-   //$display(R1);
-   //$display(R2);
-   //$display(R3);
-
-   //$display(" ");
-   //$display(R1_3);
-   //$display(R2_3);
-   //end // end initial_step
-
-   //fl_c1 = (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   //fl_c2 = (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
 
    //I(fl_out) <+ V(fl_i1, fl_out)/R1_3;
    //I(fl_out) <+ V(fl_i2, fl_out)/R2_3;
@@ -99,11 +88,7 @@ analog begin
    I(int_1) <+ V(fl_i2, int_1)/R2;
 
    I(fl_out)<+ V(int_1, fl_out)/R3;
-   //Concentration signals
-   //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   //V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
-   //V(c_out, gnd) <+ V(c_i1, gnd)*fl_c1 + V(c_i1, gnd)*fl_c2; 
+
 end
 
 endmodule
