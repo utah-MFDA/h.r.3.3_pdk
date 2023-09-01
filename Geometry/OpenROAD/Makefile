@@ -26,7 +26,7 @@ combine_files:
 	echo " " >> $(COMBINED_FILE)
 	echo "##### Library $(PLATFORM)" >> $(COMBINED_FILE)
 
-	find $(LOCAL_OR_MFDA_DIR)/lef -type f -name '*.lef' -exec cat {} + >>$(COMBINED_FILE)
+	find $(LOCAL_OR_MFDA_DIR)/lef -type f -name '*.lef' -exec cut -b 1- {} + >>$(COMBINED_FILE)
 	
 	echo " " >> $(COMBINED_FILE)
 	echo "END LIBRARY" >> $(COMBINED_FILE)
