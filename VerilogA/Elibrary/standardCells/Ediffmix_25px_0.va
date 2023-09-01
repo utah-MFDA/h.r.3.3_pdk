@@ -32,7 +32,7 @@ real layer_height;// = 10u;
 
 ground gnd;
 
-real Vc1, Vc2;
+//real Vc1, Vc2;
 
 analog begin
 
@@ -74,11 +74,11 @@ analog begin
    $display(R2);
    $display(R3);
 
-   Vc1 = V(int_1, gnd);
-   Vc2 = V(fl_i1, gnd);
+   //Vc1 = V(int_1, gnd);
+   //Vc2 = V(fl_i1, gnd);
 
-   $display(Vc1);
-   $display(Vc2);
+   //$display(Vc1);
+   //$display(Vc2);
    //$display(" ");
    //$display(R1_3);
    //$display(R2_3);
@@ -91,6 +91,7 @@ analog begin
    I(fl_i2, int_1) <+ V(fl_i2, int_1)/R2;
 
    I(int_1, fl_out) <+ V(int_1, fl_out)/R3;
+
    //Concentration signals
    //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
    //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
