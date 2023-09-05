@@ -31,7 +31,7 @@ MACRO valve_20px_1
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
+      LAYER met2 ;
         RECT 59.5 29.5 60.5 30.5 ;
     END
   END in_air
@@ -39,7 +39,7 @@ MACRO valve_20px_1
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
+      LAYER met2 ;
         RECT 59.5 89.5 60.5 90.5 ;
     END
   END out_air

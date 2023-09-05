@@ -20,3 +20,5 @@ run_openroad_make:
 
 run_openscad_make:
 	cd $(OPENSCAD_MK_LOC) && make
+
+all:
