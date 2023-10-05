@@ -6,8 +6,8 @@
 module serpentine_25px_0(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
-electrical c_in, c_out;
-electrical fl_in, fl_out;
+concentration c_in, c_out;
+fluidDynamics fl_in, fl_out;
 
 (*desc="length", type="instance"*) parameter real length=0.380m;
 (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
@@ -22,7 +22,8 @@ real ch_width_pixels, ch_height_layers;
 ground gnd;
 
 analog begin
-   //@(initial_step) begin
+   @(initial_instance) 
+   begin : initial_instance
       
       //
       // -- print resolution definitions
@@ -51,10 +52,10 @@ analog begin
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
      // $display("resistance:");
      // $display(R);
-   //end //end initial_step
+   end //end initial_instance
 
-   I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
-   V(c_out, gnd) <+ V(c_in, gnd);
+   Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
+   C(c_out, gnd) <+ C(c_in, gnd);
 end
 
 endmodule
