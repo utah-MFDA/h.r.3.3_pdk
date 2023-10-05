@@ -56,3 +56,16 @@ module serpentine_300px_0(xpos, ypos, zpos, orientation){
 }
 
 serpentine_300px_0(0,0,0,"N");
+
+translate([(23-200)*px,23*px,0])cube([200*px,14*px,0.1]);
+translate([(23+360+14)*px,23*px,0])cube([100*px,14*px,0.1]);
+
+color("green") cube([423*px, 423*px, 0.0005]);
+
+color("blue") translate([23*px, 23*px, 0]) cube([374*px, 374*px, 0.001]);
+
+//color("red")
+//translate([23*px, 23*px, 0]) cube([14*px, 14*px, 0.15]);
+//color("red")
+//translate([(23+360)*px, 23*px, 0]) cube([14*px, 14*px, 0.15]);
+
