@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module serpentine_100px_0(fl_in, fl_out, c_in, c_out);
+module serpentine_100px_0_q(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 electrical c_in, c_out;
@@ -61,7 +61,7 @@ analog begin
    I(fflow) <+ V(fl_in, fl_out)/R;
 
    //V(c_out, c_in) <+ 0;
-   V(c_out) <+ V(c_in);
+   I(c_out, c_in) <+ I(c_in, gnd)*V(fl_in, fl_out)/R;
    //I(chem) <+ 0;
 end
 

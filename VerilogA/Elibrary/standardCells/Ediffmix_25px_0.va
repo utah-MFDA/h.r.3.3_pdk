@@ -12,6 +12,7 @@ electrical c_i1, c_i2, c_out;
 
 //internal nodes
 electrical int_1;
+//electrical ic1, ic2;
 //electrical c_in1, c_in2;
 
 (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
@@ -32,11 +33,15 @@ real layer_height;// = 10u;
 
 ground gnd;
 
-//real Vc1, Vc2;
+//branch(c_i1, c_out) chem1;
+//branch(c_i2, c_out) chem2;
+
+//real Vc1;//, Vc2;
 
 analog begin
 
-   //@(initial_step) begin
+   @(initial_instance) 
+   begin : initial_instance
       
    pixel_width = 7.6u;
    layer_height = 10u;
@@ -69,10 +74,11 @@ analog begin
    R1_3 = R1 + R3;
    R2_3 = R2 + R3;
 
-   //$display("resistance Mixer:");
+   $display("resistance Mixer:");
    $display(R1);
    $display(R2);
    $display(R3);
+   $display("test 4");
 
    //Vc1 = V(int_1, gnd);
    //Vc2 = V(fl_i1, gnd);
@@ -82,7 +88,7 @@ analog begin
    //$display(" ");
    //$display(R1_3);
    //$display(R2_3);
-   //end // end initial_step
+   end // end initial_step
 
    //fl_c1 = (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
    //fl_c2 = (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
@@ -93,10 +99,27 @@ analog begin
    I(int_1, fl_out) <+ V(int_1, fl_out)/R3;
 
    //Concentration signals
+   //V(ic1) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(int_1, fl_out)/R3);
+   //V(ic2) <+ V(c_i2, gnd) * ((V(fl_i2, int_1)/R2) / (V(int_1, fl_out)/R3));
    //V(c_in1, gnd) <+ V(c_i1, gnd) * (V(fl_i1, fl_out)/R1_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
    //V(c_in2, gnd) <+ V(c_i2, gnd) * (V(fl_i2, fl_out)/R2_3) / (V(fl_i1, fl_out)/R1_3 + V(fl_i2, fl_out)/R2_3);
-   V(c_out, gnd) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(int_1, fl_out)/R3);
-   V(c_out, gnd) <+ V(c_i2, gnd) * (V(fl_i2, int_1)/R2) / (V(int_1, fl_out)/R3);
+   //V(c_out) <+ V(ic1) + V(ic2);
+
+   if (V(int_1, fl_out) > 0) 
+      V(c_out, gnd) <+ V(c_i1, gnd) * (V(fl_i1, int_1)/R1) / (V(int_1, fl_out)/R3);
+   //else 
+   //   V(c_out, gnd) <+ V(c_i1, gnd);
+      //V(c_i1) * ((V(fl_i1, int_1)/R1) / (V(int_1, fl_out)/R3));
+
+   if (V(int_1, fl_out) > 0) 
+      V(c_out, gnd) <+ V(c_i2, gnd) * ((V(fl_i2, int_1)/R2) / (V(int_1, fl_out)/R3));
+   //else 
+   //   V(c_out, gnd) <+ 0;//V(c_i2, gnd);
+      //V(c_i2);// * ((V(fl_i2, int_1)/R2) / (V(int_1, fl_out)/R3));
+
+
+   //I(chem1) <+ 0;
+   //I(chem2) <+ 0;
    //V(c_out, gnd) <+ V(c_in1, gnd) + V(c_in2, gnd);
    //V(c_out, gnd) <+ V(c_i1, gnd)*fl_c1 + V(c_i1, gnd)*fl_c2; 
 end
