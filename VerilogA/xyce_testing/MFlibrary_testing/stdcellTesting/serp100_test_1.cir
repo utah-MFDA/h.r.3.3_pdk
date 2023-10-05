@@ -1,0 +1,13 @@
+* serpentine 100 test
+
+YPressurePump pr1  1  2   pressure=100k chemConcentration=100m
+
+Yserpentine_100px_0 serp1 1 11 2 3
+Yserpentine_100px_0 serp2 11 0 3 4
+
+*VCC 4 0 0V
+
+.tran 1m 10m
+.print tran V(3) V(11) 
+*I(vcc)
+.end

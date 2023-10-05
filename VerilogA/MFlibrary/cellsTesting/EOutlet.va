@@ -1,0 +1,8 @@
+
+
+//`include
+
+module Outlet(fl_in, c_in);
+
+
+endmodule
