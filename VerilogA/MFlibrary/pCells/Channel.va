@@ -1,11 +1,13 @@
 
+`include "nature_fluid_dynamics.vams"
 `include "disciplines.vams"
 `include "constants.vams"
 
 module channel(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
-electrical fl_in, fl_out, c_in, c_out;
+fluidDynamics fl_in, fl_out;
+concentration c_in, c_out;
 
 inout c_in, c_out;
 
@@ -60,11 +62,11 @@ analog begin
    //$display(R);
    
 
-   I(fl_in, fl_out) <+ V(fl_in, fl_out)/R;
+   Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
    //for (i = vec_size-1; i >= 0; i = i - 1) begin
    //   V(c_out[i]) <+ V(c_in[i]);
    //end // end FOR LOOP
-   V(c_out, gnd) <+ V(c_in, gnd);
+   C(c_out, gnd) <+ C(c_in, gnd);
 end
 
 endmodule

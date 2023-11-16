@@ -1,4 +1,5 @@
 
+`include "nature_fluid_dynamics.vams"
 `include "disciplines.vams"
 `include "constants.vams"
 
@@ -8,7 +9,9 @@ inout fl_in, fl_out;
 inout c_in, c_out;
 inout pn_in, pn_out;
 
-electrical fl_in, fl_out, c_in, c_out, pn_in, pn_out;
+fluidDynamics fl_in, fl_out;
+concentration c_in, c_out;
+fluidDynamics pn_in, pn_out;
 
 (*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
 (*desc="length", type="instance"*)         parameter real L = 0.1;
@@ -57,12 +60,12 @@ analog begin
 
     R_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
 
-    if (V(pn_in) >= threshold_pressure_PSI)
-        I(fl_in, fl_out) <+ V(fl_in, fl_out)/R_valve;
+    if (P(pn_in) >= threshold_pressure_PSI)
+        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve;
     else
-        I(fl_in, fl_out) <+ 0;
+        Q(fl_in, fl_out) <+ 0;
 
-    V(c_out) <+ V(c_in);
+    C(c_out) <+ C(c_in);
 end // end analog
 
 endmodule

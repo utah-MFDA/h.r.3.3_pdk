@@ -1,0 +1,22 @@
+
+
+`include "disciplines.vams"
+`include "constants.vams"
+
+module outlet(c_in, c_out);
+
+input c_in;
+input c_out;
+
+electrical c_in, c_out;
+
+branch (c_in, c_out) chem_o;
+ground gnd;
+
+analog begin
+   V(chem_o) <+ -V(c_in, gnd) + V(c_out, gnd);
+   //V(chem_o) <+ V(c_in, gnd) - V(c_out, gnd);
+   
+end
+
+endmodule
