@@ -38,42 +38,42 @@ analog begin
    @(initial_instance) 
    begin : initial_instance
       
-   pixel_width = 7.6u;
-   layer_height = 10u;
+      pixel_width = 7.6u;
+      layer_height = 10u;
 
-   LENGTH1=0.19m;
-   LENGTH2=0.269m;
-   LENGTH3=0.190m;
+      LENGTH1=0.19m;
+      LENGTH2=0.269m;
+      LENGTH3=0.190m;
 
-   begin
-   if  (CROSS_SECTION == 1) begin
-      ch_height_layers = 10;
-      ch_width_pixels  = 14;
-   end
-   else if(CROSS_SECTION== 2) begin
-      ch_height_layers = 5;
-      ch_width_pixels  = 6;
-   end
-   end
+      begin
+      if  (CROSS_SECTION == 1) begin
+         ch_height_layers = 10;
+         ch_width_pixels  = 14;
+      end
+      else if(CROSS_SECTION== 2) begin
+         ch_height_layers = 5;
+         ch_width_pixels  = 6;
+      end
+      end
 
-   W  = ch_width_pixels * pixel_width;
-   H  = ch_height_layers* layer_height;
-   L1 = LENGTH1;
-   L2 = LENGTH2;
-   L3 = LENGTH3;
+      W  = ch_width_pixels * pixel_width;
+      H  = ch_height_layers* layer_height;
+      L1 = LENGTH1;
+      L2 = LENGTH2;
+      L3 = LENGTH3;
 
-   R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-   R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-   R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
-   R1_3 = R1 + R3;
-   R2_3 = R2 + R3;
+      R1_3 = R1 + R3;
+      R2_3 = R2 + R3;
 
-   $display("resistance Mixer:");
-   $display(R1);
-   $display(R2);
-   $display(R3);
-   $display("test 4");
+      $display("resistance Mixer:");
+      $display(R1);
+      $display(R2);
+      $display(R3);
+      $display("test 4");
 
    end // end initial_step
 
