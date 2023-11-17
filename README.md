@@ -9,7 +9,6 @@ These components include
 
 # Sub-directories
 
-Two main directories exist including
-- Geometry
-- VerilogA
-which contain information for the components to be used in the MFDA modules for place and routing and system-level simulation.
+Two main directories exist including: Geometry and VerilogA. These directories contain files with information for the components to be used in the MFDA modules for place and routing and system-level simulation.
+
+
