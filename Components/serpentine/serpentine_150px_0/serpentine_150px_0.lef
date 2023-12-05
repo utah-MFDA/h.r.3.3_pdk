@@ -1,0 +1,30 @@
+ 
+MACRO serpentine_150px_0
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN serpentine_150px_0 0 0 ;
+  SIZE 240 BY 240 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 29.5 29.5 30.5 30.5 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 209.5 29.5 210.5 30.5 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 210 210 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END serpentine_150px_0
