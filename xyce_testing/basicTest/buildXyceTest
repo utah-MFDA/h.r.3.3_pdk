@@ -1,0 +1,11 @@
+#/bin/sh
+
+rm -rf ./lib
+
+mkdir -p ./lib
+cp *.va ./lib
+cp test ./lib
+
+buildxyceplugin.sh -o test *.va ./lib && rm ./lib/*.va
+rm ./lib/test
+mv ./lib/*.so ./ 

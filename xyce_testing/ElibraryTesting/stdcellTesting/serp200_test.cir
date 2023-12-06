@@ -1,0 +1,8 @@
+* serpentine 200 test
+
+YPressurePump prPump 1 2 pressure=100k
+Yserpentine_200px_0 serp1 1 0 2 3
+
+.tran 1m 10m
+.print tran V(1)
+.end

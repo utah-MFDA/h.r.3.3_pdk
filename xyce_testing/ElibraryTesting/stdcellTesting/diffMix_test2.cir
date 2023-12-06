@@ -1,0 +1,19 @@
+
+
+*YPressurePump pr1         1  2   pressure=100k chemConcentration=100m
+*YPressurePump pr2         11 22  pressure=100k
+
+Vc1 1  0 100kV
+Vc2 11 0 100kV
+
+Vc3 2  0 100mV
+Vc4 22 0 0kV
+
+Ydiffmix_25px_0 mix1      1  11  0  2  22 6
+
+*Youtlet c_chem1 6 2
+*Youtlet c_chem2 6 22
+
+.tran 1m 10m 
+.print tran V(1) V(2) V(22) V(6)
+.end

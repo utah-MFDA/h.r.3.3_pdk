@@ -1,0 +1,16 @@
+
+
+YPressurePump prPump1 1 3   pressure=100k
+YPressurePump prPump2 2 4 pressure=100k
+
+Yserpentine_100px_0 serp1 1 11 3 5
+Yserpentine_100px_0 serp2 2 11 4 6
+
+*Ydiffmix_25px_0_fl mix1 11 12 0 
+
+Yserpentine_100px_0 serp3 11 0 5 7
+
+
+.tran 1m 10m 
+.print tran V(1) V(2) V(11)
+.end

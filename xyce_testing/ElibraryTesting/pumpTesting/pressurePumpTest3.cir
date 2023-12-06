@@ -1,0 +1,9 @@
+*Test of the pump object
+
+YPressurePump prpump serp1:fl_in 0 pressure=100k
+
+Yserpentine_100px_0 serp1 prpump:fl_out 0 0 0 length=100m
+
+.tran 1m 10m
+.print tran V(prpump:fl_out)
+.end
