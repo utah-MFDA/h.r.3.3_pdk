@@ -1,4 +1,10 @@
 
+// Xyce requires a valid va file as the first argument, even though it will not actually build
+//    The first argument is supposed to be the library file, but it still gets syntax checked
+//
+//    This is a place holder file. The name of this file is the name of the library file:
+//       lib<file_name>.so
+
 `include "disciplines.vams"
 `include "constants.vams"
 

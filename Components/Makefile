@@ -14,11 +14,13 @@ DATE = $(date '+%Y-%m-%d')
 VERILOGA_BUILD_DIR = verilogA_build
 VERILOGA_BUILD_SRC = $(VERILOGA_BUILD_DIR)/src
 
-VA_SRC_DIR = valves serpentine pumps mixers veriloga_objects
+#VA_SRC_DIR = valves serpentine pumps mixers veriloga_objects
+VA_SRC_DIR = serpentine mixers veriloga_objects
 
-MF_LIB = lib_MFXyce
+MF_LIB = MFXyce
 
-$(BUILD_COMMAND)
+BUILD_COMMAND_LOC = /usr/local/xyce_dev/bin
+BUILD_COMMAND     = $(BUILD_COMMAND_LOC)/buildxyceplugin.sh -o
 
 
 $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
@@ -33,5 +35,23 @@ $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.
 	rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
+DOCKER_IMAGE = bgoenner/mfda_xyce
+
+DOCKER_LOCAL_COMP_DIR = ./
+
+DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
+DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
+
+make_remote:
+	mkdir -p $(VERILOGA_BUILD_DIR)/lib
+	docker run -a stdout -v $(DOCKER_LOCAL_COMP_DIR):$(DOCKER_REMOTE_COMP_DIR) -w $(DOCKER_REMOTE_COMP_DIR) --entrypoint='' $(DOCKER_IMAGE) make build_remote
+
+build_remote:
+	cp -r $(DOCKER_REMOTE_COMP_DIR) $(DOCKER_REMOTE_VA_BUILD)
+	cd $(DOCKER_REMOTE_VA_BUILD) && make make_default
+	cp $(DOCKER_REMOTE_COMP_DIR)_tmp/$(VERILOGA_BUILD_DIR)/lib/lib$(MF_LIB).so $(VERILOGA_BUILD_DIR)/lib/
+
 clean_va_build:
 	rm -r $(VERILOGA_BUILD_SRC)
+
+make_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
