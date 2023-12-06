@@ -1,0 +1,142 @@
+
+*****
+***** Welcome to the Xyce(TM) Parallel Electronic Simulator
+*****
+***** This is version Xyce DEVELOPMENT-202306010240-(Public_Release-7.6.0-225-g0f7f3e36)-opensource
+***** Date: Wed Dec 06 20:18:10 UTC 2023
+
+
+***** Executing netlist ./MFlibrary_testing/pCellTesting/channel_test.cir
+
+***** Reading and parsing netlist...
+***** Setting up topology...
+
+Netlist warning: Voltage Node (3) connected to only 1 device Terminal
+Netlist warning: Voltage Node (3) does not have a DC path to ground
+***** Device Count Summary ...
+       CHANNEL level 1 (ADMS channel)           1
+       PRESSUREPUMP level 1 (ADMS pressurePump) 1
+       ------------------------------------------
+       Total Devices                            2
+***** Setting up matrix structure...
+***** Number of Unknowns = 6
+***** Initializing...
+
+***** Beginning DC Operating Point Calculation...
+
+***** Beginning Transient Calculation...
+
+***** Percent complete: 1.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 3.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 7.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 15.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 25.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 35.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 45.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 55.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 65.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 75.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 85.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 95.5 %
+***** Current system time: Wed Dec  6 20:18:10 2023
+***** Estimated time to completion:  0 sec.
+
+***** Problem read in and set up time: 0.001858 seconds
+ ***** DCOP time: 0.000452042 seconds.  Breakdown follows:
+	Number Successful Steps Taken:		1
+	Number Failed Steps Attempted:		0
+	Number Jacobians Evaluated:		2
+	Number Linear Solves:			2
+	Number Failed Linear Solves:		0
+	Number Residual Evaluations:		4
+	Number Nonlinear Convergence Failures:	0
+	Total Residual Load Time:		2.71797e-05 seconds
+	Total Jacobian Load Time:		7.86781e-06 seconds
+	Total Linear Solution Time:		5.10216e-05 seconds
+
+ ***** Transient Stepping time: 0.000717878 seconds.  Breakdown follows:
+	Number Successful Steps Taken:		14
+	Number Failed Steps Attempted:		0
+	Number Jacobians Evaluated:		14
+	Number Linear Solves:			14
+	Number Failed Linear Solves:		0
+	Number Residual Evaluations:		28
+	Number Nonlinear Convergence Failures:	0
+	Total Residual Load Time:		9.34601e-05 seconds
+	Total Jacobian Load Time:		2.09808e-05 seconds
+	Total Linear Solution Time:		3.91006e-05 seconds
+
+
+***** Solution Summary *****
+	Number Successful Steps Taken:		15
+	Number Failed Steps Attempted:		0
+	Number Jacobians Evaluated:		16
+	Number Linear Solves:			16
+	Number Failed Linear Solves:		0
+	Number Residual Evaluations:		32
+	Number Nonlinear Convergence Failures:	0
+	Total Residual Load Time:		0.00012064 seconds
+	Total Jacobian Load Time:		2.88486e-05 seconds
+	Total Linear Solution Time:		9.01222e-05 seconds
+
+
+***** Total Simulation Solvers Run Time: 0.00132012 seconds
+***** Total Elapsed Run Time:            0.00317001 seconds
+*****
+***** End of Xyce(TM) Simulation
+*****
+
+Timing summary of 1 processor
+                 Stats                   Count       CPU Time              Wall Time
+---------------------------------------- ----- --------------------- ---------------------
+Xyce                                         1        0.006 (100.0%)        0.006 (100.0%)
+  Analysis                                   1        0.001 (20.04%)        0.001 (20.06%)
+    Transient                                1        0.001 (19.90%)        0.001 (19.90%)
+      Nonlinear Solve                       15        0.001 ( 8.68%)        0.001 ( 8.64%)
+        Residual                            32        0.000 ( 2.11%)        0.000 ( 2.08%)
+        Jacobian                            16        0.000 ( 0.50%)        0.000 ( 0.54%)
+        Linear Solve                        16        0.000 ( 1.47%)        0.000 ( 1.50%)
+      Successful DCOP Steps                  1        0.000 ( 2.00%)        0.000 ( 2.02%)
+      Successful Step                       14        0.000 ( 2.92%)        0.000 ( 2.97%)
+  Netlist Import                             1        0.001 (11.29%)        0.001 (11.30%)
+    Parse Context                            1        0.000 ( 1.78%)        0.000 ( 1.78%)
+    Distribute Devices                       1        0.000 ( 1.64%)        0.000 ( 1.64%)
+    Verify Devices                           1        0.000 ( 0.08%)        0.000 ( 0.06%)
+    Instantiate                              1        0.000 ( 1.14%)        0.000 ( 1.14%)
+  Late Initialization                        1        0.001 ( 8.68%)        0.001 ( 8.69%)
+    Global Indices                           1        0.000 ( 0.72%)        0.000 ( 0.72%)
+  Setup Matrix Structure                     1        0.000 ( 1.87%)        0.000 ( 1.86%)
+

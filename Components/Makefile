@@ -15,7 +15,7 @@ VERILOGA_BUILD_DIR = verilogA_build
 VERILOGA_BUILD_SRC = $(VERILOGA_BUILD_DIR)/src
 
 #VA_SRC_DIR = valves serpentine pumps mixers veriloga_objects
-VA_SRC_DIR = serpentine mixers veriloga_objects
+VA_SRC_DIR = valves serpentine mixers veriloga_objects
 
 MF_LIB = MFXyce
 
@@ -44,12 +44,21 @@ DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
 make_remote:
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
-	docker run -a stdout -v $(DOCKER_LOCAL_COMP_DIR):$(DOCKER_REMOTE_COMP_DIR) -w $(DOCKER_REMOTE_COMP_DIR) --entrypoint='' $(DOCKER_IMAGE) make build_remote
+	docker run \
+	-a stdout \
+	-v $(DOCKER_LOCAL_COMP_DIR):$(DOCKER_REMOTE_COMP_DIR) \
+	-w $(DOCKER_REMOTE_COMP_DIR) \
+	--entrypoint='' \
+	--rm \
+	$(DOCKER_IMAGE) make build_remote
 
-build_remote:
+build_remote_tmp:
 	cp -r $(DOCKER_REMOTE_COMP_DIR) $(DOCKER_REMOTE_VA_BUILD)
 	cd $(DOCKER_REMOTE_VA_BUILD) && make make_default
 	cp $(DOCKER_REMOTE_COMP_DIR)_tmp/$(VERILOGA_BUILD_DIR)/lib/lib$(MF_LIB).so $(VERILOGA_BUILD_DIR)/lib/
+
+build_remote:
+	cd $(DOCKER_REMOTE_COMP_DIR) && make make_default
 
 clean_va_build:
 	rm -r $(VERILOGA_BUILD_SRC)

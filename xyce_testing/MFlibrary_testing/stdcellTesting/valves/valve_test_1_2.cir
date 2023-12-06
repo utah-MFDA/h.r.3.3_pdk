@@ -1,0 +1,15 @@
+
+
+YPressurePump prp1 1 101 pressure=100k 
+
+Vpn 201 0 0V PWL(0s 0V 2s 0V 6s 20V 10s 20V)
+
+Vpr 1 11 0V
+
+Yserpentine_100px_0 serp1 11 2 101 102
+Yvalve_20px_1 valve1      2  3 102 103 201 0
+Yserpentine_100px_0 serp2 3  0 103 104
+
+.tran 100m 10s
+.print tran V(201)
+.end

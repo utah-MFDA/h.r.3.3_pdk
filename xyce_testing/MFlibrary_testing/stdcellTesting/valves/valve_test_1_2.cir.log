@@ -1,0 +1,152 @@
+
+*****
+***** Welcome to the Xyce(TM) Parallel Electronic Simulator
+*****
+***** This is version Xyce DEVELOPMENT-202306010240-(Public_Release-7.6.0-225-g0f7f3e36)-opensource
+***** Date: Wed Dec 06 20:27:05 UTC 2023
+
+
+***** Executing netlist ./MFlibrary_testing/stdcellTesting/valves/valve_test_1_2.cir
+
+***** Reading and parsing netlist...
+***** Setting up topology...
+
+Netlist warning: Voltage Node (104) connected to only 1 device Terminal
+Netlist warning: Voltage Node (103) does not have a DC path to ground
+Netlist warning: Voltage Node (102) does not have a DC path to ground
+Netlist warning: Voltage Node (104) does not have a DC path to ground
+***** Device Count Summary ...
+       PRESSUREPUMP level 1 (ADMS pressurePump)             1
+       SERPENTINE_100PX_0 level 1 (ADMS serpentine_100px_0) 2
+       V level 1 (Independent Voltage Source)               2
+       VALVE_20PX_1 level 1 (ADMS valve_20px_1)             1
+       ------------------------------------------------------
+       Total Devices                                        6
+***** Setting up matrix structure...
+***** Number of Unknowns = 16
+***** Initializing...
+
+***** Beginning DC Operating Point Calculation...
+
+***** Beginning Transient Calculation...
+
+***** Percent complete: 1.5 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 3.1 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 6.3 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 12.7 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 20 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 23 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 27 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 35 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 45 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 47.5 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 48.75 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+***** Percent complete: 49.8438 %
+***** Current system time: Wed Dec  6 20:27:05 2023
+***** Estimated time to completion:  0 sec.
+
+ *** Transient failure history: 
+Time        Time      Step   EstErr       Non-Linear Solver       node     node
+(sec)       Step     Status  OverTol    Status    Iters  ||F||    index    name
+ 5.000e+00  9.313e-10  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  2.328e-10  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  4.657e-10  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  1.164e-10  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  2.328e-10  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  5.821e-11  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  1.164e-10  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  2.910e-11  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  5.821e-11  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  1.455e-11  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  2.910e-11  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  7.276e-12  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  1.455e-11  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  3.638e-12  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  7.276e-12  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  1.819e-12  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  3.638e-12  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  9.095e-13  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  1.819e-12  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  4.547e-13  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  9.095e-13  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  2.274e-13  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  4.547e-13  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+ 5.000e+00  1.137e-13  pass  0.000e+00  P:sm nrm   1  0.000e+00     -1    N/A
+ 5.000e+00  2.274e-13  fail  3.928e+01  P:sm nrm   1  4.548e-18     14    3
+Time step too small near step number: 55  Exiting transient loop.
+
+
+***** Solution Summary *****
+	Number Successful Steps Taken:		56
+	Number Failed Steps Attempted:		43
+	Number Jacobians Evaluated:		100
+	Number Linear Solves:			100
+	Number Failed Linear Solves:		0
+	Number Residual Evaluations:		200
+	Number Nonlinear Convergence Failures:	0
+	Total Residual Load Time:		0.001 seconds
+	Total Jacobian Load Time:		0.000 seconds
+	Total Linear Solution Time:		0.000 seconds
+
+
+***** Total Simulation Solvers Run Time: 0.005 seconds
+***** Total Elapsed Run Time:            0.007 seconds
+*****
+***** End of Xyce(TM) Simulation
+*****
+
+Timing summary of 1 processor
+                 Stats                   Count       CPU Time              Wall Time
+---------------------------------------- ----- --------------------- ---------------------
+Xyce                                         1        0.010 (100.0%)        0.010 (100.0%)
+  Analysis                                   1        0.005 (46.37%)        0.005 (46.42%)
+    Transient                                1        0.005 (46.28%)        0.005 (46.32%)
+      Nonlinear Solve                       99        0.003 (26.71%)        0.003 (26.60%)
+        Residual                           200        0.001 (11.17%)        0.001 (11.29%)
+        Jacobian                           100        0.000 ( 2.41%)        0.000 ( 2.38%)
+        Linear Solve                       100        0.000 ( 4.47%)        0.000 ( 4.49%)
+      Successful DCOP Steps                  1        0.000 ( 1.44%)        0.000 ( 1.45%)
+      Successful Step                       55        0.001 ( 8.03%)        0.001 ( 8.16%)
+      Failed Steps                          43        0.000 ( 2.13%)        0.000 ( 2.09%)
+  Netlist Import                             1        0.001 ( 9.17%)        0.001 ( 9.17%)
+    Parse Context                            1        0.000 ( 1.28%)        0.000 ( 1.29%)
+    Distribute Devices                       1        0.000 ( 1.86%)        0.000 ( 1.86%)
+    Verify Devices                           1        0.000 ( 0.04%)        0.000 ( 0.04%)
+    Instantiate                              1        0.000 ( 1.56%)        0.000 ( 1.57%)
+  Late Initialization                        1        0.001 ( 5.85%)        0.001 ( 5.85%)
+    Global Indices                           1        0.000 ( 0.73%)        0.000 ( 0.73%)
+  Setup Matrix Structure                     1        0.000 ( 1.31%)        0.000 ( 1.31%)
+
