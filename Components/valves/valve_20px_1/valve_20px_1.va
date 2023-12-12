@@ -29,6 +29,8 @@ real Hm, Wm, Lm;
 real dia_m, mem_th_m;
 real R_valve;
 
+real P_lin, P_lin_start;
+
 analog begin
 
     pixel_size = 7.6u;
@@ -61,17 +63,40 @@ analog begin
 
     R_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
 
-    begin
-    if (P(pn_in) >= threshold_pressure_PSI)
-        Q_r = P(fl_in, fl_out)/R_valve;
-        Q(fl_in, fl_out) <+ Q_r + transition(Q_r, 0, 200m, 200m);
-    end
-    else 
-        Q(fl_in, fl_out) <+ 0 + transition(-Q_r, 0, 200m, 200m);
-    end
-    end
+    // linear region of valve transition
+    P_lin = 0.5; 
+    P_lin_start = threshold_pressure_PSI - P_lin;     
 
-    C(c_out) <+ C(c_in);
+    // Pressure above theshold
+    if (P(pn_in) > threshold_pressure_PSI) begin
+        Q(fl_in, fl_out) <+ 0;
+        C(c_out) <+ C(c_in);
+    end else if (threshold_pressure_PSI - P(pn_in) <= P_lin) begin
+        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - \
+            P(fl_in, fl_out)/R_valve * ((P(pn_in)-P_lin_start)/(threshold_pressure_PSI-P_lin_start));
+        C(c_out) <+ C(c_in);
+    end else begin
+        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve;
+        C(c_out) <+ C(c_in);
+    end 
+
+
+    //if (P(pn_in) >= threshold_pressure_PSI)
+    //    targ_q = P(fl_in, fl_out)/R_valve;
+    //else 
+    //    targ_q = 0 ;
+
+    //else if (threshold_pressure_PSI - P(pn_in) <= 2) 
+    //    Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - P(fl_in, fl_out)/R_valve*((P(pn_in)-13)/(threshold_pressure_PSI-13));
+    
+
+    //Q(fl_in, fl_out) <+ ddt(targ_q - q_prev);
+
+    //q_prev    = q_present;
+    //q_present = ddt(targ_q - q_prev);
+     
+
+    
 end // end analog
 
 endmodule

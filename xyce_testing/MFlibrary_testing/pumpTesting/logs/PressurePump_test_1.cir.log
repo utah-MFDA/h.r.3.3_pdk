@@ -3,7 +3,7 @@
 ***** Welcome to the Xyce(TM) Parallel Electronic Simulator
 *****
 ***** This is version Xyce DEVELOPMENT-202306010240-(Public_Release-7.6.0-225-g0f7f3e36)-opensource
-***** Date: Wed Dec 06 20:18:10 UTC 2023
+***** Date: Thu Dec 07 20:36:20 UTC 2023
 
 
 ***** Executing netlist ./MFlibrary_testing/pumpTesting/PressurePump_test_1.cir
@@ -27,55 +27,55 @@ Netlist warning: Voltage Node (3) does not have a DC path to ground
 ***** Beginning Transient Calculation...
 
 ***** Percent complete: 1.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 3.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 7.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 15.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 25.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 35.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 45.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 55.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 65.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 75.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 85.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
 ***** Percent complete: 95.5 %
-***** Current system time: Wed Dec  6 20:18:10 2023
+***** Current system time: Thu Dec  7 20:36:20 2023
 ***** Estimated time to completion:  0 sec.
 
-***** Problem read in and set up time: 0.00182104 seconds
- ***** DCOP time: 0.000452042 seconds.  Breakdown follows:
+***** Problem read in and set up time: 0.00189519 seconds
+ ***** DCOP time: 0.000465155 seconds.  Breakdown follows:
 	Number Successful Steps Taken:		1
 	Number Failed Steps Attempted:		0
 	Number Jacobians Evaluated:		2
@@ -83,11 +83,11 @@ Netlist warning: Voltage Node (3) does not have a DC path to ground
 	Number Failed Linear Solves:		0
 	Number Residual Evaluations:		4
 	Number Nonlinear Convergence Failures:	0
-	Total Residual Load Time:		2.90871e-05 seconds
-	Total Jacobian Load Time:		6.91414e-06 seconds
-	Total Linear Solution Time:		4.91142e-05 seconds
+	Total Residual Load Time:		2.59876e-05 seconds
+	Total Jacobian Load Time:		5.96046e-06 seconds
+	Total Linear Solution Time:		5.19753e-05 seconds
 
- ***** Transient Stepping time: 0.000926971 seconds.  Breakdown follows:
+ ***** Transient Stepping time: 0.000983953 seconds.  Breakdown follows:
 	Number Successful Steps Taken:		14
 	Number Failed Steps Attempted:		0
 	Number Jacobians Evaluated:		14
@@ -95,9 +95,9 @@ Netlist warning: Voltage Node (3) does not have a DC path to ground
 	Number Failed Linear Solves:		0
 	Number Residual Evaluations:		28
 	Number Nonlinear Convergence Failures:	0
-	Total Residual Load Time:		0.000118732 seconds
+	Total Residual Load Time:		0.000103474 seconds
 	Total Jacobian Load Time:		2.90871e-05 seconds
-	Total Linear Solution Time:		4.48227e-05 seconds
+	Total Linear Solution Time:		4.02927e-05 seconds
 
 
 ***** Solution Summary *****
@@ -108,13 +108,13 @@ Netlist warning: Voltage Node (3) does not have a DC path to ground
 	Number Failed Linear Solves:		0
 	Number Residual Evaluations:		32
 	Number Nonlinear Convergence Failures:	0
-	Total Residual Load Time:		0.00014782 seconds
-	Total Jacobian Load Time:		3.60012e-05 seconds
-	Total Linear Solution Time:		9.39369e-05 seconds
+	Total Residual Load Time:		0.000129461 seconds
+	Total Jacobian Load Time:		3.50475e-05 seconds
+	Total Linear Solution Time:		9.2268e-05 seconds
 
 
-***** Total Simulation Solvers Run Time: 0.00156498 seconds
-***** Total Elapsed Run Time:            0.00337815 seconds
+***** Total Simulation Solvers Run Time: 0.00170088 seconds
+***** Total Elapsed Run Time:            0.00359201 seconds
 *****
 ***** End of Xyce(TM) Simulation
 *****
@@ -122,21 +122,21 @@ Netlist warning: Voltage Node (3) does not have a DC path to ground
 Timing summary of 1 processor
                  Stats                   Count       CPU Time              Wall Time
 ---------------------------------------- ----- --------------------- ---------------------
-Xyce                                         1        0.006 (100.0%)        0.006 (100.0%)
-  Analysis                                   1        0.001 (11.99%)        0.002 (23.46%)
-    Transient                                1        0.001 (11.85%)        0.002 (23.31%)
-      Nonlinear Solve                       15        0.000 ( 6.52%)        0.001 ( 9.52%)
-        Residual                            32        0.000 ( 1.06%)        0.000 ( 2.52%)
-        Jacobian                            16        0.000 ( 0.36%)        0.000 ( 0.65%)
-        Linear Solve                        16        0.000 ( 1.13%)        0.000 ( 1.62%)
-      Successful DCOP Steps                  1        0.000 ( 2.40%)        0.000 ( 2.06%)
-      Successful Step                       14        0.000 ( 1.08%)        0.000 ( 3.60%)
-  Netlist Import                             1        0.001 (12.82%)        0.001 (11.00%)
-    Parse Context                            1        0.000 ( 2.11%)        0.000 ( 1.81%)
-    Distribute Devices                       1        0.000 ( 1.80%)        0.000 ( 1.56%)
-    Verify Devices                           1        0.000 ( 0.07%)        0.000 ( 0.06%)
-    Instantiate                              1        0.000 ( 1.37%)        0.000 ( 1.19%)
-  Late Initialization                        1        0.001 ( 9.40%)        0.001 ( 8.09%)
-    Global Indices                           1        0.000 ( 0.86%)        0.000 ( 0.74%)
-  Setup Matrix Structure                     1        0.000 ( 2.05%)        0.000 ( 1.76%)
+Xyce                                         1        0.007 (100.0%)        0.007 (100.0%)
+  Analysis                                   1        0.002 (23.70%)        0.002 (23.71%)
+    Transient                                1        0.002 (23.55%)        0.002 (23.57%)
+      Nonlinear Solve                       15        0.001 ( 8.61%)        0.001 ( 8.54%)
+        Residual                            32        0.000 ( 2.16%)        0.000 ( 2.14%)
+        Jacobian                            16        0.000 ( 0.55%)        0.000 ( 0.55%)
+        Linear Solve                        16        0.000 ( 1.46%)        0.000 ( 1.47%)
+      Successful DCOP Steps                  1        0.000 ( 2.08%)        0.000 ( 2.10%)
+      Successful Step                       14        0.000 ( 3.28%)        0.000 ( 3.33%)
+  Netlist Import                             1        0.001 (11.06%)        0.001 (11.05%)
+    Parse Context                            1        0.000 ( 1.66%)        0.000 ( 1.64%)
+    Distribute Devices                       1        0.000 ( 1.52%)        0.000 ( 1.52%)
+    Verify Devices                           1        0.000 ( 0.07%)        0.000 ( 0.07%)
+    Instantiate                              1        0.000 ( 1.12%)        0.000 ( 1.12%)
+  Late Initialization                        1        0.001 ( 8.07%)        0.001 ( 8.08%)
+    Global Indices                           1        0.000 ( 0.77%)        0.000 ( 0.77%)
+  Setup Matrix Structure                     1        0.000 ( 1.81%)        0.000 ( 1.79%)
 

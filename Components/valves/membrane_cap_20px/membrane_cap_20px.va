@@ -1,0 +1,18 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+
+module membrane_cap_20px(p,n) ;
+
+(*desc="length", type="instance"*) parameter real capacitance = 1n ;
+
+fluidDynamics p, n ;
+
+analog begin
+    Q(p,n) <+ capacitance * ddt(P(p,n)) ;
+end
+
+
+endmodule

@@ -2,7 +2,7 @@
 
 YPressurePump prp1 1 101 pressure=100k 
 
-Vpn 201 0 30V PWL(0 30V 2s 30V 6s 20V 10s 20V)
+Vpn 201 0 0V PWL(0s 0V 2s 0V 6s 20V 10s 20V)
 
 Vpr 1 11 0V
 
