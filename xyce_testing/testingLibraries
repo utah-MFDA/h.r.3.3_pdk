@@ -1,0 +1,3 @@
+
+hardware=./../../Elibrary/xyce_lib/hardware/libXyce_Plugin_EPressurePump.so
+stdcells=./../../Elibrary/xyce_lib/std_lib/libXyce_Plugin_Eserpentine_75px_0.so

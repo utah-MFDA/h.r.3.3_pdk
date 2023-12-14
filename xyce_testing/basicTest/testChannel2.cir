@@ -1,0 +1,11 @@
+*Test the channel objects
+
+VCC 0 1 5V 
+Ychannel2 channel1 1 0
+* w=100u h=100u L=2m
+
+.tran 1m 10m
+.print tran I(vcc)
+.end
+
+

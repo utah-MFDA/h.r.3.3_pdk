@@ -11,6 +11,7 @@ sxcmd.*
 *sx_crash.sx
 *.nfs*
 *.so
+*.cir.log
 
 *.prn
 VerilogA/xyce_lib/*
@@ -22,3 +23,6 @@ VerilogA/xyce_testing/basicTest/lib/*
 *tests/*
 
 xyce_testing/*/*/logs/*
+xyce_testing/*/*/*/logs/*
+xyce_testing/*/*/*.log
+Components/verilogA_build/*

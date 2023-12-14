@@ -1,0 +1,10 @@
+ 
+* serpentine 100 test
+
+YPressurePump pr1  1  2   pressure=100k chemConcentration=100m
+
+Ychannel chan1 1 0 2 3 length=100m
+
+.tran 1m 10m
+.print tran V(1) V(2) V(3) 
+.end
