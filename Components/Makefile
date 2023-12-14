@@ -9,13 +9,15 @@ SHELL		= /bin/bash
 DATE = $(date '+%Y-%m-%d')
 
 
+GENERAL_SRC_DIR = valves serpentine mixers
+
 ## Verilog A targets
 
 VERILOGA_BUILD_DIR = verilogA_build
 VERILOGA_BUILD_SRC = $(VERILOGA_BUILD_DIR)/src
 
 #VA_SRC_DIR = valves serpentine pumps mixers veriloga_objects
-VA_SRC_DIR = valves serpentine mixers veriloga_objects
+VA_SRC_DIR = $(GENERAL_SRC_DIR) veriloga_objects
 
 MF_LIB = MFXyce
 
@@ -51,6 +53,10 @@ make_remote:
 	--entrypoint='' \
 	--rm \
 	$(DOCKER_IMAGE) make build_remote
+
+check_library:
+	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
+
 
 build_remote_tmp:
 	cp -r $(DOCKER_REMOTE_COMP_DIR) $(DOCKER_REMOTE_VA_BUILD)
