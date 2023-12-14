@@ -20,3 +20,5 @@ VerilogA/xyce_testing/basicTest/lib/*
 *remoteComFiles
 
 *tests/*
+
+xyce_testing/*/*/logs/*
