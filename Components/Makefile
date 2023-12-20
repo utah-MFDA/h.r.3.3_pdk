@@ -1,13 +1,15 @@
 
 # Shell Setup for make
 SHELL		= /bin/bash
-.SHELLFLAGS = -o pipefail -c
+.SHELLFLAGS 	= -o pipefail -c
 
 # Default target when invoking without a specific target
 .DEFAULT_GOAL := all
 
 DATE = $(date '+%Y-%m-%d')
 
+
+KIT_NAME = HR3.3
 
 GENERAL_SRC_DIR = valves serpentine mixers
 
@@ -17,7 +19,11 @@ VERILOGA_BUILD_DIR = verilogA_build
 VERILOGA_BUILD_SRC = $(VERILOGA_BUILD_DIR)/src
 
 #VA_SRC_DIR = valves serpentine pumps mixers veriloga_objects
-VA_SRC_DIR = $(GENERAL_SRC_DIR) veriloga_objects
+VA_SRC_DIR  = $(GENERAL_SRC_DIR) veriloga_objects
+
+LEF_SRC_DIR = $(GENERAL_SRC_DIR)
+
+SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects
 
 MF_LIB = MFXyce
 
@@ -44,7 +50,7 @@ DOCKER_LOCAL_COMP_DIR = ./
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
 DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
-make_remote:
+make_va_remote:
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	docker run \
 	-a stdout \
@@ -54,19 +60,33 @@ make_remote:
 	--rm \
 	$(DOCKER_IMAGE) make build_remote
 
+MERGE_LEF = $(KIT_NAME)_merged.lef
+make_lef:
+	rm -f $(MERGE_LEF)
+	touch $(MERGE_LEF)
+	#cat $(foreach LEF_SRC_DIR, $(LEF_SRC_DIR), $(LEF_SRC_DIR)/*/*.lef) > $(KIT_NAME)_merged.lef
+	find $(LEF_SRC_DIR) -type f -name '*.lef' -exec cut -b 1- {} + >> $(MERGE_LEF)
+
+MERGE_SCAD = $(KIT_NAME)_merged.scad
+make_scad:
+	rm -f $(MERGE_SCAD)
+	touch $(MERGE_SCAD)
+	find $(SCAD_SRC_DIR) -type f -name '*.scad' -exec cut -b 1- {} + >> $(MERGE_SCAD)
+
+
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
 
 
-build_remote_tmp:
+build_va_remote_tmp:
 	cp -r $(DOCKER_REMOTE_COMP_DIR) $(DOCKER_REMOTE_VA_BUILD)
 	cd $(DOCKER_REMOTE_VA_BUILD) && make make_default
 	cp $(DOCKER_REMOTE_COMP_DIR)_tmp/$(VERILOGA_BUILD_DIR)/lib/lib$(MF_LIB).so $(VERILOGA_BUILD_DIR)/lib/
 
 build_remote:
-	cd $(DOCKER_REMOTE_COMP_DIR) && make make_default
+	cd $(DOCKER_REMOTE_COMP_DIR) && make make_va_default
 
 clean_va_build:
 	rm -r $(VERILOGA_BUILD_SRC)
 
-make_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
