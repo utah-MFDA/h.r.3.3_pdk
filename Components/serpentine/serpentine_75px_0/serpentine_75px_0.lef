@@ -27,4 +27,4 @@ MACRO serpentine_75px_0
       RECT 30 30 120 120 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
-END serpentine_50px_0
+END serpentine_75px_0
