@@ -24,6 +24,9 @@ VA_SRC_DIR  = $(GENERAL_SRC_DIR) veriloga_objects
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects
+SCAD_USE    = scad_use
+
+SCAD_BUILD_DIR= scad_build
 
 MF_LIB = MFXyce
 
@@ -73,10 +76,18 @@ make_scad:
 	touch $(MERGE_SCAD)
 	find $(SCAD_SRC_DIR) -type f -name '*.scad' -exec cut -b 1- {} + >> $(MERGE_SCAD)
 
+clean_merge_scad:
+	python3 cleanScadFile.py --merge_file HR3.3_merged.scad
+
+build_scad_local: make_scad clean_merge_scad
+	mkdir -p $(SCAD_BUILD_DIR)
+	cp $(foreach SCAD_USE, $(SCAD_USE), $(SCAD_USE)/*.scad) $(SCAD_BUILD_DIR)
+	mv $(MERGE_SCAD) $(SCAD_BUILD_DIR)
 
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
 
+build_scad_remote: make_scad clean_merge_scad
 
 build_va_remote_tmp:
 	cp -r $(DOCKER_REMOTE_COMP_DIR) $(DOCKER_REMOTE_VA_BUILD)
