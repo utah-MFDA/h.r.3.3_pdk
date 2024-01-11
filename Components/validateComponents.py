@@ -17,8 +17,8 @@ def check_va_file(va_file):
 
 def check_dir(dir_list):
 
-    comp_check = pd.DataFrame(columns=['StandardCell', 'lef', 'va', 'scad'])
-    comp_lib   = pd.DataFrame(columns=['StandardCell'])
+    comp_check = pd.DataFrame(columns=['Standard_Cell', 'lef', 'va', 'scad'])
+    comp_lib   = pd.DataFrame(columns=['Standard_Cell'])
 
 
     for dir in dir_list:
@@ -35,7 +35,7 @@ def check_dir(dir_list):
                     columns=['StandardCell', 'lef', 'va', 'scad'])], 
                 ignore_index=True, axis=0)
 
-            comp_ind = comp_check[comp_check['StandardCell'] == comp].index[0]
+            comp_ind = comp_check[comp_check['Standard_Cell'] == comp].index[0]
 
             print("check for component, "+comp+"; @ "+file_base)
 
@@ -57,7 +57,7 @@ def check_dir(dir_list):
             if comp_check[comp_check['StandardCell'] == comp][['lef', 'va', 'scad']].values.tolist() \
                 == [[1,1,1]]:
                 comp_lib = pd.concat([comp_lib, pd.DataFrame(np.array([(comp)]),
-                    columns=['StandardCell'])])
+                    columns=['Standard_Cell'])])
 
     comp_check.to_csv('Component_Check.csv')
     comp_lib.to_csv('StandardCellLibrary.csv')
