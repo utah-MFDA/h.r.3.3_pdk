@@ -56,4 +56,4 @@ docker_run_tests:
 COMPONENT_LIB_MAKE = ./../Components
 
 rebuild_xyce_library:
-	cd $(COMPONENT_LIB_MAKE) && make make_remote
+	cd $(COMPONENT_LIB_MAKE) && make build_remote
