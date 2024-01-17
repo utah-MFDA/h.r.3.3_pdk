@@ -1,14 +1,17 @@
 Process design kit (PDK) for the H.R.3.3 3D printer.
 
+All of the components for the library are placed in the Components subdirectory which is further broken out into subdirectories into there respective functional directory (valve, mixer, ...). Inside those directories are the respective specific component containing three different files for the software:
+ - LEF (.lef)
+ - Verilog-AMS (.va)
+ - OpenSCAD (.scad)
 
 ## Adding to the component library
 
-Each component will be broken out into subdirectories into there respective functional directory (valve, mixer, ...).
+You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce). Otherwise the software will not see it.
 
-Each component must have three files to be used for the MFDA software they are:
-- LEF (.lef)
-- Verilog-AMS (.va)
-- OpenSCAD (.scad)
+
+For Verilog-AMS development you can make a new subdirectory in xyce_testing/MFlibrary_testing
+
 
 ### LEF
 
