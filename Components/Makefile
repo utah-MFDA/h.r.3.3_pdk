@@ -53,6 +53,7 @@ DOCKER_LOCAL_COMP_DIR = ./
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
 DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
+# change to lib
 make_va_remote:
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	docker run \
