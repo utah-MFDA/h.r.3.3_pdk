@@ -30,10 +30,12 @@ def check_dir(dir_list):
             
             file_base = dir+'/'+comp+'/'
 
+
             comp_check = pd.concat([comp_check, 
                 pd.DataFrame(np.array([(comp, 0, 0, 0)]), 
-                    columns=['StandardCell', 'lef', 'va', 'scad'])], 
+                    columns=['Standard_Cell', 'lef', 'va', 'scad'])], 
                 ignore_index=True, axis=0)
+
 
             comp_ind = comp_check[comp_check['Standard_Cell'] == comp].index[0]
 
@@ -54,7 +56,7 @@ def check_dir(dir_list):
 
             #print(comp_check[comp_check['StandardCell'] == comp][['lef', 'va', 'scad']])
 
-            if comp_check[comp_check['StandardCell'] == comp][['lef', 'va', 'scad']].values.tolist() \
+            if comp_check[comp_check['Standard_Cell'] == comp][['lef', 'va', 'scad']].values.tolist() \
                 == [[1,1,1]]:
                 comp_lib = pd.concat([comp_lib, pd.DataFrame(np.array([(comp)]),
                     columns=['Standard_Cell'])])
