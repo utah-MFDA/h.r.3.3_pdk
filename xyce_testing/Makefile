@@ -70,11 +70,11 @@ run_single_test_mf:
 	-w $(REMOTE_TEST_DIR) \
 	-a stdout \
 	--entrypoint='' \
-	$(DOCKER_IMAGE) make docker_run_single_test_mf INFILE=$(TEST)
+	$(DOCKER_IMAGE) make docker_run_single_test_mf INFILE=$(INFILE)
 
 docker_run_single_test_mf:
 	if [ $(INFILE) != template ]; then \
-		$(XYCE_RUN) ./$(LIBRARY_TEST)/$(INFILE) > ./$(LIBRARY_TEST)/$(TEST).log \
+		$(XYCE_RUN) ./$(LIBRARY_TEST)/$(INFILE) > ./$(LIBRARY_TEST)/$(INFILE).log \
 	else \
 		echo INFILE not defined; \
 	fi;

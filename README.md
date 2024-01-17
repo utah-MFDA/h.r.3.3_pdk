@@ -9,8 +9,29 @@ All of the components for the library are placed in the Components subdirectory 
 
 You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce). Otherwise the software will not see it.
 
+To initialize the Xyce library run, to get the docker image:
+```
+make init_va
+```
 
-For Verilog-AMS development you can make a new subdirectory in xyce_testing/MFlibrary_testing
+Then to build the Xyce library run: 
+```
+make make_va_remote
+```
+
+
+
+For Verilog-AMS development you can make a new subdirectory in xyce_testing/MFlibrary_testing to run specific Xyce tests.
+
+To run all of the tests run
+```
+make run_tests_remote
+```
+
+To run a single test run
+```
+make run_single_test_mf INFILE=<path-to>/<your_cir-file>
+```
 
 
 ### LEF
