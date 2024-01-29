@@ -5,7 +5,7 @@ define \n
 endef
 
 
-DOCKER_IMAGE = bgoenner/mfda_xyce:latest
+DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.0
 
 REMOTE_BUILD_LOC = /mfda_simulation/local/lib
 LOCAL_BUILD_LOC  = ./../Components/verilogA_build/lib
