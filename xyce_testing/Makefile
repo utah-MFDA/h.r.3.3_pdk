@@ -31,6 +31,7 @@ make_docker:
 	-w $(REMOTE_TEST_DIR) \
 	-a stdout \
 	--entrypoint='' \
+	--rm \
 	$(DOCKER_IMAGE) make docker_run_tests 
 
 run_tests_remote: make_docker
@@ -70,6 +71,7 @@ run_single_test_mf:
 	-w $(REMOTE_TEST_DIR) \
 	-a stdout \
 	--entrypoint='' \
+	--rm \
 	$(DOCKER_IMAGE) make docker_run_single_test_mf INFILE=$(INFILE)
 
 docker_run_single_test_mf:

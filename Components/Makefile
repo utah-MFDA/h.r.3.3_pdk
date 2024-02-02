@@ -43,10 +43,21 @@ $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.
 	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
 
 	cd $(VERILOGA_BUILD_SRC) && $(BUILD_COMMAND) $(MF_LIB) *.va ./ && \
-	rm *.va && rm *.vams && rm $(MF_LIB) && \
+	#rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
-DOCKER_IMAGE = bgoenner/mfda_xyce:latest
+copy_va:
+	mkdir -p $(VERILOGA_BUILD_SRC)
+
+	cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
+	cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
+	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
+
+clean_va:
+	rm -rf $(VERILOGA_BUILD_SRC)
+
+#DOCKER_IMAGE = bgoenner/mfda_xyce:latest
+DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
 
 DOCKER_LOCAL_COMP_DIR = ./
 

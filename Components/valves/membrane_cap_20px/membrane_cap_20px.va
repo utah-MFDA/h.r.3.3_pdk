@@ -6,14 +6,37 @@
 
 module membrane_cap_20px(p,n) ;
 
-(*desc="length", type="instance"*) parameter real capacitance = 1n ;
-
 inout p, n;
 fluidDynamics p, n ;
 
+real cap;
+
+// typical dimension for a 3D printed valve
+(*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+// properties of PEGDA with 2% NPS
+(*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+// estimating poisson's ratio using a typical value for epoxies
+//   which tend to be 0.3 - 0.35
+(*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+// membrane radius
+(*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+branch (p, n) q_mem ;
+real q;
+
+
 analog begin
-    Q(p,n) <+ capacitance * ddt( P(p,n)) ;
-end
+
+    // circuilar membrane
+    cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+
+    q  = cap * P(q_mem) ;
+    Qfl(q_mem) <+ ddt( q ) ;
+
+end // end analog
 
 
 endmodule

@@ -12,7 +12,7 @@ R1 1 2 10000k
 R2 0 3 1000k
 *
 *Ymembrane_cap_20pxV 2 0 100u
-C1 2 3 1000u
+C1 2 3 1000p
 *
 **YVLG_capacitor 0 2 capacitor
 

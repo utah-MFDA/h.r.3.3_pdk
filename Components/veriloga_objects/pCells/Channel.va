@@ -62,7 +62,7 @@ analog begin
    //$display(R);
    
 
-   Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
+   Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
    //for (i = vec_size-1; i >= 0; i = i - 1) begin
    //   V(c_out[i]) <+ V(c_in[i]);
    //end // end FOR LOOP

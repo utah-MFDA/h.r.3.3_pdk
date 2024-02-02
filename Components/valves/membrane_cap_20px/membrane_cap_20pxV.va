@@ -1,5 +1,5 @@
 
-`include "nature_fluid_dynamics.vams"
+//`include "nature_fluid_dynamics.vams"
 `include "disciplines.vams"
 `include "constants.vams"
 
@@ -11,8 +11,23 @@ module membrane_cap_20pxV(p, n);
   electrical p,n;
   inout p,n;
 
-  (*desc="Capacitance", type="instance" *) parameter real C=1p;
-  real Q;
+  real cap;
+
+  // typical dimension for a 3D printed valve
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+  // properties of PEGDA with 2% NPS
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+  // estimating poisson's ratio using a typical value for epoxies
+  //   which tend to be 0.3 - 0.35
+  (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+  // membrane radius
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+  branch (p, n) q_cap ;
+  real q;
 
   analog
   begin
@@ -21,7 +36,21 @@ module membrane_cap_20pxV(p, n);
     // solution-dependent parameter.  Fortunately, Xyce doesn't let you
     // make parameters solution-dependent, and special coding is necessary
     // external to the device even to enable such a thing.
-    Q=C*V(p,n);
-    I(p,n) <+ ddt(Q);
+
+
+    @(initial_instance) 
+    begin : initial_instance
+      cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+      $display(cap);
+    end
+
+
+    // circuilar membrane
+    cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ))*1000;
+    $display(cap);
+
+
+    q=cap*V(q_cap);
+    I(q_cap) <+ ddt(q) ;
   end
 endmodule

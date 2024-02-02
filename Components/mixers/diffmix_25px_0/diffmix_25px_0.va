@@ -78,10 +78,10 @@ analog begin
    end // end initial_step
 
 
-   Q(fl_i1, int_1) <+ P(fl_i1, int_1)/R1;
-   Q(fl_i2, int_1) <+ P(fl_i2, int_1)/R2;
+   Qfl(fl_i1, int_1) <+ P(fl_i1, int_1)/R1;
+   Qfl(fl_i2, int_1) <+ P(fl_i2, int_1)/R2;
 
-   Q(int_1, fl_out) <+ P(int_1, fl_out)/R3;
+   Qfl(int_1, fl_out) <+ P(int_1, fl_out)/R3;
 
    //Concentration signals
 

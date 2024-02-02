@@ -69,14 +69,14 @@ analog begin
 
     // Pressure above theshold
     if (P(pn_in) > threshold_pressure_PSI) begin
-        Q(fl_in, fl_out) <+ 0;
+        Qfl(fl_in, fl_out) <+ 0;
         C(c_out) <+ C(c_in);
     end else if (threshold_pressure_PSI - P(pn_in) <= P_lin) begin
-        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - \
+        Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - \
             P(fl_in, fl_out)/R_valve * ((P(pn_in)-P_lin_start)/(threshold_pressure_PSI-P_lin_start));
         C(c_out) <+ C(c_in);
     end else begin
-        Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve;
+        Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve;
         C(c_out) <+ C(c_in);
     end 
 

@@ -30,10 +30,13 @@ if __name__ == "__main__":
     prn_dir = "MFlibrary_testing/stdcellTesting/membrane_cap/results"
     #prn_dir = "MFlibrary_testing/stdcellTesting/membrane_cap/"
 
-    prn_file = "mem_cap_test_v_1_1.cir.prn"
+    #prn_file = "mem_cap_test_v_0_1.cir.prn"
+    #plot_prn(prn_dir+'/'+prn_file)
 
-    plot_prn(prn_dir+'/'+prn_file)
-
-    prn_file = "mem_cap_test_v_1_2.cir.prn"
-
+    # membrane test
+    #prn_file = "mem_cap_test_1_1.cir.prn"
+    
+    # electrical test
+    prn_file = "mem_cap_test_v_0_3.cir.prn"
+    
     plot_prn(prn_dir+'/'+prn_file)

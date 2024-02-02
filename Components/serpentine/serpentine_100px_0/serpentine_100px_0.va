@@ -59,7 +59,7 @@ analog begin
       //$display(R);
    end // end initial_model
 
-   Q(fflow) <+ P(fl_in, fl_out)/R;
+   Qfl(fflow) <+ P(fl_in, fl_out)/R;
 
    //V(c_out, c_in) <+ 0;
    C(c_out) <+ C(c_in);

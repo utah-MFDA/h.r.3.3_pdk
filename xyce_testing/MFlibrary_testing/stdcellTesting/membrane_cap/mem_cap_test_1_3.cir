@@ -15,7 +15,10 @@ Yserpentine_100px_0  serp1 0 21 11 12
 Vpr2 21 22 0V
 
 Yserpentine_100px_0  serpE 22 31 11 13
-*Ymembrane_cap_20px   mem1  22 31 capacitance=1M
+*Ymembrane_cap_20px   mem1  22 31 
+
+*capacitance=1M
+
 * probe
 Vpr1 31 32 0V
 

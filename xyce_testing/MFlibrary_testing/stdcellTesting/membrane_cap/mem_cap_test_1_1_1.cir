@@ -7,7 +7,8 @@ Vcc 11 0 0V
 
 Ychannel  serp1 1  21 11 12 length=1000
 
-Ymembrane_cap_20px   mem1  22 31 capacitance=1M
+Ymembrane_cap_20px   mem1  22 31 
+*capacitance=1M
 
 Yserpentine_100px_0  serp2 32 0 12 13
 

@@ -54,7 +54,7 @@ analog begin
      // $display(R);
    end //end initial_instance
 
-   Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
+   Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
    C(c_out, gnd) <+ C(c_in, gnd);
 end
 

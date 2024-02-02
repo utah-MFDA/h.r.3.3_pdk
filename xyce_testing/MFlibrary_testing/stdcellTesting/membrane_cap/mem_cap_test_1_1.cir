@@ -1,13 +1,12 @@
 
 
-Vpp 1  0 PWL(0s 0V 3s 20V)
-*Vpp 1  0 SIN(10V 20V 100Hz)
+Vpp 31 0 PWL(0s 0V 3ms 0V 3.001ms 5V 5.5ms 5V 6.5ms -5V 10ms -5V)
 
 Vcc 11 0 0V
 
-Yserpentine_100px_0  serp1 1  21 11 12
+Yserpentine_100px_0  serp1 0  21 11 12
 
-Ymembrane_cap_20px   mem1  22 31 capacitance=1n
+Ymembrane_cap_20px   mem1  22 31 
 
 Yserpentine_100px_0  serp2 32 0 12 13
 
@@ -15,6 +14,7 @@ Yserpentine_100px_0  serp2 32 0 12 13
 Vpr1 31 32 0V 
 Vpr2 21 22 0V
 
-.tran 10ms 1s
-.print tran V(22) V(31) I(Vpr1) I(Vpr2)
+.tran 100ns 100ms
+*.print tran V(11) V(22) V(31) 
+.print tran I(Vpp) I(Vpr1) I(Vpr2)
 .end

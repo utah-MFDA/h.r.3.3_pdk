@@ -1,0 +1,12 @@
+
+
+vs 1 0 PWL(0s 0V 5ms 0V 5.001ms 5V 10ms 5V)
+r1 1 2 1k
+c1 3 0 100uF
+
+vp 2 3 0V
+
+.tran 0.01ms 10ms
+*.option post=2
+.print tran I(vs) I(vp)
+.end

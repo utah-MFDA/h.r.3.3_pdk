@@ -7,7 +7,7 @@ endnature
 
 nature FluidFlow
      units = "L/s";
-     access = Q;
+     access = Qfl;
      //abstol = 1u;
 endnature
 
