@@ -43,7 +43,7 @@ $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.
 	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
 
 	cd $(VERILOGA_BUILD_SRC) && $(BUILD_COMMAND) $(MF_LIB) *.va ./ && \
-	#rm *.va && rm *.vams && rm $(MF_LIB) && \
+	rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
 copy_va:
