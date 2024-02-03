@@ -1,0 +1,91 @@
+
+//`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+
+//Capacitor
+
+
+module membrane_cap_20pxV_Pn(p, n);
+  electrical p,n;
+  inout p,n;
+
+  real cap;
+
+  ////
+  // these variables are used for small deflections
+
+  // typical dimension for a 3D printed valve
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+  // properties of PEGDA with 2% NPS
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+  // estimating poisson's ratio using a typical value for epoxies
+  //   which tend to be 0.3 - 0.35
+  (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+  // membrane radius
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+  ////
+  // these are used for large deflections 
+  // these variables derive from the Karman's large circular plate deflections
+
+  // currently m and N are based on a 2.5 mm radius - 100 um thickness membrane
+  // 02-02-24
+
+  (*desc="Karman fitting variable m", type="instance"*) parameter real m_fit = 0.41795 ;
+
+  // this comes from the original equation where N = 10^n
+  (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
+
+  branch (p, n) q_cap ;
+  real p_c;
+  real q;
+  real D;
+
+  analog
+  begin
+    //  Note:  It is explicitly assumed here that C is constant!
+    // This is wrong if C is externally defined as some time- or
+    // solution-dependent parameter.  Fortunately, Xyce doesn't let you
+    // make parameters solution-dependent, and special coding is necessary
+    // external to the device even to enable such a thing.
+
+    // Used for small deflection not currently used as the Karman eq works in this 
+    //   region as well.
+    //@(initial_instance) 
+    //begin : initial_instance
+    //  cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+    //  $display(cap);
+    //end
+    // circuilar membrane
+    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+    //$display(cap);
+
+    
+    
+    begin
+    //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
+    if (V(n) > 0 ) begin
+      cap = m_fit*N_fit*pow(V(n), (m_fit-1)) * 1e-6;
+      p_c  = cap*V(q_cap) ;
+      $display(cap) ;
+    end
+    else if (V(p) > 0) begin
+      cap = 1/D ;
+      p_c  = cap*V(q_cap) ;
+    end
+    else begin
+      cap = 1/D;
+      p_c=cap*V(q_cap);
+    end
+    end
+
+
+    
+    I(q_cap) <+ ddt(p_c) ;
+  end
+endmodule

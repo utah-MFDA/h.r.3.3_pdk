@@ -13,6 +13,9 @@ module membrane_cap_20pxV(p, n);
 
   real cap;
 
+  ////
+  // these variables are used for small deflections
+
   // typical dimension for a 3D printed valve
   (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
 
@@ -44,10 +47,6 @@ module membrane_cap_20pxV(p, n);
       $display(cap);
     end
 
-
-    // circuilar membrane
-    cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ))*1000;
-    $display(cap);
 
 
     q=cap*V(q_cap);

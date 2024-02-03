@@ -7,7 +7,7 @@
 //Capacitor
 
 
-module membrane_cap_20pxV(p, n);
+module membrane_cap_20pxV_1(p, n);
   electrical p,n;
   inout p,n;
 

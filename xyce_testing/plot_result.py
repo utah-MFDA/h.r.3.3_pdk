@@ -37,6 +37,6 @@ if __name__ == "__main__":
     #prn_file = "mem_cap_test_1_1.cir.prn"
     
     # electrical test
-    prn_file = "mem_cap_test_v_0_3.cir.prn"
+    prn_file = "mem_cap_test_v_0_2.cir.prn"
     
     plot_prn(prn_dir+'/'+prn_file)
