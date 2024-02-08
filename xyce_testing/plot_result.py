@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 def plot_prn(results_file):
     
-    temp_df = pd.read_table(results_file, skipfooter=1, index_col=0, delim_whitespace=True)
+    temp_df = pd.read_table(results_file, engine='python', skipfooter=1, index_col=0, delim_whitespace=True)
     
     x = temp_df["TIME"]
     y = {}
@@ -22,6 +22,7 @@ def plot_prn(results_file):
         ax.plot(x, y[p], label=p)
 
     ax.legend()
+    #print("plot: "+results_file.split('/')[-1])
     plt.show()
 
 

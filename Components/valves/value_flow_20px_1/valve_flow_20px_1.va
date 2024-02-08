@@ -1,0 +1,167 @@
+
+//`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+
+//Capacitor
+
+
+module valve_flow_20px_1(fl_i, fl_o, pn_i, pn_o);
+  electrical fl_i, fl_o, pn_i, pn_o;
+  inout fl_i, fl_o, pn_i, pn_o;
+
+  // internal nodes
+
+  electrical pn_int, fl_int;
+
+  real cap;
+
+  ////
+  // these variables are used for small deflections
+
+  // typical dimension for a 3D printed valve
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+  // properties of PEGDA with 2% NPS
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+  // estimating poisson's ratio using a typical value for epoxies
+  //   which tend to be 0.3 - 0.35
+  (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+  // membrane radius
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+  ////
+  // these are used for large deflections 
+  // these variables derive from the Karman's large circular plate deflections
+
+  // currently m and N are based on a 2.5 mm radius - 100 um thickness membrane
+  // 02-02-24
+
+  (*desc="Karman fitting variable m", type="instance"*) parameter real m_fit = 0.41795 ;
+
+  // this comes from the original equation where N = 10^n
+  (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
+
+
+  //////
+  // ~ 15 psi
+
+  (*desc="Threshold pressure", type="instance"*) parameter real P_th = 103k ;
+
+  branch (fl_i, fl_int) q_cap_i ;
+  branch (fl_o, fl_int) q_cap_o ;
+  branch (pn_int, fl_int) q_cap ;
+  real p_c;
+  real q;
+  real D;
+
+  (*desc="length", type="instance"*) parameter real length=0.100m;
+  (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
+  (*desc="length", type="instance"*) parameter real NU=0.0010016;
+
+  real pixel_size;
+  real layer_height;
+  real W, H, L;
+  real R;
+  real ch_width_pixels, ch_height_layers;
+
+  analog
+  begin
+    
+    // calculations
+
+    @(initial_instance) 
+    begin : initial_instance
+
+      length = 1m;
+      
+      //
+      // -- print resolution definitions
+      //
+      pixel_size = 7.6u;
+      layer_height = 10u;
+      
+      //
+      // -- adjust resistance based on cross section  
+      //
+      begin 
+      if (CROSS_SECTION == 1) begin
+         ch_width_pixels = 14;
+         ch_height_layers= 10;
+      end
+      else if(CROSS_SECTION == 2) begin
+         ch_width_pixels = 6;
+         ch_height_layers= 5;
+      end
+      end
+
+      W = pixel_size * ch_width_pixels;
+      H = layer_height*ch_height_layers;
+      L = length;
+
+      R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      // $display("resistance:");
+      // $display(R);
+    end //end initial_instance
+
+    // circuilar membrane
+    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+
+    begin
+    //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
+    if (V(pn_int) > 0 ) begin
+      cap = m_fit*N_fit*pow(V(pn_int), (m_fit-1)) * 1e-6;
+      p_c  = cap*V(q_cap) ;
+      $display(cap) ;
+    end
+    else if (V(pn_int) > 0) begin
+      cap = 1/D ;
+      p_c  = cap*V(q_cap) ;
+    end
+    else begin
+      cap = 1/D;
+      p_c=cap*V(q_cap);
+    end
+    end
+
+    /// Node logic
+
+    V(pn_int) <+ V(pn_i) ;
+    V(pn_o)   <+ V(pn_int) ;
+
+    /// membrane logic
+
+    begin
+    if (V(pn_int) > P_th) begin
+      if (V(pn_int, fl_int) >= P_th) begin
+        // switches on
+        I(q_cap) <+ ddt(p_c) ;
+
+        I(fl_i, fl_int) <+ 0;
+        I(fl_int, fl_o) <+ 0;
+
+      end
+      else begin // V(pn_int, fl_int) < P_th
+        // switches off
+        I(q_cap) <+ ddt(p_c) ;
+
+        I(fl_i, fl_int) <+ V(fl_i, fl_int)/R;
+        I(fl_int, fl_o) <+ V(fl_int, fl_o)/R;
+      end
+    end
+    else begin
+      // swtiches off
+      // no capacitance
+      I(fl_i, fl_int) <+ V(fl_i, fl_int)/R;
+      I(fl_int, fl_o) <+ V(fl_int, fl_o)/R;
+    end 
+    end
+    
+
+    
+    I(q_cap) <+ ddt(p_c) ;
+  end
+endmodule

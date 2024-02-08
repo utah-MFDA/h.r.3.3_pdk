@@ -5,7 +5,7 @@ define \n
 endef
 
 
-DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.0
+DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
 
 REMOTE_BUILD_LOC = /mfda_simulation/local/lib
 LOCAL_BUILD_LOC  = ./../Components/verilogA_build/lib
@@ -37,7 +37,8 @@ make_docker:
 run_tests_remote: make_docker
 
 TESTING_TARGET = MFlibrary_testing
-STD_CELL_DIR   = stdcellTesting/serpentine stdcellTesting/mixer stdcellTesting/valves stdcellTesting/membrane_cap
+STD_CELL_DIR   = stdcellTesting/serpentine stdcellTesting/mixer stdcellTesting/valves stdcellTesting/membrane_cap 
+#stdcellTesting/valve_flow
 TESTING_DIR    = pCellTesting pumpTesting $(STD_CELL_DIR)
 
 test_files  = 

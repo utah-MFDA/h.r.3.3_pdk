@@ -8,7 +8,7 @@
 
 
 module membrane_cap_20pxV_Pn(p, n);
-  electrical p,n;
+  electrical p,n, n_v;
   inout p,n;
 
   real cap;
@@ -41,7 +41,7 @@ module membrane_cap_20pxV_Pn(p, n);
   // this comes from the original equation where N = 10^n
   (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
 
-  branch (p, n) q_cap ;
+  branch (p, n_v) q_cap ;
   real p_c;
   real q;
   real D;
@@ -64,19 +64,22 @@ module membrane_cap_20pxV_Pn(p, n);
     // circuilar membrane
     D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
     //$display(cap);
+    //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
 
+    V(n_v) <+ -V(n);
     
     
     begin
-    //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
-    if (V(n) > 0 ) begin
-      cap = m_fit*N_fit*pow(V(n), (m_fit-1)) * 1e-6;
+    
+    if (V(n_v) > 0 ) begin
+      cap = m_fit*N_fit*pow(V(n_v), (m_fit-1)) * 1e-6;
       p_c  = cap*V(q_cap) ;
       $display(cap) ;
     end
-    else if (V(p) > 0) begin
-      cap = 1/D ;
+    else if (V(n_v) < 0 ) begin
+      cap = m_fit*N_fit*pow(-V(n_v), (m_fit-1)) * 1e-6;
       p_c  = cap*V(q_cap) ;
+      $display(cap) ;
     end
     else begin
       cap = 1/D;
