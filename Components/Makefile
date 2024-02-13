@@ -46,7 +46,7 @@ $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.
 	rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
-DOCKER_IMAGE = bgoenner/mfda_xyce
+DOCKER_IMAGE = bgoenner/mfda_xyce:latest
 
 DOCKER_LOCAL_COMP_DIR = ./
 

@@ -8,10 +8,11 @@ module membrane_cap_20px(p,n) ;
 
 (*desc="length", type="instance"*) parameter real capacitance = 1n ;
 
+inout p, n;
 fluidDynamics p, n ;
 
 analog begin
-    Q(p,n) <+ capacitance * ddt(P(p,n)) ;
+    Q(p,n) <+ capacitance * ddt( P(p,n)) ;
 end
 
 

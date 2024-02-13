@@ -13,11 +13,11 @@ Vpn2 102 0 0V
 
 Yserpentine_100px_0  serp1 0 21 11 12
 
-*probe
+* probe
 Vpr2 21 22 0V
 
-Yserpentine_100px_0  serpE 22 31 11 13
-*Ymembrane_cap_20px   mem1  22 31 capacitance=1M
+Yserpentine_100px_0   serpE 22 31 11 13
+
 * probe
 Vpr1 31 32 0V
 
@@ -26,7 +26,7 @@ Yserpentine_100px_0  serp2 4 32 11 14
 Yserpentine_100px_0  serp3 6 5 11 16
 Yvalve_20px_1        valv1 5 4 11 15 101 0
 
-Yvalve_20px_1        valv2 4 7 11 17 201 0
+Yvalve_20px_1        valv2 4 7 11 17 102 0
 Yserpentine_100px_0  serp4 7 0 11 18
 
 
