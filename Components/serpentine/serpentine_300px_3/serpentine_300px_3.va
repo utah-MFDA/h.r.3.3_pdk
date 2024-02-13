@@ -3,7 +3,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module serpentine_300px_2(fl_in, fl_out, c_in, c_out);
+module serpentine_300px_3(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
