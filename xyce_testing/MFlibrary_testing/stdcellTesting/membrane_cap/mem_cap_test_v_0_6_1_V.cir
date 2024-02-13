@@ -10,7 +10,7 @@ Ymembrane_cap_20pxV_Pn mem1 2 1
 vp1 11 2 0V
 vp2 2 13 0V
 
-.tran 0.01ms 10ms
+.tran 0.001ms 10ms
 *.option post=2
 .print tran V(1) V(2)
 *V(2)

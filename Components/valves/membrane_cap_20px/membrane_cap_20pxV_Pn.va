@@ -45,6 +45,7 @@ module membrane_cap_20pxV_Pn(p, n);
   real p_c;
   real q;
   real D;
+  real mfit_1;
 
   analog
   begin
@@ -69,23 +70,34 @@ module membrane_cap_20pxV_Pn(p, n);
     V(n_v) <+ -V(n);
     
     
-    begin
-    
-    if (V(n_v) > 0 ) begin
-      cap = m_fit*N_fit*pow(V(n_v), (m_fit-1)) * 1e-6;
-      p_c  = cap*V(q_cap) ;
-      $display(cap) ;
-    end
-    else if (V(n_v) < 0 ) begin
-      cap = m_fit*N_fit*pow(-V(n_v), (m_fit-1)) * 1e-6;
-      p_c  = cap*V(q_cap) ;
-      $display(cap) ;
-    end
-    else begin
-      cap = 1/D;
-      p_c=cap*V(q_cap);
-    end
-    end
+    //begin
+    //if (V(n_v) > 0 ) begin
+    //  mfit_1 = m_fit -1 ;
+    //  cap = m_fit*N_fit*pow(V(n_v), mfit_1) * 1e-6;
+    //  //cap
+    //  //p_c  = cap*V(q_cap) ;
+    //  $display(cap) ;
+    //end
+    //else if (V(n_v) < 0 ) begin
+    //  mfit_1 = m_fit -1 ;
+    //  cap = -m_fit*N_fit*pow(-V(n_v), mfit_1) * 1e-6;
+    //  //cap
+    //  //p_c  = cap*V(q_cap) ;
+    //  $display(cap) ;
+    //end
+    //else begin
+    //  cap = 1/D;
+    //  p_c=cap*V(q_cap);
+    //end
+    //end
+
+
+    //V(n_v)
+    // 103e3 kpa is ~ 15 psi
+    mfit_1 = m_fit -1 ;
+    cap = m_fit*N_fit*pow(103e3, mfit_1) *1e-3;
+    $display(cap) ;
+    p_c = cap*V(q_cap);
 
 
     
