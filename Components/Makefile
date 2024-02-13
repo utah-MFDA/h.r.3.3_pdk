@@ -71,6 +71,7 @@ make_lef:
 	#cat $(foreach LEF_SRC_DIR, $(LEF_SRC_DIR), $(LEF_SRC_DIR)/*/*.lef) > $(KIT_NAME)_merged.lef
 	find $(LEF_SRC_DIR) -type f -name '*.lef' -exec cut -b 1- {} + >> $(MERGE_LEF)
 
+
 MERGE_SCAD = $(KIT_NAME)_merged.scad
 make_scad:
 	rm -f $(MERGE_SCAD)
