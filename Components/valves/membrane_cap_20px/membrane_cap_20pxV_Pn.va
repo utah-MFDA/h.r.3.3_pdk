@@ -8,7 +8,7 @@
 
 
 module membrane_cap_20pxV_Pn(p, n);
-  electrical p,n, n_v;
+  electrical p,n;
   inout p,n;
 
   real cap;
@@ -41,7 +41,7 @@ module membrane_cap_20pxV_Pn(p, n);
   // this comes from the original equation where N = 10^n
   (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
 
-  branch (p, n_v) q_cap ;
+  branch (p, n) q_cap ;
   real p_c;
   real q;
   real D;
@@ -67,7 +67,7 @@ module membrane_cap_20pxV_Pn(p, n);
     //$display(cap);
     //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
 
-    V(n_v) <+ -V(n);
+    //V(n_v) <+ V(n);
     
     
     //begin

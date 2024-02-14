@@ -37,8 +37,7 @@ make_docker:
 run_tests_remote: make_docker
 
 TESTING_TARGET = MFlibrary_testing
-STD_CELL_DIR   = stdcellTesting/serpentine stdcellTesting/mixer stdcellTesting/valves stdcellTesting/membrane_cap 
-#stdcellTesting/valve_flow
+STD_CELL_DIR   = stdcellTesting/serpentine stdcellTesting/mixer stdcellTesting/valves stdcellTesting/membrane_cap stdcellTesting/valve_flow
 TESTING_DIR    = pCellTesting pumpTesting $(STD_CELL_DIR)
 
 test_files  = 

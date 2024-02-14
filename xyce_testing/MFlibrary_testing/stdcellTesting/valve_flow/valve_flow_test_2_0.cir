@@ -1,7 +1,7 @@
 
 
 vs_f 1  0 5V
-vs_p 11 0 PWL(0s 0V 3m 0v 6m 105kV 10m 105kV)
+vs_p 11 0 PWL(0s 0V 3m 0v 6m 90kV 10m 90kV)
 
 r1 1 2 1k
 r2 5 0 1k

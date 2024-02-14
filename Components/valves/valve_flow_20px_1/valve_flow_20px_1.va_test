@@ -1,19 +1,13 @@
-
+/*
 //`include "nature_fluid_dynamics.vams"
 `include "disciplines.vams"
 `include "constants.vams"
 
+// --- membrane -----------------------------
 
-//Capacitor
-
-
-module valve_flow_20px_1(fl_i, fl_o, pn_i, pn_o);
-  electrical fl_i, fl_o, pn_i, pn_o;
-  inout fl_i, fl_o, pn_i, pn_o;
-
-  // internal nodes
-
-  electrical pn_int, fl_int;
+module membrane_cap_20pxV_Pn(p, n);
+  electrical p,n;
+  inout p,n;
 
   real cap;
 
@@ -45,33 +39,142 @@ module valve_flow_20px_1(fl_i, fl_o, pn_i, pn_o);
   // this comes from the original equation where N = 10^n
   (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
 
-
-  //////
-  // ~ 15 psi
-
-  (*desc="Threshold pressure", type="instance"*) parameter real P_th = 103k ;
-
-  branch (fl_i, fl_int) q_cap_i ;
-  branch (fl_o, fl_int) q_cap_o ;
-  branch (pn_int, fl_int) q_cap ;
+  branch (p, n) q_cap ;
   real p_c;
   real q;
   real D;
-
-  (*desc="length", type="instance"*) parameter real length=0.100m;
-  (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
-  (*desc="length", type="instance"*) parameter real NU=0.0010016;
-
-  real pixel_size;
-  real layer_height;
-  real W, H, L;
-  real R;
-  real ch_width_pixels, ch_height_layers;
+  real mfit_1;
 
   analog
   begin
     
-    // calculations
+    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+    
+
+    mfit_1 = m_fit -1 ;
+    cap = m_fit*N_fit*pow(103e3, mfit_1) *1e-3;
+    $display(cap) ;
+    p_c = cap*V(q_cap);
+
+
+    
+    I(q_cap) <+ ddt(p_c) ;
+  end
+endmodule
+
+// --- valve -----------------------------
+
+module valve_20px_1_V(fl_in, fl_out, pn_in, pn_out);
+
+inout fl_in, fl_out;
+//inout c_in, c_out;
+inout pn_in, pn_out;
+
+electrical fl_in, fl_out;
+//concentration c_in, c_out;
+electrical pn_in, pn_out;
+
+(*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
+(*desc="length", type="instance"*)         parameter real L = 0.1;
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION = 1;
+(*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
+(*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
+
+real pixel_size; 
+real layer_height;
+real threshold_pressure_kPa;
+
+real H_layer, W_px;
+real Hm, Wm, Lm;
+real dia_m, mem_th_m;
+real R_valve;
+
+real P_lin, P_lin_start;
+
+analog begin
+
+    pixel_size = 7.6u;
+    layer_height = 10u;
+
+    //threshold_pressure_PSI = 15;
+    threshold_pressure_kPa = 103e3;
+    
+    begin
+    if (CROSS_SECTION == 1) begin
+        // standard 1 
+        H_layer = 5;
+        W_px = 6;
+    end
+    else if (CROSS_SECTION == 2) begin
+        // standard 2
+        H_layer = 8;
+        W_px = 14; 
+    end
+    end
+
+    // Valve standard size 20px
+    dia_m = pixel_size*valve_diameter_px; 
+    mem_th_m = pixel_size*mem_th;
+
+
+    // converts the channel size to meters
+    Lm = L;
+    Hm = H_layer*layer_height; 
+    Wm = W_px*pixel_size;
+
+    R_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+
+    // linear region of valve transition
+    P_lin = 0.5 * 6000; 
+    P_lin_start = threshold_pressure_kPa - P_lin;     
+
+    // Pressure above theshold
+    if (V(pn_in) > threshold_pressure_kPa) begin
+        I(fl_in, fl_out) <+ 0;
+        //V(c_out) <+ V(c_in);
+    end else if (threshold_pressure_kPa - V(pn_in) <= P_lin) begin
+        I(fl_in, fl_out) <+ V(fl_in, fl_out)/R_valve - \
+            P(fl_in, fl_out)/R_valve * ((V(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start));
+        //V(c_out) <+ V(c_in);
+    end else begin
+        I(fl_in, fl_out) <+ V(fl_in, fl_out)/R_valve;
+        //V(c_out) <+ V(c_in);
+    end 
+
+
+    
+
+    //Q(fl_in, fl_out) <+ ddt(targ_q - q_prev);
+
+    //q_prev    = q_present;
+    //q_present = ddt(targ_q - q_prev);
+     
+
+    
+end // end analog
+
+endmodule
+
+
+//module valve_20px_1_V(fl_in, fl_out, pn_in, pn_out);
+//module membrane_cap_20pxV_Pn(p, n);
+
+module valve_flow_20px_1(fl_i, fl_o, pn_i, pn_o);
+  electrical fl_i, fl_o, pn_i, pn_o;
+  inout fl_i, fl_o, pn_i, pn_o;
+
+  valve_20px_1_V V1(.fl_in(fl_i), .fl_out(aa0), .pn_in(pn_i), .pn_out(pn_o)) ;
+  membrane_cap_20pxV_Pn M1(.p(aa1), .n(pn_i)) ;
+  valve_20px_1_V V2(.fl_in(aa1),  .fl_out(fl_o),.pn_in(pn_i), .pn_out(pn_o)) ;
+
+   
+
+
+endmodule
+*/
+
+/*
+// calculations
 
     @(initial_instance) 
     begin : initial_instance
@@ -163,5 +266,4 @@ module valve_flow_20px_1(fl_i, fl_o, pn_i, pn_o);
 
     
     I(q_cap) <+ ddt(p_c) ;
-  end
-endmodule
+    */
