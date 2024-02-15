@@ -7,7 +7,34 @@ All of the components for the library are placed in the Components subdirectory 
 
 ## Adding to the component library
 
-You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce). Otherwise the software will not see it.
+
+You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce, .lef for place and routing, and .scad for 3D rendering ). Otherwise the software will not see it.
+
+Components can be made in new subdirectories (component directories) of the subdirectories of the current Component directory (like within the serpentine directory, or component class directories)
+
+If additional component class directies are made they need to be added to the Makefile variable (within the Component directory) GENERAL_SRC_DIR for the software to find them.
+
+Otherwise new component directories can be made and build with the following make commands within the Component directory.
+```
+make build_lef
+
+make build_scad
+
+make build_va
+
+```
+
+### Place and Route (.lef)
+
+
+Running the following commend 
+```
+make build_lef
+```
+
+Will generate a merged lef file called HR3.3_merged.lef of the avalible components, provided they have the correct extension.
+
+### Xyce (.va)
 
 To initialize the Xyce library run, to get the docker image:
 ```
@@ -18,7 +45,6 @@ Then to build the Xyce library run:
 ```
 make make_va_remote
 ```
-
 
 
 For Verilog-AMS development you can make a new subdirectory in xyce_testing/MFlibrary_testing to run specific Xyce tests.
@@ -33,6 +59,17 @@ To run a single test run
 make run_single_test_mf INFILE=<path-to>/<your_cir-file>
 ```
 
+### 3D model generator (.scad)
+
+Running the following commend 
+```
+make build_scad
+```
+
+Will generate a merged lef file called HR3.3_merged.lef of the avalible components, provided they have the correct extension.
+
+
+## Instructions for additional components
 
 ### LEF
 

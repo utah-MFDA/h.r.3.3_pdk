@@ -64,6 +64,10 @@ make_va_remote:
 	--rm \
 	$(DOCKER_IMAGE) make build_remote
 
+make_va_docker: make_va_remote
+
+build_va: make_va_remote
+
 MERGE_LEF = $(KIT_NAME)_merged.lef
 make_lef:
 	rm -f $(MERGE_LEF)
@@ -71,6 +75,7 @@ make_lef:
 	#cat $(foreach LEF_SRC_DIR, $(LEF_SRC_DIR), $(LEF_SRC_DIR)/*/*.lef) > $(KIT_NAME)_merged.lef
 	find $(LEF_SRC_DIR) -type f -name '*.lef' -exec cut -b 1- {} + >> $(MERGE_LEF)
 
+build_lef: make_lef
 
 MERGE_SCAD = $(KIT_NAME)_merged.scad
 make_scad:
@@ -81,7 +86,7 @@ make_scad:
 clean_merge_scad:
 	python3 cleanScadFile.py --merge_file HR3.3_merged.scad
 
-build_scad_local: make_scad clean_merge_scad
+build_scad: make_scad clean_merge_scad
 	mkdir -p $(SCAD_BUILD_DIR)
 	cp $(foreach SCAD_USE, $(SCAD_USE), $(SCAD_USE)/*.scad) $(SCAD_BUILD_DIR)
 	mv $(MERGE_SCAD) $(SCAD_BUILD_DIR)
@@ -101,5 +106,7 @@ build_remote:
 
 clean_va_build:
 	rm -r $(VERILOGA_BUILD_SRC)
+
+clean_xyce_build: clean_va_build
 
 make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
