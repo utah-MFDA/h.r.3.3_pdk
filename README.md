@@ -69,6 +69,18 @@ make build_scad
 Will generate a merged lef file called HR3.3_merged.lef of the avalible components, provided they have the correct extension.
 
 
+### Component check
+
+This just checks if the components exist within there subdirectory and generates a list of developed standard components.
+
+run from within the Component directory
+```
+make check_library
+```
+
+You can then look at the Component_Check.csv and StandardCellLibrary.csv for what files exist.
+
+
 ## Instructions for additional components
 
 ### LEF
