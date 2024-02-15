@@ -1,0 +1,28 @@
+
+
+Vpp 1  0 PWL(0s 0V 0.49s 0V 0.5s 20V)
+*Vpp 1  0 SIN(10V 20V 100Hz)
+
+Vcc 11 0 0V
+
+Ychannel  serp1 1  21 11 12 length=1000
+
+Ymembrane_cap_20px   mem1  22 31 capacitance=1M
+
+Yserpentine_100px_0  serp2 32 0 12 13
+
+* parallel channel
+*Yserpentine_100px_0  serp3 1 3 11 14
+
+* probe
+Vpr1 31 32 0V 
+Vpr2 21 22 0V
+
+* probe
+*Vpr3 3 0 0V
+
+.tran 10ms 1s
+.print tran  I(Vpr1) I(Vpr2) 
+*I(Vpr3)
+*V(22) V(31)
+.end

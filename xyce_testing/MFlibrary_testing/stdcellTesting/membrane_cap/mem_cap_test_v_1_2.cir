@@ -1,0 +1,29 @@
+
+
+** Capacitor test case
+
+.ic V(C1)=2
+**.verilog "capacitor.va"
+
+V1 1 0 sin( 0 2.5 20meg)
+*V1 1 0 AC 0 2.5 20
+*V1 1 0 sin( 0 2.5 0 0 0 10n 20n)
+R1 1 2 10000k
+R2 0 3 1000k
+*
+*Ymembrane_cap_20pxV 2 0 100u
+C1 2 3 1000u
+*
+**YVLG_capacitor 0 2 capacitor
+
+.tran 0.1n 0.5u
+.print tran V(2) V(1) 
+*I(V1)
+
+*.DC V1 -10 15 1
+*.print dc V(2) V(1)
+
+*.AC LIN 1K 10MEG
+*.print ac V(2) V(1)
+
+.end
