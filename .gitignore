@@ -28,5 +28,6 @@ Components/HR3.3_merged.lef
 xyce_testing/*/*/logs/*
 xyce_testing/*/*/*/logs/*
 xyce_testing/*/*/*.log
+xyce_testing/JupyterTesting/.ipynb_checkpoints/*
 
 __pycache__/
