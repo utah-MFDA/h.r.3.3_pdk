@@ -46,13 +46,14 @@ $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.
 	rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
-DOCKER_IMAGE = bgoenner/mfda_xyce
+DOCKER_IMAGE = bgoenner/mfda_xyce:latest
 
 DOCKER_LOCAL_COMP_DIR = ./
 
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
 DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
+# change to lib
 make_va_remote:
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	docker run \
@@ -69,6 +70,7 @@ make_lef:
 	touch $(MERGE_LEF)
 	#cat $(foreach LEF_SRC_DIR, $(LEF_SRC_DIR), $(LEF_SRC_DIR)/*/*.lef) > $(KIT_NAME)_merged.lef
 	find $(LEF_SRC_DIR) -type f -name '*.lef' -exec cut -b 1- {} + >> $(MERGE_LEF)
+
 
 MERGE_SCAD = $(KIT_NAME)_merged.scad
 make_scad:

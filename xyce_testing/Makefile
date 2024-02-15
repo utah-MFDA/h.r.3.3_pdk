@@ -19,7 +19,10 @@ XYCE = /usr/local/xyce_dev/bin/Xyce
 MF_LIB = libMFXyce.so
 #
 
-XYCE_RUN = $(XYCE) -plugin $(REMOTE_BUILD_LOC)/$(MF_LIB) 
+XYCE_RUN = $(XYCE) -plugin $(REMOTE_BUILD_LOC)/$(MF_LIB)
+
+init_va:
+	docker pull $(DOCKER_IMAGE)
 
 make_docker:
 	docker run \
@@ -53,7 +56,31 @@ docker_run_tests:
 
 #$(XYCE_RUN) $(CIR_FILE).cir > $(CIR_FILE).log ${\n}))
 
+# initial value to test is INFILE was defined
+INFILE ?= template
+
+LIBRARY_TEST ?= MFlibrary_testing
+
+TEST = stdcellTesting/membrane_cap/mem_cap_test_1_3.cir
+
+run_single_test_mf:
+	docker run \
+	-v $(LOCAL_TEST_DIR):$(REMOTE_TEST_DIR):z \
+	-v $(LOCAL_BUILD_LOC):$(REMOTE_BUILD_LOC) \
+	-w $(REMOTE_TEST_DIR) \
+	-a stdout \
+	--entrypoint='' \
+	$(DOCKER_IMAGE) make docker_run_single_test_mf INFILE=$(INFILE)
+
+docker_run_single_test_mf:
+	if [ $(INFILE) != template ]; then \
+		$(XYCE_RUN) ./$(LIBRARY_TEST)/$(INFILE) > ./$(LIBRARY_TEST)/$(INFILE).log \
+	else \
+		echo INFILE not defined; \
+	fi;
+
 COMPONENT_LIB_MAKE = ./../Components
 
 rebuild_xyce_library:
-	cd $(COMPONENT_LIB_MAKE) && make make_remote
+	cd $(COMPONENT_LIB_MAKE) && make make_va_remote
+

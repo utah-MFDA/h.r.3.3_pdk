@@ -9,7 +9,7 @@ inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
 fluidDynamics fl_in, fl_out;
 
-(*desc="length", type="instance"*) parameter real length=13.680;
+(*desc="length", type="instance"*) parameter real length=13.680m;
 (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
 (*desc="length", type="instance"*) parameter real NU=0.0010016;
 
