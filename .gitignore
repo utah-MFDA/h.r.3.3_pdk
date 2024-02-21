@@ -30,3 +30,4 @@ xyce_testing/*/*/*/logs/*
 xyce_testing/*/*/*.log
 
 __pycache__/
+.libs/

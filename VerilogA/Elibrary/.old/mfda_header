@@ -1,5 +1,0 @@
-
-
-//`include "nature_fluid_dynamics.vams"
-`include "disciplines.vams"
-`include "constants.vams"
