@@ -1,3 +1,4 @@
+
 pluginname=test
 XyceDir=/usr/local/stow/Xyce/7.8-adms
 XyceInstDir=${XyceDir}/bin
@@ -69,3 +70,13 @@ install: ${pluginname}.la
 	${LIBTOOL} --mode=install ${INSTALL} -c ${pluginname}.la "${DESTDIR}"
 
 .PHONEY: install all clean
+
+build_lef:
+	cd Components && make build_lef
+
+build_va:
+	cd Components && make build_va
+
+build_scad:
+	cd Components && make build_scad
+

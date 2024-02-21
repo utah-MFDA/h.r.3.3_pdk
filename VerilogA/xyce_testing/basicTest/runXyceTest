@@ -1,5 +1,0 @@
-
-
-Xyce -plugin ./libtest.so testChannel2.cir
-
-Xyce -plugin ./libtest.so testChannel1.cir

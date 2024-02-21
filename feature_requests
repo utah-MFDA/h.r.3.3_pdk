@@ -1,0 +1,11 @@
+
+
+(1) use of .stl directly as the geometry for new components.
+    - rational
+        Most engineers will what to use thier software for generating a 3D design (such as SolidWorks, Creo, Autodesk Inventor)
+        that means we will not be able to import them into this library. 
+    - implementation suggestion
+        Since almost all 3D modeling software will export STLs, and OpenSCAD allows for importing STLs we could have a 
+        simple way to import the geometry. However, this will NOT be compatible with the current implementation of
+        merging a scad file used in the modelgen software. Unless we can have that software point to this directory we
+        shouldn't have any issues. 
