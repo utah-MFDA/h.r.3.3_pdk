@@ -14,12 +14,15 @@ REMOTE_TEST_DIR = /mfda_simulations/local/xyce_testing
 LOCAL_TEST_DIR  = ./
 
 
-XYCE = /usr/local/xyce_dev/bin/Xyce
+#XYCE = /usr/local/xyce_dev/bin/Xyce
+XYCE = /usr/local/bin/Xyce
 
-MF_LIB = libMFXyce.so
+#MF_LIB = libMFXyce.so
+MF_LIB = MFXyce.so
 #
 
-XYCE_RUN = $(XYCE) -plugin $(REMOTE_BUILD_LOC)/$(MF_LIB)
+#XYCE_RUN = $(XYCE) -plugin $(REMOTE_BUILD_LOC)/$(MF_LIB)
+XYCE_RUN = $(XYCE) -plugin $(LOCAL_BUILD_LOC)/$(MF_LIB)
 
 init_va:
 	docker pull $(DOCKER_IMAGE)
