@@ -7,7 +7,7 @@
 //Capacitor
 
 
-module membrane_cap_20pxV_Pn_nlin(p, n);
+module membrane_cap_20pxV_Pn_lin(p, n);
   electrical p,n;
   inout p,n;
 
@@ -70,26 +70,26 @@ module membrane_cap_20pxV_Pn_nlin(p, n);
     //V(n_v) <+ V(n);
     
     
-    begin
-    if (V(n) > 0 ) begin
-      mfit_1 = m_fit -1 ;
-      cap = m_fit*N_fit*pow(V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      $display(cap) ;
-    end
-    else if (V(n) < 0 ) begin
-      mfit_1 = m_fit -1 ;
-      cap = m_fit*N_fit*pow(-V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      $display(cap) ;
-    end
-    else begin
-      cap = 1/D;
-      p_c=cap*V(q_cap);
-    end
-    end
+    //begin
+    //if (V(n_v) > 0 ) begin
+    //  mfit_1 = m_fit -1 ;
+    //  cap = m_fit*N_fit*pow(V(n_v), mfit_1) * 1e-6;
+    //  //cap
+    //  //p_c  = cap*V(q_cap) ;
+    //  $display(cap) ;
+    //end
+    //else if (V(n_v) < 0 ) begin
+    //  mfit_1 = m_fit -1 ;
+    //  cap = -m_fit*N_fit*pow(-V(n_v), mfit_1) * 1e-6;
+    //  //cap
+    //  //p_c  = cap*V(q_cap) ;
+    //  $display(cap) ;
+    //end
+    //else begin
+    //  cap = 1/D;
+    //  p_c=cap*V(q_cap);
+    //end
+    //end
 
 
     //V(n_v)

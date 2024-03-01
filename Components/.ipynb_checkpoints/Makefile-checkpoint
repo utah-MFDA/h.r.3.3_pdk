@@ -9,7 +9,7 @@ SHELL		= /bin/bash
 DATE = $(date '+%Y-%m-%d')
 
 
-KIT_NAME = h.r.3.3
+KIT_NAME = HR3.3
 
 GENERAL_SRC_DIR = valves serpentine mixers
 
@@ -99,7 +99,7 @@ make_scad:
 	find $(SCAD_SRC_DIR) -type f -name '*.scad' -exec cut -b 1- {} + >> $(MERGE_SCAD)
 
 clean_merge_scad:
-	python3 cleanScadFile.py --merge_file $(MERGE_SCAD)
+	python3 cleanScadFile.py --merge_file HR3.3_merged.scad
 
 build_scad: make_scad clean_merge_scad
 	mkdir -p $(SCAD_BUILD_DIR)
