@@ -25,6 +25,7 @@ VerilogA/xyce_testing/basicTest/lib/*
 Components/verilogA_build/*
 Components/scad_build/*
 Components/HR3.3_merged.lef
+*.ipynb_checkpoints/*
 xyce_testing/*/*/logs/*
 xyce_testing/*/*/*/logs/*
 xyce_testing/*/*/*.log
