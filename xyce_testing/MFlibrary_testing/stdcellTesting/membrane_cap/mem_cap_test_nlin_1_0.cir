@@ -1,12 +1,13 @@
 
 
-Vpp 31 0 PWL(0s 0V 3ms 0V 3.001ms 5V 5.5ms 5V 6.5ms -5V 10ms -5V)
+*Vpp 31 0 PWL(0s 0V 3ms 0V 3.001ms 5V 5.5ms 5V 6.5ms -5V 10ms -5V)
+Vpp 31 0 PWL(0s 0V 5ms 0V 5.001ms 103e3V 10ms 103e3V)
 
 Vcc 11 0 0V
 
 Yserpentine_100px_0  serp1 0  21 11 12
 
-Ymembrane_cap_20px   mem1  22 31 
+Ymembrane_cap_20pxV_nlin   mem1  22 31 
 
 Yserpentine_100px_0  serp2 32 0 12 13
 
@@ -14,6 +15,6 @@ Yserpentine_100px_0  serp2 32 0 12 13
 Vpr1 31 32 0V 
 Vpr2 21 22 0V
 
-.tran 100ns 100ms
+.tran 0.01ms 10ms
 .print tran I(Vpp) I(Vpr1) I(Vpr2) V(11) V(22) V(31) 
 .end

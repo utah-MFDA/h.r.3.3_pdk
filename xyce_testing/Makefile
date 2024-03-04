@@ -43,9 +43,8 @@ TESTING_TARGET = MFlibrary_testing
 STD_CELL_DIR   = stdcellTesting/serpentine stdcellTesting/mixer stdcellTesting/valves stdcellTesting/membrane_cap stdcellTesting/valve_flow
 TESTING_DIR    = pCellTesting pumpTesting $(STD_CELL_DIR)
 
-test_files  = 
 
-docker_run_tests:
+docker_run_tests: $(test_files)
 	mkdir -p $(foreach TEST_DIR, $(TESTING_DIR), \
 		./$(TESTING_TARGET)/$(TEST_DIR)/results \
 		./$(TESTING_TARGET)/$(TEST_DIR)/logs)
@@ -57,6 +56,18 @@ docker_run_tests:
 	$(foreach TEST_DIR, $(TESTING_DIR), \
 		mv ./$(TESTING_TARGET)/$(TEST_DIR)/*.prn ./$(TESTING_TARGET)/$(TEST_DIR)/results && \
 		mv ./$(TESTING_TARGET)/$(TEST_DIR)/*.log ./$(TESTING_TARGET)/$(TEST_DIR)/logs${\n})
+
+run_valve_flow_tests:
+	mkdir -p ./MFlibrary_testing/stdcellTesting/valve_flow/{results,logs}
+
+	$(foreach CIR_FILE, $(wildcard ./MFlibrary_testing/stdcellTesting/valve_flow/*.cir), \
+		    $(XYCE_RUN) $(CIR_FILE) > $(CIR_FILE).log ${\n})
+
+
+	mv ./MFlibrary_testing/stdcellTesting/valve_flow/*.log ./MFlibrary_testing/stdcellTesting/valve_flow/logs
+	mv ./MFlibrary_testing/stdcellTesting/valve_flow/*.prn ./MFlibrary_testing/stdcellTesting/valve_flow/results
+
+    
 
 #$(XYCE_RUN) $(CIR_FILE).cir > $(CIR_FILE).log ${\n}))
 
@@ -89,3 +100,5 @@ COMPONENT_LIB_MAKE = ./../Components
 rebuild_xyce_library:
 	cd $(COMPONENT_LIB_MAKE) && make make_va_remote
 
+rebuild_xyce_library_local:
+	cd $(COMPONENT_LIB_MAKE) && make build_va 

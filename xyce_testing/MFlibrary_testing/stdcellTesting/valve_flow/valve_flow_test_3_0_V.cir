@@ -17,5 +17,5 @@ vp1 3 2 0V
 vp2 5 4 0V  
 
 .tran 0.01 10s
-.print tran V(11) V(12) V(13)
+.print tran V(11) V(12) V(13) I(vp2) I(vp1)
 .end

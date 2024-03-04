@@ -34,14 +34,25 @@ MF_LIB = MFXyce
 BUILD_COMMAND_LOC = /usr/local/bin/
 BUILD_COMMAND     = $(BUILD_COMMAND_LOC)/buildxyceplugin -o
 
+VA_TARGETS = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va)) \
+    $(wildcard veriloga_objects/*.vams) \
+    veriloga_objects/$(MF_LIB)
 
-$(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
+va_build_dir:  $(VERILOGA_BUILD_DIR)/lib $(VERILOGA_BUILD_SRC)
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	mkdir -p $(VERILOGA_BUILD_SRC)
 
-	cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
-	cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
-	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
+$(VA_TARGETS): va_build_dir
+	cp $@ $(VERILOGA_BUILD_SRC)
+
+$(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_TARGETS) 
+	#$(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
+	#mkdir -p $(VERILOGA_BUILD_DIR)/lib
+	#mkdir -p $(VERILOGA_BUILD_SRC)
+
+	#cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
+	#cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
+	#cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
 
 	cd $(VERILOGA_BUILD_SRC) && $(BUILD_COMMAND) $(MF_LIB) *.va ./ && \
 	#rm *.va && rm *.vams && rm $(MF_LIB) && \
@@ -124,4 +135,4 @@ clean_va_build:
 
 clean_xyce_build: clean_va_build
 
-make_va_default: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 

@@ -7,11 +7,12 @@
 //Capacitor
 
 
-module membrane_cap_20pxV_Pn(p, n);
+module membrane_cap_20pxV_nlin(p, n);
   electrical p,n;
   inout p,n;
 
   real cap;
+
 
   ////
   // these variables are used for small deflections
@@ -49,54 +50,31 @@ module membrane_cap_20pxV_Pn(p, n);
 
   analog
   begin
-    //  Note:  It is explicitly assumed here that C is constant!
-    // This is wrong if C is externally defined as some time- or
-    // solution-dependent parameter.  Fortunately, Xyce doesn't let you
-    // make parameters solution-dependent, and special coding is necessary
-    // external to the device even to enable such a thing.
-
-    // Used for small deflection not currently used as the Karman eq works in this 
-    //   region as well.
-    //@(initial_instance) 
-    //begin : initial_instance
-    //  cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
-    //  $display(cap);
-    //end
+    
     // circuilar membrane
-    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(16*mem_Emod*pow(mem_th,3 ));
+    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
     //$display(cap);
-    //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
 
-    //V(n_v) <+ V(n);
-    
-    
+    mfit_1 = m_fit -1 ;
+
     begin
     if (V(n) > 0 ) begin
-      mfit_1 = m_fit -1 ;
       cap = m_fit*N_fit*pow(V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      //$display(cap) ;
+      $display(cap) ;
     end
     else if (V(n) < 0 ) begin
-      mfit_1 = m_fit -1 ;
       cap = m_fit*N_fit*pow(-V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      //$display(cap) ;
+      $display(cap) ;
     end
     else begin
       cap = 1/D;
-      p_c=cap*V(q_cap);
     end
     end
 
 
-    //V(n_v)
+    
     // 103e3 kpa is ~ 15 psi
-    //mfit_1 = m_fit -1 ;
-    //cap = m_fit*N_fit*pow(103e3, mfit_1) *1e-3;
-    $display(cap) ;
+    
     p_c = cap*V(q_cap);
 
 
