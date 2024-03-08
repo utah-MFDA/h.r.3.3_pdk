@@ -7,7 +7,7 @@
 //Capacitor
 
 
-module membrane_cap_20pxV(p, n);
+module membrane_cap_20pxV_2(p, n);
   electrical p,n;
   inout p,n;
 
@@ -49,7 +49,7 @@ module membrane_cap_20pxV(p, n);
 
 
 
-    q=cap*V(q_cap);
+    q=cap*pow(V(q_cap), 3);
     I(q_cap) <+ ddt(q) ;
   end
 endmodule

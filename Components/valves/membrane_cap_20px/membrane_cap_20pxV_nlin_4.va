@@ -7,7 +7,7 @@
 //Capacitor
 
 
-module membrane_cap_20pxV_nlin(p, n);
+module membrane_cap_20pxV_nlin_4(p, n);
   electrical p, n;
   //electrical n_gnd;
   //electrical p_i;
@@ -36,15 +36,6 @@ module membrane_cap_20pxV_nlin(p, n);
   ////
   // these are used for large deflections 
   // these variables derive from the Karman's large circular plate deflections
-
-  // currently m and N are based on a 2.5 mm radius - 100 um thickness membrane
-  // 02-02-24
-
-  (*desc="Karman fitting variable m", type="instance"*) parameter real m_fit = 0.41795 ;
-
-  // this comes from the original equation where N = 10^n
-  (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
-
   
   (*desc="fluid chamber height", type="instance"*) parameter real fl_ch_h = 20u; // meters
   (*desc="pneumatic chamber height", type="instance"*) parameter real pn_ch_h = 100u; // meters
@@ -63,8 +54,8 @@ module membrane_cap_20pxV_nlin(p, n);
   real cap;
   
   //real mfit_1;
-  //real r_rt; // root value for membrane
-  //real vol_int;
+  real r_rt; // root value for membrane
+  real vol_int;
   //real V_n;
 
   (*desc="valve Resistance", type="instance"*) parameter real C_res = 0;
@@ -78,12 +69,10 @@ module membrane_cap_20pxV_nlin(p, n);
     
 
     // deflection at center
-    //w0_v = V(q_cap)*pow(mem_r, 4) / (64*D) ;
+    w0_v = abs(V(q_cap))*pow(mem_r, 4) / (64*D) ;
     
-    w0_v = fl_ch_h*64*D/pow(mem_r, 4) ;
-
-    $display("w0") ;
-    $display(w0_v);
+    $display("w0:", w0_v) ;
+    //$display(w0_v);
 
     //linear capacitance 
     cap = 3.141*pow(mem_r, 6)/(16*mem_Emod*pow(mem_th,3)) * (1 - mem_v*mem_v) ;
@@ -91,57 +80,70 @@ module membrane_cap_20pxV_nlin(p, n);
     /*
     begin
     if (V(q_cap)>0) begin
-      r_rt  = mem_r*mem_r * (1-8/mem_r * sqrt(D*fl_ch_h/abs(V(q_cap)))) ;
+      r_rt  = mem_r*mem_r - 8 * sqrt(D*fl_ch_h/abs(V(q_cap))) ;
     end
-    if (V(q_cap)<0) begin
-      r_rt  = mem_r*mem_r * (1+8/mem_r * sqrt(D*fl_ch_h/abs(V(q_cap)))) ;
+    else if (V(q_cap)<0) begin
+      r_rt  = mem_r*mem_r + 8 * sqrt(D*fl_ch_h/abs(V(q_cap))) ;
     end
     else begin
       r_rt = 0;
     end
     end
-   */ 
+    */
     //r_rt = (mem_r*0.94) * tanh(V(q_cap)/3000) ;
 
-    //vol_int = 2*3.141*(0.5*pow(r_rt,2) - (1/(2*mem_r*mem_r))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) ;
-
-    //$display(r_rt);
     //$display(vol_int);
     // non-linear model
     // radius of curvature
     
-    /*
+    
     begin
-    if ((V(q_cap) < w0_v)) begin
+    if (w0_v < fl_ch_h) begin
+    //if ((V(q_cap) < w0_v)) begin
       p_c = cap*V(q_cap) ;
-      $display("linear");
-      $display(p_c);
+      //$display("linear");
+      //$display(p_c);
     end
     else begin
-      //p_c = cap*V(q_cap) - vol_int*V(q_cap)*pow(mem_r,4)/(64*D) + 3.141*fl_ch_h*r_rt*r_rt ; 
-      //p_c = cap*V(q_cap) - \
-      //  2*3.141*(0.5*pow(r_rt,2) - (1/(2*mem_r*mem_r))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) * \
-      //  V(q_cap)*pow(mem_r,4)/(64*D) + \
-      //  3.141*fl_ch_h*pow(mem_r,4)*(1-8/mem_r * sqrt(D*fl_ch_h/abs(V(q_cap))))* (1-8/mem_r * sqrt(D*fl_ch_h/abs(V(q_cap)))) ;
-      p_c = cap*V(q_cap);
+      begin
+      if (V(q_cap)>0) begin
+        r_rt  = pow(mem_r,2) - 8 * sqrt(D*fl_ch_h/abs(V(q_cap)) ) ;
+      end
+      else if (V(q_cap)<0) begin
+        r_rt  = pow(mem_r,2) + 8 * sqrt(D*fl_ch_h/abs(V(q_cap)) ) ;
+      end
+      else begin
+        r_rt = 0 ;
+      end
+      end
+      $display("root w:", r_rt, " vc:", V(q_cap));
+      
+      //vol_int = 2*3.141*(0.5*pow(r_rt,2) - (1/(2*pow(mem_r,2)))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) ;
+      
+      //p_c = cap*V(q_cap) - vol_int*V(q_cap)*pow(mem_r,4)/(64*D) + 3.141*fl_ch_h*pow(r_rt,2) ; 
+      p_c = cap*V(q_cap) - \
+        2*3.141*(0.5*pow(r_rt,2) - (1/(2*mem_r*mem_r))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) * \
+        V(q_cap)*pow(mem_r,4)/(64*D) + \
+        3.141*fl_ch_h*pow(r_rt, 2) ;
+      //p_c = cap*V(q_cap);
       //p_c = 3.141*pow(mem_r,2)*fl_ch_h*tanh(V(q_cap)/2000);
-      $display("nonlinear");
-      $display(p_c);
+      //$display("nonlinear");
+      //$display(p_c);
     end
     end
-    */
     
-    $display("v cap") ;
-    $display(V(q_cap));
+    
+    //$display("v cap") ;
+    //$display(V(q_cap));
 
 
-    $display("cap: c:") ;
-    $display(cap) ;
-    $display(p_c) ;
+    $display("c_vol:", p_c);
+    //$display(cap) ;
+    //$display(p_c) ;
     // 103e3 kpa is ~ 15 psi
    
     //p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.94*tanh(V(q_cap)/2000) ;
-    p_c = cap*V(q_cap);
+    //p_c = cap*V(q_cap);
 
     
     I(q_cap) <+ ddt(p_c) ;

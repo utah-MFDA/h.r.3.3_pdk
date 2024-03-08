@@ -8,5 +8,5 @@ vp 2 3 0V
 
 .tran 0.01ms 10ms
 *.option post=2
-.print tran I(vs) I(vp)
+.print tran I(vs) I(vp) V(3)
 .end

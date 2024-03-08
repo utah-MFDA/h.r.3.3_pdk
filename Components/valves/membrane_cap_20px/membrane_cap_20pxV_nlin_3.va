@@ -7,7 +7,7 @@
 //Capacitor
 
 
-module membrane_cap_20pxV_nlin(p, n);
+module membrane_cap_20pxV_nlin_3(p, n);
   electrical p, n;
   //electrical n_gnd;
   //electrical p_i;
@@ -140,8 +140,8 @@ module membrane_cap_20pxV_nlin(p, n);
     $display(p_c) ;
     // 103e3 kpa is ~ 15 psi
    
-    //p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.94*tanh(V(q_cap)/2000) ;
-    p_c = cap*V(q_cap);
+    p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.94*tanh(V(q_cap)/2000) ;
+    //p_c = cap*V(q_cap);
 
     
     I(q_cap) <+ ddt(p_c) ;

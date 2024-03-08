@@ -17,17 +17,17 @@ module membrane_cap_20pxV_Pn(p, n);
   // these variables are used for small deflections
 
   // typical dimension for a 3D printed valve
-  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20e-6;
 
   // properties of PEGDA with 2% NPS
-  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7e6; // MPa
 
   // estimating poisson's ratio using a typical value for epoxies
   //   which tend to be 0.3 - 0.35
   (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
 
   // membrane radius
-  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100e-6; // meters
 
   ////
   // these are used for large deflections 
@@ -41,64 +41,97 @@ module membrane_cap_20pxV_Pn(p, n);
   // this comes from the original equation where N = 10^n
   (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
 
+
+  (*desc="fluid chamber height", type="instance"*) parameter real fl_ch_h = 20u; // meters
+  (*desc="pneumatic chamber height", type="instance"*) parameter real pn_ch_h = 100u; // meters
+
+  (*desc="enable volume limit", type="instance"*) parameter real vol_limit = 1; // meters
+  (*desc="enable volume limit", type="instance"*) parameter real lin_valve = 1; // meters
+
   branch (p, n) q_cap ;
   real p_c;
-  real q;
+  //real q;
   real D;
+  real C_mem;
   real mfit_1;
+
+  real limit_fl;
+  real limit_pn;
+  real w;
 
   analog
   begin
-    //  Note:  It is explicitly assumed here that C is constant!
-    // This is wrong if C is externally defined as some time- or
-    // solution-dependent parameter.  Fortunately, Xyce doesn't let you
-    // make parameters solution-dependent, and special coding is necessary
-    // external to the device even to enable such a thing.
 
-    // Used for small deflection not currently used as the Karman eq works in this 
-    //   region as well.
-    //@(initial_instance) 
-    //begin : initial_instance
-    //  cap = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
-    //  $display(cap);
-    //end
-    // circuilar membrane
-    D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(16*mem_Emod*pow(mem_th,3 ));
+    // circuilar membrane capacitance
+    C_mem = 3.141 * pow(mem_r, 6) * (1 - pow(mem_v, 2))/(16*mem_Emod*pow(mem_th,3 ));
+    D = mem_Emod*pow(mem_th, 3) * (12*(1 -  mem_v)) ; 
+    //D_pl= mem_Emod*pow(mem_th) 
+    // deflection at center
+    w = V(n)*pow(mem_r, 4)/(64*D);
     //$display(cap);
     //if (V(q_cap) > pow(10, log(m_fit*N_fit*(1/D)/(2-m_fit)) ) ) begin
 
-    //V(n_v) <+ V(n);
-    
-    
     begin
-    if (V(n) > 0 ) begin
-      mfit_1 = m_fit -1 ;
-      cap = m_fit*N_fit*pow(V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      //$display(cap) ;
-    end
-    else if (V(n) < 0 ) begin
-      mfit_1 = m_fit -1 ;
-      cap = m_fit*N_fit*pow(-V(n), mfit_1) * 1e-3;
-      //cap
-      //p_c  = cap*V(q_cap) ;
-      //$display(cap) ;
+    if (V(q_cap) > 0) begin
+      limit_fl = 3.141*mem_r*mem_r*fl_ch_h/V(q_cap);
+      limit_pn = 3.141*mem_r*mem_r*pn_ch_h/V(q_cap); 
     end
     else begin
-      cap = 1/D;
-      p_c=cap*V(q_cap);
+      // unreachable values
+      limit_fl = C_mem;
+      limit_pn = C_mem;
     end
     end
 
 
+    begin
+    if (!(lin_valve)) begin
+      if (V(n) > 0 ) begin
+        mfit_1 = m_fit -1 ;
+        cap = m_fit*N_fit*pow(V(n), mfit_1);
+        //if ((cap > limit_fl)&&(vol_limit))
+        //   cap = limit_fl;
+        //cap
+        //p_c  = cap*V(q_cap) ;
+        //$display(cap) ;
+      end
+      else if (V(n) < 0 ) begin
+        mfit_1 = m_fit -1 ;
+        cap = m_fit*N_fit*pow(-V(n), mfit_1);
+        //if ((cap > limit_pn) && (vol_limit))
+        //  cap = limit_pn;
+        //cap
+        //p_c  = cap*V(q_cap) ;
+        //$display(cap) ;
+      end
+      else begin // V(n) = 0
+        cap = C_mem;
+        //p_c=cap*V(q_cap);
+      end
+    end
+    else begin
+      cap = C_mem;
+      //p_c=cap*V(q_cap);
+    end
+    end
+
+    //cap = C_mem;
     //V(n_v)
     // 103e3 kpa is ~ 15 psi
     //mfit_1 = m_fit -1 ;
     //cap = m_fit*N_fit*pow(103e3, mfit_1) *1e-3;
     $display(cap) ;
+    //begin
+    //if ((V(n) > 0) && (cap > limit_fl) && (vol_limit)) begin
+    //  p_c = limit_fl*V(q_cap);
+    //end
+    //else if ((V(n) < 0) && (cap > limit_pn) && (vol_limit)) begin
+    //  p_c = limit_pn*V(q_cap);
+    //end
+    //else
     p_c = cap*V(q_cap);
-
+    //end
+    //end
 
     
     I(q_cap) <+ ddt(p_c) ;
