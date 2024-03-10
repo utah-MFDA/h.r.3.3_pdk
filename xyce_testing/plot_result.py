@@ -15,6 +15,7 @@ def load_prn(results_file, plot_nodes=None, plot_type=None):
                         sep='\s+')
 
 def sum_cur(time, i, set_time_inter=None):
+    
     i_sum = 0
     t_sl = [0,0]
     if set_time_inter is not None:
@@ -23,14 +24,19 @@ def sum_cur(time, i, set_time_inter=None):
                 for t_ind, t in enumerate(time):
                     if t >= ti:
                         t_sl[ind] = t_ind
+                        print(t_ind)
                         break
             time = time.iloc[t_sl[0]:t_sl[1]].reset_index(drop=True)
-    
+    print("start:"+str(t_sl[0])+" end:"+str(t_sl[1]))
+    print(i[t_sl[0]:t_sl[1]])
     for ind, t in enumerate(time):
         if ind == 0:
             continue
         else:
-            i_sum += (i[ind] - i[ind-1])*(time[ind-1] - time[ind])
+            idt = (i[ind] + i[ind-1])
+            #if   idt > 0:
+            #    print(idt)
+            i_sum += (idt)*(time[ind] - time[ind-1])/2
     return i_sum
 
 # plot_nodes is a list of strings

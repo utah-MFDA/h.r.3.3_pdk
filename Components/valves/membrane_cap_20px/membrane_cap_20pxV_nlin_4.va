@@ -24,7 +24,7 @@ module membrane_cap_20pxV_nlin_4(p, n);
   (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
 
   // properties of PEGDA with 2% NPS
-  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7e6; // MPa
 
   // estimating poisson's ratio using a typical value for epoxies
   //   which tend to be 0.3 - 0.35
@@ -52,10 +52,12 @@ module membrane_cap_20pxV_nlin_4(p, n);
   //real Pr;
   real w0_v;
   real cap;
+  real vol_rd;
+  real vol_int;
   
   //real mfit_1;
   real r_rt; // root value for membrane
-  real vol_int;
+  //real vol_int;
   //real V_n;
 
   (*desc="valve Resistance", type="instance"*) parameter real C_res = 0;
@@ -69,9 +71,10 @@ module membrane_cap_20pxV_nlin_4(p, n);
     
 
     // deflection at center
-    w0_v = abs(V(q_cap))*pow(mem_r, 4) / (64*D) ;
-    
-    $display("w0:", w0_v) ;
+    //w0_v = abs(V(q_cap))*pow(mem_r, 4) / (64*D) ;
+    w0_v = fl_ch_h*64*D/(pow(mem_r,4)) ;
+
+    //$display("w0:", w0_v) ;
     //$display(w0_v);
 
     //linear capacitance 
@@ -98,9 +101,10 @@ module membrane_cap_20pxV_nlin_4(p, n);
     
     
     begin
-    if (w0_v < fl_ch_h) begin
-    //if ((V(q_cap) < w0_v)) begin
+    //if (w0_v < fl_ch_h) begin
+    if ((V(q_cap) < w0_v)) begin
       p_c = cap*V(q_cap) ;
+      //p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.94*tanh(V(q_cap)/2000) ;
       //$display("linear");
       //$display(p_c);
     end
@@ -119,16 +123,20 @@ module membrane_cap_20pxV_nlin_4(p, n);
       $display("root w:", r_rt, " vc:", V(q_cap));
       
       //vol_int = 2*3.141*(0.5*pow(r_rt,2) - (1/(2*pow(mem_r,2)))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) ;
-      
+      //vol_int = 2*3.141*(0.5*pow(r_rt,2) - (1/(2*mem_r*mem_r))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) * \
+      //  pow(mem_r,4)/(64*D) ;
+      //vol_rd  = 3.141*fl_ch_h*pow(r_rt, 2) ;
+
       //p_c = cap*V(q_cap) - vol_int*V(q_cap)*pow(mem_r,4)/(64*D) + 3.141*fl_ch_h*pow(r_rt,2) ; 
       p_c = cap*V(q_cap) - \
         2*3.141*(0.5*pow(r_rt,2) - (1/(2*mem_r*mem_r))*pow(r_rt,4) + (1/(6*pow(mem_r,4)))*pow(r_rt,6)) * \
         V(q_cap)*pow(mem_r,4)/(64*D) + \
         3.141*fl_ch_h*pow(r_rt, 2) ;
+      //p_c = cap*V(q_cap) - vol_int*V(q_cap) + vol_rd;
       //p_c = cap*V(q_cap);
       //p_c = 3.141*pow(mem_r,2)*fl_ch_h*tanh(V(q_cap)/2000);
       //$display("nonlinear");
-      //$display(p_c);
+      //$display("c", cap, " i", vol_int, " r", vol_rd);
     end
     end
     
@@ -137,7 +145,7 @@ module membrane_cap_20pxV_nlin_4(p, n);
     //$display(V(q_cap));
 
 
-    $display("c_vol:", p_c);
+    $display("c_vol:", p_c, " V:", V(q_cap));
     //$display(cap) ;
     //$display(p_c) ;
     // 103e3 kpa is ~ 15 psi
