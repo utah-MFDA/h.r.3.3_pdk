@@ -13,9 +13,9 @@ r1 1 2 1k
 r2 5 0 1k
 
 
-Yvalve_20px_1_V        valv1 3 31 11 0  
+Yvalve_sw_20px_1_V        valv1 3 31 11 0  
 Ymembrane_cap_20pxV_Pn mem1  31 12 
-Yvalve_20px_1_V        valv2 31 4 13 0  
+Yvalve_sw_20px_1_V        valv2 31 4 13 0  
 
 vp1 2 3 0V
 vp2 4 5 0V 

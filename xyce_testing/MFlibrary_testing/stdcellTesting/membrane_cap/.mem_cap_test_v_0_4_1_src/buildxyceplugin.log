@@ -1,0 +1,19 @@
+buildxyceplugin log begun at Tue Mar 12 17:19:07 MDT 2024\n
+ script invoked as: \n /usr/local/bin/buildxyceplugin -o MFXyce membrane_cap_20pxV_nlin.va ./
+ ----------------
+Building C++ for Verilog-A input file 'membrane_cap_20pxV_nlin.va'...
+[info...] -x: skipping any implicit xml scripts
+[info...] admsXml-2.3.7 (728590c) Feb  6 2024 08:01:28
+[info...] Top-level analog/code assigns to 4 variables.
+[info...] elapsed time: 0 (second)
+[info...] admst iterations: 55879 (28211 freed)
+Compiling C++ for membrane_cap_20pxV_nlin...
+libtool: compile:  c++ -std=gnu++11 -I. -I/usr/local/stow/Xyce/7.8/include -DXyce_NOX_LOCA_SUPPORT -I/usr/local/stow/Trilinos/12.12-serial/include -I/usr/include/suitesparse -I/usr/local/stow/Trilinos/12.12-serial/include -fPIC -Wl,-rpath,/../lib -O3 -fPIC -c N_DEV_ADMSmembrane_cap_20pxV_nlin.C -fPIC -DPIC  -fPIC -DPIC -o .libs/N_DEV_ADMSmembrane_cap_20pxV_nlin.o
+libtool: compile:  c++ -std=gnu++11 -I. -I/usr/local/stow/Xyce/7.8/include -DXyce_NOX_LOCA_SUPPORT -I/usr/local/stow/Trilinos/12.12-serial/include -I/usr/include/suitesparse -I/usr/local/stow/Trilinos/12.12-serial/include -fPIC -Wl,-rpath,/../lib -O3 -fPIC -c N_DEV_ADMSmembrane_cap_20pxV_nlin.C -fPIC -DPIC -o N_DEV_ADMSmembrane_cap_20pxV_nlin.o >/dev/null 2>&1
+libtool: compile:  c++ -std=gnu++11 -I. -I/usr/local/stow/Xyce/7.8/include -DXyce_NOX_LOCA_SUPPORT -I/usr/local/stow/Trilinos/12.12-serial/include -I/usr/include/suitesparse -I/usr/local/stow/Trilinos/12.12-serial/include -fPIC -Wl,-rpath,/../lib -O3 -fPIC -c MFXyce_bootstrap.C -fPIC -DPIC  -fPIC -DPIC -o .libs/MFXyce_bootstrap.o
+libtool: compile:  c++ -std=gnu++11 -I. -I/usr/local/stow/Xyce/7.8/include -DXyce_NOX_LOCA_SUPPORT -I/usr/local/stow/Trilinos/12.12-serial/include -I/usr/include/suitesparse -I/usr/local/stow/Trilinos/12.12-serial/include -fPIC -Wl,-rpath,/../lib -O3 -fPIC -c MFXyce_bootstrap.C -fPIC -DPIC -o MFXyce_bootstrap.o >/dev/null 2>&1
+libtool: link: c++ -std=gnu++11  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbeginS.o  .libs/N_DEV_ADMSmembrane_cap_20pxV_nlin.o .libs/MFXyce_bootstrap.o   -L/usr/local/stow/Trilinos/12.12-serial/lib -L/usr/lib/gcc/x86_64-redhat-linux/8 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-redhat-linux/8/crtendS.o /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/crtn.o  -Wl,-rpath -Wl,/../lib -O3   -Wl,-soname -Wl,MFXyce.so -o .libs/MFXyce.so
+libtool: link: ( cd ".libs" && rm -f "MFXyce.la" && ln -s "../MFXyce.la" "MFXyce.la" )
+libtool: install: /usr/bin/install -c -c .libs/MFXyce.so /home/u1146591/MFDA/h.r.3.3_pdk/xyce_testing/MFlibrary_testing/stdcellTesting/membrane_cap/.mem_cap_test_v_0_4_1_src/MFXyce.so
+libtool: install: /usr/bin/install -c -c .libs/MFXyce.lai /home/u1146591/MFDA/h.r.3.3_pdk/xyce_testing/MFlibrary_testing/stdcellTesting/membrane_cap/.mem_cap_test_v_0_4_1_src/MFXyce.la
+libtool: warning: remember to run 'libtool --finish /usr/local/stow/Xyce/7.8/lib'

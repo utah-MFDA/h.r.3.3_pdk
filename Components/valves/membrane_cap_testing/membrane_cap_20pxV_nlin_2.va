@@ -5,7 +5,9 @@
 
 
 //Capacitor
-
+//
+// based on log fit
+//
 
 module membrane_cap_20pxV_nlin_2(p, n);
   electrical p, n;

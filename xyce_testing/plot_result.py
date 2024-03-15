@@ -24,10 +24,10 @@ def sum_cur(time, i, set_time_inter=None):
                 for t_ind, t in enumerate(time):
                     if t >= ti:
                         t_sl[ind] = t_ind
-                        print(t_ind)
+                        #print(t_ind)
                         break
             time = time.iloc[t_sl[0]:t_sl[1]].reset_index(drop=True)
-    print("start:"+str(t_sl[0])+" end:"+str(t_sl[1]))
+    #print("start:"+str(t_sl[0])+" end:"+str(t_sl[1]))
     print(i[t_sl[0]:t_sl[1]])
     for ind, t in enumerate(time):
         if ind == 0:
@@ -104,24 +104,39 @@ def run_xyce(lib, cir):
     
     subprocess.run(['sh', './../run_test.sh', lib, cir, cir_root])
 
-component_loc = './../Components/'
-xyce_build    = '/usr/local/bin/buildxyceplugin -o'.split(' ')
+component_loc = './../../Components'
+#xyce_build    = '/usr/local/bin/buildxyceplugin -o'
+xyce_build    = 'buildxyceplugin -o'
+
+import subprocess
 
 def build_and_run(cir, modules):
     cir_root, fname = os.path.split(cir)
-    src_path = cir_root+'/.'+fname+'_src'
-    os.mkdir(src_path)
+    print(fname)
+    lib_dir  = '.'+fname.split('.')[0]+'_src'
+    n_dir    = cir_root+'/'+lib_dir
+    src_path = cir_root+'/'+lib_dir
+    if not os.path.isdir(n_dir): 
+        os.mkdir(src_path)
 
     lib_file = component_loc+'/veriloga_objects/MFXyce'
-    shutil.copy(lib_file, src_path+'/ComponentLib')
+    print([lib_file, src_path])
+    shutil.copy(lib_file, src_path+'/MFXyce')
     
     for m in modules:
+        print(m)
         if len(m) == 2:
-            mfile = component_loc+'/'+m[0]+'/'+m[1]+'/'+m[1]+'.va'
+            mfile = '/'+m[0][0]+'/'+m[1][0]+'/'+m[1][0]+'.va'
+            print(mfile)
+            shutil.copyfile(component_loc+'/'+mfile, src_path+'/'+m[1][0])
         elif len(m) == 3:
-            mfile = component_loc+'/'+m[0]+'/'+m[1]+'/'+m[2]+'.va'
-        shutil.copyfile(mfile, src_path)
-    subprosses.run(xyce_build)
+            mfile = '/'+m[0][0]+'/'+m[1][0]+'/'+m[2][0]+'.va'
+            print(mfile)
+            shutil.copyfile(component_loc+'/'+mfile, src_path+'/'+m[2][0]+'.va')
+
+    xyce_build_lib_cmd = 'cd ' + n_dir + ' && ' + xyce_build + ' MFXyce *.va ./'
+    print(xyce_build_lib_cmd)
+    subprocess.run(xyce_build_lib_cmd.split(' '), shell=True)
 
     lib = src_path+'/'
                              
