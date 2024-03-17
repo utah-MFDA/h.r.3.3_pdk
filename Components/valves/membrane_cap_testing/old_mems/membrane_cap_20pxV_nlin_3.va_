@@ -72,7 +72,7 @@ module membrane_cap_20pxV_nlin_3(p, n);
 
     // 103e3 kpa is ~ 15 psi
     begin
-    if(V(q_cap)) begin
+    if(V(q_cap)>0) begin
       p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.94*tanh(V(q_cap)/2000) ;
     end
     else begin

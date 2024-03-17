@@ -1,7 +1,7 @@
 
 *.options linsol type=klu
 
-vs 1 0 PWL(0s 0V 30ms 0V 31ms 6.8e4V 60ms 6.8e4V 61ms 0V 1100.0ms 0V)
+vs 1 0 PWL(0s 0V 30ms 0V 31ms 6.8e4V 1s 6.8e4V )
 
 r1 22 21 1e12
 Ymembrane_cap_20pxV_nlin_5_1 mem1 2 21 mem_r=540e-6 fl_ch_h=60e-6
@@ -12,6 +12,15 @@ Ymembrane_cap_20pxV_nlin_5_1 mem1 2 21 mem_r=540e-6 fl_ch_h=60e-6
 vp1 1  2 0V
 vp2 0 22 0V
 
-.tran 0.001ms 40ms 29ms 0.01ms
-.print tran I(vp1) V(1) V(21)
+vs1 101 0 PWL(0s 0V 60ms 0V 61ms 6.8e4V 1s 6.8e4V)
+
+vp3 1  62 0V
+vp4 0  72 0V
+
+r2 72 71 1e11
+*Yvalve_sw_20px_1_V           valv1 61 62 101 0 threshold_pressure_kPa=60e3
+Ymembrane_cap_20pxV_nlin_5_1 mem2  71 62 mem_r=540e-6 fl_ch_h=60e-6
+
+.tran 0.001ms 200ms 29ms 0.01ms
+.print tran I(vp1) I(vp3) V(1) V(21)
 .end

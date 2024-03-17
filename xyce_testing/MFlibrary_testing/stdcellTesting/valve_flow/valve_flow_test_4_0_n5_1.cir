@@ -11,12 +11,12 @@ r2 5 0 1e11
 
 
 Yvalve_sw_20px_1_V              valv1 3 31 11 0  
-Ymembrane_cap_20pxV_nlin_3_1 mem1  31 12 mem_r=540e-6 fl_ch_h=60e-6
+Ymembrane_cap_20pxV_nlin_5_1 mem1  31 12 mem_r=540e-6 fl_ch_h=60e-6
 Yvalve_sw_20px_1_V              valv2 31 4 13 0  
 
 vp1 2 3 0V
 vp2 4 5 0V 
 
-.tran 0.01ms 3s 0s 0.1ms
+.tran 0.01ms 2.3s 0s 0.1ms
 .print tran I(vp1) I(vp2) V(11) V(12) V(13)
 .end

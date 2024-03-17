@@ -5,9 +5,9 @@ vs_f 1  0 0V
 *vs_p2 12 0 PWL(0s 0V    6 0v    6.1 27kV  15 27kV  15.1   0V    20 0kV)
 *vs_p3 13 0 PWL(0s 105kV 9 105kV 9.1 0kV   18 0kV   18.1   105kV 20 105kV)
 
-vs_p1 11 0 PULSE(105kV 0kV   0.56   10m 10m 60m  300m)
-vs_p2 12 0 PULSE(69kV 0kV    0.56   10m 10m 180m 300m)
-vs_p3 13 0 PULSE(105kV 0kV   0.68   10m 10m 120m 300m)
+vs_p1 11 0 PULSE(105kV 0kV   0.56   5m 5m 60m  300m)
+vs_p2 12 0 PULSE(69kV 0kV    0.56   5m 5m 180m 300m)
+vs_p3 13 0 PULSE(105kV 0kV   0.68   5m 5m 120m 300m)
 
 r1 1 2 1e11
 r2 5 0 1e11

@@ -1,0 +1,22 @@
+
+vsi 1  0 0V
+
+vsp1 31 0 PULSE(69kV 0kV 30ms  5ms 5ms 30ms  150ms)
+vsp2 41 0 PULSE(69kV 0kV 30ms  5ms 5ms 90ms  150ms)
+vsp3 51 0 PULSE(69kV 0kV 90ms  5ms 5ms 60ms  150ms)
+
+r1 1 2 1e12
+r2 6 0 1e12
+
+*module valve_fl_20px_1_V2(fl_in, fl_out,  pn_in);
+Yvalve_fl_20px_1_V3_m5 valv1 2 3 31 mem_r=540e-6 fl_ch_h=60e-6
+
+Yvalve_fl_20px_1_V3_m5 valv2 3 4 41 mem_r=540e-6 fl_ch_h=60e-6
+
+Yvalve_fl_20px_1_V3_m5 valv3 4 5 51 mem_r=540e-6 fl_ch_h=60e-6
+
+vp1 6 5 0V
+
+.tran 0.001ms 600ms 0s 1ms
+.print tran I(vp1) I(vsi) V(31) V(41) V(51) V(3) V(4) V(5)
+.end

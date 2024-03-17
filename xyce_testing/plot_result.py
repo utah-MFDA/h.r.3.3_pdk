@@ -28,7 +28,7 @@ def sum_cur(time, i, set_time_inter=None):
                         break
             time = time.iloc[t_sl[0]:t_sl[1]].reset_index(drop=True)
     #print("start:"+str(t_sl[0])+" end:"+str(t_sl[1]))
-    print(i[t_sl[0]:t_sl[1]])
+    #print(i[t_sl[0]:t_sl[1]])
     for ind, t in enumerate(time):
         if ind == 0:
             continue
@@ -98,7 +98,7 @@ def run_xyce(lib, cir):
         raise ValueError(lib + " library file does not exist") 
 
     if not os.path.isfile(cir):
-        raise ValueError(cir + " not able to find ciruit file") 
+        raise ValueError(cir + " not able to find circuit file") 
 
     cir_root, fname = os.path.split(cir)
     
@@ -117,38 +117,42 @@ def build_and_run(cir, modules):
     n_dir    = cir_root+'/'+lib_dir
     src_path = cir_root+'/'+lib_dir
     if not os.path.isdir(n_dir): 
-        os.mkdir(src_path)
+        os.makedirs(src_path, exist_ok=True)
 
     lib_file = component_loc+'/veriloga_objects/MFXyce'
     print([lib_file, src_path])
     shutil.copy(lib_file, src_path+'/MFXyce')
+
+    mods_list = []
     
     for m in modules:
         print(m)
         if len(m) == 2:
             mfile = '/'+m[0][0]+'/'+m[1][0]+'/'+m[1][0]+'.va'
+            mods_list.append(m[1][0]+'.va')
             print(mfile)
             shutil.copyfile(component_loc+'/'+mfile, src_path+'/'+m[1][0])
         elif len(m) == 3:
             mfile = '/'+m[0][0]+'/'+m[1][0]+'/'+m[2][0]+'.va'
+            mods_list.append(m[2][0]+'.va')
             print(mfile)
             shutil.copyfile(component_loc+'/'+mfile, src_path+'/'+m[2][0]+'.va')
 
-    xyce_build_lib_cmd = 'cd ' + n_dir + ' && ' + xyce_build + ' MFXyce *.va ./'
+    xyce_build_lib_cmd = 'cd ' + n_dir + ' && ' + xyce_build + ' MFXyce '+' '.join(mods_list)+' ./'
     print(xyce_build_lib_cmd)
     subprocess.run(xyce_build_lib_cmd.split(' '), shell=True)
 
-    lib = src_path+'/'
+    lib = src_path+'/MFXyce.so'
                              
     run_and_plot(lib, cir, plot_type=None, plot_nodes=None)
 
 def run_and_plot(lib, cir, plot_type=None, plot_nodes=None, cir_path=None):
 
     cir_root, fname = os.path.split(cir)
-    cir_a = cir_root+'/'+cir
-    prn   = cir_root+'/results/'+cir+'.prn'
+    cir_a = cir_root+'/'+fname
+    prn   = cir_root+'/results/'+fname+'.prn'
     
-    run_xyce(lib, cir_a)
+    #run_xyce(lib, cir_a)
     
     # only the definition above needs to be changed
     run_xyce(lib, cir_a)
@@ -158,9 +162,9 @@ def run_and_plot(lib, cir, plot_type=None, plot_nodes=None, cir_path=None):
                 n=plot_nodes[ind]
             else:
                 n=None
-            plot_r(prn, plot_type=ty, plot_nodes=n)
+            plot_prn(prn, plot_type=ty, plot_nodes=n)
     else:
-        plot_r(prn, plot_type=None, plot_nodes=plot_nodes)
+        plot_prn(prn, plot_type=None, plot_nodes=plot_nodes)
         
 
 if __name__ == "__main__":

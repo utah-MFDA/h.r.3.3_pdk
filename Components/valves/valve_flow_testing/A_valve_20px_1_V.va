@@ -4,7 +4,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module valve_20px_1_V(fl_in, fl_out,  pn_in);
+module valve_fl_20px_1_V1(fl_in, fl_out,  pn_in);
 //c_in, c_out,
 
 inout fl_in, fl_out;
@@ -24,6 +24,8 @@ electrical pn_in;//, pn_out;
 
 (*desc="threshold_pressure", type="instance"*) parameter real threshold_pressure_kPa=103e3;
 (*desc="threshold_pressure", type="instance"*) parameter real transition_pressure_kPa=6.8e3;
+
+(*desc="threshold_multiplier", type="instance"*) parameter real w0_m=1.1;
 
 (*desc="pn viscosity", type="instance"*)   parameter real nu_pn=18.03e-6;
 (*desc="pn length", type="instance"*)         parameter real L_pn = 6e-3;
@@ -74,6 +76,7 @@ real P_lin, P_lin_start;
 real p_c;
 real D;
 real w0_v;
+real w0;
 real cap;
 real mem_r; 
 
@@ -141,10 +144,12 @@ analog begin
 
     cap = 3.141*pow(mem_r, 6)/(16*mem_Emod*pow(mem_th,3)) * (1 - mem_v*mem_v) ; 
    
+    D = mem_Emod*pow(mem_th, 3)/(12*(1-mem_v*mem_v)) ;
     p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.70*tanh(V(q_cap)/2000) ;
 
+    w0_v = fl_ch_h*64*D/pow(mem_r, 4) ;
 
-
+    w0   = V(q_cap)*pow(mem_r, 4)/(64*D);
     //
     // Contribution statements
     //
@@ -158,16 +163,33 @@ analog begin
     // Pressure above theshold
     if (V(pn_in) > threshold_pressure_kPa) begin
         I(fl_ib) <+ 0;
-        I(fl_ob) <+ 0;
+        //I(fl_ob) <+ 0;
         //V(c_out) <+ V(c_in);
     end else if (threshold_pressure_kPa - V(pn_in) <= P_lin) begin
         I(fl_ib) <+ V(fl_ib)/R_valve - \
             V(fl_ib)/R_valve * ((V(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start));
-        //V(c_out) <+ V(c_in);
+       //V(c_out) <+ V(c_in);
     end else begin
         I(fl_ib) <+ V(fl_ib)/R_valve;
         //V(c_out) <+ V(c_in);
     end 
+
+    //if (V(q_cap) > (w0_v*1.1 )) begin
+    //    I(fl_ib) <+ 0;
+    //    //V(fl_ob) <+ 0;
+    //    //I(fl_ob) <+ 0;
+    //    //V(c_out) <+ V(c_in);
+    //end else if (V(q_cap) >= w0_v) begin
+    //    I(fl_ib) <+ V(fl_ib)/R_valve - \
+    //        //V(fl_ib)/R_valve * ((V(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start));
+    //        V(fl_ib)/R_valve * (V(q_cap)-w0_v)/(w0_v*(0.1));
+    //    //V(c_out) <+ V(c_in);
+    //end 
+    //else begin
+    //    I(fl_ib) <+ V(fl_ib)/R_valve;
+    //    //V(fl_ob) <+ 0;
+    //    //V(c_out) <+ V(c_in);
+    //end 
     
     I(q_cap) <+ ddt(p_c) ;
  

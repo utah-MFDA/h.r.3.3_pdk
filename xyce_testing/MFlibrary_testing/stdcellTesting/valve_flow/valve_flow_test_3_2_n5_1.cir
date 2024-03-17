@@ -1,16 +1,10 @@
 * one stop valve per device
 
 vs_f 1  0 0V
-*vs_p1 11 0 PWL(0s 105kV 3 105kV 3.1 0kV   12 0kV   12.1   105kV 20 105kV)
-*vs_p2 12 0 PWL(0s 0V    6 0v    6.1 27kV  15 27kV  15.1   0V    20 0kV)
-*vs_p3 13 0 PWL(0s 105kV 9 105kV 9.1 0kV   18 0kV   18.1   105kV 20 105kV)
 
-*vs_p1 11 0 PULSE(0 105kV  0.5   1m 1m 20m 60m)
-*vs_p2 12 0 PULSE(0 6.9e4V 0.51  1m 1m 30m 60m)
-*vs_p3 13 0 PULSE(0 105kV  0.53  1m 1m 20m 60m)
-vs_p1 11 0 PULSE(69kV 0kV   0.56   10m 10m 60m  300m)
-vs_p2 12 0 PULSE(69kV 0kV   0.561  10m 10m 180m 300m)
-vs_p3 13 0 PULSE(69kV 0kV   0.68   10m 10m 120m 300m)
+vs_p1 11 0 PULSE(69kV 0kV   0.56   5m 5m 60m  300m)
+vs_p2 12 0 PULSE(69kV 0kV   0.561  5m 5m 180m 300m)
+vs_p3 13 0 PULSE(69kV 0kV   0.68   5m 5m 120m 300m)
 
 r1 1 2 1e12
 r2 5 0 1e12
