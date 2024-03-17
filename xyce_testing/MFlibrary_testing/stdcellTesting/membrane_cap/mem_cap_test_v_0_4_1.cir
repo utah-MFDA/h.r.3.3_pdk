@@ -1,0 +1,18 @@
+
+*.options linsol type=klu
+
+vs 1 0 PWL(0s 0V 30ms 0V 31ms 1000V 60ms 1000V 61ms 0V 100.0ms 0V)
+*vs 1 0 PWL(0s 4V 200ms 4V)
+
+r1 0 21 1e8
+Ymembrane_cap_20pxV_nlin_3 mem1 2 21 mem_r=540e-6 fl_ch_h=60e-6
+*C_res=1e1
+
+
+* probe sources
+vp1 1 2 0V
+
+.tran 0.01ms 40ms 29ms 0.01ms
+.print tran I(vp1) V(1) V(21)
+
+.end

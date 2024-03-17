@@ -1,0 +1,83 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+
+//Capacitor
+//
+// based on tanh * 0.70
+//
+
+
+module membrane_cap_20px_1_v3(fl_in, fl_out, pn_in, pn_out);
+  
+  fluidDynamics fl_in, fl_out;
+  fluidDynamics pn_in, pn_out;
+
+  inout fl_in, fl_out, pn_in, pn_out;
+
+  ////
+  // these variables are used for small deflections
+
+  // typical dimension for a 3D printed valve
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+  // properties of PEGDA with 2% NPS
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+  // estimating poisson's ratio using a typical value for epoxies
+  //   which tend to be 0.3 - 0.35
+  (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+  // membrane radius
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+  ////
+  // these are used for large deflections 
+  // these variables derive from the Karman's large circular plate deflections
+
+  // currently m and N are based on a 2.5 mm radius - 100 um thickness membrane
+  // 02-02-24
+
+  (*desc="Karman fitting variable m", type="instance"*) parameter real m_fit = 0.41795 ;
+
+  // this comes from the original equation where N = 10^n
+  (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
+
+  
+  (*desc="fluid chamber height", type="instance"*) parameter real fl_ch_h = 20u; // meters
+  (*desc="pneumatic chamber height", type="instance"*) parameter real pn_ch_h = 100u; // meters
+
+  branch (n, p) q_cap ;
+
+  real p_c;
+  real D;
+  real w0_v;
+  real cap;
+  
+  (*desc="valve Resistance", type="instance"*) parameter real C_res = 0;
+  (*desc="viscosity", type="instance"*) parameter real nu = 0.0010016;
+
+  analog
+  begin
+    
+    // circuilar membrane
+    D = mem_Emod*pow(mem_th, 3)/(12*(1-mem_v*mem_v)) ;
+    
+    // deflection at center
+    w0_v = fl_ch_h*64*D/pow(mem_r, 4) ;
+
+    $display("w0") ;
+    $display(w0_v);
+
+    //linear capacitance 
+    cap = 3.141*pow(mem_r, 6)/(16*mem_Emod*pow(mem_th,3)) * (1 - mem_v*mem_v) ; 
+   
+    p_c = 3.141*pow(mem_r,2)*fl_ch_h*0.70*tanh(V(q_cap)/2000) ;
+
+    
+    I(q_cap) <+ ddt(p_c) ;
+ 
+ end
+endmodule

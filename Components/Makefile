@@ -9,7 +9,7 @@ SHELL		= /bin/bash
 DATE = $(date '+%Y-%m-%d')
 
 
-KIT_NAME = HR3.3
+KIT_NAME = h.r.3.3
 
 GENERAL_SRC_DIR = valves serpentine mixers
 
@@ -30,30 +30,45 @@ SCAD_BUILD_DIR= scad_build
 
 MF_LIB = MFXyce
 
-BUILD_COMMAND_LOC = /usr/local/xyce_dev/bin
-BUILD_COMMAND     = $(BUILD_COMMAND_LOC)/buildxyceplugin.sh -o
+#BUILD_COMMAND_LOC = /usr/local/xyce_dev/bin
+BUILD_COMMAND_LOC = /usr/local/bin/
+BUILD_COMMAND     = $(BUILD_COMMAND_LOC)/buildxyceplugin -o
 
+VA_TARGETS = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va)) \
+    $(wildcard veriloga_objects/*.vams) \
+    veriloga_objects/$(MF_LIB)
 
-$(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
+va_build_dir:  $(VERILOGA_BUILD_DIR)/lib $(VERILOGA_BUILD_SRC)
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	mkdir -p $(VERILOGA_BUILD_SRC)
 
-	cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
-	cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
-	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
+$(VA_TARGETS): va_build_dir
+	cp $@ $(VERILOGA_BUILD_SRC)
+
+$(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_TARGETS) 
+	#$(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
+	#mkdir -p $(VERILOGA_BUILD_DIR)/lib
+	#mkdir -p $(VERILOGA_BUILD_SRC)
+
+	#cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
+	#cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
+	#cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
 
 	cd $(VERILOGA_BUILD_SRC) && $(BUILD_COMMAND) $(MF_LIB) *.va ./ && \
-	rm *.va && rm *.vams && rm $(MF_LIB) && \
+	#rm *.va && rm *.vams && rm $(MF_LIB) && \
 	mv *.so ./../lib
 
 copy_va:
 	mkdir -p $(VERILOGA_BUILD_SRC)
-
+	
 	cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
 	cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
 	cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
 
 clean_va:
+	rm -rf $(VERILOGA_BUILD_SRC)/*.va $(VERILOGA_BUILD_SRC)/*.vams
+
+nuke_va:
 	rm -rf $(VERILOGA_BUILD_SRC)
 
 #DOCKER_IMAGE = bgoenner/mfda_xyce:latest
@@ -75,12 +90,18 @@ make_va_remote:
 	--rm \
 	$(DOCKER_IMAGE) make build_remote
 
+make_va_docker: make_va_remote
+
+build_va: make_va_default
+
 MERGE_LEF = $(KIT_NAME)_merged.lef
 make_lef:
 	rm -f $(MERGE_LEF)
 	touch $(MERGE_LEF)
 	#cat $(foreach LEF_SRC_DIR, $(LEF_SRC_DIR), $(LEF_SRC_DIR)/*/*.lef) > $(KIT_NAME)_merged.lef
 	find $(LEF_SRC_DIR) -type f -name '*.lef' -exec cut -b 1- {} + >> $(MERGE_LEF)
+
+build_lef: make_lef
 
 MERGE_SCAD = $(KIT_NAME)_merged.scad
 make_scad:
@@ -89,9 +110,9 @@ make_scad:
 	find $(SCAD_SRC_DIR) -type f -name '*.scad' -exec cut -b 1- {} + >> $(MERGE_SCAD)
 
 clean_merge_scad:
-	python3 cleanScadFile.py --merge_file HR3.3_merged.scad
+	python3 cleanScadFile.py --merge_file $(MERGE_SCAD)
 
-build_scad_local: make_scad clean_merge_scad
+build_scad: make_scad clean_merge_scad
 	mkdir -p $(SCAD_BUILD_DIR)
 	cp $(foreach SCAD_USE, $(SCAD_USE), $(SCAD_USE)/*.scad) $(SCAD_BUILD_DIR)
 	mv $(MERGE_SCAD) $(SCAD_BUILD_DIR)
@@ -106,10 +127,12 @@ build_va_remote_tmp:
 	cd $(DOCKER_REMOTE_VA_BUILD) && make make_default
 	cp $(DOCKER_REMOTE_COMP_DIR)_tmp/$(VERILOGA_BUILD_DIR)/lib/lib$(MF_LIB).so $(VERILOGA_BUILD_DIR)/lib/
 
-build_remote:
+build_on_remote:
 	cd $(DOCKER_REMOTE_COMP_DIR) && make make_va_default
 
 clean_va_build:
 	rm -r $(VERILOGA_BUILD_SRC)
 
-make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
+clean_xyce_build: clean_va_build
+
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 

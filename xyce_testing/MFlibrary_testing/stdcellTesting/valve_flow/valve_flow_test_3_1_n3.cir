@@ -1,0 +1,28 @@
+
+
+vs_f 1  0 0V
+*vs_p1 11 0 PWL(0s 105kV 3 105kV 3.1 0kV   12 0kV   12.1   105kV 20 105kV)
+*vs_p2 12 0 PWL(0s 0V    6 0v    6.1 27kV  15 27kV  15.1   0V    20 0kV)
+*vs_p3 13 0 PWL(0s 105kV 9 105kV 9.1 0kV   18 0kV   18.1   105kV 20 105kV)
+
+*vs_p1 11 0 PULSE(0 105kV  0.5   1m 1m 20m 60m)
+*vs_p2 12 0 PULSE(0 6.9kV  0.51  1m 1m 30m 60m)
+*vs_p3 13 0 PULSE(0 105kV  0.53  1m 1m 20m 60m)
+vs_p1 11 0 PULSE(105kV 0   0.56   1m 1m 60m  300m)
+vs_p2 12 0 PULSE(6.9kV 0   0.56   1m 1m 180m 300m)
+vs_p3 13 0 PULSE(105kV 0   0.68   1m 1m 120m 300m)
+
+r1 1 2 1e11
+r2 5 0 1e11
+
+
+Yvalve_sw_20px_1_V            valv1 3 31 11 0  
+Ymembrane_cap_20pxV_nlin_3 mem1  31 12 mem_r=504e-6 fl_ch_h=60e-6
+Yvalve_sw_20px_1_V            valv2 31 4 13 0  
+
+vp1 2 3 0V
+vp2 4 5 0V 
+
+.tran 0.0001 3s 0s 0.001
+.print tran I(vp1) I(vp2) V(11) V(12) V(13)
+.end

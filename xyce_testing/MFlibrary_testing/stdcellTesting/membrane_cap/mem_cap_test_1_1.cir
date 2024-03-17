@@ -15,6 +15,5 @@ Vpr1 31 32 0V
 Vpr2 21 22 0V
 
 .tran 100ns 100ms
-*.print tran V(11) V(22) V(31) 
-.print tran I(Vpp) I(Vpr1) I(Vpr2)
+.print tran I(Vpp) I(Vpr1) I(Vpr2) V(11) V(22) V(31) 
 .end

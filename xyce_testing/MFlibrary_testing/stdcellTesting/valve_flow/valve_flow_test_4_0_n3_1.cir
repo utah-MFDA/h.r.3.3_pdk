@@ -1,0 +1,22 @@
+
+
+vs_f 1  0 0V
+
+vs_p1 11 0 PULSE(105kV 0kV   0.53   5m 5m 30m 150m)
+vs_p2 12 0 PULSE(69kV 0kV    0.53   5m 5m 90m 150m)
+vs_p3 13 0 PULSE(105kV 0kV   0.59   5m 5m 60m 150m)
+
+r1 1 2 1e11
+r2 5 0 1e11
+
+
+Yvalve_sw_20px_1_V              valv1 3 31 11 0  
+Ymembrane_cap_20pxV_nlin_3_1 mem1  31 12 mem_r=540e-6 fl_ch_h=60e-6
+Yvalve_sw_20px_1_V              valv2 31 4 13 0  
+
+vp1 2 3 0V
+vp2 4 5 0V 
+
+.tran 0.01ms 3s 0s 0.1ms
+.print tran I(vp1) I(vp2) V(11) V(12) V(13)
+.end

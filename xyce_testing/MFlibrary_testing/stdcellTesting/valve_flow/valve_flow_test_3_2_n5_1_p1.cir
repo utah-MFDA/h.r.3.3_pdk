@@ -1,0 +1,28 @@
+* one stop valve per device
+
+vs_f 1  0 0V
+
+vs_p1 11 0 PULSE(69kV 0kV   0.56   10m 10m 60m  500m)
+vs_p2 12 0 PULSE(69kV 0kV   0.561  10m 10m 180m 500m)
+vs_p3 13 0 PULSE(69kV 0kV   0.68   10m 10m 120m 500m)
+
+r1 1 2 1e11
+r2 5 0 1e11
+
+
+Yvalve_sw_20px_1_V              valv1 3  31 11 0 threshold_pressure_kPa=60e3 
+Ymembrane_cap_20pxV_nlin_5_1    mem1  31 12      mem_r=540e-6 fl_ch_h=60e-6
+Yvalve_sw_20px_1_V              valv2 31 4  13 0 threshold_pressure_kPa=60e3 
+
+vp1 2 3 0V
+vp2 4 5 0V 
+
+r3 1 41 1e12
+Ymembrane_cap_20pxV_nlin_5_1    mem2  41 12      mem_r=540e-6 fl_ch_h=60e-6
+
+vp3 0 41 0V
+
+.tran 0.01ms 1.0s 0.5s 0.1ms
+.print tran I(vp1) I(vp2) V(11) V(12) V(13)
+*I(vp3)
+.end

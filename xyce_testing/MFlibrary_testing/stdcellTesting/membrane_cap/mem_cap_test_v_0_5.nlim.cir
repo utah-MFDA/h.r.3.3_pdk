@@ -1,0 +1,17 @@
+
+
+vs 1 0 PWL(0s 0V 20ms 0V 23ms 103e3V 500ms 103e3V)
+r1 0 11 1k
+r2 13 0 1k
+
+Ymembrane_cap_20pxV_Pn mem1 2 1 vol_limit=0 
+*cap=1u
+
+* probe sources
+vp1 11 2 0V
+vp2 2 13 0V
+
+.tran 0.0001ms 40ms
+*.option post=2
+.print tran I(vp2) I(vp1) V(2) V(1)
+.end
