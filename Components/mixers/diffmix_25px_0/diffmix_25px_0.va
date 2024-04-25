@@ -84,13 +84,13 @@ analog begin
    Qfl(int_1, fl_out) <+ P(int_1, fl_out)/R3;
 
    //Concentration signals
-
-   if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i1, gnd) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
-
-   if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i2, gnd) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
-
+   if ($port_connected(c_i1) && $port_connected(c_i2) && $port_connected(c_out))
+   begin
+      if (P(int_1, fl_out) > 0) 
+         C(c_out, gnd) <+ C(c_i1, gnd) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
+      if (P(int_1, fl_out) > 0) 
+         C(c_out, gnd) <+ C(c_i2, gnd) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
+   end
 end
 
 endmodule

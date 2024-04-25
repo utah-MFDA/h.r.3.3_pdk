@@ -3,7 +3,7 @@ use <routing.scad>
 px = 7.6e-3;
 layer = 10e-3;
 
-module serpentine_200px_0(xpos, ypos, zpos, orientation){
+module serpentine_200px_0(xpos, ypos, zpos, orientation, show_area=false){
     
     // Sub-modules
     module obj(){
@@ -48,8 +48,10 @@ module serpentine_200px_0(xpos, ypos, zpos, orientation){
         translate([-10*30*px - xpos*px, -10*30*px - ypos*px, zpos*layer])
         obj();
     }
+    if (show_area){
+        translate([23*px,23*px,-0.01]) cube([200*px, 200*px, 0.01]);
+    }
     
 }
 
 serpentine_200px_0(0,0,0,"FS");
-translate([23*px,23*px,-0.01]) cube([200*px, 200*px, 0.01]);

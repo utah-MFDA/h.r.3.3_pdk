@@ -62,7 +62,10 @@ analog begin
    Qfl(fflow) <+ P(fl_in, fl_out)/R;
 
    //V(c_out, c_in) <+ 0;
-   C(c_out) <+ C(c_in);
+   if ($port_connected(c_in) && $port_connected(c_out))
+   begin
+      C(c_out) <+ C(c_in);
+   end
    //I(chem) <+ 0;
 end
 

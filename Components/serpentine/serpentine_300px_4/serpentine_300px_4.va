@@ -55,7 +55,11 @@ analog begin
    end //end initial_instance
 
    Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
-   C(c_out) <+ C(c_in);
+   
+   if ($port_connected(c_in) && $port_connected(c_out))
+   begin
+      C(c_out) <+ C(c_in);
+   end
 end
 
 endmodule
