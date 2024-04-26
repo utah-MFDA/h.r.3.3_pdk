@@ -7,11 +7,14 @@ module serpentine_50px_0(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
+concentration cv1, cv2;
 fluidDynamics fl_in, fl_out;
 
 (*desc="cross-section", type="instance"*) parameter real length=1.140m;
 (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1;
 (*desc="cross-section", type="instance"*) parameter real NU=0.0010016;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 
 real pixel_size;
 real layer_height;
@@ -55,7 +58,13 @@ analog begin
    end // end initial_instance
 
    Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
-   C(c_out, gnd) <+ C(c_in, gnd);
+   //C(c_in, c_out) <+ 0 ;
+   //C(c_out, gnd) <+ C(c_in, gnd);
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
 end
 
 endmodule

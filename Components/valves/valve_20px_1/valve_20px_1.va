@@ -20,6 +20,8 @@ fluidDynamics pn_in, pn_out;
 (*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
 (*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
 
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+
 real pixel_size; 
 real layer_height;
 real threshold_pressure_PSI;
@@ -69,15 +71,31 @@ analog begin
 
     // Pressure above theshold
     if (P(pn_in) > threshold_pressure_PSI) begin
+        //TODO no exchange of chemistty
         Qfl(fl_in, fl_out) <+ 0;
-        C(c_out) <+ C(c_in);
+        //C(c_out) <+ C(c_in);
+        C(cv1, cv2) <+ 0 ;
+        cqi = ccap*C(c_in,  cv1) ;
+        cqo = ccap*C(c_out, cv2);
+        Ci(c_in,  cv1) <+ ddt(cqi) ;
+        Ci(c_out, cv2) <+ ddt(cqo) ;
     end else if (threshold_pressure_PSI - P(pn_in) <= P_lin) begin
         Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - \
             P(fl_in, fl_out)/R_valve * ((P(pn_in)-P_lin_start)/(threshold_pressure_PSI-P_lin_start));
-        C(c_out) <+ C(c_in);
+        //C(c_out) <+ C(c_in);
+        C(cv1, cv2) <+ 0 ;
+        cqi = ccap*C(c_in,  cv1) ;
+        cqo = ccap*C(c_out, cv2);
+        Ci(c_in,  cv1) <+ ddt(cqi) ;
+        Ci(c_out, cv2) <+ ddt(cqo) ;
     end else begin
         Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve;
-        C(c_out) <+ C(c_in);
+        //C(c_out) <+ C(c_in);
+        C(cv1, cv2) <+ 0 ;
+        cqi = ccap*C(c_in,  cv1) ;
+        cqo = ccap*C(c_out, cv2);
+        Ci(c_in,  cv1) <+ ddt(cqi) ;
+        Ci(c_out, cv2) <+ ddt(cqo) ;
     end 
 
 

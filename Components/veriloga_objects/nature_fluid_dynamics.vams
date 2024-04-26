@@ -23,6 +23,12 @@ nature Concentration_mole
      //abstol = 1;
 endnature
 
+nature Concentration_current
+     units = "M";
+     access = Ci;
+     //abstol = 1;
+endnature
+
 discipline fluidDynamics
      domain continuous;
      potential Pressure;
@@ -32,5 +38,5 @@ enddiscipline
 discipline concentration
     domain continuous;
     potential Concentration_mole;
-
+    flow Concentration_current;
 enddiscipline
