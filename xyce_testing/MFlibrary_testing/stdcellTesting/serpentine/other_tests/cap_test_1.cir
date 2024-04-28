@@ -1,0 +1,15 @@
+
+
+vs 1 0 5V
+
+c1 1 0 100u
+c2 1 0 100u
+
+r1 1 2 5k
+
+c3 2 0 100u
+c4 2 0 100u
+
+.tran 1m 1.0m
+.print tran V(1) V(2)
+.end

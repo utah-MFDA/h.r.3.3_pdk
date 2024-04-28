@@ -1,0 +1,34 @@
+XYCE-generated Netlist file copy:  TIME='11:33:33 PM' DATE='Apr 25, 2024' 
+*Original Netlist Title:  
+
+** serpentine 100 test
+
+
+
+YPressurePump pr1  1  2   pressure=100k chemConcentration=100m
+
+Ychannel serp1 11 1 3 2 length=10m
+Ychannel serp2 0 11 4 3 length=10m
+*YOutput  out   4
+*VCC 4 0 0V
+
+*.preprocess addresistors nodcpath 1G
+*Xyce:  ".PREPROCESS ADDRESISTORS" statement automatically commented out in netlist copy.
+*.preprocess addresistors oneterminal 1G
+*Xyce:  ".PREPROCESS ADDRESISTORS" statement automatically commented out in netlist copy.
+
+.tran 1m 10m
+.print tran V(3) V(11) 
+*I(vcc)
+
+
+*XYCE-GENERATED OUTPUT:  Adding resistors between ground and nodes connected to only 1 device terminal:
+
+RONETERM1 4 0 1G
+
+
+*XYCE-GENERATED OUTPUT:  Adding resistors between ground and nodes with no DC path to ground:
+
+RNODCPATH1 3 0 1G
+
+.END
