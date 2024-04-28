@@ -10,9 +10,10 @@ concentration c_in, c_out;
 concentration cv1, cv2;
 fluidDynamics fl_in, fl_out;
 
-(*desc="length", type="instance"*) parameter real length=7.980m;
+(*desc="length", type="instance"*) parameter real length=9.576m;
 (*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
-(*desc="length", type="instance"*) parameter real NU=0.0010016;
+// dynamic viscosity @ 20 C
+(*desc="length", type="instance"*) parameter real NU=0.0010005;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 
