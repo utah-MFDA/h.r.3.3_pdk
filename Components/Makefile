@@ -23,7 +23,7 @@ VA_SRC_DIR  = $(GENERAL_SRC_DIR) veriloga_objects
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects
+SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects scad_pcells/serpentine
 SCAD_USE    = scad_use
 
 SCAD_BUILD_DIR= scad_build

@@ -78,26 +78,26 @@ module valve_20px_1(xpos, ypos, zpos, orientation){
     
     if (orientation == "N"){
         rotate(270)
-        translate([-30*px*2 - ypos*px, 30*px*2 + xpos*px, 4*layer + zpos*layer])
+        translate([-25*px*2 - ypos*px, 30*px*2 + xpos*px, 4*layer + zpos*layer])
         obj();
     }
     if (orientation == "FN"){
         mirror([1, 0 , 0])
         rotate(270)
-        translate([-30*px*2 - ypos*px, -30*px*2 - xpos*px, 4*layer + zpos*layer])
+        translate([-25*px*2 - ypos*px, -30*px*2 - xpos*px, 4*layer + zpos*layer])
         obj();
     }
     if (orientation == "FS"){
         mirror([0, 1, 0])
         rotate(270)
-        translate([30*px*2 + ypos*px, 30*px*2 + xpos*px, 4*layer + zpos*layer])
+        translate([25*px*2 + ypos*px, 30*px*2 + xpos*px, 4*layer + zpos*layer])
         obj();
     }
     if (orientation == "S"){
         mirror([0, 1, 0])
         mirror([1, 0 , 0])
         rotate(270)
-        translate([30*px*2 + ypos*px, -30*px*2 - xpos*px, 4*layer + zpos*layer])
+        translate([25*px*2 + ypos*px, -30*px*2 - xpos*px, 4*layer + zpos*layer])
         obj();
     }
     
