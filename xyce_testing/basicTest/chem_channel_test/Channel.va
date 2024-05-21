@@ -1,0 +1,129 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module channel(fl_in, fl_out, c_in, c_out);
+
+inout fl_in, fl_out;
+fluidDynamics fl_in, fl_out;
+branch (fl_in, fl_out) fl_br ;
+
+inout c_in, c_out;
+concentration c_in, c_out;
+//concentration c_v;
+concentration cv1, cv2;
+//branch (c_in, c_out) chem ;
+
+(*desc="channel length", type="instance"*) parameter real length=5m;
+(*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1; 
+(*desc="viscosity of fluid", type="instance"*) parameter real NU=0.0010016;
+(*desc="fluid temperature", type="instance"*) parameter real fl_T=20;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+//(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
+
+real pixel_size;
+real layer_height;
+real W, H, L;
+real R;
+real ch_width_pixels;
+real ch_height_layers;
+
+real cqi, cqo ;
+//real cq ;
+
+ground gnd;
+
+real fl_NU;
+real w_NU;
+real T_const;
+real den_est;
+
+analog begin
+
+   @(initial_instance) 
+   begin : initial_instance
+      pixel_size = 7.6u; 
+      layer_height = 10u;
+   
+   
+      begin 
+      if (CROSS_SECTION == 1) begin
+         ch_width_pixels = 14;
+         ch_height_layers= 10;
+      end
+      else if(CROSS_SECTION == 2) begin
+         ch_width_pixels = 6;
+         ch_height_layers= 5;
+      end
+      else if(CROSS_SECTION == 3) begin
+         ch_width_pixels = 28;
+         ch_height_layers= 20;
+      end
+      else if(CROSS_SECTION == 4) begin
+         ch_width_pixels = 42;
+         ch_height_layers= 30;
+      end
+      else if(CROSS_SECTION == 5) begin
+         ch_width_pixels = 70;
+         ch_height_layers= 50;
+      end
+      end
+
+      W = pixel_size * ch_width_pixels;
+      H = layer_height*ch_height_layers;
+      L = length;
+
+      den_est = 998.5 ;
+   end
+
+   T_const  = ((fl_T+273.1)/273.1)*((fl_T+273.1)/273.1)*((fl_T+273.1)/273.1) ;
+
+   w_NU  = 0.09607*exp(2.9/T_const) * 1e-6 * den_est;
+   fl_NU = w_NU*(1 + 0.125*C(c_in)*exp(pow(C(c_in),0.25)/(2.291*(T_const)-1))) ;
+      
+   R = (12*fl_NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   //$display("resistance:");
+   //$display(R);
+   //begin 
+   //if (P(fl_br) >= 0) begin
+   Qfl(fl_br) <+ P(fl_br)/R;
+   //end
+   //else begin
+      //Qfl(fl_br) <+ - abs(P(fl_br))/R;
+   //end
+   //end
+   //for (i = vec_size-1; i >= 0; i = i - 1) begin
+   //   V(c_out[i]) <+ V(c_in[i]);
+   //end // end FOR LOOP
+   //C(chem_con_d) <+ 0 ;//C(c_in, gnd);
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
+   //C(c_out, gnd) <+ C(c_in, gnd);
+
+   /////////// cap try 1
+   //begin
+   //if (P(fl_br) >= 0) begin
+      //C(c_v) <+ -C(c_in) ;
+      //cq = C(c_v)*ccap ;
+      //CI(c_out, c_v) <+ ddt(C(c_out, c_v));
+   //end
+   //else begin
+      //C(c_v) <+ -C(c_out) ;
+      //cq = C(c_v)*ccap ;
+      //CI(c_in, c_v) <+ ddt(C(c_out, c_v));
+   //end
+   //end
+
+
+   //cqi = ccap * C(c_in , gnd) ;
+   //CI(c_in, gnd)  <+ ddt(cqi) ;
+   //cqo = ccap * C(c_out, gnd) ;
+   //CI(c_out, gnd)  <+ ddt(cqo) ;
+end
+
+endmodule

@@ -18,7 +18,8 @@ branch (fl_in, fl_out) fflow;
 (*desc="cross-section", type="instance"*) parameter real length=4.56m;
 (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1;
 // dynamic viscosity @ 20 C
-(*desc="cross-section", type="instance"*) parameter real NU=0.0010005;
+(*desc="fluid viscosty", type="instance"*) parameter real NU=0.0010005;
+(*desc="chemical viscosity param", type="instance"*) parameter real ch0_NU=0.5;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 
