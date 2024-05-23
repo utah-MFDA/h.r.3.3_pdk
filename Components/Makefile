@@ -11,8 +11,8 @@ DATE = $(date '+%Y-%m-%d')
 
 KIT_NAME = h.r.3.3
 
-GENERAL_SRC_DIR = valves serpentine mixers
-
+GENERAL_SRC_DIR = serpentine mixers
+#valves
 ## Verilog A targets
 
 VERILOGA_BUILD_DIR = verilogA_build
