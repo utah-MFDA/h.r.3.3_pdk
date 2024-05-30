@@ -11,12 +11,6 @@ nature FluidFlow
      //abstol = 1u;
 endnature
 
-nature FluidFlow
-     units = "L/s";
-     access = Q;
-     //abstol = 1u;
-endnature
-
 nature Concentration_ppm
      units = "ppm";
      access = PPM;
@@ -29,6 +23,12 @@ nature Concentration_mole
      //abstol = 1;
 endnature
 
+nature Concentration_current
+     units = "M";
+     access = Ci;
+     //abstol = 1;
+endnature
+
 discipline fluidDynamics
      domain continuous;
      potential Pressure;
@@ -38,5 +38,5 @@ enddiscipline
 discipline concentration
     domain continuous;
     potential Concentration_mole;
-
+    flow Concentration_current;
 enddiscipline
