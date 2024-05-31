@@ -38,6 +38,11 @@ VA_TARGETS = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va)) \
     $(wildcard veriloga_objects/*.vams) \
     veriloga_objects/$(MF_LIB)
 
+
+$(VERILOGA_BUILD_SRC):
+
+$(VERILOGA_BUILD_DIR)/lib:
+
 va_build_dir:  $(VERILOGA_BUILD_DIR)/lib $(VERILOGA_BUILD_SRC)
 	mkdir -p $(VERILOGA_BUILD_DIR)/lib
 	mkdir -p $(VERILOGA_BUILD_SRC)

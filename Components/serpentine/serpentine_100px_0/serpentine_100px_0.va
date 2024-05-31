@@ -27,6 +27,7 @@ real layer_height;
 real W, H, L;
 real R;
 real ch_width_pixels, ch_height_layers;
+real cqi, cqo;
 
 ground gnd;
 
