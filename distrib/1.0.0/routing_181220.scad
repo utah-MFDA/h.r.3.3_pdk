@@ -75,7 +75,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         if(pf[index][0][sub_index + 1] == "x"){
 
             length      =(pf[index][1][sub_index] == undef) ?  pf[index][1]:pf[index][1][sub_index];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[0]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[0]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
 
             if(len(pf[index][0])-1 == sub_index + 1){
 
@@ -85,7 +85,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][0];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][0];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][0],ending_2]);
                     routing(p0 + [length,0,0],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
@@ -102,7 +102,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         else if(pf[index][0][sub_index + 1] == "y"){
 
             length      =(pf[index][1][sub_index] == undef) ?  pf[index][1]:pf[index][1][sub_index];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[1]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[1]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
 
             if(len(pf[index][0])-1 == sub_index + 1){
 
@@ -112,7 +112,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][1];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][1];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][1],ending_2]);
                     routing(p0 + [0,length,0],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
@@ -129,7 +129,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         else if(pf[index][0][sub_index + 1] == "z"){
 
             length      =(pf[index][1][sub_index] == undef) ?  pf[index][1]:pf[index][1][sub_index];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[2]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[2]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
 
             if(len(pf[index][0])-1 == sub_index + 1){
 
@@ -139,7 +139,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][2];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][2];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][2],ending_2]);
                     routing(p0 + [0,0,length],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
@@ -160,7 +160,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         if(pf[index][0][sub_index] == "x"){
 
             length      =(pf[index][1][sub_index] == undef ?  pf[index][1]:pf[index][1][0]) - p0[0];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[0]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[0]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
             //echo(sub_index);
             if(len(pf[index][0]) == sub_index + 1){
 
@@ -170,7 +170,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][0];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][0];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][0],ending_2]);
                     routing(p0 + [length,0,0],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
@@ -187,7 +187,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         else if(pf[index][0][sub_index] == "y"){
 
             length      =(pf[index][1][sub_index] == undef ?  pf[index][1]:pf[index][1][1]) - p0[1];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[1]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[1]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
 
             if(len(pf[index][0]) == sub_index + 1){
 
@@ -197,7 +197,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][1];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][1];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][1],ending_2]);
                     routing(p0 + [0,length,0],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
@@ -214,7 +214,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
         else if(pf[index][0][sub_index] == "z"){
 
             length      =(pf[index][1][sub_index] == undef ?  pf[index][1]:pf[index][1][2]) - p0[2];
-            chan_dimm   = dimm[(pf[index][2] == undef) ? def[2]:((len(pf[index][2]) == undef) ? pf[index][2]:pf[index][2][sub_index])];
+            chan_dimm   = dimm[(pf[index][2] == undef) ? def[2]:(!is_list(pf[index][2]) ? pf[index][2]:pf[index][2][sub_index])];
 
             if(len(pf[index][0]) == sub_index + 1){
 
@@ -225,7 +225,7 @@ module routing(p0 ,pf ,dimm, routing_color = "RosyBrown", endings = [[[0,0],[0,0
                 }
                 else{
 
-                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:((len(pf[index+1][2]) == undef) ? pf[index+1][2]:pf[index+1][2][0])][2];
+                    ending_2 = dimm[(pf[index+1][2] == undef) ? def[xyz_idx(pf[index+1][0],0)]:(!is_list(pf[index+1][2]) ? pf[index+1][2]:pf[index+1][2][0])][2];
 
                     channel(p0,length, chan_dimm, routing_color, [endings[0][2],ending_2]);
                     routing(p0 + [0,0,length],pf, dimm, routing_color,[chan_dimm,endings[1]], index+1,0,def);
