@@ -1,10 +1,10 @@
 // ^^^ routing and px/layer defines are added at runtime ^^^ //
 
 module serpentine_25px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -15,9 +15,9 @@ module serpentine_25px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [30*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -38,7 +38,7 @@ module serpentine_25px_0(xpos, ypos, zpos, orientation){
         translate([-3*30*px - xpos*px, -3*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -48,10 +48,10 @@ module serpentine_25px_0(xpos, ypos, zpos, orientation){
 //serpentine_25px_0(270, 0, 0, "S");
 
 module serpentine_50px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -63,9 +63,9 @@ module serpentine_50px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [-60*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -86,7 +86,7 @@ module serpentine_50px_0(xpos, ypos, zpos, orientation){
         translate([-4*30*px - xpos*px, -4*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -96,10 +96,10 @@ module serpentine_50px_0(xpos, ypos, zpos, orientation){
 //serpentine_50px_0(360, 0, 0, "S");
 
 module serpentine_75px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -112,9 +112,9 @@ module serpentine_75px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [90*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -135,7 +135,7 @@ module serpentine_75px_0(xpos, ypos, zpos, orientation){
         translate([-5*30*px - xpos*px, -5*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -145,10 +145,10 @@ module serpentine_75px_0(xpos, ypos, zpos, orientation){
 //serpentine_75px_0(450, 0, 0, "S");
 
 module serpentine_100px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -162,9 +162,9 @@ module serpentine_100px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [-120*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -185,7 +185,7 @@ module serpentine_100px_0(xpos, ypos, zpos, orientation){
         translate([-6*30*px - xpos*px, -6*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -195,10 +195,10 @@ module serpentine_100px_0(xpos, ypos, zpos, orientation){
 //serpentine_100px_0(540, 0, "S");
 
 module serpentine_150px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -214,9 +214,9 @@ module serpentine_150px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [-180*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -237,7 +237,7 @@ module serpentine_150px_0(xpos, ypos, zpos, orientation){
         translate([-8*30*px - xpos*px, -8*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -247,10 +247,10 @@ module serpentine_150px_0(xpos, ypos, zpos, orientation){
 //serpentine_150px_0(720, 0, 0, "S");
 
 module serpentine_200px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -268,9 +268,9 @@ module serpentine_200px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [-240*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -291,7 +291,7 @@ module serpentine_200px_0(xpos, ypos, zpos, orientation){
         translate([-10*30*px - xpos*px, -10*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -301,10 +301,10 @@ module serpentine_200px_0(xpos, ypos, zpos, orientation){
 //serpentine_200px_0(900, 0, 0, "S");
 
 module serpentine_200px_3(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px+30*px, 23*px, 0]){      
+        translate([23*px+30*px, 23*px, 0]){
             routing(
                 dimm = [
                         [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -379,9 +379,9 @@ module serpentine_200px_3(xpos, ypos, zpos, orientation){
                         ]
             );
         }
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -402,7 +402,7 @@ module serpentine_200px_3(xpos, ypos, zpos, orientation){
         translate([-10*30*px - xpos*px, -10*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -412,10 +412,10 @@ module serpentine_200px_3(xpos, ypos, zpos, orientation){
 //serpentine_200px_3(900, 0, 0, "S");
 
 module serpentine_300px_0(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px, 23*px, 0])       
+        translate([23*px, 23*px, 0])
         routing(
             dimm = [
                     [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -437,9 +437,9 @@ module serpentine_300px_0(xpos, ypos, zpos, orientation){
                     ["+yx", [-360*px, 30*px+14*px], [1, 0]]
                     ]
         );
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -460,7 +460,7 @@ module serpentine_300px_0(xpos, ypos, zpos, orientation){
         translate([-14*30*px - xpos*px, -14*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -470,10 +470,10 @@ module serpentine_300px_0(xpos, ypos, zpos, orientation){
 //serpentine_300px_0(1260, 0, 0, "S");
 
 module serpentine_300px_1(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px+30*px, 23*px, 0]){     
+        translate([23*px+30*px, 23*px, 0]){
             routing(
                 dimm = [
                         [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -519,9 +519,9 @@ module serpentine_300px_1(xpos, ypos, zpos, orientation){
                         ]
             );
         }
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -542,7 +542,7 @@ module serpentine_300px_1(xpos, ypos, zpos, orientation){
         translate([-14*30*px - xpos*px, -14*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -552,10 +552,10 @@ module serpentine_300px_1(xpos, ypos, zpos, orientation){
 //serpentine_300px_1(1260, 0, 0, "S");
 
 module serpentine_300px_2(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px+30*px, 23*px, 0]){     
+        translate([23*px+30*px, 23*px, 0]){
             routing(
                 dimm = [
                         [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -624,9 +624,9 @@ module serpentine_300px_2(xpos, ypos, zpos, orientation){
                         ]
             );
         }
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -647,7 +647,7 @@ module serpentine_300px_2(xpos, ypos, zpos, orientation){
         translate([-15*30*px - xpos*px, -14*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -657,10 +657,10 @@ module serpentine_300px_2(xpos, ypos, zpos, orientation){
 //serpentine_300px_2(3*420, 0, 0, "S");
 
 module serpentine_300px_3(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px+30*px, 23*px, 0]){     
+        translate([23*px+30*px, 23*px, 0]){
             routing(
                 dimm = [
                         [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -750,9 +750,9 @@ module serpentine_300px_3(xpos, ypos, zpos, orientation){
                         ]
             );
         }
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -773,7 +773,7 @@ module serpentine_300px_3(xpos, ypos, zpos, orientation){
         translate([-14*30*px - xpos*px, -14*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -783,10 +783,10 @@ module serpentine_300px_3(xpos, ypos, zpos, orientation){
 //serpentine_300px_3(3*420, 0, 0, "S");
 
 module serpentine_300px_4(xpos, ypos, zpos, orientation){
-    
+
     // Sub-modules
     module obj(){
-        translate([23*px+30*px, 23*px, 0]){     
+        translate([23*px+30*px, 23*px, 0]){
             routing(
                 dimm = [
                         [[0, 0], [0, 14*px], [0, 10*layer]],
@@ -899,9 +899,9 @@ module serpentine_300px_4(xpos, ypos, zpos, orientation){
                         ]
             );
         }
-        
+
     }
-    
+
     if (orientation == "N"){
         translate([xpos*px, ypos*px, zpos*layer])
         obj();
@@ -922,7 +922,7 @@ module serpentine_300px_4(xpos, ypos, zpos, orientation){
         translate([-15*30*px - xpos*px, -14*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -933,7 +933,7 @@ module serpentine_300px_4(xpos, ypos, zpos, orientation){
 
 
 module diffmix_25px_0(xpos, ypos, zpos, orientation){
-      
+
     // Channel Dimensions
     hchan = 10*layer;
     Wchan = 14*px;
@@ -941,9 +941,9 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
     dim  = [
             [[0,0],[-Wchan/2,Wchan/2],[0,hchan]], // 0
             [[-Wchan/2,Wchan/2],[0,0],[0,hchan]], // 1
-                    
+
            ];
-    
+
     module obj(){
         pi_0 = [-7*px, 30*px, 0];
         pf_0 = [Wchan+16*px, 0, 0];
@@ -951,7 +951,7 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
                      ["+x", pf_0, 0]
                     ];
         routing(pi_0, connect_0, dim);
-        
+
         pi_1 = [-7*px, 0*px, 0];
         pf_1 = [Wchan, 0, 0];
         connect_1 = [
@@ -965,17 +965,17 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
                      ["+x", pf_2, 0]
                     ];
         routing(pi_2, connect_2, dim);
-  
+
         pi_3 = [0, 0, 0];
         pf_3 = [42.4*px, 0, 0];
         connect_3 = [
                      ["+x", pf_3, 0]
                     ];
         rotate(45)
-        routing(pi_3, connect_3, dim);  
-        
+        routing(pi_3, connect_3, dim);
+
     }
-    
+
     if (orientation == "N"){
         translate([30*px + xpos*px, 30*px + ypos*px, zpos*layer])
         obj();
@@ -996,7 +996,7 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
         translate([-2*30*px - xpos*px, -2*30*px - ypos*px, zpos*layer])
         obj();
     }
-    
+
 }
 
 // Test
@@ -1006,12 +1006,12 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
 //diffmix_25px_0(3*90, 0, 0, "S");
 
 module pinhole_325px_0(xpos, ypos, zpos, orientation){
-    
+
     // Parameters
     d_pin   = 140*px;   // ~= 106*layer = 1.06mm;
     l_pin   = 260*px;   // ~= 2.00mm
     h_cone  = 67*px;    // ~= 0.46mm
-    
+
     module obj(){
         rotate([-90, 0, 0]){
             translate([0, 0, l_pin]){
@@ -1020,24 +1020,24 @@ module pinhole_325px_0(xpos, ypos, zpos, orientation){
         cylinder(d = d_pin, h = l_pin);
         }
     }
-    
+
     if (orientation == "bottom"){
         translate([xpos*px, ypos*px, zpos*layer + 5 * layer])
         obj();
     }
-    
+
     if (orientation == "left"){
         rotate([0, 0, -90])
         translate([-ypos*px, xpos*px, zpos*layer + 5 * layer])
         obj();
     }
-    
+
     if (orientation == "top"){
         rotate([0, 0, -180])
         translate([-xpos*px, -ypos*px, zpos*layer + 5 * layer])
         obj();
     }
-    
+
     if (orientation == "right"){
         rotate([0, 0, 90])
         translate([ypos*px, -xpos*px, zpos*layer+ 5 * layer])
@@ -1083,8 +1083,8 @@ module interconnect_32channel(xpos, ypos, zpos){
     }
 
     module gasket(
-        gasket_side_length=gasket_side_length, 
-        aperture_side_length=gasket_aperture_length, 
+        gasket_side_length=gasket_side_length,
+        aperture_side_length=gasket_aperture_length,
         height=gasket_height
         ){
 
@@ -1098,8 +1098,8 @@ module interconnect_32channel(xpos, ypos, zpos){
 
     module interconnect(
         gasket_grid=gasket_grid,
-        gasket_side_length=gasket_side_length, 
-        aperture_side_length=gasket_aperture_length, 
+        gasket_side_length=gasket_side_length,
+        aperture_side_length=gasket_aperture_length,
         gasket_height=gasket_height,
         gasket_offset = gasket_offset,
         block_gasket_offset=block_gasket_offset,
@@ -1178,7 +1178,7 @@ module interconnect_32channel(xpos, ypos, zpos){
     translate([xpos*px, ypos*px, zpos*layer]){
         obj();
     }
-        
+
 }
 
 //interconnect_32channel(0, 0, 0);
@@ -1186,7 +1186,7 @@ module interconnect_32channel(xpos, ypos, zpos){
 module marker(xpos, ypos, zpos){
     marker_height = 80*layer;
     marker_diameter = 200*px;
-    
+
     module obj(){
         cylinder(h = marker_height, d = marker_diameter);
     }
@@ -1197,78 +1197,78 @@ module marker(xpos, ypos, zpos){
 }
 
 module empty_obj(str_obj){
-    
+
 }
 
 ////////////////////////// NEEDS FIX /////////////////////////////////////////
 
 module valve_20px_0(xpos, ypos, orientation){
-    
+
     // Parameteres
     h_fluid = 2*layer;
     t_memb = layer;
     h_air = 4*layer;
     h_total = h_fluid + t_memb + h_air;
     d_valve = 20*px;
-    
+
     // Valve connection channels
     xychan0 = 6*px;
     xychan = 8*px;
     hchan = 5*layer;
     wchan = 8*px;
 
-    dimm        =   [  
+    dimm        =   [
                         [[0,0],[-wchan/2,wchan/2],[0, hchan]], // 0
                         [[-wchan/2,wchan/2],[0,0],[0, hchan]], // 1
                         [[-xychan/2,xychan/2],[-xychan/2,xychan/2],[0,0]], // 2
                         [[-xychan0/2,xychan0/2],[-xychan0/2,xychan0/2],[0,0]], // 3
                     ];
-                    
+
     overlap_v_xy  = 2*px;
-    
+
     module obj(){
     // Fluid compartment
     color("CadetBlue")
     cylinder(d = d_valve, h = h_fluid);
-    
+
     // Air compartment
     color("SteelBlue")
     translate([0,0,h_fluid + t_memb])
-    cylinder(d = d_valve, h = h_air);    
-        
+    cylinder(d = d_valve, h = h_air);
+
     // Fluid in channel connection
     pt_fluid_in         = [0, 0, 0];
     pt_fluid_in_next    = [
                             ["+z", -7*layer, 3],
                           ];
-    
+
     routing(pt_fluid_in,pt_fluid_in_next, dimm);
-    
+
     // Fluid out channel connection
     pt_fluid_out        = [d_valve/2 - overlap_v_xy, 0, 1*layer - hchan];
     pt_fluid_out_next   = [
                             ["+x", 50*px],
                           ];
-    
+
     routing(pt_fluid_out,pt_fluid_out_next, dimm);
-    
+
     // Air control channel connection
     pt_air_control      = [-d_valve/2 - xychan/2 + 6*px, 0, h_total];
     pt_air_control_next = [
                             ["+zx", [10*layer, -50*px]],
                           ];
-    
+
     routing(pt_air_control,pt_air_control_next, dimm);
-    
+
     // Air flushing channel connection
     pt_air_flush        = [d_valve/2 + xychan/2 - 6*px, 0, h_total];
     pt_air_flush_next   = [
                             ["+zy", [10*layer, 50*px], [2,1]],
                           ];
-    
+
     routing(pt_air_flush,pt_air_flush_next, dimm);
     }
-    
+
     if (orientation == "N"){
         translate([68*px + xpos*px, 20*px + ypos*px, 7*layer])
         obj();
@@ -1289,7 +1289,7 @@ module valve_20px_0(xpos, ypos, orientation){
         translate([-68*px - xpos*px, -60*px - ypos*px, 7*layer])
         obj();
     }
-    
+
 }
 
 // Test
