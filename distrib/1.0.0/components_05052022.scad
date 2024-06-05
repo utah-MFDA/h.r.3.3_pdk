@@ -981,7 +981,7 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
         obj();
     }
     if (orientation == "FN"){
-        mirror()
+        mirror([1,0,0])
         translate([-2*30*px - xpos*px, 30*px + ypos*px, zpos*layer])
         obj();
     }
@@ -991,7 +991,7 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
         obj();
     }
     if (orientation == "S"){
-        mirror()
+        mirror([1,0,0])
         mirror([0, 1, 0])
         translate([-2*30*px - xpos*px, -2*30*px - ypos*px, zpos*layer])
         obj();
@@ -1274,7 +1274,7 @@ module valve_20px_0(xpos, ypos, orientation){
         obj();
     }
     if (orientation == "FN"){
-        mirror()
+        mirror([1,0,0])
         translate([-68*px - xpos*px, 20*px + ypos*px, 7*layer])
         obj();
     }
@@ -1284,8 +1284,8 @@ module valve_20px_0(xpos, ypos, orientation){
         obj();
     }
     if (orientation == "S"){
-        mirror()
         mirror([0, 1, 0])
+        mirror([1, 0, 0])
         translate([-68*px - xpos*px, -60*px - ypos*px, 7*layer])
         obj();
     }
