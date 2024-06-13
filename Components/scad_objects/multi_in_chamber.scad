@@ -40,6 +40,8 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
     translate([pitch*px,pitch*px,0])
         translate([(rot?y_off:x_off),(rot?x_off:y_off),chm_h*layer/2])
             rotate([0,0,(rot?-90:0)])
+            mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
+            mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
             obj() ;
     if (floor_area)
         color("blue")
@@ -50,4 +52,4 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
 }
 
 //multi_in_chamber(0,0,0,"N",3,50,10,20);
-multi_in_chamber(0,0,0,"N",4,60,10,60, has_nozzle=true, nozzle_l=20,rot=true, floor_area=false);
+multi_in_chamber(0,0,0,"FS",4,50,10,30, has_nozzle=true, nozzle_l=10,rot=true, floor_area=true);

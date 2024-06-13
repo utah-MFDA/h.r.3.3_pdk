@@ -7,8 +7,8 @@ module p_valve(xpos, ypos, zpos, orientation,
     out_len=30, fl_extra_sp = "fill", fl_chan_down_layers=30, pn_extra_sp="fill", pn_chan_up_layers=30, rot_pn="true",
     // extra center spacing if needed when inport_center=false
     extra_sp = 0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
-    no_obj=false, floor_area=false)
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
+    rot=false, no_obj=false, floor_area=false)
 {
 
     module obj()
@@ -69,9 +69,12 @@ module p_valve(xpos, ypos, zpos, orientation,
     
     tran_offset = (out_len+valve_r)*px;
     
-    translate([0,0,0])
-    translate([tran_offset,tran_offset,(fl_chan_down_layers+chan_h)*layer])
-        obj();
+    translate([pitch*px, pitch*px, offset_layers*layer])
+    translate([tran_offset,tran_offset,(fl_chan_down_layers+chan_h/2)*layer])
+        rotate([0,0,(rot?90:0)])
+        mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
+        mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+            obj();
 }
 
 p_valve(0,0,0,"N", 

@@ -4,12 +4,12 @@ use <polychannel_v2_testing.scad>
 module p_chamber(xpos, ypos, zpos, orientation,
     chm_r, chm_h, chm_len=0,
     conn_ch_w=14, conn_ch_h=10, conn_ch_l=20, 
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
-    no_obj=false, floor_area=false)
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10, $fn=50,
+    rot=false, no_obj=false, floor_area=false)
     {
         
         module obj(){
-        $fn=30;
+        //$fn=30;
         c_px_len = chm_len*px;
         c_px_r   = chm_r*px;
         c_lay_h  = chm_h*layer;
@@ -35,8 +35,14 @@ module p_chamber(xpos, ypos, zpos, orientation,
         
         }
         
-        translate([pitch*px, pitch*px, 0])
-        translate([chm_len/2*px+conn_ch_l*px, chm_r*px, chm_h/2*layer])
+        x_off = chm_len/2*px+conn_ch_l*px ;
+        y_off = chm_r*px ;
+        
+        translate([pitch*px, pitch*px, offset_layers*layer])
+        translate([(rot?y_off:x_off), (rot?x_off:y_off), chm_h/2*layer])
+        rotate([0,0,(rot?90:0)])
+            mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
+            mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
             obj();
         
     }

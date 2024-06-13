@@ -11,8 +11,8 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
     no_out_transition=false, no_in_transition=false,
     // extra center spacing if needed when inport_center=false
     extra_sp = 0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
-    no_obj=false, floor_area=false)
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
+    rot=false, no_obj=false, floor_area=false)
 {
     no_rot = [0,[0,0,1]];
     
@@ -56,10 +56,16 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
         ]);
     }
     
-    obj_z_offset = (chan_h/2+mem_th*2+fl_chm_h+pn_bttm_chm_h)*layer;
+    obj_z_offset = (chan_h/2+mem_th*2+fl_chm_h+pn_bttm_chm_h)*layer ;
+    obj_x_off = (fl_ext_len+0.5)*px ;
+    obj_y_off = (pn_len+chan_w/2)*px ;
     
+    translate([pitch*px, pitch*px, offset_layers*layer])
     translate([xpos, ypos, zpos])
-    translate([(fl_ext_len+0.5)*px,(pn_len+chan_w/2)*px,obj_z_offset])
+    translate([(rot?obj_y_off:obj_x_off),(rot?obj_x_off:obj_y_off),obj_z_offset])
+        rotate([0,0,(rot?90:0)])
+        mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
+        mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
         obj();
     
 }

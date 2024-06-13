@@ -13,7 +13,7 @@ module p_squeeze_pump(xpos, ypos, zpos, orientation,
     no_out_transition=false, no_in_transition=false,
     // extra center spacing if needed when inport_center=false
     extra_sp = 0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
     no_obj=false, floor_area=false)
 {
     module obj() {
@@ -27,6 +27,9 @@ module p_squeeze_pump(xpos, ypos, zpos, orientation,
             pn_pad=pn_pad,
             pn_len=pn_len,
             pn_bttm_chm_h=pn_bttm_chm_h,
+            pitch=0, 
+            offset_layers=offset_layers,
+            px=px, layer=layer,
             no_out_transition=true);
         p_squeeze_valve((valve_sp+pn_ch_w)*px,0,0,"N",
             mem_th, fl_chm_h,
@@ -34,6 +37,9 @@ module p_squeeze_pump(xpos, ypos, zpos, orientation,
             pn_pad=pn_pad,
             pn_len=pn_len,
             pn_bttm_chm_h=pn_bttm_chm_h,
+            pitch=0, 
+            offset_layers=offset_layers,
+            px=px, layer=layer,
             no_out_transition=true,
             no_in_transition=true);
         p_squeeze_valve((valve_sp+pn_ch_w)*px*2,0,0,"N",
@@ -44,6 +50,9 @@ module p_squeeze_pump(xpos, ypos, zpos, orientation,
             pn_ch_w=pn_ch_w,
             pn_pad=pn_pad,
             pn_len=pn_len,
+            pitch=0, 
+            offset_layers=offset_layers,
+            px=px, layer=layer,
             pn_bttm_chm_h=pn_bttm_chm_h,
             no_in_transition=true);
     }
