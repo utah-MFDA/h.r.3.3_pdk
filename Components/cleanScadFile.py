@@ -25,7 +25,7 @@ def remove_blacklist_phrase(platform):
             # replace old file with cleaned
             os.rename(merge_clean, merge_file)
 
-def find_modules(inFile_str):
+def find_modules(inFile_str, overwrite_f=False):
 
     scad_header_f = open('scad_header.scad', 'r')
 
@@ -33,8 +33,8 @@ def find_modules(inFile_str):
 
                        #0        1         2         3         4         5         6
                        #123456789012345678901234567890123456789012345678901234567890
-    
-    module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}", 'utf-8')
+    module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,\/\n\".-]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}", 'utf-8') 
+    #module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}", 'utf-8')
     #module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?>[^}{]+|\g<0>)*\}", 'utf-8')
     #module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)\{(.*\s)*\}", 'utf-8')
 
@@ -49,7 +49,8 @@ def find_modules(inFile_str):
             print("found module", mo)#.decode('utf-8'))
 
     # over write merge file; rebuild through make
-    os.rename(inFile_str+"_clean", inFile_str)
+    if overwrite_f: 
+        os.rename(inFile_str+"_clean", inFile_str)
 
 if __name__ == "__main__":
 

@@ -23,7 +23,8 @@ VA_SRC_DIR  = $(GENERAL_SRC_DIR) veriloga_objects
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects scad_pcells/serpentine
+SCAD_SRC_DIR= $(GENERAL_SRC_DIR) scad_objects 
+#scad_pcells/serpentine
 SCAD_USE    = scad_use
 
 SCAD_BUILD_DIR= scad_build
@@ -46,17 +47,7 @@ $(VA_TARGETS): va_build_dir
 	cp $@ $(VERILOGA_BUILD_SRC)
 
 $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so: $(VA_TARGETS) 
-	#$(VA_SRC_DIR)/*/*.va veriloga_objects/*.vams
-	#mkdir -p $(VERILOGA_BUILD_DIR)/lib
-	#mkdir -p $(VERILOGA_BUILD_SRC)
-
-	#cp veriloga_objects/$(MF_LIB) $(VERILOGA_BUILD_SRC)
-	#cp veriloga_objects/*.vams $(VERILOGA_BUILD_SRC)
-	#cp $(foreach VA_SRC_DIR, $(VA_SRC_DIR), $(VA_SRC_DIR)/*/*.va) $(VERILOGA_BUILD_SRC)
-
 	cd $(VERILOGA_BUILD_SRC) && $(BUILD_COMMAND) $(MF_LIB) *.va ./ && \
-	#rm *.va && rm *.vams && rm $(MF_LIB) && \
-	mv *.so ./../lib
 
 copy_va:
 	mkdir -p $(VERILOGA_BUILD_SRC)
@@ -115,7 +106,7 @@ clean_merge_scad:
 build_scad: make_scad clean_merge_scad
 	mkdir -p $(SCAD_BUILD_DIR)
 	cp $(foreach SCAD_USE, $(SCAD_USE), $(SCAD_USE)/*.scad) $(SCAD_BUILD_DIR)
-	mv $(MERGE_SCAD) $(SCAD_BUILD_DIR)
+	mv $(MERGE_SCAD)_clean $(SCAD_BUILD_DIR)/$(MERGE_SCAD)
 
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
