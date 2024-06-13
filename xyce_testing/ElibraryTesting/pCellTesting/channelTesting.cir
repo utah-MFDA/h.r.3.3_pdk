@@ -1,9 +1,0 @@
-*Test of the pump object
-
-VCC 1 0 5V
-
-YChannel chan1 1 0 0 0 length=50m
-
-.tran 1m 10m
-.print tran V(1)
-.end
