@@ -1,3 +1,4 @@
+.PHONY: install all clean
 
 pluginname=test
 XyceDir=/usr/local/stow/Xyce/7.8-adms
