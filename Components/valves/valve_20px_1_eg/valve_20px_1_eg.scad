@@ -1,4 +1,4 @@
-use <routing.scad>
+use <./../../scad_use/routing.scad>
 
 px    = 7.6*10^-3;
 //px    = 1.0;
@@ -6,7 +6,7 @@ layer = 10*10^-3;
 
 $fn = 20;
 
-module valve_20px_1(xpos, ypos, zpos, orientation){
+module valve_20px_1_eg(xpos, ypos, zpos, orientation){
     
     // Parameteres
     h_fluid = 2*layer;
@@ -103,4 +103,4 @@ module valve_20px_1(xpos, ypos, zpos, orientation){
     
 }
 
-valve_20px_1(0,0,0,"FS");
+valve_20px_1_eg(0,0,0,"FS");

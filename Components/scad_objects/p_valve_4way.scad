@@ -5,10 +5,10 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, 
     // extra center spacing if needed when inport_center=false
     inport_center=false, 
-    out_len=30, 
+    out_len=30, fl_out_h=10,
     // length of channels extending outside of valve radius
-    extra_sp=10, 
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
+    extra_sp=10, pn_up_layers=10, rot_pn=false,
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
     no_obj=false, floor_area=false)
 {
     
@@ -39,22 +39,22 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
         
         polychannel(
             [[shape, chan_dimm, [inp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [-fl_len_0,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
             [[shape, chan_dimm, [outp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [fl_len_1,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
             [[shape, chan_dimm, [0,inp_pos,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [0,-fl_len_0,0], [0,[0,0,1]]]
         ]);
         polychannel(
             [[shape, chan_dimm, [0,outp_pos,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [0,fl_len_1,0], [0,[0,0,1]]]
         ]);
         
@@ -63,21 +63,25 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
         pn_pos_lat = (valve_r/4+chan_w/2)*px;
         pn_len     = (valve_r*3/4-chan_w+out_len)*px;
         
+        rotate([0,0,(rot_pn?90:0)])
+        {
         polychannel(
             [[shape, chan_dimm, [0,pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,pn_up_layers*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [0,pn_len,0], [0,[0,0,1]]]
         ]);
         polychannel(
             [[shape, chan_dimm, [0,-pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,20*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,pn_up_layers*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [0,-pn_len,0], [0,[0,0,1]]]
         ]);
+        }
     }
     
     tran_offset = (out_len+valve_r)*px;
     
-    translate([0,0,0])
+    translate([xpos, ypos, zpos])
+    translate([pitch*px,pitch*px,layer*offset_layers])
     translate([tran_offset,tran_offset,(20+chan_h)*layer])
         obj();
 }
