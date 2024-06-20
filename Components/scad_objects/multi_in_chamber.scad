@@ -1,5 +1,5 @@
 
-use <polychannel_v2_testing.scad>
+use <../scad_use/polychannel_v2.scad>
 
 module multi_in_chamber(xpos, ypos, zpos, orientation,
     num_inputs, input_sp, chm_h, chm_l,

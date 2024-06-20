@@ -1,6 +1,6 @@
 
 
-use <./../scad_use/polychannel_v2.scad>
+use <../scad_use/polychannel_v2.scad>
 
 module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
@@ -87,4 +87,4 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine_obj(0,0,0,"FN", 300, 50, 14, floor_area=true, alt=0, rot=0);
+p_serpentine(0,0,0,"FN", 300, 50, 14, floor_area=true, alt=0, rot=0);

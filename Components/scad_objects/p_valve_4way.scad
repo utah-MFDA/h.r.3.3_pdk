@@ -1,5 +1,5 @@
 
-use <polychannel_v2_testing.scad>
+use <../scad_use/polychannel_v2.scad>
 
 module p_valve_4way(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, 

@@ -1,5 +1,5 @@
  
-use <polychannel_v2_testing.scad>
+use <../scad_use/polychannel_v2.scad>
 
 module p_squeeze_valve(xpos, ypos, zpos, orientation,
     mem_th, fl_chm_h,
