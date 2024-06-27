@@ -25,9 +25,11 @@ module lef_port(port_name, direction, geometry, pts, px=0, layer=0)
         color(port_clr2)
         if(len(pts)==4){
             lef_rect(
-            [(pts[0]+pts[2])/2,(pts[1]+pts[3])/2,
-            pts[0]+get_config("via_w"),
-            pts[1]+get_config("via_w")]*(px!=0?px:get_config("px")), 
+            [
+            (pts[0]+pts[2])/2-get_config("via_w")/2,
+            (pts[1]+pts[3])/2-get_config("via_w")/2,
+            (pts[0]+pts[2])/2+get_config("via_w")/2,
+            (pts[1]+pts[3])/2+get_config("via_w")/2]*(px!=0?px:get_config("px")), 
             (layer!=0?layer:get_config("layer"))*(get_config("lpv")-1)) ;
         }
         if(len(pts)==2)
@@ -65,6 +67,7 @@ module lef_layer(layer)
 
 module lef_size(X, Y)
 {
+    cube([X*get_config("px"), Y*get_config("px"), get_config("layer")*0.1]);
 }
 
 function get_layer_index(x) = search([x], layers)[0] ;
@@ -77,4 +80,4 @@ lef_layer("met1")
     lef_obs("RECT", [0,0,100,120]) ;
 
 lef_layer("met2")
-    lef_port("RECT", [10,10,20,20]) ;
+    lef_port("", "", "RECT", [14,14,16,16]) ;

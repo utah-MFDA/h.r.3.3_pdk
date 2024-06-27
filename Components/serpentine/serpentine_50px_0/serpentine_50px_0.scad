@@ -1,9 +1,10 @@
 use <routing.scad>
+use <./../../scad_use/lef_helper.scad>
 
 px = 7.6e-3;
 layer = 10e-3;
 
-module serpentine_50px_0(xpos, ypos, zpos, orientation){
+module serpentine_50px_0(xpos, ypos, zpos, orientation, ren_lef=false){
     
     // Sub-modules
     module obj(){
@@ -43,6 +44,21 @@ module serpentine_50px_0(xpos, ypos, zpos, orientation){
         obj();
     }
     
+    module lef() {
+        
+        lef_size(120,120) ;
+        
+        lef_layer("met1")
+        lef_obs("RECT", [30, 30, 90, 90]) ;
+        lef_layer("met1")
+        lef_port("in_fluid", "INPUT", "RECT", [29.5, 29.5, 30.5, 30.5]);
+        lef_layer("met1")
+        lef_port("out_fluid", "OUTPUT", "RECT", [89.5, 29.5, 90.5, 30.5]);
+    }
+    
+    if(ren_lef)
+        lef() ;
+    
 }
 
-serpentine_50px_0(0,0,0,"N");
+serpentine_50px_0(0,0,0,"N", true);

@@ -104,7 +104,7 @@ module p_pump(xpos, ypos, zpos, orientation,
         [[shape, dimm, pt1_0, [0,[0,0,1]]],
         [shape, dimm, pt1_1, [0,[0,0,1]]],]) ;
     }
-    translate([pitch*px, pitch*px, offset_layers*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
         obj() ;
 }
 

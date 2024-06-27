@@ -1,0 +1,82 @@
+
+MACRO pump_20_40_20px_0
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN pump_20_40_20px_0 0 0 ;
+  SIZE 300 BY 170 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN fluid_in
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 29.5 82.5 30.5 83.5 ;
+    END
+  END fluid_in
+  PIN fluid_out
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 285.5 82.5 286.5 83.5 ;
+    END
+  END fluid_out
+  PIN air_out_a
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 67.5 135.5 68.5 136.5 ;
+    END
+  END air_out_a
+  PIN air_out_b
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 157.5 135.5 158.5 136.5 ;
+    END
+  END air_out_b
+  PIN air_out_c
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 247.5 135.5 248.5 136.5 ;
+    END
+  END air_out_c
+  PIN air_in_a
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 79.5 29.5 80.5 30.5 ;
+    END
+  END air_in_a
+  PIN air_in_b
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 157.5 29.5 158.5 30.5 ;
+    END
+  END air_in_b
+  PIN air_in_c
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 247.5 29.5 248.5 30.5 ;
+    END
+  END air_in_c
+  OBS
+    LAYER met1 ;
+      RECT 30 30 286 136 ;
+    LAYER met2 ;
+      RECT 30 30 286 136 ;
+    LAYER met3 ;
+      RECT 30 30 286 136 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END pump_20_40_20px_0
