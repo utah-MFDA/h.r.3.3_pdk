@@ -1,5 +1,5 @@
 
-use <polychannel_v2_testing.scad>
+use <../scad_use/polychannel_v2.scad>
 
 module p_valve(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false, 
@@ -101,7 +101,7 @@ module p_valve(xpos, ypos, zpos, orientation,
     translate([
         (rot?tran_y_offset:tran_x_offset),
         (rot?tran_x_offset:tran_y_offset),
-        (20+chan_h)*layer]) // hard coded
+        (fl_out_h+chan_h)*layer]) // hard coded
         rotate([0,0,(rot?90:0)])
         mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
         mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
@@ -109,4 +109,4 @@ module p_valve(xpos, ypos, zpos, orientation,
 }
 
 p_valve(0,0,0,"N", 
-    46,4,10,20, inport_center=true, pitch=0, fl_extra_sp=10, pn_extra_sp="fill-edge", flip_fl=true);
+    46,4,10,20, inport_center=true, pitch=0, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=true);

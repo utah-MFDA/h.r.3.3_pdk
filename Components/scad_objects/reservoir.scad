@@ -1,4 +1,4 @@
-use <polychannel_v2_testing.scad>
+use <../scad_use/polychannel_v2.scad>
 
 $fa = 1;
 $fs = 0.04;
