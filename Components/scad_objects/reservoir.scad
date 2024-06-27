@@ -13,18 +13,19 @@ module p_reservoir(xpos, ypos, zpos, orientation,
     p1_dir="z+", p2_dir="z+", port_len1=50, port_len2=-1, p1_offset=[0,0], p2_offset=[0,0], 
     size=[300, 300, 250], edge_rounding=0.5, 
     center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1)
+    px=0.0076, layer=0.010, chan_w=14, chan_h=10, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1)
 {
     n_size = [size[0]*px, size[1]*px, size[2]*layer];
     
     translate([xpos, ypos, zpos])
-    translate([pitch*px, pitch*px, layer_offset*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, layer_offset*layer])
     translate(n_size/2)
     rotate([0,0,(rot?90:0)])
     mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
     mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
         reservoir(size=size, edge_rounding=edge_rounding,
     p1_dir=p1_dir, p2_dir=p2_dir, port_len1=port_len1, port_len2=port_len2, p1_offset=p1_offset, p2_offset=p2_offset,
+    chan_w=chan_w, chan_h=chan_h,
     center=center, clr=clr, px=px, layer=layer, $fs=$fs, $fa=$fa) ; 
 }
 
@@ -88,7 +89,7 @@ module reservoir(size=[300, 300, 250], edge_rounding=0.5, center=true, clr="gray
                 :"error")));
                 
         pt0 = i_orient[0]*i_pt_s+i_orient[1]*x_off+i_orient[2]*y_off;
-        pt1 = i_orient[0]*(port_len)*px+i_orient[0]*i_pt_s;
+        pt1 = i_orient[0]*(port_len)+i_orient[0]*i_pt_s;
         polychannel([
             ["cube",[chan_w*px, chan_w*px, chan_h*layer], pt0, [0,[1,0,0]]],
             ["cube",[chan_w*px, chan_w*px, chan_h*layer], pt1, [0,[1,0,0]]]
@@ -106,4 +107,4 @@ module reservoir(size=[300, 300, 250], edge_rounding=0.5, center=true, clr="gray
         //port(p2_dir, x_off=size[0]/4/px, y_off=0) ;
 }
 
-p_reservoir(0,0,0,"N",size=[300, 300, 280], edge_rounding=edge_rounding, p1_dir="z+", p2_dir="x+", port_len1=0, p1_offset=[-140,0], p2_offset=[0,-270/2], clr="lightblue");
+p_reservoir(0,0,0,"N",size=[300, 300, 280], edge_rounding=edge_rounding, p1_dir="z+", p2_dir="x+", port_len1=50, p1_offset=[-140,0], p2_offset=[0,-270/2], clr="lightblue");

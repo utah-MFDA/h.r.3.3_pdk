@@ -97,7 +97,7 @@ module p_valve(xpos, ypos, zpos, orientation,
     tran_x_offset = (valve_r+fl_out_len)*px;
     tran_y_offset = (valve_r+pn_out_len)*px;
     
-    translate([pitch*px,pitch*px,offset_layers*layer])
+    translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,offset_layers*layer])
     translate([
         (rot?tran_y_offset:tran_x_offset),
         (rot?tran_x_offset:tran_y_offset),
@@ -109,4 +109,4 @@ module p_valve(xpos, ypos, zpos, orientation,
 }
 
 p_valve(0,0,0,"N", 
-    46,4,10,20, inport_center=true, pitch=0, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=true);
+    46,4,10,20, inport_center=true, pitch=30, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=true);

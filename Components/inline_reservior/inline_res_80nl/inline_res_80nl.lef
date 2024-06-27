@@ -1,0 +1,32 @@
+
+MACRO inline_res_80nl
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN inline_res_80nl 0 0 ;
+  SIZE 210 BY 110 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 29.5 52.5 30.5 53.5 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 145.5 52.5 146.5 53.5 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 180 80 ;
+    LAYER met2 ;
+      RECT 30 30 180 80 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END inline_res_80nl

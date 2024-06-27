@@ -37,7 +37,7 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
     x_off = chm_w/2;
     y_off = chan_out_l+chm_l*px/2;
     
-    translate([pitch*px,pitch*px,0])
+    translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,0])
         translate([(rot?y_off:x_off),(rot?x_off:y_off),chm_h*layer/2])
             rotate([0,0,(rot?-90:0)])
             mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])

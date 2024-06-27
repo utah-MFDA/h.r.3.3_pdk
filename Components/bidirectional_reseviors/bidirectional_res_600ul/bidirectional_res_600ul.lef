@@ -1,0 +1,42 @@
+
+MACRO bidirectional_res_600ul
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN bidirectional_res_600ul 0 0 ;
+  SIZE 150 BY 150 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 72.5 29.5 73.5 30.5 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 72.5 114.5 73.5 115.5 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 115 115 ;
+    LAYER met2 ;
+      RECT 30 30 115 115 ;
+    LAYER met3 ;
+      RECT 30 30 115 115 ;
+    LAYER met4 ;
+      RECT 30 30 115 115 ;
+    LAYER met5 ;
+      RECT 30 30 115 115 ;
+    LAYER met6 ;
+      RECT 30 30 115 115 ;
+    LAYER met7 ;
+      RECT 30 30 115 115 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END bidirectional_res_600ul

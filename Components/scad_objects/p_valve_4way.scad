@@ -81,7 +81,7 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
     tran_offset = (out_len+valve_r)*px;
     
     translate([xpos, ypos, zpos])
-    translate([pitch*px,pitch*px,layer*offset_layers])
+    translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,layer*offset_layers])
     translate([tran_offset,tran_offset,(20+chan_h)*layer])
         obj();
 }

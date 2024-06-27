@@ -79,7 +79,7 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     // not working
     if(floor_area == "transparent"){
         color("blue")
-        translate([(pitch)*px, (pitch)*px,-layer/10])
+        translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px,-layer/10])
             %cube([(L1+chan_w)*px, L2*px*(turns)+chan_w*px, layer/10]);
         color("red")
         translate([0, 0,-layer*2/10])

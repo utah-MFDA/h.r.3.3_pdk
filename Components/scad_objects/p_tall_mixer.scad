@@ -25,7 +25,7 @@ module p_tall_mixer(xpos, ypos, zpos, orientation,
         ]) ;
     }
     
-    translate([pitch*px, pitch*px, 0])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, 0])
         translate([init_l_offset*px, chan_w/2*px, mix_h/2*layer])
             obj();
     

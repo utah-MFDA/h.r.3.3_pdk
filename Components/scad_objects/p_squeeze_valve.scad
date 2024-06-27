@@ -60,7 +60,7 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
     obj_x_off = (fl_ext_len+0.5)*px ;
     obj_y_off = (pn_len+chan_w/2)*px ;
     
-    translate([pitch*px, pitch*px, offset_layers*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
     translate([xpos, ypos, zpos])
     translate([(rot?obj_y_off:obj_x_off),(rot?obj_x_off:obj_y_off),obj_z_offset])
         rotate([0,0,(rot?90:0)])

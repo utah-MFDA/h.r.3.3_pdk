@@ -58,7 +58,7 @@ module p_squeeze_pump(xpos, ypos, zpos, orientation,
     }
     
     translate([xpos, ypos, zpos])
-    translate([pitch*px, pitch*px, 0])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, 0])
         obj();
 }
 

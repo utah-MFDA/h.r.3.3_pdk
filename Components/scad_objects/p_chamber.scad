@@ -38,7 +38,7 @@ module p_chamber(xpos, ypos, zpos, orientation,
         x_off = chm_len/2*px+conn_ch_l*px ;
         y_off = chm_r*px ;
         
-        translate([pitch*px, pitch*px, offset_layers*layer])
+        translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
         translate([(rot?y_off:x_off), (rot?x_off:y_off), chm_h/2*layer])
         rotate([0,0,(rot?90:0)])
             mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])

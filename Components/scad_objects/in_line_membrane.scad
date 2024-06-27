@@ -30,7 +30,7 @@ module in_line_membrane(xpos, ypos, zpos, orientation,
         ["cube", chan_dimm, [0, (mem_r+fl_out_len)*2*px, 0], [0,[0,0,1]], ]]);
     }
     
-    //translate([pitch*px, pitch*px, 0])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, 0])
         translate([(mem_r+fl_out_len+chan_w/2)*px, (mem_r+pn_out_len+chan_w/2)*px, 0])
             obj();
     

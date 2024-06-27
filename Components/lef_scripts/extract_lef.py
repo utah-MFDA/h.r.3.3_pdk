@@ -1,7 +1,8 @@
 import mmap, re, os, regex
 
 lef_mod_reg = bytes(
-    r'^[ ]*module\s+(?P<module_name>\w+)\s*\([\s*\w*,=.\-"\[\]]*\)\s*\{[\s*\w*\(\),=."\-;\[\]]*(module\s+lef\s*\(\s*\)\s*\{[\s*\w*\(\),=."\-;\[\]]*\})',  # fmt: skip
+    r'^[ ]*module\s+(?P<module_name>\w+)\s*\([^\)\(]*\)\s*\{[\s\S]*(module\s+lef\s*\(\s*\)\s*\{[\s*\w*\(\),=."\-;\[\]]*\})',
+    #r'^[ ]*module\s+(?P<module_name>\w+)\s*\([\s*\w*\(\),=."\-;\[\]\/\$]*\)\s*\{[\s*\w*\(\),=."\-;\[\]\/\$]*(module\s+lef\s*\(\s*\)\s*\{[\s*\w*\(\),=."\-;\[\]]*\})',  # fmt: skip
     "utf-8",
 )
 lef_parts_reg = bytes(
@@ -26,6 +27,8 @@ class LEF_SCAD:
         self.obs.append({"layer": layer, "shape": shape, "pts": pts})
 
     def add_pin(self, name, dir, layer, shape, pts):
+        if name in self.pins:
+            print(f"Duplicate pin {name}")
         self.pins[name] = {"direction":dir, "layer": layer, "shape": shape, "pts": pts}
 
     def set_size(self, x, y):
@@ -39,12 +42,13 @@ def parse_lef(in_scad_f):
         mo_lef = regex.findall(lef_mod_reg, data, re.MULTILINE)
         if mo_lef == []:
             raise Exception(f"No lef module in scad file {in_scad_f}")
-        # print(mo_lef[0][1])
+        #print(mo_lef[0][1])
         mo = re.finditer(
             lef_parts_reg,
             mo_lef[0][1],
             re.MULTILINE,
         )
+        #print(mo)
 
     lef_scad = LEF_SCAD(mo_lef[0][0].decode('utf-8'))
     def get_pts(pts):
@@ -56,7 +60,7 @@ def parse_lef(in_scad_f):
 
     # print(mo)
     for part in mo:
-        # print(part.group("layer").decode('utf-8'))
+        print(part)
         lef_type = part.group("lef_type").decode('utf-8')
         if lef_type == "lef_obs":
 
@@ -128,10 +132,11 @@ def extract_lef_from_scad(in_scad, out_f=None):
     lef_scad = parse_lef(in_scad)
     if out_f is None:
         if "/" in in_scad:
-            base_path = os.path.dirname(in_scad)
+            base_path = os.path.dirname(in_scad) + '/'
         else:
             base_path = "./"
         out_f = base_path + os.path.basename(in_scad)[:-4] + "lef"
+    print(f"writing to {out_f}")
     write_lef(out_f, lef_scad)
 
 

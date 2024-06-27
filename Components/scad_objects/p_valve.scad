@@ -70,7 +70,7 @@ module p_valve(xpos, ypos, zpos, orientation,
     
     tran_offset = (out_len+valve_r)*px;
     
-    translate([pitch*px, pitch*px, offset_layers*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
     translate([tran_offset,tran_offset,(fl_chan_down_layers+chan_h/2)*layer])
         rotate([0,0,(rot?90:0)])
         mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
