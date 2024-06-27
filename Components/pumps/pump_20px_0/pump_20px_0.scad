@@ -21,6 +21,7 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
     
     module lef()
     {
+        lef_size(300, 150) ;
         lef_layer("met1")
         lef_obs("rect",  [30,30,280,110]);
         lef_layer("met2")
@@ -29,22 +30,22 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
         lef_obs("rect",  [30,30,280,110]);
         
         lef_layer("met1")
-        lef_port("rect", [29.5,62.5,30.5,63.5]) ;
+        lef_port("fluid_in", "INPUT", "rect", [29.5,62.5,30.5,63.5]) ;
         lef_layer("met1")
-        lef_port("rect", [269,62.5,270.5,63.5]) ;
+        lef_port("fluid_out", "OUTPUT", "rect", [269,62.5,270.5,63.5]) ;
         
         lef_layer("met3")
-        lef_port("rect", [77.5,99.5,78.5,100.5]) ;
+        lef_port("air_out_a", "OUTPUT", "rect", [77.5,99.5,78.5,100.5]) ;
         lef_layer("met3")
-        lef_port("rect", [147.5,99.5,148.5,100.5]) ;
+        lef_port("air_out_b", "OUTPUT", "rect", [147.5,99.5,148.5,100.5]) ;
         lef_layer("met3")
-        lef_port("rect", [217.5,99.5,218.5,100.5]) ;
+        lef_port("air_out_c", "OUTPUT", "rect", [217.5,99.5,218.5,100.5]) ;
         lef_layer("met3")
-        lef_port("rect", [77.5,29.5,78.5,30.5]) ;
+        lef_port("air_in_a", "INPUT", "rect", [77.5,29.5,78.5,30.5]) ;
         lef_layer("met3")
-        lef_port("rect", [147.5,29.5,148.5,30.5]) ;
+        lef_port("air_in_b", "INPUT", "rect", [147.5,29.5,148.5,30.5]) ;
         lef_layer("met3")
-        lef_port("rect", [217.5,29.5,218.5,30.5]) ;
+        lef_port("air_in_c", "INPUT", "rect", [217.5,29.5,218.5,30.5]) ;
     }
     if(ren_lef)
     {
@@ -52,4 +53,4 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
     }
 }
 
-pump_20px_0(0,0,0,"N",offset_layers=0, ren_lef=true) ;
+pump_20px_0(0,0,0,"N",offset_layers=0, ren_lef=false) ;

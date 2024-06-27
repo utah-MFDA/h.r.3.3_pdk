@@ -14,7 +14,7 @@ module lef_obs(geometry, pts, px=0, layer=0)
     }
 }
 
-module lef_port(geometry, pts, px=0, layer=0)
+module lef_port(port_name, direction, geometry, pts, px=0, layer=0)
 {
     if(geometry=="RECT" || geometry=="rect")
     {
@@ -61,6 +61,10 @@ module lef_layer(layer)
     
     translate([0,0,l_off])
         children() ;
+}
+
+module lef_size(X, Y)
+{
 }
 
 function get_layer_index(x) = search([x], layers)[0] ;

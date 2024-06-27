@@ -1,85 +1,82 @@
 
-
 MACRO pump_20px_0
   CLASS CORE ;
   ORIGIN  0 0 ;
   FOREIGN pump_20px_0 0 0 ;
-  SIZE 270 BY 140 ;
+  SIZE 300 BY 150 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
-  PIN in_fluid
+  PIN fluid_in
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
         RECT 29.5 62.5 30.5 63.5 ;
     END
-  END in_fluid
-  PIN out_fluid
+  END fluid_in
+  PIN fluid_out
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 239.5 62.5 240.5 63.5 ;
+        RECT 269 62.5 270.5 63.5 ;
     END
-  END out_fluid
-  PIN a_in_air
-    DIRECTION INPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met2 ;
-        RECT 57.5 29.5 58.5 30.5 ;
-    END
-  END a_in_air
-  PIN a_out_air
+  END fluid_out
+  PIN air_out_a
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met2 ;
-        RECT 57.5 119.5 58.5 120.5 ;
+      LAYER met3 ;
+        RECT 77.5 99.5 78.5 100.5 ;
     END
-  END a_out_air
-  PIN b_in_air
-    DIRECTION INPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met2 ;
-        RECT 97.5 29.5 98.5 30.5 ;
-    END
-  END b_in_air
-  PIN b_out_air
+  END air_out_a
+  PIN air_out_b
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met2 ;
-        RECT 97.5 119.5 98.5 120.5 ;
+      LAYER met3 ;
+        RECT 147.5 99.5 148.5 100.5 ;
     END
-  END b_out_air
-  PIN c_in_air
-    DIRECTION INPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met2 ;
-        RECT 167.5 29.5 168.5 30.5 ;
-    END
-  END c_in_air
-  PIN c_out_air
+  END air_out_b
+  PIN air_out_c
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met2 ;
-        RECT 167.5 119.5 168.5 120.5 ;
+      LAYER met3 ;
+        RECT 217.5 99.5 218.5 100.5 ;
     END
-  END c_out_air
+  END air_out_c
+  PIN air_in_a
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 77.5 29.5 78.5 30.5 ;
+    END
+  END air_in_a
+  PIN air_in_b
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 147.5 29.5 148.5 30.5 ;
+    END
+  END air_in_b
+  PIN air_in_c
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 217.5 29.5 218.5 30.5 ;
+    END
+  END air_in_c
   OBS
     LAYER met1 ;
-      RECT 30 30 240 120 ;
+      RECT 30 30 280 110 ;
     LAYER met2 ;
-      RECT 30 30 240 120 ;
+      RECT 30 30 280 110 ;
     LAYER met3 ;
-      RECT 30 30 240 120 ;
-    LAYER met4 ;
-      RECT 30 30 240 120 ;
+      RECT 30 30 280 110 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END pump_20px_0
