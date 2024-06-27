@@ -32,7 +32,7 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
         lef_layer("met1")
         lef_port("fluid_in", "INPUT", "rect", [29.5,62.5,30.5,63.5]) ;
         lef_layer("met1")
-        lef_port("fluid_out", "OUTPUT", "rect", [269,62.5,270.5,63.5]) ;
+        lef_port("fluid_out", "OUTPUT", "rect", [269.5,62.5,270.5,63.5]) ;
         
         lef_layer("met3")
         lef_port("air_out_a", "OUTPUT", "rect", [77.5,99.5,78.5,100.5]) ;
@@ -53,4 +53,4 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
     }
 }
 
-pump_20px_0(0,0,0,"N",offset_layers=0, ren_lef=false) ;
+pump_20px_0(0,0,0,"N",offset_layers=0, ren_lef=true) ;
