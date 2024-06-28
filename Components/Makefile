@@ -91,7 +91,11 @@ clean_va:
 ################################################################
 export SC_LEF = $(ROOT_DIR)/$(KIT_NAME)_merged.lef
 $(SC_LEF): $(LEF_FILES)
-	cut -b 1- $^ > $@
+	echo "VERSION 5.7 ;" > $@
+	echo 'BUSBITCHARS "[]" ;' >> $@
+	echo 'DIVIDERCHAR "/" ;' >> $@
+	cut -b 1- $^ >> $@
+	echo "END LIBRARY" >> $@
 
 export TECH_LEF = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
 export LIB_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
@@ -117,8 +121,18 @@ $(SCAD_BUILD_DIR):
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
 export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' | perl -pe '/^[ ]*module\s+\w*\s*\((?:[a-zA-Z0-9_=,\/\n\".\-\$\[\]\)\(]*\s*)*\)\s*|\{(?:[^}{]+|(?R))*+\}/gm' > $@
-#| perl -pe '/^[ ]*module\s+\w*\s*\((?:[a-zA-Z0-9_=,\/\n\".\-\$\[\]\)\(]*\s*)*\)\s*|\{(?:[^}{]+|(?R))*+\}/gm' >
+	cut -b 1- $^ | python3 cleanScadFile.py --stream >> $@
+	# cat scad_header.scad > $@	
+# $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
+	# cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
+
+SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
+SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_build/%, $(SCAD_USE_FILES))
+$(SCAD_USE_BUILD): $(SCAD_USE_FILES)
+	cp $^ ./scad_build
+
+cp_scad: $(SCAD_USE_BUILD) 
+
 build_scad: $(SCAD_COMPONENT_LIBRARY)
 
 clean_scad:
