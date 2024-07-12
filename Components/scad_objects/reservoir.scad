@@ -17,7 +17,7 @@ module p_reservoir(xpos, ypos, zpos, orientation,
 {
     n_size = [size[0]*px, size[1]*px, size[2]*layer];
     
-    translate([xpos, ypos, zpos])
+    translate([xpos*px, ypos*px, zpos*layer])
     translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, layer_offset*layer])
     translate(n_size/2)
     rotate([0,0,(rot?90:0)])

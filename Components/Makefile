@@ -19,7 +19,7 @@ KIT_NAME = h.r.3.3
 #GENERAL_SRC_DIR = valves serpentine mixers
 #
 #=======
-GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine $(ROOT_DIR)/mixers
+GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine $(ROOT_DIR)/mixers $(ROOT_DIR)/directional_reserviors $(ROOT_DIR)/bidirectional_reserviors $(ROOT_DIR)/inline_reserviors
 #valves
 #>>>>>>> master
 ## Verilog A targets
@@ -122,9 +122,9 @@ export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
 export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 	cut -b 1- $^ | python3 cleanScadFile.py --stream >> $@
-	# cat scad_header.scad > $@	
+# cat scad_header.scad > $@	
 # $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	# cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
+# cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
 
 SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
 SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_build/%, $(SCAD_USE_FILES))
