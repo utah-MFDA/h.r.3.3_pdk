@@ -14,13 +14,13 @@ module inline_res_60nl(xpos, ypos, zpos, orientation,
     p_chamber(xpos, ypos, zpos, orientation,
     chm_r=30, chm_h=20, chm_len=90,
     conn_ch_w=14, conn_ch_h=10, conn_ch_l=20, 
-    px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=5, $fn=50,
+    px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=-5, $fn=50,
     rot=false, no_obj=false, floor_area=false) ;
     
     module lef()
     {
         color("blue")
-        lef_size(210, 110) ;
+        lef_size(180, 110) ;
         
         lef_layer("met1")
         lef_obs("RECT", [30, 30, 146, 80]) ;

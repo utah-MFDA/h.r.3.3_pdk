@@ -13,7 +13,7 @@ module inline_res_80nl(xpos, ypos, zpos, orientation,
     p_chamber(xpos, ypos, zpos, orientation,
     chm_r=30, chm_h=20, chm_len=120,
     conn_ch_w=14, conn_ch_h=10, conn_ch_l=20, 
-    px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=5, $fn=50,
+    px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=-5, $fn=50,
     rot=false, no_obj=false, floor_area=false) ;
     
     module lef()
