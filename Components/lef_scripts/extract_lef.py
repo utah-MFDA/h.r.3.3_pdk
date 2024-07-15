@@ -6,7 +6,7 @@ lef_mod_reg = bytes(
     "utf-8",
 )
 lef_parts_reg = bytes(
-    r'^[ ]*(?:lef_layer\s*\(\s*"(?P<layer>\w+)"\)|)\s*(?P<lef_type>lef_port|lef_obs|lef_size)\s*\(\s*(?:(?:"(?P<port_name>\w+)"\s*,\s*"(?P<direction>INPUT|OUTPUT)"\s*,|)\s*"(?P<shape>\w*)"\s*,\s*\[(?P<pts>[\s\-.,\d]*)\]\s*\)\s*;|\s*(?P<x>\d*)\s*,\s*(?P<y>\d*)\s*\)\s*;)',  # fmt: skip
+    r'^[ ]*(?:lef_layer\s*\(\s*"(?P<layer>\w+)"\)|)\s*(?P<lef_type>lef_port|lef_obs|lef_size)\s*\(\s*(?:(?:"(?P<port_name>\w+)"\s*,\s*"(?P<direction>INPUT|OUTPUT|INOUT)"\s*,|)\s*"(?P<shape>\w*)"\s*,\s*\[(?P<pts>[\s\-.,\d]*)\]\s*\)\s*;|\s*(?P<x>\d*)\s*,\s*(?P<y>\d*)\s*\)\s*;)',  # fmt: skip
     "utf-8",
 )
 

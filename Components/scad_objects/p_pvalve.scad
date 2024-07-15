@@ -97,6 +97,7 @@ module p_valve(xpos, ypos, zpos, orientation,
     tran_x_offset = (valve_r+fl_out_len)*px;
     tran_y_offset = (valve_r+pn_out_len)*px;
     
+    //translate([xpos*px, ypos*px, zpos*layer])
     translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,offset_layers*layer])
     translate([
         (rot?tran_y_offset:tran_x_offset),

@@ -14,14 +14,17 @@ module lef_obs(geometry, pts, px=0, layer=0)
     }
 }
 
-module lef_port(port_name, direction, geometry, pts, px=0, layer=0)
+module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_h=0, layer=false)
 {
+    if(port_name=="" || direction=="" || geometry=="" || pts==false)
+        echo("module def: lef_port(port_name, direction, geom, pts)") ;
+    
     if(geometry=="RECT" || geometry=="rect")
     {
         color(port_clr1)
         lef_rect(
             pts*(px!=0?px:get_config("px")), 
-            (layer!=0?layer:get_config("layer"))*get_config("lpv")) ;
+            (layer_h!=0?layer_h:get_config("layer"))*get_config("lpv")) ;
         color(port_clr2)
         if(len(pts)==4){
             lef_rect(
@@ -30,7 +33,7 @@ module lef_port(port_name, direction, geometry, pts, px=0, layer=0)
             (pts[1]+pts[3])/2-get_config("via_w")/2,
             (pts[0]+pts[2])/2+get_config("via_w")/2,
             (pts[1]+pts[3])/2+get_config("via_w")/2]*(px!=0?px:get_config("px")), 
-            (layer!=0?layer:get_config("layer"))*(get_config("lpv")-1)) ;
+            (layer_h!=0?layer_h:get_config("layer"))*(get_config("lpv")-1)) ;
         }
         if(len(pts)==2)
         {
@@ -38,7 +41,7 @@ module lef_port(port_name, direction, geometry, pts, px=0, layer=0)
             [pts[0],pts[1],
             pts[0]+get_config("via_w"),
             pts[1]+get_config("via_w")]*(px!=0?px:get_config("px")), 
-            (layer!=0?layer:get_config("layer"))*(get_config("lpv")-1)) ;
+            (layer_h!=0?layer_h:get_config("layer"))*(get_config("lpv")-1)) ;
         }
     } 
 }
