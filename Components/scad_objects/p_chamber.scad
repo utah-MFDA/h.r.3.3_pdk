@@ -48,4 +48,4 @@ module p_chamber(xpos, ypos, zpos, orientation,
     }
     
     
-p_chamber(0,0,0,"N", 100, 10, chm_len=800);
+p_chamber(1,0,0,"N", 100, 10, chm_len=800);
