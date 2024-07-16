@@ -29,7 +29,7 @@ module p_pump(xpos, ypos, zpos, orientation,
     pt0_1 = [ends_ex_len*px,0,0] ;
     
     pt1_0 = [
-        (r1*2+r2*2+r3*2+len_sp*3-chan_w/2+ends_ex_len)*px,
+        (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len+chan_w/2)*px,
         (r_max-chan_w/2+pn_out_len)*px,
         chan_h/2*layer] ;
     pt1_1 = [ends_ex_len*px,0,0] ;
@@ -37,7 +37,8 @@ module p_pump(xpos, ypos, zpos, orientation,
     module obj() {
         // check 1      
         //translate([0,(r_max-r1)*px,0])
-        translate([ends_ex_len*px, 0,0]){
+        translate([(ends_ex_len+chan_w)*px, 0,0]){
+        //translate([0, 0,0]){
         translate([0,0,0])
             p_pvalve(0,0,0,"N",
             valve_r=r1, 
@@ -109,4 +110,14 @@ module p_pump(xpos, ypos, zpos, orientation,
         obj() ;
 }
 
-p_pump(0,0,0,"N", r2=80);
+//p_pump(0,0,0,"N", r2=80);
+p_pump (0, 0, 0, "N",
+    r1=20, r2=40, r3=20,
+    th1=0.6, th2=0.6, th3=0.6,
+    fl_h1=3.1, fl_h2=3.1, fl_h3=3.1,
+    pn_h1=4, pn_h2=4, pn_h3=4,
+    len_sp=30,
+    pn_out_len=20, 
+    fl_extra_sp=10, pn_extra_sp="fill-edge",
+    chan_h=10, chan_w=14, shape="cube", 
+    rot=false, no_obj=false, floor_area=false) ;

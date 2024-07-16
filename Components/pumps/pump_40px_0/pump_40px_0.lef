@@ -3,7 +3,7 @@ MACRO pump_40px_0
   CLASS CORE ;
   ORIGIN  0 0 ;
   FOREIGN pump_40px_0 0 0 ;
-  SIZE 285 BY 135 ;
+  SIZE 290 BY 135 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN in_fluid
@@ -19,7 +19,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 254.5 69.5 255.5 70.5 ;
+        RECT 259.5 69.5 260.5 70.5 ;
     END
   END out_fluid
   PIN a_in_air
@@ -27,7 +27,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 69.5 29.5 70.5 30.5 ;
+        RECT 74.5 29.5 75.5 30.5 ;
     END
   END a_in_air
   PIN a_out_air
@@ -35,7 +35,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 69.5 109.5 70.5 110.5 ;
+        RECT 74.5 109.5 75.5 110.5 ;
     END
   END a_out_air
   PIN b_in_air
@@ -43,7 +43,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 139.5 29.5 140.5 30.5 ;
+        RECT 144.5 29.5 145.5 30.5 ;
     END
   END b_in_air
   PIN b_out_air
@@ -51,7 +51,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 139.5 109.5 140.5 110.5 ;
+        RECT 144.5 109.5 145.5 110.5 ;
     END
   END b_out_air
   PIN c_in_air
@@ -59,7 +59,7 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 209.5 29.5 210.5 30.5 ;
+        RECT 214.5 29.5 215.5 30.5 ;
     END
   END c_in_air
   PIN c_out_air
@@ -67,16 +67,16 @@ MACRO pump_40px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 209.5 109.5 210.5 110.5 ;
+        RECT 214.5 109.5 215.5 110.5 ;
     END
   END c_out_air
   OBS
     LAYER met1 ;
-      RECT 30 30 255 110 ;
+      RECT 30 30 260 110 ;
     LAYER met2 ;
-      RECT 30 30 255 110 ;
+      RECT 30 30 260 110 ;
     LAYER met3 ;
-      RECT 30 30 255 110 ;
+      RECT 30 30 260 110 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END pump_40px_0

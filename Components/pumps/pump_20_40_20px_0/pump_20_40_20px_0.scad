@@ -5,7 +5,7 @@ use <../../scad_use/lef_helper.scad>
 module pump_20_40_20px_0(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
-    translate([0,9*px,0])
+    translate([0,9*px,-10*layer])
     p_pump (xpos, ypos, zpos, orientation,
     r1=20, r2=40, r3=20,
     th1=0.6, th2=0.6, th3=0.6,
@@ -21,29 +21,29 @@ module pump_20_40_20px_0(xpos, ypos, zpos, orientation,
     {
         lef_size(320, 165) ;
         lef_layer("met1")
-        lef_obs("rect",  [30,30,290,140]);
+        lef_obs("rect",  [30,30,300,140]);
         lef_layer("met2")
-        lef_obs("rect",  [30,30,290,140]);
+        lef_obs("rect",  [30,30,300,140]);
         lef_layer("met3")
-        lef_obs("rect",  [30,30,290,140]);
+        lef_obs("rect",  [30,30,300,140]);
         
         lef_layer("met1")
         lef_port("fluid_in", "INPUT", "rect", [29.5,84.5,30.5,85.5]) ;
         lef_layer("met1")
-        lef_port("fluid_out", "OUTPUT", "rect", [289.5,84.5,290.5,85.5]) ;
+        lef_port("fluid_out", "OUTPUT", "rect", [299.5,84.5,300.5,85.5]) ;
         
         lef_layer("met3")
-        lef_port("a_out_air", "OUTPUT", "rect", [59.5,139.5,60.5,140.5]) ;
+        lef_port("a_out_air", "OUTPUT", "rect", [74.5,139.5,75.5,140.5]) ;
         lef_layer("met3")
-        lef_port("b_out_air", "OUTPUT", "rect", [149.5,139.5,150.5,140.5]) ;
+        lef_port("b_out_air", "OUTPUT", "rect", [164.5,139.5,165.5,140.5]) ;
         lef_layer("met3")
-        lef_port("c_out_air", "OUTPUT", "rect", [239.5,139.5,240.5,140.5]) ;
+        lef_port("c_out_air", "OUTPUT", "rect", [254.5,139.5,255.5,140.5]) ;
         lef_layer("met3")
-        lef_port("a_in_air", "INPUT", "rect", [59.5,29.5,60.5,30.5]) ;
+        lef_port("a_in_air", "INPUT", "rect", [74.5,29.5,75.5,30.5]) ;
         lef_layer("met3")
-        lef_port("b_in_air", "INPUT", "rect", [149.5,29.5,150.5,30.5]) ;
+        lef_port("b_in_air", "INPUT", "rect", [164.5,29.5,165.5,30.5]) ;
         lef_layer("met3")
-        lef_port("c_in_air", "INPUT", "rect", [239.5,29.5,240.5,30.5]) ;
+        lef_port("c_in_air", "INPUT", "rect", [254.5,29.5,255.5,30.5]) ;
     }
     if(ren_lef)
         lef();

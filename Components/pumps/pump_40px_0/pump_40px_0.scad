@@ -18,33 +18,33 @@ module pump_40px_0(xpos, ypos, zpos, orientation,
     rot=false, no_obj=false, floor_area=false) ;
     module lef()
     {
-        color("blue")
-        lef_size(285, 135);
+        color("yellow")
+        lef_size(290, 135);
         
         lef_layer("met1")
         lef_port("in_fluid", "INPUT", "RECT",  [29.5, 69.5, 30.5, 70.5]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [254.5, 69.5, 255.5, 70.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [259.5, 69.5, 260.5, 70.5]) ;
         
         lef_layer("met3")
-        lef_port("a_in_air", "INPUT", "RECT",   [69.5, 29.5, 70.5, 30.5]) ;
+        lef_port("a_in_air", "INPUT", "RECT",   [74.5, 29.5, 75.5, 30.5]) ;
         lef_layer("met3")
-        lef_port("a_out_air", "OUTPUT", "RECT", [69.5, 109.5, 70.5, 110.5]) ;
+        lef_port("a_out_air", "OUTPUT", "RECT", [74.5, 109.5, 75.5, 110.5]) ;
         lef_layer("met3")
-        lef_port("b_in_air", "INPUT", "RECT",   [139.5, 29.5, 140.5, 30.5]) ;
+        lef_port("b_in_air", "INPUT", "RECT",   [144.5, 29.5, 145.5, 30.5]) ;
         lef_layer("met3")
-        lef_port("b_out_air", "OUTPUT", "RECT", [139.5, 109.5, 140.5, 110.5]) ;
+        lef_port("b_out_air", "OUTPUT", "RECT", [144.5, 109.5, 145.5, 110.5]) ;
         lef_layer("met3")
-        lef_port("c_in_air", "INPUT", "RECT",   [209.5, 29.5, 210.5, 30.5]) ;
+        lef_port("c_in_air", "INPUT", "RECT",   [214.5, 29.5, 215.5, 30.5]) ;
         lef_layer("met3")
-        lef_port("c_out_air", "OUTPUT", "RECT", [209.5, 109.5, 210.5, 110.5]) ;
+        lef_port("c_out_air", "OUTPUT", "RECT", [214.5, 109.5, 215.5, 110.5]) ;
         
         lef_layer("met1")
-        lef_obs("RECT", [30, 30, 255, 110]) ;
+        lef_obs("RECT", [30, 30, 260, 110]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 30, 255, 110]) ;
+        lef_obs("RECT", [30, 30, 260, 110]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 255, 110]) ;
+        lef_obs("RECT", [30, 30, 260, 110]) ;
     }
     if (ren_lef)
         lef() ;
