@@ -19,7 +19,7 @@ KIT_NAME = h.r.3.3
 #GENERAL_SRC_DIR = valves serpentine mixers
 #
 #=======
-GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine $(ROOT_DIR)/mixers $(ROOT_DIR)/directional_reserviors $(ROOT_DIR)/bidirectional_reserviors $(ROOT_DIR)/inline_reserviors
+GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine $(ROOT_DIR)/mixers $(ROOT_DIR)/directional_reserviors $(ROOT_DIR)/bidirectional_reserviors $(ROOT_DIR)/inline_reserviors $(ROOT_DIR)/valves
 #valves
 #>>>>>>> master
 ## Verilog A targets
@@ -39,8 +39,8 @@ SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)
 
 export MF_LIB = MFXyce
 
-.PHONY: clean clean_va clean_scad clean_lef build_va build_scad build_lef
-clean: clean_va clean_scad clean_lef
+.PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
+clean_all: clean_va clean_scad clean_lef
 ################################################################
 # __     __        _ _
 # \ \   / /__ _ __(_) | ___   __ _

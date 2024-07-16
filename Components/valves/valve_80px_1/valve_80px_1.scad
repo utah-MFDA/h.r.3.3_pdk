@@ -12,7 +12,7 @@ module valve_80px_1(xpos, ypos, zpos, orientation,
         pn_extra_sp="fill", pn_chan_up_layers=10, rot_pn=false,
         // extra center spacing if needed when inport_center=false
         extra_sp = 0,
-        px=px, layer=layer, lpv=lvp, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=10,
+        px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=10,
         no_obj=false, floor_area=false) ;
     
     module lef()

@@ -11,7 +11,7 @@ module valve_80px_4way_0 (xpos, ypos, zpos, orientation,
         fl_out_len=30, pn_out_len=30, 
         // length of channels extending outside of valve radius
         fl_extra_sp=10, pn_extra_sp=10, 
-        px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=0,
+        px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=-10,
         no_obj=false, floor_area=false) ;
     
     module lef()
