@@ -1,7 +1,7 @@
 
 use <../scad_use/polychannel_v2.scad>
 
-module p_valve(xpos, ypos, zpos, orientation,
+module p_pvalve(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false, 
     // length of channels extending outside of valve radius
     fl_out_len=20, pn_out_len=20,

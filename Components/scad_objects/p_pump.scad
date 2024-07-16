@@ -39,7 +39,7 @@ module p_pump(xpos, ypos, zpos, orientation,
         //translate([0,(r_max-r1)*px,0])
         translate([ends_ex_len*px, 0,0]){
         translate([0,0,0])
-            p_valve(0,0,0,"N",
+            p_pvalve(0,0,0,"N",
             valve_r=r1, 
             mem_th=th1,
             fl_extra_sp=fl_extra_sp,
@@ -60,7 +60,7 @@ module p_pump(xpos, ypos, zpos, orientation,
             );
         // pump
         translate([(r1*2+len_sp)*px,0,0])
-            p_valve(0,0,0,"N",
+            p_pvalve(0,0,0,"N",
             valve_r=r2, 
             mem_th=th2, 
             fl_chm_h=fl_h2, 
@@ -79,7 +79,7 @@ module p_pump(xpos, ypos, zpos, orientation,
             offset_layers=0);
         // check 2
         translate([((r1*2+len_sp)+(r2*2+len_sp))*px,0,0])
-            p_valve(0,0,0,"N",
+            p_pvalve(0,0,0,"N",
             valve_r=r3, 
             mem_th=th3,
             fl_extra_sp=fl_extra_sp,
