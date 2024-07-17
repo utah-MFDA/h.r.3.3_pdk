@@ -37,29 +37,38 @@ def find_modules(inFile_str, overwrite_f=False, stream=False, to_stdout=False):
     else:
         newFile = open(inFile_str + "_clean", "w+")
         newFile.write("".join([line for line in scad_header_f]))
-    # 0        1         2         3         4         5         6
-    # 123456789012345678901234567890123456789012345678901234567890
-    module_re = bytes(
+        # 0        1         2         3         4         5         6
+        # 123456789012345678901234567890123456789012345678901234567890
+        # module_re = bytes(
         # r"^[ ]*module\s*\w*\s*\(([^\(\)]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}",
         # r"^[ ]*module\s*\w*\s*\([^\(\)]*\)|\{(?:[^}{]+|(?R))*+\}",
         # r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*\{(?:[^}{]+|(?R))*+\}|\{(?:[^}{]+|(?R))*+\})+",
-        r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*|[ ]*\{(?:[^}{]+|(?R))*+\})+",
+        # r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*|[ ]*\{(?:[^}{]+|(?R))*+\})+",
         # r"(?:(^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*)|(\{(?:[^}{]+|(?R))*+\}))",
-        "utf-8",
-    )
+        # "utf-8",
+    # )
     module_re = r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*|[ ]*\{(?:[^}{]+|(?R))*+\})+"
     # module_re = bytes(r"(?:^[ ]*module\s+\w*\s*\((?:[^\(\)])*\)\s*\{(?:[^}{]+|(?R))+\}|\{(?:[^}{]+|(?R))+\})","utf-8")
     # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}", 'utf-8')
     # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?>[^}{]+|\g<0>)*\}", 'utf-8')
     # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)\{(.*\s)*\}", 'utf-8')
+    sub_com_re = r"[ ]*\/\/.*\n|^[ ]+\n"
     if stream:
         data = sys.stdin.read()
-        mo = regex.finditer(module_re, data, re.MULTILINE)
+        mo = regex.finditer(
+            module_re,
+            re.sub(sub_com_re, "", data),
+            re.MULTILINE,
+        )
     else:
         f = open(inFile_str, "r+")
         data = mmap.mmap(f.fileno(), 0)
         f.close()
-        mo = regex.finditer(bytes(module_re, "utf-8"), data, re.MULTILINE)
+        mo = regex.finditer(
+            bytes(module_re, "utf-8"),
+            re.sub(bytes(sub_com_re, "utf-8"), bytes("", 'utf-8'), data),
+            re.MULTILINE,
+        )
 
     if mo:
         # print([x.group().decode("utf-8") for x in mo])

@@ -5,7 +5,8 @@ use <./../../scad_use/lef_helper.scad>
 module valve_80px_4way_0 (xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
-    translate([-3*px,-3*px,0])
+    translate([7*px,-3*px,0])
+    // the geometry may not match the lef here, but works in flow
     p_valve_4way(xpos, ypos, zpos, orientation,
         valve_r=40, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=false,
         pn_up_layers=15,

@@ -3,7 +3,7 @@ MACRO directional_res_600nl
   CLASS CORE ;
   ORIGIN  0 0 ;
   FOREIGN directional_res_600nl 0 0 ;
-  SIZE 160 BY 160 ;
+  SIZE 210 BY 150 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN in_fluid
