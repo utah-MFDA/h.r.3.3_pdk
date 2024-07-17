@@ -42,7 +42,7 @@ MACRO valve_40px_1
     LAYER met1 ;
       RECT 30 30 90 90 ;
     LAYER met2 ;
-      RECT 30 30 90 90 ;
+      RECT 0 0 120 120 ;
     LAYER met3 ;
       RECT 30 30 90 90 ;
   END

@@ -10,6 +10,8 @@ module p_pump(xpos, ypos, zpos, orientation,
     len_sp=30, pn_out_len=20, 
     fl_extra_sp=4, pn_extra_sp="fill",
     fl_out_h=10, pn_out_h=10, ends_ex_len=10,
+    dwn_chan_h=0, dwn_chan_w=0,
+    port_chan_h=0, port_chan_w=0,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
     rot=false, no_obj=false, floor_area=false)
 {
@@ -24,7 +26,8 @@ module p_pump(xpos, ypos, zpos, orientation,
     
     //ex_len = 30*px;
     
-    dimm = [chan_w*px,chan_w*px,chan_h*layer] ;
+    dimm  = [chan_w*px,chan_w*px,chan_h*layer] ;
+    dimmp = [port_chan_w*px,port_chan_w*px,port_chan_h*layer] ;
     pt0_0 = [chan_w/2*px,(r_max-chan_w/2+pn_out_len)*px,chan_h/2*layer] ;
     pt0_1 = [ends_ex_len*px,0,0] ;
     
@@ -57,6 +60,7 @@ module p_pump(xpos, ypos, zpos, orientation,
             px=px,
             layer=layer,
             chan_h=chan_h, chan_w=chan_w,
+            dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w,
             offset_layers=0
             );
         // pump
@@ -77,6 +81,7 @@ module p_pump(xpos, ypos, zpos, orientation,
             px=px,
             layer=layer,
             chan_h=chan_h, chan_w=chan_w,
+            dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w,
             offset_layers=0);
         // check 2
         translate([((r1*2+len_sp)+(r2*2+len_sp))*px,0,0])
@@ -96,14 +101,15 @@ module p_pump(xpos, ypos, zpos, orientation,
             px=px,
             layer=layer,
             chan_h=chan_h, chan_w=chan_w,
+            dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w,
             offset_layers=0);
         }
         polychannel(
-        [[shape, dimm, pt0_0, [0,[0,0,1]]],
+        [[shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt0_0, [0,[0,0,1]]],
         [shape, dimm, pt0_1, [0,[0,0,1]]],]) ;
         polychannel(
         [[shape, dimm, pt1_0, [0,[0,0,1]]],
-        [shape, dimm, pt1_1, [0,[0,0,1]]],]) ;
+        [shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt1_1, [0,[0,0,1]]],]) ;
     }
     translate([xpos*px, ypos*px, zpos*layer])
     translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])

@@ -6,6 +6,8 @@ module p_pvalve(xpos, ypos, zpos, orientation,
     // length of channels extending outside of valve radius
     fl_out_len=20, pn_out_len=20,
     fl_out_h  =10, pn_out_h  =10,
+    //l1_dwn=1, 
+    dwn_chan_h=0, dwn_chan_w=0,
     // extra center spacing if needed when inport_center=false
     fl_extra_sp = 0, pn_extra_sp = 0, rot_pn="true",
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10, $fn=30, flip_fl=false,
@@ -15,11 +17,12 @@ module p_pvalve(xpos, ypos, zpos, orientation,
     
     module obj()
     {
-        chan_dimm = [chan_w*px, chan_w*px, chan_h*layer];
+        chan_dimm     = [chan_w*px, chan_w*px, chan_h*layer];
+        chan_dimm_dwn = [dwn_chan_w*px, dwn_chan_w*px, chan_h*layer];
         translate([0,0,fl_chm_h/2*layer])
-            cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
+            %cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
         translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)*layer])
-            cylinder(pn_chm_h*layer, r=valve_r*px, center=true);
+            %cylinder(pn_chm_h*layer, r=valve_r*px, center=true);
         
         // fluid connection channel definitions
         
@@ -40,28 +43,36 @@ module p_pvalve(xpos, ypos, zpos, orientation,
         fl_len_1 = (inport_center?
             (fl_out_len-fl_extra_sp)*px:
             (fl_extra_sp=="fill"?(fl_out_len+1)*px:(valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+            
+        //l2_dwn = fl_out_h*layer - l1_dwn*layer ;
         
         // flip fluid ports
         if(flip_fl)
         {
         polychannel(
-            [[shape, chan_dimm, [inp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
+            [
+            [shape, (dwn_chan_h==0 || dwn_chan_w==0?chan_dimm:chan_dimm_dwn), [-inp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
+            //[shape, chan_dimm_dwn, [0,0,-l1_dwn*layer], [0,[0,0,1]]],
+            //[shape, chan_dimm, [0,0,-l2_dwn], [0,[0,0,1]]],
             [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [fl_len_0,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
-            [[shape, chan_dimm, [-outp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
+            [[shape, (dwn_chan_h==0 || dwn_chan_w==0?chan_dimm:(inport_center?chan_dimm:chan_dimm_dwn)), 
+            [-outp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
             [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [-fl_len_1,0,0], [0,[0,0,1]]]
         ]);
         } else {
         polychannel(
-            [[shape, chan_dimm, [inp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
+            [
+            [shape, (dwn_chan_h==0 || dwn_chan_w==0?chan_dimm:chan_dimm_dwn), [inp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
             [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [-fl_len_0,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
-            [[shape, chan_dimm, [outp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
+            [[shape, (dwn_chan_h==0 || dwn_chan_w==0?chan_dimm:(inport_center?chan_dimm:chan_dimm_dwn)), 
+            [outp_pos,0,-chan_h*layer/2], [0,[0,0,1]]],
             [shape, chan_dimm, [0,0,-fl_out_h*layer], [0,[0,0,1]]],
             [shape, chan_dimm, [fl_len_1,0,0], [0,[0,0,1]]]
         ]); 
@@ -109,5 +120,5 @@ module p_pvalve(xpos, ypos, zpos, orientation,
             obj();
 }
 
-p_valve(0,0,0,"N", 
+p_pvalve(0,0,0,"N", 
     46,4,10,20, inport_center=true, pitch=30, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=true);

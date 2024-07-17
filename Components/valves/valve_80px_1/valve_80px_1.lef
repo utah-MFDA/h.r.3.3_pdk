@@ -19,7 +19,7 @@ MACRO valve_80px_1
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 159.5 89.5 160.5 90.5 ;
+        RECT 149.5 89.5 150.5 90.5 ;
     END
   END out_fluid
   PIN in_air
@@ -35,16 +35,16 @@ MACRO valve_80px_1
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 89.5 159.5 90.5 160.5 ;
+        RECT 89.5 149.5 90.5 150.5 ;
     END
   END out_air
   OBS
     LAYER met1 ;
-      RECT 30 30 160 160 ;
+      RECT 30 30 150 150 ;
     LAYER met2 ;
-      RECT 30 30 160 160 ;
+      RECT 30 30 150 150 ;
     LAYER met3 ;
-      RECT 30 30 160 160 ;
+      RECT 30 30 150 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END valve_80px_1
