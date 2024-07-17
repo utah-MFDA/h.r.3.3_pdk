@@ -9,27 +9,27 @@ module inline_res_100nl(xpos, ypos, zpos, orientation,
     
     
     */
-    
+    translate([0,7*px,0])
     p_chamber(xpos, ypos, zpos, orientation,
     chm_r=30, chm_h=20, chm_len=150,
-    conn_ch_w=14, conn_ch_h=10, conn_ch_l=20, 
+    conn_ch_w=14, conn_ch_h=10, conn_ch_l=22, 
     px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=pitch, offset_layers=-5, $fn=50,
     rot=false, no_obj=false, floor_area=false) ;
     
     module lef()
     {
         color("blue")
-        lef_size(240, 110) ;
+        lef_size(240, 120) ;
         
         lef_layer("met1")
-        lef_obs("RECT", [30, 30, 210, 80]) ;
+        lef_obs("RECT", [30, 30, 210, 90]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 30, 210, 80]) ;
+        lef_obs("RECT", [30, 30, 210, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 52.5, 30.5, 53.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [209.5, 52.5, 210.5, 53.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [209.5, 59.5, 210.5, 60.5]) ;
         
     }
     if(ren_lef)
