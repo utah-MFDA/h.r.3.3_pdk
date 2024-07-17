@@ -36,13 +36,20 @@ module p_pvalve(xpos, ypos, zpos, orientation,
         
         // -----
         
-        fl_len_0 = (inport_center?
-            (valve_r-chan_w/2+fl_out_len)*px:
-            (fl_extra_sp=="fill"?(fl_out_len+1)*px:(valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
         
+        fl_len_0 = (inport_center?
+                (fl_out_len>fl_extra_sp?(valve_r-chan_w/2+fl_out_len)*px:
+                (valve_r-chan_w/2+fl_out_len)*px)
+            : //inport_center (false)
+            (fl_extra_sp=="fill"?(fl_out_len+1)*px:
+            (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
         fl_len_1 = (inport_center?
-            (fl_out_len-fl_extra_sp)*px:
-            (fl_extra_sp=="fill"?(fl_out_len+1)*px:(valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+                //(fl_out_len>fl_extra_sp?
+                abs(fl_out_len-fl_extra_sp)*px
+                //:(0)*px)
+            : //inport_center (false)
+            (fl_extra_sp=="fill"?(fl_out_len+1)*px:
+            (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
             
         //l2_dwn = fl_out_h*layer - l1_dwn*layer ;
         
@@ -120,5 +127,24 @@ module p_pvalve(xpos, ypos, zpos, orientation,
             obj();
 }
 
-p_pvalve(0,0,0,"N", 
-    46,4,10,20, inport_center=true, pitch=30, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=true);
+//p_pvalve(0,0,0,"N", 
+//    46,4,10,20, inport_center=true, pitch=30, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=false);
+
+p_pvalve(0,0,0,"N",
+            valve_r=20, 
+            mem_th=0.6,
+            fl_extra_sp=10,
+            fl_chm_h=3.1, 
+            pn_chm_h=4, 
+            inport_center=true,
+            pitch=0,
+            fl_out_len=15/2,
+            pn_out_len=30/2,
+            rot_pn=false,
+            pn_extra_sp="fill",
+            fl_out_h=10,
+            //px=px,
+            //layer=layer,
+            //chan_h=chan_h, chan_w=chan_w,
+            //dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w,
+            offset_layers=0);
