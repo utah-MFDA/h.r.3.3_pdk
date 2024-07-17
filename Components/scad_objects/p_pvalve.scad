@@ -20,9 +20,9 @@ module p_pvalve(xpos, ypos, zpos, orientation,
         chan_dimm     = [chan_w*px, chan_w*px, chan_h*layer];
         chan_dimm_dwn = [dwn_chan_w*px, dwn_chan_w*px, chan_h*layer];
         translate([0,0,fl_chm_h/2*layer])
-            %cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
+            cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
         translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)*layer])
-            %cylinder(pn_chm_h*layer, r=valve_r*px, center=true);
+            cylinder(pn_chm_h*layer, r=valve_r*px, center=true);
         
         // fluid connection channel definitions
         
