@@ -22,22 +22,23 @@ module p_pump(xpos, ypos, zpos, orientation,
     
     
     
-    r_max = max(r1, r2, r3);
     
-    //ex_len = 30*px;
-    
-    dimm  = [chan_w*px,chan_w*px,chan_h*layer] ;
-    dimmp = [port_chan_w*px,port_chan_w*px,port_chan_h*layer] ;
-    pt0_0 = [chan_w/2*px,(r_max-chan_w/2+pn_out_len)*px,chan_h/2*layer] ;
-    pt0_1 = [ends_ex_len*px,0,0] ;
-    
-    pt1_0 = [
-        (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len+chan_w/2)*px,
-        (r_max-chan_w/2+pn_out_len)*px,
-        chan_h/2*layer] ;
-    pt1_1 = [ends_ex_len*px,0,0] ;
     
     module obj() {
+        r_max = max(r1, r2, r3);
+    
+        //ex_len = 30*px;
+        
+        dimm  = [chan_w*px,chan_w*px,chan_h*layer] ;
+        dimmp = [port_chan_w*px,port_chan_w*px,port_chan_h*layer] ;
+        pt0_0 = [chan_w/2*px,(r_max-chan_w/2+pn_out_len)*px,chan_h/2*layer] ;
+        pt0_1 = [ends_ex_len*px,0,0] ;
+        
+        pt1_0 = [
+            (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len+chan_w/2)*px,
+            (r_max-chan_w/2+pn_out_len)*px,
+            chan_h/2*layer] ;
+        pt1_1 = [ends_ex_len*px,0,0] ;
         // check 1      
         //translate([0,(r_max-r1)*px,0])
         translate([(ends_ex_len+chan_w)*px, 0,0]){
