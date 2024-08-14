@@ -50,9 +50,9 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
         poly_pts = [for(i=[0:len(pts_c)-1])
             [shape, [chan_w*px, chan_w*px, chan_h*layer], pts_c[i], [0,[0,0,1]]] ];
         
-        rotate([0,0,(rot?-90:0)])
-        mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
-        mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+        mirror([(orientation=="FN"||orientation=="S"?1:0),0,0])
+        mirror([0,(orientation=="FS"||orientation=="S"?1:0), 0])
+        mirror([0,(rot?1:0),0]) rotate([0,0,(rot?-90:0)])
         translate([-L1*px/2, -L2*px*(turns)/2, 0])
             polychannel(poly_pts, clr=clr) ;
     }
@@ -93,4 +93,4 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine(0,0,0,"FN", 300, 50, 13, chan_layers=2, floor_area=true, alt=0, rot=1, report_len=true);
+p_serpentine(0,0,0,"S", 300, 50, 13, chan_layers=2, floor_area=true, alt=0, rot=1, report_len=true);

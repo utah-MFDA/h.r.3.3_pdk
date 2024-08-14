@@ -11,7 +11,7 @@ MACRO p_serpentine_1(L1.d, L2.d, turns.d)
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT #L2*turns+29.5# #29.5+L1# #L2*turns+30.5# #30.5+L1# ;
+        RECT 29.5 29.5 30.5 30.5 ;
     END
   END in_fluid
   PIN out_fluid
@@ -19,14 +19,14 @@ MACRO p_serpentine_1(L1.d, L2.d, turns.d)
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT #L2*turns+29.5# #29.5+L1# #L2*turns+30.5# #30.5+L1#  ;
+        RECT 29.5 29.5 30.5 30.5 ;
     END
   END out_fluid
   OBS
     LAYER met2 ;
       RECT 30 30 #L2*turns+30# #L1+30# ;
     LAYER met3 ;
-      RECT 30 30 #L2*turns+30# #L1+30# ;
+      RECT 0 0 #L2*turns+30# #L1+30# ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END p_serpentine_1
