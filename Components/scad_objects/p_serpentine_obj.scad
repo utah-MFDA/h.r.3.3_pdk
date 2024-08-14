@@ -1,4 +1,6 @@
 
+// identical to p_serpentine
+//  this one should be removed
 
 use <../scad_use/polychannel_v2.scad>
 
