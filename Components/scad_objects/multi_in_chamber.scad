@@ -54,7 +54,3 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
 
 //multi_in_chamber(0,0,0,"N",3,50,10,20);
 multi_in_chamber(0,0,0,"FS",5,50,10,40, has_nozzle=true, nozzle_l=10,rot=true, floor_area=false);
-color("blue")
-lef_size(150,270) ; // SIZE 150 x {-30 + #*60}
-lef_layer("met1")
-lef_obs("RECT", [30, 30, 120, 180]) ; // RECT 30 30 110 {(#-1)*60}

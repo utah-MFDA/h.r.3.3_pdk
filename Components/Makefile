@@ -19,7 +19,13 @@ KIT_NAME = h.r.3.3
 #GENERAL_SRC_DIR = valves serpentine mixers
 #
 #=======
-GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine $(ROOT_DIR)/mixers $(ROOT_DIR)/directional_reserviors $(ROOT_DIR)/bidirectional_reserviors $(ROOT_DIR)/inline_reserviors $(ROOT_DIR)/valves
+GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
+									$(ROOT_DIR)/mixers \
+									$(ROOT_DIR)/directional_reserviors \
+									$(ROOT_DIR)/bidirectional_reserviors \
+									$(ROOT_DIR)/inline_reserviors \
+									$(ROOT_DIR)/valves \
+									$(ROOT_DIR)/pumps
 #valves
 #>>>>>>> master
 ## Verilog A targets

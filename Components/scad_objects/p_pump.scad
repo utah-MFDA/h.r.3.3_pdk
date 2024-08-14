@@ -13,16 +13,7 @@ module p_pump(xpos, ypos, zpos, orientation,
     dwn_chan_h=0, dwn_chan_w=0,
     port_chan_h=0, port_chan_w=0,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
-    rot=false, no_obj=false, floor_area=false)
-{
-    //r1 = 46; r2 = 76; r3 = 46;
-    //th1 = 10; th2 = 10; th3 = 10;
-    //len_sp = 30;
-    
-    
-    
-    
-    
+    rot=false, no_obj=false, floor_area=false){
     
     module obj() {
         r_max = max(r1, r2, r3);
@@ -131,5 +122,4 @@ p_pump (0, 0, 0, "N",
     //px=px, layer=layer, 
     lpv=20, chan_h=10, chan_w=14, shape="cube", 
     //pitch=pitch, 
-    rot=false, no_obj=false, floor_area=false) ;
-    
+    rot=false, no_obj=false, floor_area=false) ;    

@@ -19,7 +19,7 @@ p_reservoir(xpos, ypos, zpos, orientation,
     
     module lef()
     {
-        lef_size(160, 160) ;
+        lef_size(210, 150) ;
         lef_layer("met1")
         lef_obs("RECT", [30, 30, 180, 120]) ;
         lef_layer("met2")
