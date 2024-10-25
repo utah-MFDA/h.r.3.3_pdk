@@ -32,7 +32,7 @@ GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
 
 VERILOGA_BUILD_DIR = $(ROOT_DIR)/verilogA_build
 
-VA_SRC_DIR = $(GENERAL_SRC_DIR) $(ROOT_DIR)/veriloga_objects
+VA_SRC_DIR = $(GENERAL_SRC_DIR) $(ROOT_DIR)/veriloga_objects $(ROOT_DIR)/p_serpentine
 VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 
@@ -120,6 +120,8 @@ build_lef: $(SC_LEF)
 # |____/ \____/_/   \_\____/
 #
 ################################################################
+SCAD_COMPONENT_HEADER = $(ROOT_DIR)/scad_header.scad
+CLEAN_SCAD_SCRIPT = $(ROOT_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
 
 $(SCAD_BUILD_DIR):
 	mkdir -p $@
@@ -127,7 +129,7 @@ $(SCAD_BUILD_DIR):
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
 export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | python3 cleanScadFile.py --stream >> $@
+	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream >> $@
 # cat scad_header.scad > $@	
 # $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 # cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@

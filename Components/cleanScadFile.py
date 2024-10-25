@@ -28,9 +28,11 @@ def remove_blacklist_phrase(platform):
             os.rename(merge_clean, merge_file)
 
 
-def find_modules(inFile_str, overwrite_f=False, stream=False, to_stdout=False):
+def find_modules(inFile_str, scad_header_file, overwrite_f=False,
+                 stream=False, to_stdout=False,):
 
-    scad_header_f = open("scad_header.scad", "r")
+    #scad_header_f = open("scad_header.scad", "r")
+    scad_header_f = open(scad_header_file, "r")
 
     if stream or to_stdout:
         sys.stdout.write("".join([line for line in scad_header_f]))
@@ -98,8 +100,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--stream", action=argparse.BooleanOptionalAction, default=False
     )
+    parser.add_argument('--scad_header', type=str, required=True)
 
     args = parser.parse_args()
 
     # remove_blacklist_phrase(args.platform)
-    find_modules(args.merge_file, stream=args.stream, to_stdout=args.stdout)
+    find_modules(args.merge_file, args.scad_header, stream=args.stream, to_stdout=args.stdout)

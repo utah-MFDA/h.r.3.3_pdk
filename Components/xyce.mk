@@ -52,7 +52,7 @@ N_DEV_ADMS%.C N_DEV_ADMS%.h: %.va
 		-fPIC -DPIC \
 		-o $@
 
-${PLUGIN_NAME}.la ${PLUGIN_NAME}.so &: $(VA_COPIES) $(VAMS_COPIES) ${PLUGIN_NAME}_bootstrap.lo $(OBJFILES)
+${PLUGIN_NAME}.la ${PLUGIN_NAME}.so &: $(notdir $(VA_COPIES)) $(notdir $(VAMS_COPIES)) ${PLUGIN_NAME}_bootstrap.lo $(OBJFILES)
 	${LIBTOOL} --tag=CXX --mode=link ${CXX} \
 		-module -shared \
 		-avoid-version ${CXXFLAGS} \
