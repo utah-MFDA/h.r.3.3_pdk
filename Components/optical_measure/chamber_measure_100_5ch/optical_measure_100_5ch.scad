@@ -5,6 +5,7 @@ use <./../../scad_objects/optical_view.scad>
 module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, pitch=30, lpv=20, fn=30, offset_layer=0, ren_lef=false)
 {
+    translate([0,0,15*layer])
     optical_view(xpos, ypos, zpos, orientation,
     r_ch=20, i_depth=10, d_depth=5, d_ch_distance=10, num_of_ch=5, init_path_len=27,
     px=px, layer=layer, lpv=lpv, pitch=pitch, fn=30, offset_layer=offset_layer,

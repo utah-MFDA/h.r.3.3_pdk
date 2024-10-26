@@ -3,7 +3,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module p_serpentine_1(fl_in, fl_out, c_in, c_out);
+module p_serpentine_3(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
@@ -70,7 +70,7 @@ analog begin
 
       W = pixel_size * ch_width_pixels;
       H = layer_height*ch_height_layers;
-      L = ((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*2 + layer_height*lpv;
+      L = ((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*4 + layer_height*lpv*3;
 
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
