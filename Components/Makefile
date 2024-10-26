@@ -123,6 +123,8 @@ build_lef: $(SC_LEF)
 # |____/ \____/_/   \_\____/
 #
 ################################################################
+SCAD_COMPONENT_HEADER = $(ROOT_DIR)/scad_header.scad
+CLEAN_SCAD_SCRIPT = $(ROOT_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
 
 $(SCAD_BUILD_DIR):
 	mkdir -p $@
@@ -130,9 +132,8 @@ $(SCAD_BUILD_DIR):
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
 export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | python3 cleanScadFile.py --stream | sed 's/\r//g' > $@
-# cat scad_header.scad > $@	
-# $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
+	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream >> $@
+# sed 's/\r//g' > $@
 # cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
 
 SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
