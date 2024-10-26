@@ -1,5 +1,5 @@
 
-use <./../../scad_objects/reservoir.scad>
+use <./../../../scad_include/scad_objects/reservoir.scad>
 
 module bidirectional_res_1000ul(xpos, ypos, zpos, orientation)
 {

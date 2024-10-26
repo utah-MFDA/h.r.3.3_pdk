@@ -1,6 +1,5 @@
-
-use <./../../scad_objects/reservoir.scad>
-use <./../../scad_use/lef_helper.scad>
+use <./../../../scad_include/scad_objects/reservoir.scad>
+use <./../../../scad_include/lef_helper.scad>
 
 module bidirectional_res_400ul(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
 {
@@ -27,8 +26,6 @@ p_reservoir(xpos, ypos, zpos, orientation,
         lef_layer("met4")
         lef_obs("RECT", [30, 30, 115, 115]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met6")
         lef_obs("RECT", [30, 30, 115, 115]) ;
         
         lef_layer("met1")

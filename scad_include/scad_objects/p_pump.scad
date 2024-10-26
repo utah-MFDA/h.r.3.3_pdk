@@ -1,5 +1,4 @@
-
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 use <p_pvalve.scad>
 
 module p_pump(xpos, ypos, zpos, orientation,

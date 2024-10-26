@@ -1,6 +1,6 @@
 
-use <./../../scad_use/lef_helper.scad>
-use <./../../scad_objects/optical_view.scad>
+use <../../../scad_include/lef_helper.scad>
+use <../../../scad_include/scad_objects/optical_view.scad>
 
 module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, pitch=30, lpv=20, fn=30, offset_layer=0, ren_lef=false)

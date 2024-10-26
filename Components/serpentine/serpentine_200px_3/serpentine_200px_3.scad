@@ -1,4 +1,4 @@
-use <routing.scad>
+use <../../../scad_include/routing.scad>
 
 px = 7.6e-3;
 layer = 10e-3;

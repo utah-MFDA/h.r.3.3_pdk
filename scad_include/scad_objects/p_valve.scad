@@ -1,5 +1,5 @@
 
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 
 module p_valve(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false,
