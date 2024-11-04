@@ -1,5 +1,4 @@
-
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 
 module in_line_membrane(xpos, ypos, zpos, orientation,
     mem_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false, 

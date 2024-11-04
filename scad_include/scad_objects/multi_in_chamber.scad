@@ -1,6 +1,5 @@
-
-use <../scad_use/polychannel_v2.scad>
-use <../scad_use/lef_helper.scad>
+use <../polychannel_v2.scad>
+use <../lef_helper.scad>
 
 module multi_in_chamber(xpos, ypos, zpos, orientation,
     num_inputs, input_sp, chm_h, chm_l,

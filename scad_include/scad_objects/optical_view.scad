@@ -63,7 +63,8 @@ module optical_view(xpos, ypos, zpos, orientation,
                 [shape, i_dimm, [i_path_len/2, 0, 0], nr]]) ;
         }
     }
-    
+   
+    translate([xpos*px, ypos*px, 0])
     translate([pitch*px, pitch*px, offset_layer*layer])
     translate([0,(30)*px-r_chpx,lpv*3*layer])
     mirror([0,0,(flip_z?1:0)])

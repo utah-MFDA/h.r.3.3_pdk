@@ -1,5 +1,5 @@
-use <routing.scad>
-use <./../../scad_use/lef_helper.scad>
+use <../../../scad_include/routing.scad>
+use <../../../scad_include/lef_helper.scad>
 
 px = 7.6e-3;
 layer = 10e-3;

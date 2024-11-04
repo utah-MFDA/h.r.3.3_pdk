@@ -1,5 +1,5 @@
 
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 
 module p_tall_mixer(xpos, ypos, zpos, orientation,
     mix_l, mix_w, mix_h,
