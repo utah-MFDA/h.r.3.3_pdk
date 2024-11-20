@@ -136,7 +136,7 @@ $(SCAD_BUILD_DIR):
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
 export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream >> $@
+	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream > $@
 # sed 's/\r//g' > $@
 # cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
 

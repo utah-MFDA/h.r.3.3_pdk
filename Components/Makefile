@@ -1,5 +1,6 @@
 ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
+PY_SCRIPTS_DIR = $(realpath $(ROOT_DIR)/../py_scripts)
 # Shell Setup for make
 SHELL		= /bin/bash
 .SHELLFLAGS 	= -o pipefail -c
@@ -25,7 +26,8 @@ GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
 									$(ROOT_DIR)/bidirectional_reserviors \
 									$(ROOT_DIR)/inline_reserviors \
 									$(ROOT_DIR)/valves \
-									$(ROOT_DIR)/pumps
+									$(ROOT_DIR)/pumps \
+									$(ROOT_DIR)/optical_measure
 
 PCELL_SRC = $(ROOT_DIR)/p_serpentine
 #valves
@@ -122,8 +124,8 @@ build_lef: $(SC_LEF)
 # |____/ \____/_/   \_\____/
 #
 ################################################################
-SCAD_COMPONENT_HEADER = $(ROOT_DIR)/scad_header.scad
-CLEAN_SCAD_SCRIPT = $(ROOT_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
+SCAD_COMPONENT_HEADER = $(PY_SCRIPTS_DIR)/scad_header.scad
+CLEAN_SCAD_SCRIPT = $(PY_SCRIPTS_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
 
 $(SCAD_BUILD_DIR):
 	mkdir -p $@
