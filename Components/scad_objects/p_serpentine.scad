@@ -87,4 +87,4 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine(0,0,0,"FN", 300, 50, 14, floor_area=true, alt=0, rot=0);
+p_serpentine(0,0,0,"FN", 300, 50, 14, floor_area=false, alt=0, rot=0);
