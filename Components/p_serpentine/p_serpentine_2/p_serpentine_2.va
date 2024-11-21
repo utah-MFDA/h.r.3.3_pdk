@@ -5,80 +5,84 @@
 
 module p_serpentine_2(fl_in, fl_out, c_in, c_out);
 
-inout fl_in, fl_out, c_in, c_out;
-concentration c_in, c_out;
-concentration cv1, cv2;
-branch (c_in, c_out) chem;
-
-
+inout fl_in, fl_out;
 fluidDynamics fl_in, fl_out;
-branch (fl_in, fl_out) fflow;
+branch (fl_in, fl_out) fl_br ;
 
-(*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=2 ;
-// dynamic viscosity @ 20 C
-(*desc="cross-section", type="instance"*) parameter real NU=0.0010005 ;
-(*desc="layer per via", type="instance"*) parameter real lpv=20 ;
+inout c_in, c_out;
+concentration c_in, c_out;
+//concentration c_v;
+concentration cv1, cv2;
+//branch (c_in, c_out) chem ;
+
+(*desc="cross-section", type="instance"*) parameter real length=5m;
+(*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1; 
+(*desc="cross-section", type="instance"*) parameter real NU=0.0010016;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+//(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
 
 (*desc="major length in px", type="instance"*) parameter real L1=200 ;
 (*desc="minor length in px", type="instance"*) parameter real L2=50 ;
 (*desc="length input multiplier", type="instance"*) parameter real Lm=1e-3 ;
 (*desc="number of serpentine turns", type="instance"*) parameter real turns=5 ;
 
-(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
-
 real pixel_size;
 real layer_height;
+real lpv;
+
 real W, H, L;
 real R;
-real ch_width_pixels, ch_height_layers;
+real ch_width_pixels;
+real ch_height_layers;
+
 real cqi, cqo ;
+//real cq ;
 
 ground gnd;
 
 analog begin
-   
+
    @(initial_instance) 
    begin : initial_instance
-
-      //
-      // -- print resolution definitions
-      //
-      pixel_size = 7.6u;
+      pixel_size = 7.6u; 
       layer_height = 10u;
-
-      //
-      // -- adjust resistance based on cross section  
-      //
+      lpv = 20 ;
+   
+   
       begin 
-      if (CROSS_SECTION == 1) begin // 45 x 50 um channels
-         ch_width_pixels = 6;
-         ch_height_layers= 5;
-      end
-      else if(CROSS_SECTION == 2) begin // 106 x 100 um channels
+      if (CROSS_SECTION == 1) begin
          ch_width_pixels = 14;
          ch_height_layers= 10;
       end
-      else if(CROSS_SECTION == 2) begin // 152 x 150 um channels
-         ch_width_pixels = 20;
-         ch_height_layers= 15;
+      else if(CROSS_SECTION == 2) begin
+         ch_width_pixels = 6;
+         ch_height_layers= 5;
       end
-      else if(CROSS_SECTION == 4) begin // 212 x 200 um channels
+      else if(CROSS_SECTION == 3) begin
          ch_width_pixels = 28;
          ch_height_layers= 20;
+      end
+      else if(CROSS_SECTION == 4) begin
+         ch_width_pixels = 42;
+         ch_height_layers= 30;
+      end
+      else if(CROSS_SECTION == 5) begin
+         ch_width_pixels = 70;
+         ch_height_layers= 50;
       end
       end
 
       W = pixel_size * ch_width_pixels;
       H = layer_height*ch_height_layers;
-      L = (((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*3 + layer_height*lpv*2)*Lm;
+      //L = length;
+      L = (((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*3 + layer_height*lpv*2);
 
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   end
 
-   end // end initial_model
+   Qfl(fl_br) <+ P(fl_br)/R;
 
-   Qfl(fflow) <+ P(fl_in, fl_out)/R;
-
-   // chemical concentration calcs
    C(cv1, cv2) <+ 0 ;
    cqi = ccap*C(c_in,  cv1) ;
    cqo = ccap*C(c_out, cv2);

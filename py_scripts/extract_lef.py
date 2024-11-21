@@ -35,12 +35,15 @@ class LEF_SCAD:
         self.size = [x, y]
 
 
-def parse_lef(in_scad_f):
+def parse_lef(in_scad_f, ignore_no_lef=False, silent_find=False):
 
     with open(in_scad_f, "r+") as f:
         data = mmap.mmap(f.fileno(), 0)
         mo_lef = regex.findall(lef_mod_reg, data, re.MULTILINE)
         if mo_lef == []:
+            if ignore_no_lef:
+                print(f"No lef module found in {in_scad_f}, not writing module")
+                return None
             raise Exception(f"No lef module in scad file {in_scad_f}")
         #print(mo_lef[0][1])
         mo = re.finditer(
@@ -51,6 +54,7 @@ def parse_lef(in_scad_f):
         #print(mo)
 
     lef_scad = LEF_SCAD(mo_lef[0][0].decode('utf-8'))
+
     def get_pts(pts):
         pts_l = []
         # print(part.group("pts"))
@@ -60,7 +64,8 @@ def parse_lef(in_scad_f):
 
     # print(mo)
     for part in mo:
-        print(part)
+        if not silent_find:
+            print(part[0].decode('utf-8'))
         lef_type = part.group("lef_type").decode('utf-8')
         if lef_type == "lef_obs":
 
@@ -128,8 +133,10 @@ END {lef_scad.module_name}
         )
 
 
-def extract_lef_from_scad(in_scad, out_f=None):
-    lef_scad = parse_lef(in_scad)
+def extract_lef_from_scad(in_scad, out_f=None, ignore_no_lef=False, silent=False):
+    lef_scad = parse_lef(in_scad, ignore_no_lef, silent)
+    if lef_scad is None:
+        return
     if out_f is None:
         if "/" in in_scad:
             base_path = os.path.dirname(in_scad) + '/'
@@ -147,7 +154,9 @@ if __name__ == "__main__":
 
     parser.add_argument("--scad", type=str, required=True)
     parser.add_argument("--of", type=str, default=None)
+    parser.add_argument("--ignore_no_lef_module", action='store_true', default=False)
+    parser.add_argument('-q', "--silent", action='store_true', default=False)
 
     args = parser.parse_args()
 
-    extract_lef_from_scad(args.scad, args.of)
+    extract_lef_from_scad(args.scad, args.of, args.ignore_no_lef_module, args.silent)

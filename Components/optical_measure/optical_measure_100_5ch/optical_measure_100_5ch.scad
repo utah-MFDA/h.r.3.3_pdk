@@ -35,11 +35,11 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         lef_layer("met2")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 330, 90]) ;
+        lef_obs("RECT", [40, 30, 320, 90]) ;
         lef_layer("met4")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 330, 90]) ;
+        lef_obs("RECT", [40, 30, 320, 90]) ;
         lef_layer("met6")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met7")
@@ -50,10 +50,10 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 330, 90]) ;
         
         lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         
         lef_layer("met4")
-        lef_port("out_fluid", "OUTPUT", "RECT", [329.5, 59.5, 330.5, 60.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [323, 53, 337, 67]) ;
     }
     if(ren_lef)
         lef() ;

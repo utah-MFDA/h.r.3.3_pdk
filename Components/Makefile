@@ -23,7 +23,6 @@ KIT_NAME = h.r.3.3
 GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
 									$(ROOT_DIR)/mixers \
 									$(ROOT_DIR)/directional_reserviors \
-									$(ROOT_DIR)/bidirectional_reserviors \
 									$(ROOT_DIR)/inline_reserviors \
 									$(ROOT_DIR)/valves \
 									$(ROOT_DIR)/pumps \
@@ -46,6 +45,14 @@ LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(PCELL_SRC) $(ROOT_DIR)/scad_objects/interfaces
 SCAD_BUILD_DIR = $(ROOT_DIR)/scad_build
 SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(ROOT_DIR)/scad_objects/*.scad)
+
+SCAD_2_LEF_SRC_DIR = $(ROOT_DIR)/directional_reserviors \
+									$(ROOT_DIR)/inline_reserviors \
+									$(ROOT_DIR)/valves \
+									$(ROOT_DIR)/pumps \
+									$(ROOT_DIR)/optical_measure
+
+SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(SCAD_2_LEF_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad))
 
 export MF_LIB = MFXyce
 
@@ -111,10 +118,17 @@ export TECH_LEF = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
 export LIB_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
 export GDS_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.gds
 
+SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
+SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
+$(SCAD_2_LEF_TRG): %.lef: %.scad
+	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
+
+
 clean_lef:
 	rm -f $(SC_LEF)
 
 build_lef: $(SC_LEF)
+scad_2_lef: $(SCAD_2_LEF_TRG) 
 
 ################################################################
 #  ____   ____    _    ____

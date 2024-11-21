@@ -11,7 +11,7 @@ MACRO p_serpentine_2(L1.d, L2.d, turns.d)
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 23 23 37 37 ;
     END
   END in_fluid
   PIN out_fluid
@@ -19,7 +19,7 @@ MACRO p_serpentine_2(L1.d, L2.d, turns.d)
     USE SIGNAL ;
     PORT
       LAYER met4 ;
-        RECT #turns*L2+29.5# #((turns+1)%2)*L1+29.5# #turns*L2+30.5# #((turns+1)%2)*L1+30.5# ;
+        RECT #turns*L2+23# #((turns+1)%2)*L1+23# #turns*L2+37# #((turns+1)%2)*L1+37# ;
     END
   END out_fluid
   OBS

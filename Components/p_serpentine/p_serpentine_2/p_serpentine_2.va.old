@@ -3,7 +3,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module p_serpentine_1(fl_in, fl_out, c_in, c_out);
+module p_serpentine_2(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
@@ -21,10 +21,10 @@ branch (fl_in, fl_out) fflow;
 
 (*desc="major length in px", type="instance"*) parameter real L1=200 ;
 (*desc="minor length in px", type="instance"*) parameter real L2=50 ;
-(*desc="number of serpentine turns", type="instance"*) parameter real turns=5 ;
 (*desc="length input multiplier", type="instance"*) parameter real Lm=1e-3 ;
+(*desc="number of serpentine turns", type="instance"*) parameter real turns=5 ;
 
-(*desc="capacitance concentration", type="instance"*) parameter real ccap=100n ;
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 
 real pixel_size;
 real layer_height;
@@ -70,7 +70,7 @@ analog begin
 
       W = pixel_size * ch_width_pixels;
       H = layer_height*ch_height_layers;
-      L = ((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*2 + layer_height*lpv;
+      L = (((turns+1)*pixel_size*L1 + (turns)*L2*pixel_size)*3 + layer_height*lpv*2)*Lm;
 
       R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 

@@ -3,7 +3,7 @@ MACRO pump_20px_0
   CLASS CORE ;
   ORIGIN  0 0 ;
   FOREIGN pump_20px_0 0 0 ;
-  SIZE 300 BY 150 ;
+  SIZE 300 BY 130 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN fluid_in
@@ -11,7 +11,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 62.5 30.5 63.5 ;
+        RECT 29.5 64.5 30.5 65.5 ;
     END
   END fluid_in
   PIN fluid_out
@@ -19,7 +19,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 269 62.5 270.5 63.5 ;
+        RECT 269.5 64.5 270.5 65.5 ;
     END
   END fluid_out
   PIN air_out_a
@@ -27,7 +27,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 77.5 99.5 78.5 100.5 ;
+        RECT 79.5 99.5 80.5 100.5 ;
     END
   END air_out_a
   PIN air_out_b
@@ -35,7 +35,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 147.5 99.5 148.5 100.5 ;
+        RECT 149.5 99.5 150.5 100.5 ;
     END
   END air_out_b
   PIN air_out_c
@@ -43,7 +43,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 217.5 99.5 218.5 100.5 ;
+        RECT 219.5 99.5 220.5 100.5 ;
     END
   END air_out_c
   PIN air_in_a
@@ -51,7 +51,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 77.5 29.5 78.5 30.5 ;
+        RECT 79.5 29.5 80.5 30.5 ;
     END
   END air_in_a
   PIN air_in_b
@@ -59,7 +59,7 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 147.5 29.5 148.5 30.5 ;
+        RECT 149.5 29.5 150.5 30.5 ;
     END
   END air_in_b
   PIN air_in_c
@@ -67,16 +67,16 @@ MACRO pump_20px_0
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 217.5 29.5 218.5 30.5 ;
+        RECT 219.5 29.5 220.5 30.5 ;
     END
   END air_in_c
   OBS
     LAYER met1 ;
-      RECT 30 30 280 110 ;
+      RECT 30 30 270 100 ;
     LAYER met2 ;
-      RECT 30 30 280 110 ;
+      RECT 30 30 270 100 ;
     LAYER met3 ;
-      RECT 30 30 280 110 ;
+      RECT 30 30 270 100 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END pump_20px_0

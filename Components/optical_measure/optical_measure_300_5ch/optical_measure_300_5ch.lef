@@ -11,7 +11,7 @@ MACRO optical_measure_300_5ch
     USE SIGNAL ;
     PORT
       LAYER met4 ;
-        RECT 29.5 74.5 30.5 75.5 ;
+        RECT 23 68 37 82 ;
     END
   END in_fluid
   PIN out_fluid
@@ -19,7 +19,7 @@ MACRO optical_measure_300_5ch
     USE SIGNAL ;
     PORT
       LAYER met4 ;
-        RECT 569.5 74.5 570.5 75.5 ;
+        RECT 563 68 577 82 ;
     END
   END out_fluid
   OBS
@@ -28,11 +28,11 @@ MACRO optical_measure_300_5ch
     LAYER met2 ;
       RECT 30 30 570 120 ;
     LAYER met3 ;
-      RECT 30 30 570 120 ;
+      RECT 40 30 560 120 ;
     LAYER met4 ;
       RECT 30 30 570 120 ;
     LAYER met5 ;
-      RECT 30 30 570 120 ;
+      RECT 40 30 560 120 ;
     LAYER met6 ;
       RECT 30 30 570 120 ;
     LAYER met7 ;

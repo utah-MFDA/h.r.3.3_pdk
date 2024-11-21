@@ -27,9 +27,9 @@ module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e
         lef_obs("RECT", [30, 30, 180, 120]) ;
         
         lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
     }
     if (ren_lef)
         lef() ;

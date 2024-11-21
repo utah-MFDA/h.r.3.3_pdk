@@ -26,9 +26,9 @@ module inline_res_60nl(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 150, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [149.5, 59.5, 150.5, 60.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [143, 53, 157, 67]) ;
         
     }
     if(ren_lef)
