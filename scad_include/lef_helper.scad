@@ -29,10 +29,11 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
         if(len(pts)==4){
             lef_rect(
             [
-            (pts[0]+pts[2])/2-get_config("via_w")/2,
-            (pts[1]+pts[3])/2-get_config("via_w")/2,
-            (pts[0]+pts[2])/2+get_config("via_w")/2,
-            (pts[1]+pts[3])/2+get_config("via_w")/2]*(px!=0?px:get_config("px")), 
+              (pts[0]+pts[2])/2-get_config("via_w")/2,
+              (pts[1]+pts[3])/2-get_config("via_w")/2,
+              (pts[0]+pts[2])/2+get_config("via_w")/2,
+              (pts[1]+pts[3])/2+get_config("via_w")/2
+            ] * (px!=0?px:get_config("px")), 
             (layer_h!=0?layer_h:get_config("layer"))*(get_config("lpv")-1)) ;
         }
         if(len(pts)==2)

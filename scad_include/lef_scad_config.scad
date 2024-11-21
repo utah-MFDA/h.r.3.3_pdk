@@ -17,5 +17,7 @@ platform_config = [
 ["lpv",   20],
 ["px",    7.6e-3],
 ["layer", 10e-3],
-["via_w", 14]] ;
+["pitch", 30],
+["via_w", 14],
+["bottom_layers", 20]] ;
 
