@@ -1,6 +1,6 @@
 
-use <../../scad_objects/p_pump.scad>
-use <./../../scad_use/lef_helper.scad>
+use <../../../scad_include/scad_objects/p_pump.scad>
+use <../../../scad_include/lef_helper.scad>
 
 module pump_40px_0(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)

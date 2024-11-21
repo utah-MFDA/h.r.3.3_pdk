@@ -1,4 +1,4 @@
-use <routing.scad>
+use <../../../scad_include/routing.scad>
 
 px = 7.6e-3;
 layer = 10e-3;
@@ -52,7 +52,7 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
         obj();
     }
     if (orientation == "FN"){
-        mirror()
+        mirror([1, 0, 0])
         translate([-2*30*px - xpos*px, 30*px + ypos*px, zpos*layer])
         obj([1, 0, 0]);
     }

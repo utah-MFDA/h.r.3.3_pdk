@@ -4,6 +4,14 @@ import sys
 import re
 import regex, mmap
 
+"""
+This script removes all definitions outside of the modules of a merged SCAD file. The purpose
+is to remove repeating px and layer definitions and any testing code for the module. Any
+global defintions needed for any module should be included to the scad_header.scad file in 
+this directory. Try to create modules that are self contained that don't rely on many global
+definitions.
+"""
+
 
 def remove_blacklist_phrase(platform):
 
@@ -28,30 +36,24 @@ def remove_blacklist_phrase(platform):
             os.rename(merge_clean, merge_file)
 
 
-def find_modules(inFile_str, overwrite_f=False, stream=False, to_stdout=False):
+def find_modules(inFile_str, scad_header_file, overwrite_f=False,
+                 stream=False, to_stdout=False,):
 
-    scad_header_f = open("scad_header.scad", "r")
+    #scad_header_f = open("scad_header.scad", "r")
+    scad_header_f = open(scad_header_file, "r")
 
     if stream or to_stdout:
         sys.stdout.write("".join([line for line in scad_header_f]))
     else:
         newFile = open(inFile_str + "_clean", "w+")
         newFile.write("".join([line for line in scad_header_f]))
-        # 0        1         2         3         4         5         6
-        # 123456789012345678901234567890123456789012345678901234567890
-        # module_re = bytes(
-        # r"^[ ]*module\s*\w*\s*\(([^\(\)]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}",
-        # r"^[ ]*module\s*\w*\s*\([^\(\)]*\)|\{(?:[^}{]+|(?R))*+\}",
-        # r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*\{(?:[^}{]+|(?R))*+\}|\{(?:[^}{]+|(?R))*+\})+",
-        # r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*|[ ]*\{(?:[^}{]+|(?R))*+\})+",
-        # r"(?:(^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*)|(\{(?:[^}{]+|(?R))*+\}))",
-        # "utf-8",
-    # )
+    """
+    This regex code grabs both the top module defintion or internal defintion inside the
+    module braces, however not at the same time. This code has issues ignoring comment braces
+    so, all comments are removed before being pass to this code.
+    """
     module_re = r"(?:^[ ]*module\s*\w*\s*\([^\(\)]*\)\s*|[ ]*\{(?:[^}{]+|(?R))*+\})+"
-    # module_re = bytes(r"(?:^[ ]*module\s+\w*\s*\((?:[^\(\)])*\)\s*\{(?:[^}{]+|(?R))+\}|\{(?:[^}{]+|(?R))+\})","utf-8")
-    # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?:[^}{]+|(?R))*+\}", 'utf-8')
-    # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)|\{(?>[^}{]+|\g<0>)*\}", 'utf-8')
-    # module_re = bytes(r"module\s*\w*\s*\(([a-zA-Z0-9_=,]*\s*)*\)\{(.*\s)*\}", 'utf-8')
+    # comment remove
     sub_com_re = r"[ ]*\/\/.*\n|^[ ]+\n"
     if stream:
         data = sys.stdin.read()
@@ -98,8 +100,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--stream", action=argparse.BooleanOptionalAction, default=False
     )
+    parser.add_argument('--scad_header', type=str, required=True)
 
     args = parser.parse_args()
 
     # remove_blacklist_phrase(args.platform)
-    find_modules(args.merge_file, stream=args.stream, to_stdout=args.stdout)
+    find_modules(args.merge_file, args.scad_header, stream=args.stream, to_stdout=args.stdout)

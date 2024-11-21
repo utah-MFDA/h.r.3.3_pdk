@@ -1,8 +1,10 @@
 
+// identical to p_serpentine
+//  this one should be removed
 
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 
-module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
+module p_serpentine_obj(xpos, ypos, zpos, orientation, L1, L2, turns,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
     no_obj=false, floor_area=false, chan_layers=2, clr="RosyBrown", layer_offset=20, alt=0, rot=0)
 {
@@ -79,7 +81,7 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     // not working
     if(floor_area == "transparent"){
         color("blue")
-        translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px,-layer/10])
+        translate([(pitch)*px, (pitch)*px,-layer/10])
             %cube([(L1+chan_w)*px, L2*px*(turns)+chan_w*px, layer/10]);
         color("red")
         translate([0, 0,-layer*2/10])
@@ -87,4 +89,4 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine(0,0,0,"FN", 300, 50, 14, floor_area=false, alt=0, rot=0);
+p_serpentine_obj(0,0,0,"FN", 300, 50, 14, floor_area=false, alt=0, rot=0);

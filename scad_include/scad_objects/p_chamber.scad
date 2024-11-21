@@ -1,5 +1,4 @@
-
-use <../scad_use/polychannel_v2.scad>
+use <../polychannel_v2.scad>
 
 module p_chamber(xpos, ypos, zpos, orientation,
     chm_r, chm_h, chm_len=0,

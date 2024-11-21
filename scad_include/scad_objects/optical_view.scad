@@ -1,10 +1,10 @@
 
-use <./../scad_use/polychannel_v2.scad>
-use <./../scad_use/lef_helper.scad>
+use <./../polychannel_v2.scad>
+use <./../lef_helper.scad>
 
 module optical_view(xpos, ypos, zpos, orientation,
     r_ch=20, i_depth=10, d_depth=6, d_ch_distance=10, num_of_ch=5, init_path_len=27,
-    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, fn=30, offset_layer=0,
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, fn=30, offset_layer=55,
    chan=[10, 10, 14], shape="cube", center_chambers=false, flip_z=false, ren_lef=false)
 {
     // chamber defs
@@ -63,7 +63,8 @@ module optical_view(xpos, ypos, zpos, orientation,
                 [shape, i_dimm, [i_path_len/2, 0, 0], nr]]) ;
         }
     }
-    
+   
+    translate([xpos*px, ypos*px, zpos*layer])
     translate([pitch*px, pitch*px, offset_layer*layer])
     translate([0,(30)*px-r_chpx,lpv*3*layer])
     mirror([0,0,(flip_z?1:0)])
