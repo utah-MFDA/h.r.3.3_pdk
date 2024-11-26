@@ -1,9 +1,6 @@
 ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-COMPONENT_DIR = $(ROOT_DIR)/Components
-SCAD_PDK_INCLUDE = $(ROOT_DIR)/scad_include
-PY_SCRIPTS_DIR = $(ROOT_DIR)/py_scripts
-
+PY_SCRIPTS_DIR = $(realpath $(ROOT_DIR)/../py_scripts)
 # Shell Setup for make
 SHELL		= /bin/bash
 .SHELLFLAGS 	= -o pipefail -c
@@ -23,32 +20,32 @@ KIT_NAME = h.r.3.3
 #GENERAL_SRC_DIR = valves serpentine mixers
 #
 #=======
-GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
-									$(COMPONENT_DIR)/mixers \
-									$(COMPONENT_DIR)/directional_reserviors \
-									$(COMPONENT_DIR)/bidirectional_reserviors \
-									$(COMPONENT_DIR)/inline_reserviors \
-									$(COMPONENT_DIR)/valves \
-									$(COMPONENT_DIR)/optical_measure \
-									$(COMPONENT_DIR)/pumps
+GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
+									$(ROOT_DIR)/mixers \
+									$(ROOT_DIR)/directional_reserviors \
+									$(ROOT_DIR)/bidirectional_reserviors \
+									$(ROOT_DIR)/inline_reserviors \
+									$(ROOT_DIR)/valves \
+									$(ROOT_DIR)/pumps \
+									$(ROOT_DIR)/optical_measure
 
-P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
+PCELL_SRC = $(ROOT_DIR)/p_serpentine
 #valves
 #>>>>>>> master
 ## Verilog A targets
 
-VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
+VERILOGA_BUILD_DIR = $(ROOT_DIR)/verilogA_build
 
-VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR ) $(COMPONENT_DIR)/veriloga_objects
+VA_SRC_DIR = $(GENERAL_SRC_DIR) $(PCELL_SRC) $(ROOT_DIR)/veriloga_objects 
 VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
-SCAD_BUILD_DIR = $(ROOT_DIR)/scad_lib
-SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
+SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(PCELL_SRC) $(ROOT_DIR)/scad_objects/interfaces
+SCAD_BUILD_DIR = $(ROOT_DIR)/scad_build
+SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(ROOT_DIR)/scad_objects/*.scad)
 
 export MF_LIB = MFXyce
 
@@ -83,7 +80,7 @@ export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 # $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES)
 # 	cd $(VERILOGA_BUILD_DIR) && $(BUILD_$(BUILD_COMMAND) -o $(MF_LIB) $(notdir $(VA_COPIES)) ./
 
-$(VERILOGA_BUILD_DIR)/Makefile: $(COMPONENT_DIR)/xyce.mk
+$(VERILOGA_BUILD_DIR)/Makefile: $(ROOT_DIR)/xyce.mk
 	cp $< $@
 
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
@@ -102,7 +99,7 @@ clean_va:
 # |_____|_____|_|
 #
 ################################################################
-export SC_LEF = $(COMPONENT_DIR)/$(KIT_NAME)_merged.lef
+export SC_LEF = $(ROOT_DIR)/$(KIT_NAME)_merged.lef
 $(SC_LEF): $(LEF_FILES)
 	echo "VERSION 5.7 ;" > $@
 	echo 'BUSBITCHARS "[]" ;' >> $@
@@ -110,9 +107,9 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
-export TECH_LEF = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
-export LIB_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
-export GDS_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
+export TECH_LEF = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
+export LIB_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
+export GDS_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.gds
 
 clean_lef:
 	rm -f $(SC_LEF)
@@ -134,20 +131,21 @@ $(SCAD_BUILD_DIR):
 	mkdir -p $@
 
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/distrib/1.0.0/routing_181220.scad
+export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream > $@
-# sed 's/\r//g' > $@
+# cat scad_header.scad > $@	
+# $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 # cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
 
 SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
-SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_lib/%, $(SCAD_USE_FILES))
+SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_build/%, $(SCAD_USE_FILES))
 $(SCAD_USE_BUILD): $(SCAD_USE_FILES)
-	cp $^ ./scad_lib
+	cp $^ ./scad_build
 
 cp_scad: $(SCAD_USE_BUILD) 
 
-build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD)
+build_scad: $(SCAD_COMPONENT_LIBRARY)
 
 clean_scad:
 	rm -f $(SCAD_COMPONENT_LIBRARY)
