@@ -3,8 +3,12 @@
 use <../polychannel_v2.scad>
 
 module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
-    no_obj=false, floor_area=false, report_len=false, chan_layers=2, clr="RosyBrown", layer_offset=20, alt=0, rot=0)
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, 
+    shape="cube", pitch=30, 
+    no_obj=false, floor_area=false, report_len=false, 
+    chan_layers=2, clr="RosyBrown", layer_offset=20, alt=0, rot=0,
+    ex_len_in=0, ex_len_out=0, ex_len_is="px"
+    )
 {
     module obj(orientation){
         i_len = [[[[[0,0,0], [L1*px,0,0]]]]];
@@ -46,16 +50,33 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
                     for(j=[0:len(pts[i])-1]) 
                         for(k=[0:len(pts[i][j])-1]) 
                             for(l=[0:len(pts[i][j][k])-1]) pts[i][j][k][l]];
-        
+        chan_dim = [chan_w*px, chan_w*px, chan_h*layer] ;
+                            
         poly_pts = [for(i=[0:len(pts_c)-1])
-            [shape, [chan_w*px, chan_w*px, chan_h*layer], pts_c[i], [0,[0,0,1]]] ];
+            [shape, chan_dim, pts_c[i], [0,[0,0,1]]] ];
         
-        mirror([(orientation=="FN"||orientation=="S"?1:0),0,0])
-        mirror([0,(orientation=="FS"||orientation=="S"?1:0), 0])
-        mirror([0,(rot?1:0),0]) rotate([0,0,(rot?-90:0)])
-        translate([-L1*px/2, -L2*px*(turns)/2, 0])
+        mirror([(orientation=="FN"||orientation=="S"?1:0),0,0]){
+        mirror([0,(orientation=="FS"||orientation=="S"?1:0), 0]){
+        mirror([0,(rot?1:0),0]) rotate([0,0,(rot?-90:0)]){
+        translate([-L1*px/2, -L2*px*(turns)/2, 0]){
             polychannel(poly_pts, clr=clr) ;
-    }
+            polychannel([
+                [shape, chan_dim, [0, 0, 0], [0, [0,0,1]]],
+                [shape, chan_dim, [0, (ex_len_is=="px"?-ex_len_in*px:-ex_len_in), 0], [0, [0,0,1]]]
+        ]) ;
+            polychannel(
+                (chan_layers%2?
+                    [
+                [shape, chan_dim, [L1*px, L2*turns*px, (chan_layers-1)*lpv*layer], [0, [0,0,1]]],
+                [shape, chan_dim, [0, (ex_len_is=="px"?ex_len_out*px:ex_len_out), 0], [0, [0,0,1]]]
+                    ] :
+                    [
+                [shape, chan_dim, [0, 0, (chan_layers-1)*lpv*layer], [0, [0,0,1]]],
+                [shape, chan_dim, [0, -1*(ex_len_is=="px"?ex_len_out*px:ex_len_out), 0], [0, [0,0,1]]]
+                    ])
+        ) ;
+        }}}}
+    } // end obj module
     
     x_off = L1/2*px+(pitch+chan_w/2)*px;
     y_off = L2*px*(turns)/2+(pitch)*px;
@@ -93,4 +114,5 @@ module p_serpentine(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine(0,0,0,"FN", 300, 50, 14, floor_area=false, alt=0, rot=0);
+p_serpentine(0,0,0,"FN", 300, 50, 14, chan_layers=3, floor_area=false, alt=0, rot=1,
+    ex_len_in=1, ex_len_out=1, ex_len_is="mm");
