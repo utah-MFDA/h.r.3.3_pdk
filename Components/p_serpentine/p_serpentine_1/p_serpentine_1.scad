@@ -15,24 +15,24 @@ module p_serpentine_1(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 
     if(orientation == "N"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
+      //translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
+      //mirror([1,0,0])
       obj() ;
     }
     else if(orientation == "S"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
+      //translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
+      //mirror([1,0,0])
+      //translate([0, (2*ypos+L1+pitch*2)*px, 0])
+      //mirror([0,1,0])
       obj() ;
     }
     else if(orientation == "FN") {
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
+      //translate([0, (2*ypos+L1+pitch*2)*px, 0])
+      //mirror([0,1,0])
       obj() ;
     }
     else
       obj() ;
 }
 
-p_serpentine_1(0,0,0,"FN", 300, 50, 12, floor_area=true, alt=0);
+p_serpentine_1(0,0,0,"N", 300, 50, 12, floor_area=true, alt=0);
