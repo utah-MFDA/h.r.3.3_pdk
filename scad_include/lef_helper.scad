@@ -78,6 +78,7 @@ function get_layer_index(x) = search([x], layers)[0] ;
 
 function get_config(prop) = platform_config[search([prop], platform_config)[0]][1] ;
 
+function get_io_layer(x1, x2) = io_loc_layer[x1][x2] ;
 
 
 lef_layer("met1")
