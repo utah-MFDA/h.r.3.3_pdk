@@ -5,14 +5,16 @@
 
 module p_serpentine_2(fl_in, fl_out, c_in, c_out);
 
+// port definitions
 inout fl_in, fl_out, c_in, c_out;
 concentration c_in, c_out;
 concentration cv1, cv2;
 branch (c_in, c_out) chem;
 
-
 fluidDynamics fl_in, fl_out;
 branch (fl_in, fl_out) fflow;
+
+// instansiations
 
 (*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=2 ;
 // dynamic viscosity @ 20 C
@@ -76,6 +78,8 @@ analog begin
 
    end // end initial_model
 
+   I(fl_in, fl_out) <+ V(fl_in, fl_out)/R ;
+   
    Qfl(fflow) <+ P(fl_in, fl_out)/R;
 
    // chemical concentration calcs
