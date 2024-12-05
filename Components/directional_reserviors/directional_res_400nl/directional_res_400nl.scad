@@ -9,7 +9,8 @@ module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e
     port_len = 25 ;
     translate([(port_len+7)*px,0,0])
     p_reservoir(xpos, ypos, zpos, orientation,
-        p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
+        p1_dir="x-", p2_dir="x+", port_len1=port_len,
+        p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
         size=[100, 100, res_h ], edge_rounding=0.2, 
         center=true, clr="gray",
         px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;

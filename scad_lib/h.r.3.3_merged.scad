@@ -286,45 +286,6 @@ module serpentine_200px_3(xpos, ypos, zpos, orientation){
     }
     
 }
-module serpentine_25px_0(xpos, ypos, zpos, orientation){
-    
-    module obj(){
-        translate([23*px, 23*px, 0])       
-        routing(
-            dimm = [
-                    [[0, 0], [0, 14*px], [0, 10*layer]],
-                    [[0, 14*px], [0, 0], [0, 10*layer]]
-                    ],
-            p0 = [0, 0, 0],
-            pf = [
-                    ["+yx", [30*px, 30*px+14*px], [1, 0]]
-                    ]
-        );
-        
-    }
-    
-    if (orientation == "N"){
-        translate([xpos*px, ypos*px, zpos*layer])
-        obj();
-    }
-        if (orientation == "FN"){
-        mirror([1, 0, 0])
-        translate([-3*30*px - xpos*px, ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "FS"){
-        mirror([0, 1, 0])
-        translate([xpos*px, -3*30*px - ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "S"){
-        mirror([0, 1, 0])
-        mirror([1, 0, 0])
-        translate([-3*30*px - xpos*px, -3*30*px - ypos*px, zpos*layer])
-        obj();
-    }
-    
-}
 module serpentine_300px_0(xpos, ypos, zpos, orientation){
     
     module obj(){
@@ -952,12 +913,12 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation){
         obj([1, 0, 0]);
     }
     if (orientation == "S"){
+        mirror([1, 0, 0])
         mirror([0, 1, 0])
         translate([30*px + xpos*px, -2*30*px - ypos*px, zpos*layer])
         obj();
     }
     if (orientation == "FS"){
-        mirror([1, 0, 0])
         mirror([0, 1, 0])
         translate([-2*30*px - xpos*px, -2*30*px - ypos*px, zpos*layer])
         obj();
@@ -1079,9 +1040,9 @@ module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e
         lef_obs("RECT", [30, 30, 180, 120]) ;
         
         lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
     }
     if (ren_lef)
         lef() ;
@@ -1089,14 +1050,18 @@ module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e
 module directional_res_600nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
 {
     
-    res_h = 104 ;
-    port_len = 25 ;
-translate([(port_len+7)*px,0,0])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+    module obj() {
+      res_h = 104 ;
+      port_len = 25 ;
+      translate([(port_len+7)*px,0,0])
+      p_reservoir(xpos, ypos, zpos, orientation,
+        p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2],
+        p2_offset=[13,-(res_h-10)/2], size=[100, 100, res_h ], edge_rounding=0.2, 
+        center=true, clr="gray",
+        px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+    }
+
+    obj() ;
     
     module lef()
     {
@@ -1115,9 +1080,9 @@ p_reservoir(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 180, 120]) ;
         
         lef_layer("met6")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
     }
     if (ren_lef)
         lef() ;
@@ -1155,133 +1120,9 @@ p_reservoir(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 180, 120]) ;
         
         lef_layer("met8")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
-    }
-    if (ren_lef)
-        lef() ;
-}
-module bidirectional_res_1000ul(xpos, ypos, zpos, orientation)
-{
-    
-    res_h = 176 ;
-
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="z-", p2_dir="z-", port_len1=0, p1_offset=[0,(100-14)/2], p2_offset=[0,-(100-14)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1) ;
-}
-module bidirectional_res_400ul(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
-{
-    
-    res_h = 70 ;
-
-port_len = 10 ;
-translate([0,0,(port_len)*layer])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="z-", p2_dir="z-", port_len1=port_len, p1_offset=[0,(100-14)/2], p2_offset=[0,-(100-14)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1) ;
-    
-    module lef()
-    {
-        lef_size(150, 150) ;
-        lef_layer("met1")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met2")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met3")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met4")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met5")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        
-        lef_layer("met1")
-        lef_port("in_fluid", "INPUT", "RECT", [72.5, 29.5, 73.5, 30.5]) ;
-        lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [72.5, 114.5, 73.5, 115.5]) ;
-    }
-    if (ren_lef)
-        lef() ;
-}
-module bidirectional_res_600ul(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
-{
-    
-    res_h = 104 ;
-port_len = 10 ;
-translate([0,0,(port_len)*layer])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="z-", p2_dir="z-", port_len1=port_len, p1_offset=[0,(100-14)/2], p2_offset=[0,-(100-14)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1) ;
-    
-    module lef()
-    {
-        lef_size(150, 150) ;
-        lef_layer("met1")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met2")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met3")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met4")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met5")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met6")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met7")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        
-        lef_layer("met1")
-        lef_port("in_fluid", "INPUT", "RECT", [72.5, 29.5, 73.5, 30.5]) ;
-        lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [72.5, 114.5, 73.5, 115.5]) ;
-    }
-    if (ren_lef)
-        lef() ;
-}
-module bidirectional_res_800ul(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
-{
-    
-    res_h = 140 ;
-port_len = 10 ;
-translate([0,0,(port_len)*layer])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="z-", p2_dir="z-", port_len1=port_len, p1_offset=[0,(100-14)/2], p2_offset=[0,-(100-14)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1) ;
-    
-    module lef()
-    {
-        lef_size(150, 150) ;
-        lef_layer("met1")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met2")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met3")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met4")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met5")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met6")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met7")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        lef_layer("met8")
-        lef_obs("RECT", [30, 30, 115, 115]) ;
-        
-        lef_layer("met1")
-        lef_port("in_fluid", "INPUT", "RECT", [72.5, 29.5, 73.5, 30.5]) ;
-        lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [72.5, 114.5, 73.5, 115.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
     }
     if (ren_lef)
         lef() ;
@@ -1311,9 +1152,9 @@ module inline_res_100nl(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 210, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [209.5, 59.5, 210.5, 60.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [203, 53, 217, 67]) ;
         
     }
     if(ren_lef)
@@ -1344,9 +1185,9 @@ module inline_res_40nl(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 180, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [173, 53, 187, 67]) ;
         
     }
     if(ren_lef)
@@ -1378,9 +1219,9 @@ module inline_res_60nl(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 150, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [149.5, 59.5, 150.5, 60.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [143, 53, 157, 67]) ;
         
     }
     if(ren_lef)
@@ -1412,9 +1253,9 @@ module inline_res_80nl(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 180, 90]) ;
         
         lef_layer("met1") 
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         lef_layer("met1") 
-        lef_port("out_fluid", "INPUT", "RECT", [179.5, 59.5, 180.5, 60.5]) ;
+        lef_port("out_fluid", "INPUT", "RECT", [173, 53, 187, 67]) ;
         
     }
     if(ren_lef)
@@ -1666,11 +1507,11 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         lef_layer("met2")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 330, 90]) ;
+        lef_obs("RECT", [40, 30, 320, 90]) ;
         lef_layer("met4")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 330, 90]) ;
+        lef_obs("RECT", [40, 30, 320, 90]) ;
         lef_layer("met6")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met7")
@@ -1681,10 +1522,10 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 330, 90]) ;
         
         lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 59.5, 30.5, 60.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
         
         lef_layer("met4")
-        lef_port("out_fluid", "OUTPUT", "RECT", [329.5, 59.5, 330.5, 60.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [323, 53, 337, 67]) ;
     }
     if(ren_lef)
         lef() ;
@@ -1722,11 +1563,11 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
         lef_layer("met2")
         lef_obs("RECT", [30, 30, 570, 120]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 570, 120]) ;
+        lef_obs("RECT", [40, 30, 560, 120]) ;
         lef_layer("met4")
         lef_obs("RECT", [30, 30, 570, 120]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 570, 120]) ;
+        lef_obs("RECT", [40, 30, 560, 120]) ;
         lef_layer("met6")
         lef_obs("RECT", [30, 30, 570, 120]) ;
         lef_layer("met7")
@@ -1737,10 +1578,10 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 570, 120]) ;
         
         lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [29.5, 74.5, 30.5, 75.5]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 68, 37, 82]) ;
         
         lef_layer("met4")
-        lef_port("out_fluid", "OUTPUT", "RECT", [569.5, 74.5, 570.5, 75.5]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [563, 68, 577, 82]) ;
     }
     if(ren_lef)
         lef() ;
@@ -1995,7 +1836,9 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
 }
 module p_serpentine_0(xpos, ypos, zpos, orientation, L1, L2, turns,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30,
-    no_obj=false, floor_area=false, chan_layers=1, rot=0, clr="RosyBrown")
+    no_obj=false, floor_area=false, chan_layers=1, rot=0, clr="RosyBrown",
+    show_lef=false
+    )
 {
   module obj()
   {
@@ -2004,24 +1847,28 @@ module p_serpentine_0(xpos, ypos, zpos, orientation, L1, L2, turns,
       px=px, layer=layer, lpv=lpv, chan_h=chan_h, chan_w=chan_w, pitch=pitch) ;
   }
     if(orientation == "N"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
+      mirror([0,0,0])
       obj() ;
     }
     else if(orientation == "S"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else if(orientation == "FN") {
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
+      mirror([0,0,0])
       obj() ;
     }
     else
       obj() ;
+    
+    module lef_() {
+        lef_layer("met1")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 23, 37, 37]) ;
+        lef_layer("met1")
+        lef_port("out_fluid", "INPUT", "RECT", [turns*L2+23, ((turns+1)%2)*L1+23, turns*L2+37, ((turns+1)%2)*L1+37]) ;
+    }
+    
+    if (show_lef)
+        lef_() ;
 }
 module p_serpentine_1(xpos, ypos, zpos, orientation, L1, L2, turns,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
@@ -2034,20 +1881,12 @@ module p_serpentine_1(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 
     if(orientation == "N"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
       obj() ;
     }
     else if(orientation == "S"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else if(orientation == "FN") {
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else
@@ -2064,20 +1903,12 @@ module p_serpentine_2(xpos, ypos, zpos, orientation, L1, L2, turns,
       px=px, layer=layer, lpv=lpv, chan_h=chan_h, chan_w=chan_w, pitch=pitch) ;
     }
     if(orientation == "N"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
       obj() ;
     }
     else if(orientation == "S"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else if(orientation == "FN") {
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else
@@ -2094,20 +1925,12 @@ module p_serpentine_3(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 
     if(orientation == "N"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
       obj() ;
     }
     else if(orientation == "S"){
-      translate([(2*xpos+L2*turns+pitch*2)*px, 0, 0])
-      mirror([1,0,0])
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else if(orientation == "FN") {
-      translate([0, (2*ypos+L1+pitch*2)*px, 0])
-      mirror([0,1,0])
       obj() ;
     }
     else
