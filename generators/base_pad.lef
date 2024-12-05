@@ -1,0 +1,26 @@
+VERSION 5.7 ;
+BUSBITCHARS "[]" ;
+DIVIDERCHAR "/" ;
+
+MACRO interconnect
+  CLASS COVER BUMP ;
+  SIZE 40 BY 40 ;
+  ORIGIN 0 0 ;
+  PIN pin
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met9 ;
+        RECT 0 0 40 40 ;
+    END
+  END pin
+  PIN pad
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      CLASS BUMP ;
+      LAYER met10 ;
+        RECT 0 0 40 40 ;
+    END
+  END pad
+END interconnect
