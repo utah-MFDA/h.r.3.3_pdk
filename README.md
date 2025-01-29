@@ -83,12 +83,18 @@ You can then look at the Component_Check.csv and StandardCellLibrary.csv for wha
 
 ## Instructions for additional components
 
+Adding new components will require at a minimum creating the approperate .scad and .lef file. Components without a .va file will not be able to be used with validation tools.
+
+To start a component can be add with an STL file exported from another CAD program, or from generating a .scad script. Geometry can be checked with OpenSCAD to validate the geometry. This library also contains tools for generating basic .lef file from OpenSCAD.
+
 ### LEF
+
+### OpenSCAD
+
+OpenSCAD is an opensource textual CAD modeling software. It is primarily used to generate the 3D rendering of the device and components to use in slicing for 
 
 ### VERILOG-AMS
 
 It is suggested that all behavioral definitions for each verilog-ams file follow the guidelines outlined in: \
 <a href="https://ieeexplore.ieee.org/document/7154394">C. C. McAndrew et al., "Best Practices for Compact Modeling in Verilog-A," in IEEE Journal of the Electron Devices Society, vol. 3, no. 5, pp. 383-396, Sept. 2015, doi: 10.1109/JEDS.2015.2455342.</a>
-
-### OpenSCAD
 

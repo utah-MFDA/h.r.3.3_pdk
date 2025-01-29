@@ -50,6 +50,14 @@ SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_obje
 SCAD_BUILD_DIR = $(ROOT_DIR)/scad_lib
 SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
 
+LEF_SCAD_EXTRACT = $(ROOT_DIR)/directional_reserviors \
+									$(ROOT_DIR)/inline_reserviors \
+									$(ROOT_DIR)/valves \
+									$(ROOT_DIR)/pumps \
+									$(ROOT_DIR)/optical_measure
+
+SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
+
 export MF_LIB = MFXyce
 
 .PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
@@ -113,6 +121,12 @@ $(SC_LEF): $(LEF_FILES)
 export TECH_LEF = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
 export LIB_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
 export GDS_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
+
+SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
+SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
+
+$(SCAD_2_LEF_TRG): %.lef: %.scad
+	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
 
 clean_lef:
 	rm -f $(SC_LEF)
