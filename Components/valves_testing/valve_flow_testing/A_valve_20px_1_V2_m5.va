@@ -1,0 +1,252 @@
+
+
+//`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module valve_fl_20px_1_V2_m5(fl_in, fl_out,  pn_in);
+//c_in, c_out,
+
+inout fl_in, fl_out;
+//inout c_in, c_out;
+inout pn_in;//, pn_out;
+
+electrical fl_in, fl_out;
+electrical fl_m;
+electrical pn_m;
+electrical pn_in;//, pn_out;
+
+(*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
+(*desc="length", type="instance"*)         parameter real L = 6e-3;
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION = 2;
+(*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
+//(*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
+
+(*desc="threshold_pressure", type="instance"*) parameter real threshold_pressure_kPa=103e3;
+(*desc="threshold_pressure", type="instance"*) parameter real transition_pressure_kPa=6.8e3;
+
+(*desc="pn viscosity", type="instance"*)   parameter real nu_pn=18.03e-6;
+(*desc="pn length", type="instance"*)         parameter real L_pn = 6e-3;
+(*desc="pn cross-section", type="instance"*)  parameter real CROSS_SECTION_PN = 2;
+
+real pixel_size; 
+real layer_height;
+
+real H_layer, W_px;
+real H_layer_pn, W_px_pn;
+real Hm, Wm;
+real Hn, Wn;
+real dia_m, mem_th_m;
+real R_valve, R_pn;
+
+real P_lin, P_lin_start;
+
+//branch (pn_m, pn_out) pn_ob;
+////
+// these variables are used for small deflections
+
+// typical dimension for a 3D printed valve
+(*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+// properties of PEGDA with 2% NPS
+(*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7e6; // MPa
+
+// estimating poisson's ratio using a typical value for epoxies
+//   which tend to be 0.3 - 0.35
+(*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+// membrane radius
+(*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+////
+// these are used for large deflections 
+// these variables derive from the Karman's large circular plate deflections
+  
+(*desc="fluid chamber height", type="instance"*) parameter real fl_ch_h = 20u; // meters
+(*desc="pneumatic chamber height", type="instance"*) parameter real pn_ch_h = 100u; // meters
+
+
+real p_c;
+
+real D;
+real R;
+real w0_v;
+real cap;
+real vol_rd;
+real vol_int;
+ 
+real c1;
+real c2;
+real c_dp2;
+
+real dp2_0;
+real d2v_dp2;
+  
+real r_diff;
+real R_dp20;
+real p_c_dp20;
+real lin_cap;
+
+real c_11, c_21;
+real c_rdp2_1, c_rdp2_2;
+
+branch (fl_m, pn_m) q_cap ;
+
+branch (fl_in, fl_m) fl_ib;
+branch (fl_m, fl_out) fl_ob;
+branch (pn_in, pn_m) pn_ib;
+
+analog begin
+
+    pixel_size = 7.6u;
+    layer_height = 10u;
+
+    begin
+    if (CROSS_SECTION == 1) begin
+        // standard 1 
+        H_layer = 5;
+        W_px = 6;
+    end
+    else if (CROSS_SECTION == 2) begin
+        // standard 2
+        H_layer = 8;
+        W_px = 14; 
+    end
+    end
+
+    begin
+    if (CROSS_SECTION_PN == 1) begin
+        // standard 1 
+        H_layer_pn = 5;
+        W_px_pn    = 6;
+    end
+    else if (CROSS_SECTION_PN == 2) begin
+        // standard 2
+        H_layer_pn = 8;
+        W_px_pn    = 14; 
+    end
+    end
+
+    // Valve standard size 20px
+    dia_m = pixel_size*valve_diameter_px; 
+    mem_th_m = pixel_size*mem_th;
+
+
+    // converts the channel size to meters
+    Hm = H_layer*layer_height; 
+    Wm = W_px*pixel_size;
+
+    R_valve = (12*nu*L)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+
+    Hn = H_layer_pn*layer_height; 
+    Wn = W_px_pn*pixel_size;
+
+    R_pn    = (12*nu_pn*L_pn)/(1 - 0.63*(Hn/Wn)) * 1/(Hn*Hn*Hn/Wn);
+
+    // linear region of valve transition
+    P_lin = 0.5*transition_pressure_kPa ; 
+    P_lin_start = threshold_pressure_kPa - P_lin;     
+
+    // Capacitance calcs
+
+    D = mem_Emod*pow(mem_th, 3)/(12*(1-mem_v*mem_v)) ;
+    
+
+    // deflection at center
+    w0_v = fl_ch_h*64*D/(pow(mem_r,4)) ;
+
+    //linear capacitance 
+    cap = 3.141*pow(mem_r, 6)/(16*mem_Emod*pow(mem_th,3)) * (1 - mem_v*mem_v) ;
+
+    c_11 = fl_ch_h*64*D;
+    c_21 = fl_ch_h*D;
+
+    c1 =  3.141*fl_ch_h*mem_r/2 * pow(c_11, 0.25);
+    c2 = -3.141*(1-pow(mem_v,2))/(mem_Emod*pow(mem_th, 3)) * 16*pow(c_21, 1.5) - \
+      3.141*fl_ch_h/2 * pow(c_11, 0.5);
+
+    //d2v_dp2 = 
+    R = pow(c_11, 0.25) * pow(abs(V(q_cap)), -0.25);
+
+    c_dp2   = c2*(-3/2)/(c1*(-5/4));
+    dp2_0   = pow(c_dp2, 4);
+
+
+    // Contribution statements
+    //
+    V(pn_ib) <+ 0;
+    //I(pn_ob) <+ 0;
+
+    V(fl_ob) <+ 0;
+
+    // switch ----------------
+    // Pressure above theshold
+    //if (V(q_cap) > threshold_pressure_kPa) begin
+    //    I(fl_ib) <+ 0;
+    //    I(fl_ob) <+ 0;
+    //    //V(c_out) <+ V(c_in);
+    //end else if (threshold_pressure_kPa - V(q_cap) <= P_lin) begin
+    //    I(fl_ib) <+ V(fl_ib)/R_valve - \
+    //        V(fl_ib)/R_valve * ((V(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start));
+    //   //V(c_out) <+ V(c_in);
+    //end else begin
+    //    I(fl_ib) <+ V(fl_ib)/R_valve;
+    //    //V(c_out) <+ V(c_in);
+    //end 
+    begin
+    if (V(q_cap) > (w0_v*1.2 )) begin
+        I(fl_ib) <+ 0;
+        //V(fl_ob) <+ 0;
+        //I(fl_ob) <+ 0;
+        //V(c_out) <+ V(c_in);
+    end 
+    else if (V(q_cap) >= w0_v) begin
+        I(fl_ib) <+ V(fl_ib)/R_valve - \
+            //V(fl_ib)/R_valve * ((V(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start));
+            V(fl_ib)/R_valve * (V(q_cap)-w0_v)/(w0_v*(0.2));
+    //    //V(c_out) <+ V(c_in);
+    end 
+    else begin
+        I(fl_ib) <+ V(fl_ib)/R_valve;
+        //V(fl_ob) <+ 0;
+        //V(c_out) <+ V(c_in);
+    end 
+    end
+
+    // Cap Contributions
+    //constant for delta
+    c_rdp2_1 = fl_ch_h*64*D/dp2_0;
+    R_dp20   = pow(c_rdp2_1, 0.25);
+
+    
+    r_diff = mem_r - R;
+    // delta of radii
+    c_rdp2_2 = mem_r-R_dp20;
+
+    begin
+    if (abs(V(q_cap)) < dp2_0) begin
+      //linear capacitance
+      p_c_dp20 = 3.141*(1-mem_v*mem_v)/(16*mem_Emod*pow(mem_th,3))*pow(R_dp20,6)*dp2_0 + \
+        3.141*fl_ch_h*pow(c_rdp2_2, 2); 
+      lin_cap = p_c_dp20/dp2_0;
+      
+      p_c = lin_cap*V(q_cap) ;
+    end
+    else if (V(q_cap)>0) begin
+      p_c = 3.141*(1-mem_v*mem_v)/(16*mem_Emod*pow(mem_th,3))*pow(R,6)*abs(V(q_cap)) +\
+        3.141*fl_ch_h*pow(r_diff, 2);
+    end
+    else if (V(q_cap)<0) begin
+      p_c = -3.141*(1-mem_v*mem_v)/(16*mem_Emod*pow(mem_th,3))*pow(R,6)*abs(V(q_cap)) -\
+        3.141*fl_ch_h*pow(r_diff, 2);
+
+    end
+    end
+    
+    I(q_cap) <+ ddt(p_c) ;
+ 
+    
+end // end analog
+
+endmodule
+

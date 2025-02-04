@@ -1,0 +1,156 @@
+
+//`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+
+//Capacitor
+//
+// based on log fit
+//
+
+module membrane_cap_20pxV_nlin_2(p, n);
+  electrical p, n;
+  //electrical n_gnd;
+  //electrical p_i;
+  //electrical n_cap;
+
+
+
+  inout p, n;
+
+  real cap;
+
+
+  ////
+  // these variables are used for small deflections
+
+  // typical dimension for a 3D printed valve
+  (*desc="membrane thickness", type="instance"*) parameter real mem_th = 20u;
+
+  // properties of PEGDA with 2% NPS
+  (*desc="Young's modulus", type="instance"*) parameter real mem_Emod = 7.7; // MPa
+
+  // estimating poisson's ratio using a typical value for epoxies
+  //   which tend to be 0.3 - 0.35
+  (*desc="Poisson's ratio", type="instance"*) parameter real mem_v = 0.3;
+
+  // membrane radius
+  (*desc="membrane radius", type="instance"*) parameter real mem_r = 100u; // meters
+
+  ////
+  // these are used for large deflections 
+  // these variables derive from the Karman's large circular plate deflections
+
+  // currently m and N are based on a 2.5 mm radius - 100 um thickness membrane
+  // 02-02-24
+
+  (*desc="Karman fitting variable m", type="instance"*) parameter real m_fit = 0.41795 ;
+
+  // this comes from the original equation where N = 10^n
+  (*desc="Karman fitting variable N", type="instance"*) parameter real N_fit = 1.6020 ;
+
+  //branch (n_cap, n) q_cap ;
+
+  branch (p, n) q_cap ;
+  //branch (p_i, n) q_cap ;
+  //branch (p_i, p) q_res ;
+  //branch (p, p_i) q_fl  ;
+  real p_c;
+  real q;
+  real D;
+  real mfit_1;
+  real r_rad; // deflection radius of membrane
+  real V_n;
+
+  (*desc="valve Resistance", type="instance"*) parameter real C_res = 0;
+  (*desc="viscosity", type="instance"*) parameter real nu = 0.0010016;
+
+  analog
+  begin
+    
+    // circuilar membrane
+    //D = 3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+    //$display(cap);
+    
+    // non-linear model
+    // radius of curvature
+    /*
+    begin
+    if (abs(V(q_cap)) > 100) begin
+      r_rad = (3*3.141*mem_Emod*mem_th)/abs(V(q_cap));
+    end
+    else begin
+      r_rad = (3*3.141*mem_Emod*mem_th)/100;
+    end
+    end
+    */
+    // this function is unstable
+    //cap = 3.141*pow(r_rad, 3)/(4*mem_Emod) * abs((8*r_rad*r_rad - mem_th*mem_th - 4*r_rad*sqrt(4*r_rad*r_rad - mem_th*mem_th)/(2*r_rad - sqrt(4*r_rad*r_rad-mem_th*mem_th)))) ; 
+    
+    //cap = 3.141*pow(r_rad, 3)/(4*mem_Emod) * (-mem_th*mem_th - mem_th)/-mem_th ;
+    
+    // based on charge
+    //p_c = 81/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)/pow(V(q_cap), 2) * (-mem_th*mem_th - mem_th)/-mem_th ;
+    /*
+    begin
+    if (abs(V(q_cap)) != 0) begin
+      //p_c = 27/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)/pow(V(q_cap), 2) * (-mem_th*mem_th - mem_th)/-mem_th ;
+      p_c = 27/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)*ln(V(q_cap)) * (-mem_th*mem_th - mem_th)/-mem_th ;
+    end
+    //else if (V(q_cap) != 0) begin
+    //  p_c = 27/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)/pow(100, 2) * (-mem_th*mem_th - mem_th)/-mem_th ;
+      //p_c = 27/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)/pow(100, 2) * (-mem_th*mem_th - mem_th)/-mem_th ;
+    //end
+    else begin
+      //p_c = 81/8 * pow(3.141,4)*pow(mem_Emod, 2)*pow(mem_th, 3)/pow(100, 2) * (-mem_th*mem_th - mem_th)/-mem_th ;
+      p_c = 0;
+      //p_c = V(q_cap);
+    end
+    end
+    */
+    //mfit_1 = m_fit -1 ;
+
+    begin
+    if (V(q_cap) != 0 ) begin
+      p_c = N_fit*pow(abs(V(q_cap)), m_fit) ;
+      //cap = m_fit*N_fit*pow(V(n), mfit_1) * 1e-3;
+    //  $display(cap) ;
+    //end
+    //else if (V(n) < 0 ) begin
+    //  p_c = m_fit*N_fit*pow(-V(n), m_fit) ;
+      //cap = m_fit*N_fit*pow(-V(n), mfit_1) * 1e-3;
+    //  $display(cap) ;
+    end
+    else begin
+      cap =  3.141 * pow(mem_r, 6) * (1 - mem_v*mem_v)/(3.141*mem_Emod*pow(mem_th,3 ));
+      p_c = cap*V(q_cap);
+    end
+    end
+
+
+    //if (C_res==0)
+    //  C_res = 8*nu*200e-6/(3.141*pow(100e-6,4));
+    //mfit_1 = m_fit -1 ;
+
+    
+    $display("v cap") ;
+    $display(V(q_cap));
+
+
+    $display("r: c:") ;
+    //$display(r_rad) ;
+    $display(p_c) ;
+    //$display(V_n) ;
+    // 103e3 kpa is ~ 15 psi
+    
+    //p_c = cap*V(q_cap);
+
+    
+    I(q_cap) <+ ddt(p_c) ;
+    //I(q_res) <+ V(q_res)/C_res ;
+
+    //I(q_fl)  <+ ddt(p_c) ;
+ 
+ end
+endmodule

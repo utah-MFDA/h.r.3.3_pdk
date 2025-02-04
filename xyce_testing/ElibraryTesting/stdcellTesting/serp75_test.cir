@@ -1,8 +1,0 @@
-* serpentine 75 test
-
-VCC 1 0
-Yeserpentine_75px_0 serp1 1 0 0 0
-
-.tran 1m 10m
-.print tran I(vcc)
-.end
