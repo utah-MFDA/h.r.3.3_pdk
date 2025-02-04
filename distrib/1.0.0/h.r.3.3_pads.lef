@@ -6,19 +6,10 @@ MACRO interconnect
   CLASS COVER BUMP ;
   SIZE 40 BY 40 ;
   ORIGIN 0 0 ;
-  PIN pin
-    DIRECTION INOUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met9 ;
-        RECT 0 0 40 40 ;
-    END
-  END pin
   PIN pad
     DIRECTION INOUT ;
     USE SIGNAL ;
     PORT
-      CLASS BUMP ;
       LAYER met10 ;
         RECT 0 0 40 40 ;
     END
@@ -29,7 +20,7 @@ MACRO pinhole_325px_met1
   CLASS PAD ;
   ORIGIN 0 0 ;
   FOREIGN pinhole_325px_met1 ;
-  SIZE 140 BY 325 ;
+  SIZE 140 BY 330 ;
   SYMMETRY X Y R90 ;
   PIN connection
     DIRECTION INOUT ;
@@ -49,13 +40,13 @@ MACRO pinhole_325px_met1
   END pad
   OBS
     LAYER met1 ;
-      RECT 0 0 140 330 ;
+      RECT 0 0 140 325 ;
     LAYER met2 ;
-      RECT 0 0 140 330 ;
+      RECT 0 0 140 325 ;
     LAYER met3 ;
-      RECT 0 0 140 330 ;
+      RECT 0 0 140 325 ;
     LAYER met4 ;
-      RECT 0 0 140 330 ;
+      RECT 0 0 140 325 ;
   END
 END pinhole_325px_met1
 MACRO pinhole_325px_met2
@@ -93,6 +84,8 @@ MACRO pinhole_325px_met2
       RECT 0 0 140 330 ;
   END
 END pinhole_325px_met2
+
+# Reminder to myself this is the previously working one
 MACRO pinhole_325px_met3
   CLASS PAD ;
   ORIGIN 0 0 ;
@@ -104,7 +97,7 @@ MACRO pinhole_325px_met3
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 0 69 2 71 ;
+        RECT 320 69 325 71 ;
     END
   END connection
   PIN pad
@@ -112,7 +105,7 @@ MACRO pinhole_325px_met3
     USE SIGNAL ;
     PORT
       LAYER met10 ;
-        RECT 320 69 325 71 ;
+        RECT 0 69 2 71 ;
     END
   END pad
   OBS
@@ -173,39 +166,43 @@ MACRO pinhole_325px_met5
   CLASS PAD ;
   ORIGIN 0 0 ;
   FOREIGN pinhole_325px_met5 ;
-  SIZE 140 BY 330 ;
+  SIZE 330 BY 140 ;
   SYMMETRY X Y R90 ;
   PIN connection
     DIRECTION INOUT ;
     USE SIGNAL ;
     PORT
-      LAYER met5 ;
-        RECT 69 325 71 327 ;
+      LAYER met1 ;
+        RECT 310 60 330 80 ;
     END
   END connection
   PIN pad
     DIRECTION INOUT ;
     USE SIGNAL ;
     PORT
-      LAYER met10 ;
-        RECT 69 0 71 2 ;
+      LAYER met9 ;
+        RECT 0 60 20 80 ;
     END
   END pad
   OBS
+    LAYER met1 ;
+      RECT 20 0 310 140 ;
     LAYER met2 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met3 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met4 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met5 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met6 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met7 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
     LAYER met8 ;
-      RECT 0 0 140 330 ;
+      RECT 20 0 310 140 ;
+    LAYER met9 ;
+      RECT 20 0 310 140 ;
   END
 END pinhole_325px_met5
 MACRO pinhole_325px_met6
@@ -392,3 +389,5 @@ MACRO pinhole_325px_met10
       RECT 0 0 140 330 ;
   END
 END pinhole_325px_met10
+
+END LIBRARY
