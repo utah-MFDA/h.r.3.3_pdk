@@ -13,16 +13,12 @@ BUILD_COMMAND = buildxyceplugin -d
 # Default target when invoking without a specific target
 .DEFAULT_GOAL := all
 
+all: build_va build_lef build_scad
+
 DATE = $(date '+%Y-%m-%d')
 
 KIT_NAME = h.r.3.3
 
-#<<<<<<< HEAD
-#KIT_NAME = h.r.3.3
-#
-#GENERAL_SRC_DIR = valves serpentine mixers
-#
-#=======
 GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/mixers \
 									$(COMPONENT_DIR)/directional_reserviors \
@@ -33,8 +29,6 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/pumps
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
-#valves
-#>>>>>>> master
 ## Verilog A targets
 
 VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
@@ -159,7 +153,7 @@ SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_lib/%, $(SCAD_USE_FILES))
 $(SCAD_USE_BUILD): $(SCAD_USE_FILES)
 	cp $^ ./scad_lib
 
-cp_scad: $(SCAD_USE_BUILD) 
+cp_scad: $(SCAD_USE_BUILD)
 
 build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD)
 
@@ -214,4 +208,4 @@ clean_va_build:
 
 clean_xyce_build: clean_va_build
 
-make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
