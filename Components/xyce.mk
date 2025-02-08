@@ -20,8 +20,14 @@ LIBTOOL = libtool
 MODULES=$(patsubst %.va,%,$(notdir $(VA_COPIES)))
 MODULES_H=$(patsubst %.va, N_DEV_ADMS%.h,$(notdir $(VA_COPIES)))
 OBJFILES=$(patsubst %.h,%.lo,$(MODULES_H))
+MODULES_OSDI=$(patsubst %.va, %.osdi,$(notdir $(VA_COPIES)))
 
 all: ${PLUGIN_NAME}.so
+
+%.osdi: %.va
+	openvaf $<
+
+osdi: $(MODULES_OSDI)
 
 ${PLUGIN_NAME}_bootstrap.C: ${MODULES_H}
 	echo ${MODULES_H}
