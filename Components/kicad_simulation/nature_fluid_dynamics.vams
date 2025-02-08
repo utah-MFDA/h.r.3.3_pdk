@@ -30,13 +30,13 @@ nature Concentration_current
 endnature
 
 discipline fluidDynamics
-     domain continuous;
+     domain continous;
      potential Pressure;
      flow FluidFlow;
 enddiscipline
 
 discipline concentration
-    domain continuous;
+    domain continous;
     potential Concentration_mole;
     flow Concentration_current;
 enddiscipline

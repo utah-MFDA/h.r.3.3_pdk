@@ -3,12 +3,15 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module diffmix_concentration(c_i1, c_i2, c_out);
+module diffmix_concentration(fl_i1, fl_i2, fl_out, c_i1, c_i2, c_out, gnd);
 
-inout c_i1, c_i2, c_out;
+inout fl_i1, fl_i2, fl_out;
+inout c_i1, c_i2, c_out, gnd;
 concentration c_i1, c_i2, c_out, gnd;
+fluidDynamics fl_i1, fl_i2, fl_out;
+fluidDynamics int_1;
 
-(*desc="cross-section height", type="instance"*)  parameter real CROSS_SECTION=7.6u*10;
+(*desc="cross-section height", type="instance"*)  parameter real height=10u*4;
 (*desc="cross-section width", type="instance"*)  parameter real width=10u*14;
 (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
 

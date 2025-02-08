@@ -114,9 +114,9 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
-export TECH_LEF = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
-export LIB_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
-export GDS_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.gds
+export TECH_LEF = $(ROOT_DIR)/../distrib/0.0.1/h.r.3.3.tlef
+export LIB_FILES = $(ROOT_DIR)/../distrib/0.0.1/h.r.3.3.lib
+export GDS_FILES = $(ROOT_DIR)/../distrib/0.0.1/h.r.3.3.gds
 
 SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
 SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
@@ -167,6 +167,25 @@ clean_scad:
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
 
+
+################################################################
+#  _  ___  ____          _
+# | |/ (_)/ ___|__ _  __| |
+# | ' /| | |   / _` |/ _` |
+# | . \| | |__| (_| | (_| |
+# |_|\_\_|\____\__,_|\__,_|
+#
+################################################################
+kicad: $(ROOT_DIR)/h.r.3.3.pretty osdi
+
+$(ROOT_DIR)/h.r.3.3.pretty: $(ROOT_DIR)/$(KIT_NAME)_merged.lef $(TECH_LEF)
+	python3 $(PY_SCRIPTS_DIR)/lef_to_footprint.py --tlef $(TECH_LEF) --lef $< --output $(ROOT_DIR) --name h.r.3.3
+
+%.osdi: %.va
+	openvaf $<
+
+KICAD_SPICE_OSDI = $(patsubst %.va,%.osdi,$(wildcard kicad_simulation/*.va))
+osdi: ${KICAD_SPICE_OSDI}
 ################################################################
 #  ____                      _
 # |  _ \ ___ _ __ ___   ___ | |_ ___
