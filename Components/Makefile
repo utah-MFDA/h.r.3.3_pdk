@@ -16,6 +16,9 @@ BUILD_COMMAND = buildxyceplugin -d
 DATE = $(date '+%Y-%m-%d')
 
 KIT_NAME = h.r.3.3
+NUM_LAYERS=10
+CHANNEL_WIDTH=14
+DISTRIB_VERSION=0.0.2
 
 GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
 									$(ROOT_DIR)/mixers \
@@ -120,7 +123,7 @@ $(SCAD_2_LEF_TRG): %.lef: %.scad
 	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
 
 $(TECH_LEF):
-	python3 $(PY_SCRIPTS_DIR)/generate_tlef.py 10 14 > $@
+	python3 $(PY_SCRIPTS_DIR)/generate_tlef.py ${NUM_LAYERS} ${CHANNEL_WIDTH} > $@
 
 clean_lef:
 	rm -f $(SC_LEF)
@@ -144,15 +147,14 @@ $(SCAD_BUILD_DIR):
 	mkdir -p $@
 
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream > $@
 # cat scad_header.scad > $@
 # $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 # cut -b 1- $^ | sed '/^(use|px|layer|lpv)/d' >> $@
 
-SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
-SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_build/%, $(SCAD_USE_FILES))
+SCAD_USE_FILES = $(addprefix $(ROOT_DIR)/../scad_include/, routing.scad polychannel_v2.scad lef_helper.scad)
+SCAD_USE_BUILD = $(patsubst $(ROOT_DIR)/../scad_include/%, $(ROOT_DIR)/scad_build/%, $(SCAD_USE_FILES))
 $(SCAD_USE_BUILD): $(SCAD_USE_FILES)
 	cp $^ ./scad_build
 
@@ -177,13 +179,14 @@ check_library:
 ################################################################
 kicad: $(ROOT_DIR)/h.r.3.3.pretty osdi
 
-$(ROOT_DIR)/h.r.3.3.pretty: $(ROOT_DIR)/$(KIT_NAME)_merged.lef $(TECH_LEF)
+$(ROOT_DIR)/h.r.3.3.pretty: $(SC_LEF) $(TECH_LEF)
 	python3 $(PY_SCRIPTS_DIR)/lef_to_footprint.py --tlef $(TECH_LEF) --lef $< --output $(ROOT_DIR) --name h.r.3.3
 
 %.osdi: %.va
 	openvaf $<
 
 KICAD_SPICE_OSDI = $(patsubst %.va,%.osdi,$(wildcard kicad_simulation/*.va))
+KICAD_SPICE_LIB = $(patsubst %.va,%.lib,$(wildcard kicad_simulation/*.va))
 osdi: ${KICAD_SPICE_OSDI}
 ################################################################
 #  ____                      _
@@ -231,3 +234,23 @@ clean_va_build:
 clean_xyce_build: clean_va_build
 
 make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
+
+################################################################
+#  ____  _     _        _ _
+# |  _ \(_)___| |_ _ __(_) |__
+# | | | | / __| __| '__| | '_ \
+# | |_| | \__ \ |_| |  | | |_) |
+# |____/|_|___/\__|_|  |_|_.__/
+#
+################################################################
+DISTRIB_TARGETS = $(TECH_LEF) $(SC_LEF)\
+	$(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) \
+	$(ROOT_DIR)/h.r.3.3.pretty \
+	$(ROOT_DIR)/kicad_symbols/mfda.kicad_sym $(ROOT_DIR)/kicad_symbols/mfda_spice.kicad_sym \
+	kicad_simulation
+
+$(ROOT_DIR)/../distrib/$(DISTRIB_VERSION): $(DISTRIB_TARGETS)
+	mkdir -p $@
+	cp -r $^ $@
+
+distrib: $(ROOT_DIR)/../distrib/$(DISTRIB_VERSION)
