@@ -90,8 +90,8 @@ class LefToFootprint:
                     bounds = [geom.xMin(), geom.xMax(), -geom.yMin(), -geom.yMax()]
                     xmin, xmax, ymin, ymax = map(self.scale, bounds)
                     metal = geom.getTechLayer().getName()
-
-                    pad = Pad(position=Position(X=xmin,Y=ymin),
+                    # Position in kicad is center of pad
+                    pad = Pad(position=Position(X=(xmax+xmin)/2,Y=(ymax+ymin)/2),
                               number=mterm.getIndex(),
                               shape='rect',
                               size=Position(X=xmax-xmin,Y=abs(ymax-ymin)),
