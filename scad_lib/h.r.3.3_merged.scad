@@ -1004,16 +1004,97 @@ module mixer_test (xpos, ypos, zpos, orientation,
             obj();
         
 }
-module directional_res_1000nl(xpos, ypos, zpos, orientation)
+module directional_res_1000nl(xpos, ypos, zpos, orientation,
+  px=0.0076, layer=0.01
+)
 {
     
-    res_h = 176 ;
+    res_h = 140 ;
 
+    translate([37*px,0,0])
 p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="x-", p2_dir="x+", p1_offset=[0,(res_h-10)/2], p2_offset=[0,-(res_h-10)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
+    p1_dir="x-", p2_dir="x+",
+    p1_offset=[0,(res_h-10)/2], p2_offset=[0,-(res_h-10)/2], 
+    port_len1=30,
+    size=[124, 100, res_h ], edge_rounding=0.2, 
     center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1) ;
+    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1,
+    ren_lef=false
+    ) ;
+
+    module lef()
+    {
+        lef_size(245, 150) ;
+        lef_layer("met1")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met2")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met3")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met4")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met5")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met6")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met7")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        lef_layer("met8")
+        lef_obs("RECT", [30, 20, 215, 130]) ;
+        
+        lef_layer("met8")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 66, 37, 80]) ;
+        lef_layer("met1")
+        lef_port("out_fluid", "OUTPUT", "RECT", [208, 66, 222, 80]) ;
+    }
+    if (ren_lef)
+        lef() ;
+}
+module directional_res_2000nl(xpos, ypos, zpos, orientation,
+  px=0.0076, layer=0.01
+)
+{
+    
+    res_h = 140 ;
+
+    translate([37*px,0,0])
+p_reservoir(xpos, ypos, zpos, orientation,
+    p1_dir="x-", p2_dir="x+", p1_offset=[0,(res_h-10)/2],
+    p2_offset=[0,-(res_h-10)/2], 
+    port_len1 = 30,
+    size=[248, 100, res_h ], edge_rounding=0.2, 
+    center=true, clr="gray",
+    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1,
+    ren_lef=false
+) ;
+
+    module lef()
+    {
+        lef_size(360, 150) ;
+        lef_layer("met1")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met2")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met3")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met4")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met5")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met6")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met7")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_layer("met8")
+        lef_obs("RECT", [30, 20, 338, 130]) ;
+        
+        lef_layer("met8")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 66, 37, 80]) ;
+        lef_layer("met1")
+        lef_port("out_fluid", "OUTPUT", "RECT", [331, 66, 345, 80]) ;
+    }
+    if (ren_lef)
+        lef() ;
 }
 module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
 {
@@ -1022,7 +1103,8 @@ module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e
     port_len = 25 ;
     translate([(port_len+7)*px,0,0])
     p_reservoir(xpos, ypos, zpos, orientation,
-        p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
+        p1_dir="x-", p2_dir="x+", port_len1=port_len,
+        p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
         size=[100, 100, res_h ], edge_rounding=0.2, 
         center=true, clr="gray",
         px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
@@ -1363,7 +1445,7 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
     p_valve(xpos, ypos, zpos, orientation,
-        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=true,
+        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=false,
         out_len=44, fl_extra_sp = 4, fl_chan_down_layers=10, 
         pn_extra_sp="fill", pn_chan_up_layers=12, rot_pn=false,
         extra_sp = 0, 
