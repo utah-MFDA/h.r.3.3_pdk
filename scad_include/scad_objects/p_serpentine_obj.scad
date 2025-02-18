@@ -3,6 +3,7 @@
 //  this one should be removed
 
 use <../polychannel_v2.scad>
+use <lefdef_transformations.scad>
 
 module p_serpentine_obj(xpos, ypos, zpos, orientation, L1, L2, turns,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
@@ -53,8 +54,9 @@ module p_serpentine_obj(xpos, ypos, zpos, orientation, L1, L2, turns,
             [shape, [chan_w*px, chan_w*px, chan_h*layer], pts_c[i], [0,[0,0,1]]] ];
         
         rotate([0,0,(rot?90:0)])
-        mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
-        mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+        //mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
+        //mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+        lefdef_orient(orientation)
         translate([-L1*px/2, -L2*px*(turns)/2, 0])
             polychannel(poly_pts, clr=clr) ;
     }
@@ -89,4 +91,4 @@ module p_serpentine_obj(xpos, ypos, zpos, orientation, L1, L2, turns,
     }
 }
 
-p_serpentine_obj(0,0,0,"FN", 300, 50, 14, floor_area=false, alt=0, rot=0);
+p_serpentine_obj(0,0,0,"N", 300, 50, 14, floor_area=false, alt=0, rot=0);

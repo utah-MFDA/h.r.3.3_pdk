@@ -61,9 +61,9 @@ module lef_rect(pts, th=ren_th)
         cube([w, h, th]) ;
 }
 
-module lef_layer(layer)
+module lef_layer(layer_name)
 {
-    l_off = get_config("layer") * get_config("lpv") * get_layer_index(layer) ;
+    l_off = get_config("layer") * get_config("lpv") * get_layer_index(layer_name) ;
     
     translate([0,0,l_off])
         children() ;
