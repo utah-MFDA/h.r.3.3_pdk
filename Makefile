@@ -4,6 +4,8 @@ COMPONENT_DIR = $(ROOT_DIR)/Components
 SCAD_PDK_INCLUDE = $(ROOT_DIR)/scad_include
 PY_SCRIPTS_DIR = $(ROOT_DIR)/py_scripts
 
+PYTHON3 ?= python3
+
 # Shell Setup for make
 SHELL		= /bin/bash
 .SHELLFLAGS 	= -o pipefail -c
@@ -49,6 +51,10 @@ LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
 SCAD_BUILD_DIR = $(ROOT_DIR)/scad_lib
 SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
+
+# Noncomponent files in scad_include
+# 	these will be copied in build_scad
+SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
 
 LEF_SCAD_EXTRACT = $(ROOT_DIR)/directional_reserviors \
 									$(ROOT_DIR)/inline_reserviors \
@@ -159,9 +165,19 @@ SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_lib/%, $(SCAD_USE_FILES))
 $(SCAD_USE_BUILD): $(SCAD_USE_FILES)
 	cp $^ ./scad_lib
 
+SCAD_LIB_INCLUDES_CP = $(patsubst $(SCAD_PDK_INCLUDE)/%, ./scad_lib/%, $(SCAD_LIB_INCLUDES))
+$(SCAD_LIB_INCLUDES_CP): $(SCAD_LIB_INCLUDES)
+	cp $^ ./scad_lib
+
 cp_scad: $(SCAD_USE_BUILD) 
 
-build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD)
+build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) $(SCAD_LIB_INCLUDES_CP)
+
+# install the SCAD library to base system
+install_scad_library:
+	$(PYTHON3) ./install_scad_library.py
+install_scad_library_unmerged:
+	$(PYTHON3) ./install_scad_library.py --unmerged
 
 clean_scad:
 	rm -f $(SCAD_COMPONENT_LIBRARY)
