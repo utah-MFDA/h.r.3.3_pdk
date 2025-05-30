@@ -1,0 +1,35 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module pressurePump(fl_out, c_out);
+
+// vector test
+//parameter integer vec_size = 1;
+
+output fl_out;
+//output [0:vec_size-1] c_out;
+output c_out;
+
+fluidDynamics fl_out;
+concentration c_out;
+
+(*desc="input-pressure", type="instance"*) parameter real pressure=34k;
+(*desc="input chemical concentration", type="instance"*) parameter real chemConcentration=0;
+
+ground gnd;
+
+//integer i;
+
+analog begin
+   P(fl_out, gnd) <+ pressure;
+   C(c_out, gnd)  <+ chemConcentration;
+   //I(c_out)  <+ 0;
+   //for (i = vec_size-1; i >= 0; i = i - 1) begin
+   //   V(c_out[i])  <+ chemConcentration;
+   //end // end FOR LOOP
+   
+end
+
+endmodule
