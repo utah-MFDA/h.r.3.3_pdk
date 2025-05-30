@@ -131,7 +131,7 @@ module p_pvalve(xpos, ypos, zpos, orientation,
 //    46,4,10,20, inport_center=true, pitch=30, fl_extra_sp=10, pn_extra_sp="fill-edge", offset_layers=0, flip_fl=false);
 
 p_pvalve(0,0,0,"N",
-            valve_r=20, 
+            valve_r=50, 
             mem_th=0.6,
             fl_extra_sp=10,
             fl_chm_h=3.1, 
