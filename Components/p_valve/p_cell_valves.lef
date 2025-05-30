@@ -1,0 +1,50 @@
+ 
+MACRO p_valve_0(D.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_valve_0 0 0 ;
+  SIZE #D + 70# BY #D + 70# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 23 #D/2+25# 37 #D/2+39# ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT #D+33# #D/2+27# #D+47# #D/2+41# ;
+    END
+  END out_fluid
+  PIN in_air
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT #D/2+27# 23 #D/2+41# 37 ;
+    END
+  END in_air
+  PIN out_air
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT #D/2+27# #D+33# #D/2+51# #D+47# ;
+    END
+  END out_air
+  OBS
+    LAYER met2 ;
+      RECT 30 30 #D+40# #D+40# ;
+    LAYER met3 ;
+      RECT 30 30 #D+40# #D+40# ;
+    LAYER met4 ;
+      RECT 30 30 #D+40# #D+40# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_valve_0
