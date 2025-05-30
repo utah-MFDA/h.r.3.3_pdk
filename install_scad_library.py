@@ -38,6 +38,22 @@ def cp_to_lib_location(lib_cp_to, src_lib):
             shutil.copy(src_lib, lib_cp_to)
         else:
             raise
+    # generate central use/include file
+    openscad_use = f'openmfda_lib_{pdk}.scad'
+    openscad_out_abs = os.path.abspath(f'{lib_cp_to}/../{openscad_use}')
+    print(f'Writing main include to {openscad_out_abs}')
+    with open(openscad_out_abs, 'w+') as oscad_out:
+        # fmt: off
+        for f in [
+                fl for fl in os.listdir(f'{lib_cp_to}')
+                    if os.path.isfile(f'{lib_cp_to}/{fl}') \
+                    and fl[-5:] == '.scad'
+        ]:
+        # fmt: on
+            print(f'  Included file to main include: {f}')
+            oscad_out.write(f'\nuse <{pdk}/{f}>')
+
+    print(f'To use library add "use <{openscad_use}>" to openscad file')
 
 
 if args.prefix is not None and args.scad_lib_path is not None:
