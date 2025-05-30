@@ -1,7 +1,11 @@
 
 import os
-
 import docker
+
+"""
+This module was being developed to have the flow not depend on make. Currently not being
+    worked on
+"""
 
 
 KIT_NAME = "HR3.3"
