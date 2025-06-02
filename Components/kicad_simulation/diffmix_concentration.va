@@ -1,0 +1,55 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module diffmix_concentration(c_i1, c_i2, c_out);
+
+inout c_i1, c_i2, c_out;
+concentration c_i1, c_i2, c_out, gnd;
+
+(*desc="cross-section height", type="instance"*)  parameter real CROSS_SECTION=7.6u*10;
+(*desc="cross-section width", type="instance"*)  parameter real width=10u*14;
+(*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
+
+real LENGTH1;
+real LENGTH2;
+real LENGTH3;
+
+real R1_3;
+real R2_3;
+real R1, R2, R3;
+real W, H, L1, L2, L3;
+
+analog begin
+
+   @(initial_step)
+   begin : initial_instance
+      LENGTH1=0.19m;
+      LENGTH2=0.269m;
+      LENGTH3=0.190m;
+
+      W  = width;
+      H  = height;
+      L1 = LENGTH1;
+      L2 = LENGTH2;
+      L3 = LENGTH3;
+
+      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+      R1_3 = R1 + R3;
+      R2_3 = R2 + R3;
+   end // end initial_instance
+   //Concentration signals
+
+   if (P(int_1, fl_out) > 0)
+      C(c_out, gnd) <+ C(c_i1, gnd) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
+
+   if (P(int_1, fl_out) > 0)
+      C(c_out, gnd) <+ C(c_i2, gnd) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
+
+end
+
+endmodule

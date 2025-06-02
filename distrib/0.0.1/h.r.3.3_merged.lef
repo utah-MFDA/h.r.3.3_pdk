@@ -8,7 +8,7 @@ MACRO valve_20px_1
   CLASS CORE ;
   ORIGIN 0 0 ;
   FOREIGN valve_20px_1 0 0 ;
-  SIZE 100 BY 100 ;
+  SIZE 120 BY 120 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN in_air
@@ -16,7 +16,7 @@ MACRO valve_20px_1
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 49.5 74.5 50.5 75.5 ;
+        RECT 40.0 65.0 60.0 85.0 ;
     END
   END in_air
   PIN out_air
@@ -24,7 +24,7 @@ MACRO valve_20px_1
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 49.5 24.5 50.5 25.5 ;
+        RECT 30.0 15.0 60.0 35.0 ;
     END
   END out_air
   PIN in_fluid
@@ -32,7 +32,7 @@ MACRO valve_20px_1
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 24.5 49.5 25.5 50.5 ;
+        RECT 16.0 40.0 15.0 60.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -40,7 +40,7 @@ MACRO valve_20px_1
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 74.5 49.5 75.5 50.5 ;
+        RECT 65.0 40.0 85.0 60.0 ;
     END
   END out_fluid
   PROPERTY CatenaDesignType "deviceLevel" ;
@@ -59,7 +59,7 @@ MACRO serpentine_50px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -67,7 +67,7 @@ MACRO serpentine_50px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 89.5 29.5 90.5 30.5 ;
+        RECT 80.0 20.0 100.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -78,18 +78,17 @@ MACRO serpentine_50px_0
 END serpentine_50px_0
 
 MACRO serpentine_100px_0
-  CLASS CORE ;
+ CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_100px_0 0 0 ;
   SIZE 180 BY 180 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
-  PIN in_fluid
+ PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -97,7 +96,7 @@ MACRO serpentine_100px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 149.5 29.5 150.5 30.5 ;
+        RECT 140.0 20.0 160.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -108,18 +107,17 @@ MACRO serpentine_100px_0
 END serpentine_100px_0
 
 MACRO serpentine_150px_0
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_150px_0 0 0 ;
   SIZE 240 BY 240 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -127,7 +125,7 @@ MACRO serpentine_150px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 209.5 29.5 210.5 30.5 ;
+        RECT 200.0 20.0 220.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -138,18 +136,17 @@ MACRO serpentine_150px_0
 END serpentine_150px_0
 
 MACRO serpentine_200px_0
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_200px_0 0 0 ;
   SIZE 300 BY 300 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -157,7 +154,7 @@ MACRO serpentine_200px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 269.5 29.5 270.5 30.5 ;
+        RECT 260.0 20.0 280.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -168,18 +165,17 @@ MACRO serpentine_200px_0
 END serpentine_200px_0
 
 MACRO serpentine_200px_3
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_200px_0 0 0 ;
   SIZE 300 BY 300 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -187,7 +183,7 @@ MACRO serpentine_200px_3
     USE SIGNAL ;
     PORT
       LAYER met5 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -204,18 +200,17 @@ MACRO serpentine_200px_3
 END serpentine_200px_3
 
 MACRO serpentine_300px_0
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_300px_0 0 0 ;
   SIZE 420 BY 420 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -223,7 +218,7 @@ MACRO serpentine_300px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 389.5 29.5 390.5 30.5 ;
+        RECT 380.0 20.0 380.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -234,18 +229,17 @@ MACRO serpentine_300px_0
 END serpentine_300px_0
 
 MACRO serpentine_300px_1
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_300px_0 0 0 ;
   SIZE 420 BY 420 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 59.5 29.5 60.5 30.5 ;
+        RECT 50.0 20.0 70.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -253,7 +247,7 @@ MACRO serpentine_300px_1
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -266,18 +260,17 @@ MACRO serpentine_300px_1
 END serpentine_300px_1
 
 MACRO serpentine_300px_2
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_300px_0 0 0 ;
   SIZE 450 BY 420 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -285,7 +278,7 @@ MACRO serpentine_300px_2
     USE SIGNAL ;
     PORT
       LAYER met4 ;
-        RECT 419.5 29.5 420.5 30.5 ;
+        RECT 410.0 20.0 430.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -300,18 +293,17 @@ MACRO serpentine_300px_2
 END serpentine_300px_2
 
 MACRO serpentine_300px_3
-  CLASS CORE ;
+  CLASS BLOCK ;
   ORIGIN  0 0 ;
   FOREIGN serpentine_300px_0 0 0 ;
   SIZE 420 BY 420 ;
   SYMMETRY X Y ;
-  SITE CoreSite ;
   PIN in_fluid
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 59.5 29.5 60.5 30.5 ;
+        RECT 50.0 20.0 70.0 40.0 ;
     END
   END in_fluid
   PIN out_fluid
@@ -319,7 +311,7 @@ MACRO serpentine_300px_3
     USE SIGNAL ;
     PORT
       LAYER met5 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END out_fluid
   OBS
@@ -339,7 +331,7 @@ MACRO diffmix_25px_0
   CLASS CORE ;
   ORIGIN  0 0 ;
   FOREIGN diffmix_25px_0 0 0 ;
-  SIZE 90 BY 90 ;
+  SIZE 120 BY 120 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN a_fluid
@@ -347,7 +339,7 @@ MACRO diffmix_25px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 59.5 30.5 60.5 ;
+        RECT 20.0 50.0 40.0 70.0 ;
     END
   END a_fluid
   PIN b_fluid
@@ -355,7 +347,7 @@ MACRO diffmix_25px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 20.0 20.0 40.0 40.0 ;
     END
   END b_fluid
   PIN out_fluid
@@ -363,7 +355,7 @@ MACRO diffmix_25px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 59.5 59.5 60.5 60.5 ;
+        RECT 50.0 50.0 70.0 70.0 ;
     END
   END out_fluid
   OBS

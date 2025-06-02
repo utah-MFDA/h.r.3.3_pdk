@@ -175,6 +175,9 @@ cp_scad: $(SCAD_USE_BUILD)
 
 build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) $(SCAD_LIB_INCLUDES_CP)
 
+install_scad_lib: build_scad
+	python3 ./install_scad_library.py
+
 # install the SCAD library to base system
 install_scad_library:
 	$(PYTHON3) ./install_scad_library.py
