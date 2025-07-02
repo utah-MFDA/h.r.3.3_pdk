@@ -1,9 +1,35 @@
-Process design kit (PDK) for the H.R.3.3 3D printer.
+# Process design kit (PDK) for the H.R.3.3 3D printer.
 
 All of the components for the library are placed in the Components subdirectory which is further broken out into subdirectories into there respective functional directory (valve, mixer, ...). Inside those directories are the respective specific component containing three different files for the software:
  - LEF (.lef)
  - Verilog-AMS (.va)
  - OpenSCAD (.scad)
+
+Directory:
+
+ - Building the libary
+ - Adding components to the library
+    - Place and Routing
+    - SCAD
+        - Installing OpenSCAD libraries on local OpenSCAD
+    - Xyce (Spice)
+
+## Building the library
+
+Building the library the following commands can be run. Each command will make a merge file containing all of the libary contents or create a lib binrary for simulations.
+
+```
+make build_lef
+# h.r.3.3_merged.lef will be placed in Components directory
+
+make build_scad
+# h.r.3.3_merged.scad will be placed in scad_lib directory
+
+make build_va
+#
+
+```
+
 
 ## Adding to the component library
 
@@ -15,14 +41,6 @@ Components can be made in new subdirectories (component directories) of the subd
 If additional component class directies are made they need to be added to the Makefile variable (within the Component directory) GENERAL_SRC_DIR for the software to find them.
 
 Otherwise new component directories can be made and build with the following make commands within the Component directory.
-```
-make build_lef
-
-make build_scad
-
-make build_va
-
-```
 
 ### Place and Route (.lef)
 
@@ -61,13 +79,34 @@ make run_single_test_mf INFILE=<path-to>/<your_cir-file>
 
 ### 3D model generator (.scad)
 
-Running the following commend 
+Running the following command will build the library into a merge scad file.
 ```
 make build_scad
 ```
 
-Will generate a merged lef file called HR3.3_merged.lef of the avalible components, provided they have the correct extension.
+Will generate a merged scad file called h.r.3.3_merged.scad of the avalible components, provided they have the correct extension.
 
+To include the scad libary components into the main scad directory it can be install by make
+```
+make install_scad_libary
+```
+or by running the python script:
+```
+python3 install_scad_libary.py
+```
+or with components as there individual files,
+```
+python3 install_scad_libary.py --unmerged
+```
+
+The scad library can than be included by having 
+```
+use <h.r.3.3/h.r.3.3_merged.scad>
+// or 
+use <h.r.3.3/replace_with_component_name.scad>
+```
+
+For using the LEF for SCAD generating script refer to the README.md in the scad_include directory.
 
 ### Component check
 

@@ -11,10 +11,9 @@
 / Rev. 3, 10/4/22, by G. Nordin
 / Rev. 4, 10/5/22, by G. Nordin - Add uniformly_increase functions
 / Rev. 4.1, 10/7/22, by G. Nordin - Add rot_* functions
-/ Rev. 4.2, 10/12/22, by G. Nordin - Add cube_shape(), sphere_shape()
-/ Rev. 4.3, 10/12/22, by G. Nordin - Add arc_xy, arc_xz, arc_yz and associated functions
-/ Rev. 4.4, 10/12/22, by G. Nordin - Clean up example code
-/ Rev. 5.0, 02/17/25, by B. Goenner - Add polychannel_route and additional polychannels variants
+/ Rev. 4.2, 10/12/2, by G. Nordin - Add cube_shape(), sphere_shape()
+/ Rev. 4.3, 10/12/2, by G. Nordin - Add arc_xy, arc_xz, arc_yz and associated functions
+/ Rev. 4.4, 10/12/2, by G. Nordin - Clean up example code
 --------------------------------------------------------------------------------------*/
 $fn=50;
 

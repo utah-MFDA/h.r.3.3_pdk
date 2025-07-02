@@ -1,10 +1,9 @@
 
 use <../polychannel_v2.scad>
+use <lefdef_transformations.scad>
 
 module p_valve_4way(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, 
-    // extra center spacing if needed when inport_center=false
-    inport_center=false, 
     out_len=30, fl_out_h=10, fl_out_len=10, pn_out_len=10,
     // length of channels extending outside of valve radius
     fl_extra_sp=10, pn_extra_sp=10, pn_up_layers=10, rot_pn=false,
@@ -24,39 +23,29 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
         // fluid connection channel definitions
         
         //inp_pos = (inport_center?
-            //0:
-        //inp_pos = -(valve_r/4+fl_extra_sp)*px;
+        //    0:
+        //    (fl_extra_sp=="fill"?
+        //        -(valve_r-chan_w/2-1)*px:
+        //        -((valve_r/4+fl_extra_sp)*px)));
+        inp_pos = -((valve_r/4+fl_extra_sp)*px);
+        
         //outp_pos= (inport_center?
-            //(valve_r-chan_w/2)*px:
-        //outp_pos= -inp_pos;
+        //    (valve_r-chan_w/2+fl_extra_sp)*px:
+        //    -inp_pos);
+        outp_pos= -inp_pos;
         
-        inp_pos = (inport_center?
-            0:
-            (fl_extra_sp=="fill"?
-                -(valve_r-chan_w/2-1)*px:
-                -((valve_r/4+fl_extra_sp)*px)));
-        
-        outp_pos= (inport_center?
-            (valve_r-chan_w/2+fl_extra_sp)*px:
-            -inp_pos);
-        
-        
-        //fl_len_0 = (inport_center?
-        //    (valve_r/2+chan_w-extra_sp+out_len)*px:
-        //    (valve_r*3/4-chan_w/2-extra_sp+out_len)*px);
-        //fl_len_1 = (inport_center?
-        //    (out_len-chan_w/4)*px:
-        //    (valve_r*3/4-chan_w/2-extra_sp+out_len)*px);
             
-        fl_len_0 = (inport_center?
-            (valve_r-chan_w/2+fl_out_len)*px:
-                (fl_extra_sp=="fill"?(fl_out_len+1)*px:
-                    (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        //fl_len_0 = (inport_center?
+        //    (valve_r-chan_w/2+fl_out_len)*px:
+        //        (fl_extra_sp=="fill"?(fl_out_len+1)*px:
+        //            (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        fl_len_0 = (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px;
         
-        fl_len_1 = (inport_center?
-            (fl_out_len-fl_extra_sp)*px:
-                (fl_extra_sp=="fill"?(fl_out_len+1)*px:
-                    (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        //fl_len_1 = (inport_center?
+        //    (fl_out_len-fl_extra_sp)*px:
+        //        (fl_extra_sp=="fill"?(fl_out_len+1)*px:
+        //            (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        fl_len_1 = (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px ;
         
         polychannel(
             [[shape, chan_dimm, [inp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
@@ -109,11 +98,14 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
     
     tran_offset = (out_len+valve_r)*px;
     
+    
     translate([xpos*px, ypos*px, zpos*layer])
+    
     translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,layer*offset_layers])
     translate([tran_offset,tran_offset,(20+chan_h)*layer])
+    lefdef_orient(orientation)
         obj();
 }
 
 p_valve_4way(0,0,0,"N", 
-    50,4,10,20, false);
+    50,4,10,20);
