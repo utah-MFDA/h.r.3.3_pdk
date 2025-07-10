@@ -1,9 +1,10 @@
 #ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+#PDK_ROOT_DIR ?= $(dir $(realpath ./))
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-COMPONENT_DIR = $(PDK_ROOT_DIR)/Components
-SCAD_PDK_INCLUDE = $(PDK_ROOT_DIR)/scad_include
-PY_SCRIPTS_DIR = $(PDK_ROOT_DIR)/py_scripts
+COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
+SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
+PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 PYTHON3 ?= python3
 
@@ -44,7 +45,11 @@ VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR ) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
+#<<<<<<< HEAD
+#export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
+#=======
+export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
+#>>>>>>> origin/lib_0.0.2
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
@@ -62,13 +67,6 @@ LEF_SCAD_EXTRACT = $(ROOT_DIR)/directional_reserviors \
 									$(ROOT_DIR)/valves \
 									$(ROOT_DIR)/pumps \
 									$(ROOT_DIR)/optical_measure
-# =======
-# LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
-# 									$(PDK_ROOT_DIR)/inline_reserviors \
-# 									$(PDK_ROOT_DIR)/valves \
-# 									$(PDK_ROOT_DIR)/pumps \
-# 									$(PDK_ROOT_DIR)/optical_measure
-# >>>>>>> Stashed changes
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
@@ -132,6 +130,7 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
+# needs update
 export TECH_LEF = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
 export LIB_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
 export GDS_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
@@ -181,6 +180,9 @@ cp_scad: $(SCAD_USE_BUILD)
 
 build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) $(SCAD_LIB_INCLUDES_CP)
 
+install_scad_lib: build_scad
+	python3 ./install_scad_library.py
+
 # install the SCAD library to base system
 install_scad_library:
 	$(PYTHON3) ./install_scad_library.py
@@ -203,7 +205,7 @@ check_library:
 ################################################################
 #>>>>>>> master
 #DOCKER_IMAGE = bgoenner/mfda_xyce:latest
-DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
+#DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
 
 DOCKER_LOCAL_COMP_DIR = ./
 
