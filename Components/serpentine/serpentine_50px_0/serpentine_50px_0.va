@@ -16,13 +16,17 @@ fluidDynamics fl_in, fl_out;
 (*desc="cross-section", type="instance"*) parameter real NU=0.0010005;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
 
 real pixel_size;
 real layer_height;
 real W, H, L;
 real R;
 real ch_width_pixels, ch_height_layers;
+
 real cqi, cqo;
+real cqi_g ;
+real cqo_g ;
 
 ground gnd;
 
@@ -67,6 +71,11 @@ analog begin
    cqo = ccap*C(c_out, cv2);
    Ci(c_in,  cv1) <+ ddt(cqi) ;
    Ci(c_out, cv2) <+ ddt(cqo) ;
+
+   cqi_g = gcap*C(cv1) ;
+   cqo_g = gcap*C(cv2) ;
+   Ci(cv1, gnd) <+ ddt(cqi_g) ;
+   Ci(cv2, gnd) <+ ddt(cqo_g) ;
 end
 
 endmodule
