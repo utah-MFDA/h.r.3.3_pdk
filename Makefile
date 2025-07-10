@@ -1,8 +1,9 @@
-ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+#ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-COMPONENT_DIR = $(ROOT_DIR)/Components
-SCAD_PDK_INCLUDE = $(ROOT_DIR)/scad_include
-PY_SCRIPTS_DIR = $(ROOT_DIR)/py_scripts
+COMPONENT_DIR = $(PDK_ROOT_DIR)/Components
+SCAD_PDK_INCLUDE = $(PDK_ROOT_DIR)/scad_include
+PY_SCRIPTS_DIR = $(PDK_ROOT_DIR)/py_scripts
 
 PYTHON3 ?= python3
 
@@ -42,14 +43,14 @@ P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR ) $(COMPONENT_DIR)/veriloga_objects
-VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
+export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
-SCAD_BUILD_DIR = $(ROOT_DIR)/scad_lib
+SCAD_BUILD_DIR = $(PDK_ROOT_DIR)/scad_lib
 SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
 
 # Noncomponent files in scad_include
@@ -61,6 +62,13 @@ LEF_SCAD_EXTRACT = $(ROOT_DIR)/directional_reserviors \
 									$(ROOT_DIR)/valves \
 									$(ROOT_DIR)/pumps \
 									$(ROOT_DIR)/optical_measure
+# =======
+# LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
+# 									$(PDK_ROOT_DIR)/inline_reserviors \
+# 									$(PDK_ROOT_DIR)/valves \
+# 									$(PDK_ROOT_DIR)/pumps \
+# 									$(PDK_ROOT_DIR)/optical_measure
+# >>>>>>> Stashed changes
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
@@ -124,9 +132,9 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
-export TECH_LEF = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
-export LIB_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
-export GDS_FILES = $(ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
+export TECH_LEF = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
+export LIB_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
+export GDS_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
 
 SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
 SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
@@ -154,7 +162,7 @@ $(SCAD_BUILD_DIR):
 	mkdir -p $@
 
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/distrib/1.0.0/routing_181220.scad
+export SCAD_ROUTING_LIBRARY = $(PDK_ROOT_DIR)/distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream > $@
 # sed 's/\r//g' > $@
