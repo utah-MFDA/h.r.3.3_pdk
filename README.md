@@ -1,6 +1,6 @@
 # Process design kit (PDK) for the H.R.3.3 3D printer.
 
-All of the components for the library are placed in the Components subdirectory which is further broken out into subdirectories into there respective functional directory (valve, mixer, ...). Inside those directories are the respective specific component containing three different files for the software:
+All of the components for the library are placed in the Components subdirectory which is further broken out into subdirectories into thier respective functional directory (valve, mixer, ...). Inside those directories are the respective specific component containing three different files for the software:
  - LEF (.lef)
  - Verilog-AMS (.va)
  - OpenSCAD (.scad)
@@ -16,7 +16,7 @@ Directory:
 
 ## Building the library
 
-Building the library the following commands can be run. Each command will make a merge file containing all of the libary contents or create a lib binrary for simulations.
+Building the library the following commands can be run. Each command will make a merge file containing all of the library contents or create a lib binrary for simulations.
 
 ```
 make build_lef
@@ -26,21 +26,9 @@ make build_scad
 # h.r.3.3_merged.scad will be placed in scad_lib directory
 
 make build_va
-# MFXyce.so will be placed in the Components/verilgoA_bulid directory
+# MFXyce.so will be placed in the Components/verilogA_bulid directory
 
 ```
-
-
-## Adding to the component library
-
-
-You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce, .lef for place and routing, and .scad for 3D rendering ). Otherwise the software will not see it.
-
-Components can be made in new subdirectories (component directories) of the subdirectories of the current Component directory (like within the serpentine directory, or component class directories)
-
-If additional component class directies are made they need to be added to the Makefile variable (within the Component directory) GENERAL_SRC_DIR for the software to find them.
-
-Otherwise new component directories can be made and build with the following make commands within the Component directory.
 
 ### Place and Route (.lef)
 
@@ -50,7 +38,7 @@ Running the following command
 make build_lef
 ```
 
-Will generate a merged lef file called HR3.3_merged.lef of the avalible components, provided they have the correct extension.
+Will generate a merged lef file called h.r.3.3_merged.lef of the avalible components, provided they have the correct extension.
 
 ### Xyce (.va)
 
@@ -69,11 +57,12 @@ Running the following command will build the library into a merge scad file.
 make build_scad
 ```
 
-Will generate a merged scad file called h.r.3.3_merged.scad of the avalible components, provided they have the correct extension.
+Will generate a merged scad file called h.r.3.3_merged.scad of the available components, provided they have the correct extension.
 
 #### Adding the library to SCAD system library
 
-To include the scad libary components into the main scad library directory it can be install by make
+To include the scad libary components into the main scad library directory it can be install by make. This is not required to use 
+OpenMFDA flow with this library but can be useful in development or for using the components outside of OpenMFDA.
 ```
 make install_scad_libary
 ```
@@ -95,10 +84,19 @@ use <h.r.3.3/replace_with_component_name.scad>
 
 For using the LEF for SCAD generating script refer to the README.md in the scad_include directory.
 
+## Adding to the component library
 
-## Instructions for additional components
+You can make a new subdirectory for the component that you would like to add to the library. This component will be to be a subdirectory call in the GENERAL_SRC_DIR variable in the make file with the appropriate extension (such .va for Xyce, .lef for place and routing, and .scad for 3D rendering ). Otherwise the software will not see it.
 
-Adding new components will require at a minimum creating the approperate .scad and .lef file. Components without a .va file will not be able to be used with validation tools.
+Components can be made in new subdirectories (component directories) of the subdirectories of the current Component directory (like within the serpentine directory, or component class directories)
+
+If additional component class directies are made they need to be added to the Makefile variable (within the Component directory) GENERAL_SRC_DIR for the software to find them.
+
+Otherwise new component directories can be made and build with the following make commands within the Component directory.
+
+### Individual file instructions for adding additional components
+
+Adding new components will require at a minimum creating the appropraite .scad and .lef file. Components without a .va file will not be able to be used with validation tools.
 
 To start a component can be add with an STL file exported from another CAD program, or from generating a .scad script. Geometry can be checked with OpenSCAD to validate the geometry. This library also contains tools for generating basic .lef file from OpenSCAD.
 
@@ -106,7 +104,7 @@ To start a component can be add with an STL file exported from another CAD progr
 
 This file format is typically used to decribe an abstract representation of a library component.
 
-Lef files can be created manually through the LEF definition, which we describe here.
+LEF files can be created manually through the LEF definition, which we describe here.
 
 We provide a `serpentine_100px` device as an example of the necessary statements of a component. This
 guide will give a brief overview of creating a component in the library. For those wanting to use
@@ -151,30 +149,31 @@ The `ORIGIN` statement is used to define the location origin of the component wh
     the component grid with the two numbers following denoting the X and Y position. When omitted the 
     default value is `0 0`.
 
-The `SIZE` statement is used to descibe the outter most bounding box of the component. The rectangle
+The `SIZE` statement is used to describes the outer most bounding box of the component. The rectangle
     always extends out from (0,0). Placers will use this to avoid overlap of other placed components. 
 
 The `SYMMETRY` statement specifies which orientations can be attempted during placement. These orientations
-    will be flip/mirror transformations along the axises specified.
+    will be flip/mirror transformations along the axis specified.
 
 The `SITE` statement specifies the placement area associated with the macro. We only have one site
     in the flow which CoreSite for placement.
 
-The `PIN` statement specifies the named pin of the component and containts additional statements
-    enclosed by `END pin_name` that specifies the details of the pin.
+The `PIN` statement specifies the named pin of the component and contains statements of
+    the named pin that is enclosed by `END pin_name` that specifies the details of that pin.
 
-The pin `DIRECTION` statement
+The pin `DIRECTION` statement declares the direction of the named pin, `INPUT`, `OUTPUT`, and `INOUT` are typical values.
+    this can be useful for design rule checks (such as checking whethter two inputs are connected together).
 
-The pin `USE` statement
+The pin `USE` statement describes the purpose of the pin, most microfluidic pins will be `SIGNAL`.
 
 The pin `PORT` statement Indicates that the following `LAYER`, `POLYGON`, and `VIA` statements are all
 part of one `PORT` connection, until another `PORT` statement occurs. If this statement is missing, all of the
 `LAYER`, `POLYGON`, and `VIA` statements are part of a single implicit `PORT` for the `PIN`.
 
-The `OBS` block is a group of statments enclosed by `OBS` at the beginning and terminated by the `END`
+The `OBS` block is a group of statements enclosed by `OBS` at the beginning and terminated by the `END`
     statement. Inside are the geometric 
 
-LEF shapes will generally be a grouping of two statements a `LAYER` definition and shape statment.
+LEF shapes will generally be a grouping of two statements a `LAYER` definition and shape definition.
     In our example we use the `RECT` statement for our shapes which is defined as `RECT ptx1 pty1 ptx2 pty2`,
     where the two pts defined are opposing corners of the rectangle. The `LAYER` statement is used
     to define which layer the shape belongs to. The `LAYER` definition is first when defining other 
@@ -215,7 +214,6 @@ Alternatively, we also provide a set of components that can be used to develop a
     from simpling calling the module and changing it's parameters. An example of a scad portion 
     of a component is provided below:
 ```
-
 use <../../../scad_include/scad_objects/p_valve.scad>
 
 module serpentine_100px_0(xpos, ypos, zpos, orientation) {
@@ -237,7 +235,7 @@ is currently being worked on and this section will be updated when ready.
 
 The OpenMFDA flow uses Xyce as the simulation tool to verify the flow, pressure and chemical concentration.
 In the library components are developed with both fluid ports and chemical concentration ports as
-seperate existing ports. One can develop using the provided fluid_dynamics disiplines in this tool
+seperate existing ports. One can develop using the provided `fluidDynamics` discipline in this tool
 with the access variables P and Qfl, for pressure and flow rate respectively. The components are to
 be developed as 1-dimension representations of the component they are trying to capature. We adopt
 a similar paradigm as 
