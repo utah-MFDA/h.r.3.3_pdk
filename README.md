@@ -26,7 +26,7 @@ make build_scad
 # h.r.3.3_merged.scad will be placed in scad_lib directory
 
 make build_va
-#
+# MFXyce.so will be placed in the Components/verilgoA_bulid directory
 
 ```
 
