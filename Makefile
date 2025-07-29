@@ -43,7 +43,7 @@ P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 
 VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
 
-VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR ) $(COMPONENT_DIR)/veriloga_objects
+VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
 
@@ -236,3 +236,8 @@ clean_va_build:
 clean_xyce_build: clean_va_build
 
 make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
+
+# if util exists
+ifneq (,$(wildcard ./util.mk))
+include util.mk
+endif
