@@ -212,9 +212,13 @@ module p_tall_mixer(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
     no_obj=false, floor_area=false)
 ```
+A simple mixer that reduces the time of mixing two fluids by reducing the channel width.
  - mix_l **(required)**
+    - Lenght of the mixer
  - mix_w **(required)**
+    - Mininum width of the mixer device
  - mix_h **(required)**
+    - Height of the mixer channel
 
 #### p_sqeeze_valve.scad
 ```
@@ -233,7 +237,9 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
     offset_layers=10, rot=false, no_obj=false, floor_area=false)
 ```
  - mem_th **(required)**
+    - Membrane thickness of squeezez valve
  - fl_chm_h **(required)**
+    - Channel height of the fluid side of the squeeze valve.
 
 #### p_pump.scad
 ```
@@ -251,10 +257,17 @@ module p_pump(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, 
     offset_layers=10, rot=false, no_obj=false, floor_area=false)
 ```
+This module is developed as a perstalitic pump using 3 membrane valves. The enumerated variables
+    refer to a specific valve along the pump with 1 closest to the input, 2 in the center, and 3
+    near the output.
  - r1, r2, r3
+    - Radius of valves
  - th1, th2, th3
+    - Thickness of the membrane of the valves
  - fl_h1, fl_h2, fl_h3
+    - Height of the fluid chamber side (bottom) of the valves
  - pn_h1, pn_h2, pn_h3
+    - Height of the pneumatic chamber side (top) of the valves
  - len_sp
  - pn_out_len
  - fl_extra_sp, pn_extra_sp
@@ -323,7 +336,7 @@ module optical_view(xpos, ypos, zpos, orientation,
 All settings for the lef_helper are defined in the lef_scad_config.scad that need the
 following variables.
 ```
-layer = [ ... ] // list of strings of named layers
+layer = [ ... ] // list (array) of strings of named layers
 // layers are list sequentially bottom to top
 
 platform_config = [
