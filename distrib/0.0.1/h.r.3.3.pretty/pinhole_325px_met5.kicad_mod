@@ -1,0 +1,122 @@
+(footprint "pinhole_325px_met5"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 6.3 -1.1 0)
+		(layer "F.SilkS")
+		(uuid "3a39142f-4512-48f8-9a63-1b111a82b5fc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Value" "pinhole_325px_met5"
+		(at 8.2 0.9 0)
+		(layer "F.SilkS")
+		(uuid "4c05bede-3647-45f0-a790-425a9eccd695")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4c8dedb4-85af-4a9e-b333-18d1cef566d6")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "07731363-6f45-4489-8c61-3e57bd345d39")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "245cd456-eba4-4e3a-8d29-634271bd8532")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 0 0)
+		(end 33 -14)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "70240952-2515-4c45-aef9-4eaca9beab36")
+	)
+	(fp_text user "connection"
+		(at 28.5 -7 0)
+		(layer "F.SilkS")
+		(uuid "89c032f1-6f84-4e91-ab6d-17f8015ff131")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 32 -7)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "336cb178-a960-482c-aed6-36d55d1a349d")
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layers "*.Cu")
+		(uuid "3009ddaa-7860-429a-83cb-7473ab8e7a6f")
+		(name "Body")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour allowed)
+			(footprints not_allowed)
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 0 -13.988368) (xy 0 0.011632) (xy 26 0.011632) (xy 31 -0.000027) (xy 30.962332 -14.037668)
+			)
+		)
+	)
+)

@@ -1,0 +1,71 @@
+MACRO pinhole_320px_1
+  CLASS PAD ;
+  ORIGIN 0 0 ;
+  FOREIGN pinhole_325px_0 ;
+  SIZE 320 BY 140 ;
+  SYMMETRY X Y R90 ;
+  PIN connection
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met8 ;
+        RECT 300 60 320 80 ;
+    END
+  END connection
+  PIN pad
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met10 ;
+        RECT 0 0 20 20 ;
+    END
+  END pad
+  OBS
+    LAYER met6 ;
+      RECT 20 0 300 140 ;
+    LAYER met7 ;
+      RECT 20 0 300 140 ;
+    LAYER met8 ;
+      RECT 20 0 300 140 ;
+    LAYER met9 ;
+      RECT 20 0 300 140 ;
+    LAYER met10 ;
+      RECT 20 0 300 140 ;
+  END
+END pinhole_320px_1
+
+MACRO pinhole_320px_0
+  CLASS PAD ;
+  ORIGIN 0 0 ;
+  FOREIGN pinhole_320px_0 ;
+  SIZE 320 BY 140 ;
+  SYMMETRY X Y R90 ;
+  PIN connection
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 300 60 320 80 ;
+    END
+  END connection
+  PIN pad
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met10 ;
+        RECT 0 60 20 80 ;
+    END
+  END pad
+  OBS
+    LAYER met1 ;
+      RECT 20 0 300 140 ;
+    LAYER met2 ;
+      RECT 20 0 300 140 ;
+    LAYER met3 ;
+      RECT 20 0 300 140 ;
+    LAYER met4 ;
+      RECT 20 0 300 140 ;
+    LAYER met5 ;
+      RECT 20 0 300 140 ;
+  END
+END pinhole_320px_0
