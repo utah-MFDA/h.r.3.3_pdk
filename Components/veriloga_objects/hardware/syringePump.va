@@ -17,11 +17,15 @@ concentration c_out;
 
 //integer i;
 
-ground gnd ;
+fluidDynamics gnd_fl ;
+ground gnd_fl ;
+
+concentration gnd_c ;
+ground gnd_c ;
 
 analog begin
-   Qfl(fl_out) <+ fluidflow;
-   C(c_out, gnd)  <+ chemConcentration;
+   Qfl(fl_out, gnd_fl) <+ fluidflow;
+   C(c_out, gnd_c)  <+ chemConcentration;
    //for (i = vec_size-1; i >= 0; i = i - 1) begin
    //   V(c_out[i])  <+ chemConcentration;
    //end // end FOR LOOP

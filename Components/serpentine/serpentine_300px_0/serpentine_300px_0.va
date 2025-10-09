@@ -11,8 +11,8 @@ concentration cv1, cv2;
 fluidDynamics fl_in, fl_out;
 
 (*desc="length", type="instance"*) parameter real length=35.568m;
-(*desc="length", type="instance"*) parameter real CROSS_SECTION=1;
-(*desc="length", type="instance"*) parameter real NU=0.0010005;
+(*desc="length", type="instance"*) parameter real cross_section=1;
+(*desc="length", type="instance"*) parameter real nu=0.0010005;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 (*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
@@ -29,6 +29,7 @@ real cqi, cqo;
 real cqi_g ;
 real cqo_g ;
 
+concentration gnd ;
 ground gnd;
 
 analog begin
@@ -46,11 +47,11 @@ analog begin
       // -- adjust resistance based on cross section  
       //
       begin 
-      if (CROSS_SECTION == 1) begin
+      if (cross_section == 1) begin
          ch_width_pixels = 14;
          ch_height_layers= 10;
       end
-      else if(CROSS_SECTION == 2) begin
+      else if(cross_section == 2) begin
          ch_width_pixels = 6;
          ch_height_layers= 5;
       end
@@ -60,7 +61,7 @@ analog begin
       H = layer_height*ch_height_layers;
       L = length;
 
-      R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R = (12*nu*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 
    end //end initial_instance
 

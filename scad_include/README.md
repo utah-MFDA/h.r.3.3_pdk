@@ -39,7 +39,6 @@ openscad.
 lef_layer("met1")
     lef_obs(...) ;
 ```
----
 
 ### Parameteric scad objects
 
@@ -329,7 +328,6 @@ module optical_view(xpos, ypos, zpos, orientation,
     chan=[10, 10, 14], shape="cube", center_chambers=false, flip_z=false, ren_lef=false)
 ```
 
----
 
 ### lef_helper config
 
