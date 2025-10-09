@@ -30,7 +30,8 @@ real ch_height_layers, ch_width_pixels;
 real pixel_width;// = 7.6u;
 real layer_height;// = 10u;
 
-ground gnd;
+concentration gnd_C ;
+ground gnd_C ;
 
 
 analog begin
@@ -86,10 +87,10 @@ analog begin
    //Concentration signals
 
    if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i1, gnd) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
+      C(c_out, gnd_C) <+ C(c_i1, gnd_C) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
 
    if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i2, gnd) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
+      C(c_out, gnd_C) <+ C(c_i2, gnd_C) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
 
 end
 

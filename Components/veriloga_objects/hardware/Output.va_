@@ -15,15 +15,22 @@ module Output(c_out, gnd);
 input c_out;
 output gnd;
 //fluidDynamics fl_out;
-concentration c_out, c_term;
+concentration gnd ;
+concentration c_out;
+
+real gcap;
 
 //ground gnd;
 
 //integer i;
 
 analog begin
+
+   begin : initial_instance
+     gcap = 100n ;
+   end
    //P(fl_out, gnd) <+ 0;
-   C(c_out, gnd)  <+ - C(c_out) ;
+   Ci(c_out, gnd)  <+ ddt(C(c_out, gnd)*gcap) ;
    //I(c_out)  <+ 0;
    //for (i = vec_size-1; i >= 0; i = i - 1) begin
    //   V(c_out[i])  <+ chemConcentration;

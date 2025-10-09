@@ -21,6 +21,7 @@ concentration cv1, cv2 ;
 branch (fl_in, fl_m)  flm_i ;
 branch (fl_out, fl_m) flm_o ;
 
+concentration gnd ;
 ground gnd ;
 
 branch (c_in,  cv1) cci ;
