@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/pressure_io_chem.osdi
+.endc
+
+.model pressure_io_chem_model pressure_io_chem pressure_psi=0 pressure_pa=0 chemConcentration=0
+.subckt pressure_io_chem_sp a b params: pressure_psi=0 pressure_pa=0 chemConcentration=0
+N1 a b pressure_io_chem_model pressure_psi=pressure_psi pressure_pa=pressure_pa chemConcentration=chemConcentration
+.ends
