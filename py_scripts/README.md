@@ -7,20 +7,16 @@ This script uses an interal lef module in the scad component to write the lef fi
 extract_lef.py arguments
 
 --scad
-
-input scad file. requires definition of a lef module for functionality of this script
+ - input scad file. requires definition of a lef module for functionality of this script
 
 --of
-
-outfile, name of output file
+ - outfile, name of output file
 
 --ignore_no_lef_module
-
-Prevents raising errors if the lef module does not exist
+ - Prevents raising errors if the lef module does not exist
 
 --silent -q
-
-Less verbose
+ - Less verbose
 
 ## Clean scad file
 
