@@ -1,0 +1,95 @@
+(footprint "pinhole_325px_0"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 165.1 10 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "d947d72d-7cd2-4683-9114-88e18422dcd2")
+		(effects
+			(font
+				(size 10 10)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "pinhole_325px_0"
+		(at 165.1 -150 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "e4a6db93-68d0-49cd-861e-7a1003e83391")
+		(effects
+			(font
+				(size 10 10)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0.1 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "460d6ec8-3980-4eb7-aaed-7aee280d598a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0.1 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8c71f110-d930-43a2-9bcd-f415a2ea563d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0.1 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8b232e12-9180-4ed0-8876-216cce6d95a2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 0 0)
+		(end 33.1 -14)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "73671104-4a9e-4f2d-acbe-a15e00987d93")
+	)
+	(fp_text user "hole"
+		(at 33.18566 -5.37972 0)
+		(layer "F.SilkS")
+		(uuid "e39c0454-93e7-4332-a15c-a3e6650bf45d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 33 -7)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "a28542de-ad4f-4599-974f-9c2020577ad5")
+	)
+)
