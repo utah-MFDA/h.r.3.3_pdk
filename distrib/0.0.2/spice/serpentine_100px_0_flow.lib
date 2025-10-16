@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/openmfda_flow_ki2/flow/platforms/h.r.3.3/pdk/Components/verilogA_build_ng/serpentine_100px_0_flow.osdi
+.endc
+
+.model serpentine_100px_0_flow_model serpentine_100px_0_flow length=4.56m cross_section=1 nu=0.0010005 ch0_nu=0.5 ccap=100u gcap=100n
+.subckt serpentine_100px_0_flow_sp a b params: length=4.56m cross_section=1 nu=0.0010005 ch0_nu=0.5 ccap=100u gcap=100n
+N1 a b serpentine_100px_0_flow_model length=length cross_section=cross_section nu=nu ch0_nu=ch0_nu ccap=ccap gcap=gcap
+.ends
