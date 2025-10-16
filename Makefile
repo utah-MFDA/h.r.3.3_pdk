@@ -48,6 +48,7 @@ NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
 #<<<<<<< HEAD
 #export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 #=======
@@ -154,7 +155,7 @@ copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
 echo_osdi:
 	echo $(OSDI_FILES)
 
-$(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_COV) $(VA_NG_CONV)
+$(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 	$(OPENVAF) $^
 
 NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
