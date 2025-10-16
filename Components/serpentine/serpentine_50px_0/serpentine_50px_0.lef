@@ -11,7 +11,7 @@ MACRO serpentine_50px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 29.5 29.5 30.5 30.5 ;
+        RECT 23 23 37 37 ;
     END
   END in_fluid
   PIN out_fluid
@@ -19,7 +19,7 @@ MACRO serpentine_50px_0
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 89.5 29.5 90.5 30.5 ;
+        RECT 83 23 97 37 ;
     END
   END out_fluid
   OBS

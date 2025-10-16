@@ -1,0 +1,132 @@
+ 
+MACRO p_serpentine_0(L1.d, L2.d, turns.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_serpentine_0 0 0 ;
+  SIZE #L2*turns + 60# BY #L1 + 60# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 23 23 37 37 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT #turns*L2+23# #((turns+1)%2)*L1+23# #turns*L2+37# #((turns+1)%2)*L1+37# ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 #L2*turns+60# #L1+60# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_serpentine_0
+
+MACRO p_serpentine_1(L1.d, L2.d, turns.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_serpentine_1 0 0 ;
+  SIZE #L2*turns + 60# BY #L1 + 60# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 23 23 37 37 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met3 ;
+        RECT 23 23 37 37 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met2 ;
+      RECT 30 30 #L2*turns+30# #L1+30# ;
+    LAYER met3 ;
+      RECT 30 30 #L2*turns+30# #L1+30# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_serpentine_1
+ 
+MACRO p_serpentine_2(L1.d, L2.d, turns.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_serpentine_0 0 0 ;
+  SIZE #L2*turns + 60# BY #L1 + 60# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 23 23 37 37 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT #turns*L2+23# #((turns+1)%2)*L1+23# #turns*L2+37# #((turns+1)%2)*L1+37# ;
+    END
+  END out_fluid
+  OBS
+    LAYER met2 ;
+      RECT 30 30 #L2*turns+30# #L1+30# ;
+    LAYER met3 ;
+      RECT 0 0 #L2*turns+30# #L1+30# ;
+    LAYER met4 ;
+      RECT 0 0 #L2*turns+30# #L1+30# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_serpentine_2
+
+MACRO p_serpentine_3(L1.d, L2.d, turns.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_serpentine_3 0 0 ;
+  SIZE #L2*turns + 60# BY #L1 + 60# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 23 23 37 37 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met5 ;
+        RECT 23 23 37 37 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met2 ;
+      RECT 30 30 #L2*turns+30# #L1+30# ;
+    LAYER met3 ;
+      RECT 0 0 #L2*turns+30# #L1+30# ;
+    LAYER met4 ;
+      RECT 0 0 #L2*turns+30# #L1+30# ;
+    LAYER met5 ;
+      RECT 30 30 #L2*turns+30# #L1+30# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_serpentine_3

@@ -1,0 +1,129 @@
+(footprint "serpentine_300px_1"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 6.2608 0.9076 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "7a363a95-a52a-4f77-a5c3-440a61929313")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Value" "serpentine_300px_1"
+		(at 21.8 -22.8 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "16f63ff9-1dad-49ba-9e59-76ca651b7120")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0.2608 -0.0924 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "34ec8edb-1057-49ad-a0bf-d514120e4822")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0.2608 -0.0924 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "24bb1a89-7665-4bb1-89ea-cf671ea4f9b9")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0.2608 -0.0924 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c8f4b2c8-495d-4829-aa31-67a092a5025c")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 0.083 0.06)
+		(end 42.083 -41.94)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "1506c140-e201-4c4f-b72a-06c5b7b80223")
+	)
+	(fp_text user "in_fluid"
+		(at 5.7472 -6.2646 0)
+		(layer "F.SilkS")
+		(uuid "0f33b087-ed2d-47a1-83ba-29e0ff6cddde")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 6.1608 -2.9924)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "e80eeb34-e13c-4934-a39f-824ffb5a30d5")
+	)
+	(pad "2" smd rect
+		(at 29.2608 -29.0924)
+		(size 2 2)
+		(layers "F.Cu")
+		(uuid "a6d9af1a-1c0b-497d-b1d7-1b3d4cdc577e")
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layer "B.Cu")
+		(uuid "4acfa1f4-6107-48f0-aef5-dbfb3972f205")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(filled_areas_thickness no)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 0.1084 0.0346) (xy 0.083 -41.977) (xy 42.3232 -41.85) (xy 42.12 0.0346)
+			)
+		)
+	)
+)

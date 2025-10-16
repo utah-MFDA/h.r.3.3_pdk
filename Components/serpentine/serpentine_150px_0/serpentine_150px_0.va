@@ -26,6 +26,8 @@ real cqi, cqo;
 
 ground gnd ;
 
+ground gnd ;
+
 analog begin
 
    @(initial_instance) 

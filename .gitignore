@@ -25,6 +25,14 @@ VerilogA/xyce_testing/basicTest/lib/*
 Components/verilogA_build/*
 Components/scad_build/*
 Components/HR3.3_merged.lef
+*.ipynb_checkpoints
 xyce_testing/*/*/logs/*
 xyce_testing/*/*/*/logs/*
 xyce_testing/*/*/*.log
+xyce_testing/JupyterTesting/.ipynb_checkpoints/*
+
+__pycache__/
+.libs/
+
+xyce_testing/JupyterTesting/BuildLibrary.ipynb
+xyce_testing/JupyterTesting/.ipynb_checkpoints/BuildLibrary-checkpoint.ipynb

@@ -1,0 +1,138 @@
+(footprint "serpentine_300px_0"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 6.6294 1.451 0)
+		(layer "F.SilkS")
+		(uuid "21ec1347-bc52-4cb6-8ccf-e0c8c1bfccb2")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Value" "serpentine_300px_0"
+		(at 24.765 -19.3008 0)
+		(layer "F.SilkS")
+		(uuid "6580d1f1-b826-4e1a-aaa9-80dfac340cf8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 -0.2 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6b862ea2-7a41-4952-b596-b583d78cd254")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 -0.2 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "da3ff778-b0a6-4007-b863-354e72ebd2fc")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 -0.2 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1552d213-e2ee-47cc-91bc-751dcd5675ee")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 0 -0.2)
+		(end 42 -42.2)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "23f37487-c6ee-4a05-94ed-ac381b2d9ec8")
+	)
+	(fp_text user "out_fluid"
+		(at 36.195 -5.915 0)
+		(layer "F.SilkS")
+		(uuid "251ad770-3269-4e94-8d6f-8988b5d738b0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(fp_text user "in_fluid"
+		(at 5.6642 -6.5246 0)
+		(layer "F.SilkS")
+		(uuid "d7cdb94a-f413-40f3-8162-74224defad10")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 3 -3.2)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "789a2906-f373-4a40-80e6-a571e23c813b")
+	)
+	(pad "2" smd rect
+		(at 39 -3.2)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "6121bc48-fce6-499b-a264-e72d61368fb9")
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layer "B.Cu")
+		(uuid "649f827e-59ec-4cef-bb76-5eb225d7d4e1")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(filled_areas_thickness no)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 0.0254 -6.7254) (xy 0 -42.237) (xy 42.2402 -42.11) (xy 42.037 -6.7254)
+			)
+		)
+	)
+)
