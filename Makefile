@@ -47,7 +47,7 @@ VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_obje
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
 
-LEF_SRC_DIR = $(GENERAL_SRC_DIR)
+LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
@@ -62,7 +62,8 @@ LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
 									$(PDK_ROOT_DIR)/inline_reserviors \
 									$(PDK_ROOT_DIR)/valves \
 									$(PDK_ROOT_DIR)/pumps \
-									$(PDK_ROOT_DIR)/optical_measure
+									$(PDK_ROOT_DIR)/optical_measure \
+									$(COMPONENT_DIR)/capillary
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
