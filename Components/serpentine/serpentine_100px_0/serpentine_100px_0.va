@@ -14,12 +14,14 @@ concentration cv1, cv2;
 fluidDynamics fl_in, fl_out;
 branch (fl_in, fl_out) fflow;
 
+concentration gnd_C;
+ground gnd_C;
 
-(*desc="cross-section", type="instance"*) parameter real length=4.56m;
-(*desc="cross-section", type="instance"*) parameter real CROSS_SECTION=1;
+(*desc="channel length", type="instance"*) parameter real length=4.56m;
+(*desc="cross-section", type="instance"*) parameter real cross_section=1;
 // dynamic viscosity @ 20 C
-(*desc="fluid viscosty", type="instance"*) parameter real NU=0.0010005;
-(*desc="chemical viscosity param", type="instance"*) parameter real ch0_NU=0.5;
+(*desc="fluid viscosty", type="instance"*) parameter real nu=0.0010005;
+// (*desc="chemical viscosity param", type="instance"*) parameter real ch0_nu=0.5;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
 (*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
@@ -35,7 +37,6 @@ real cqi, cqo;
 real cqi_g ;
 real cqo_g ;
 
-ground gnd;
 
 analog begin
    
@@ -52,11 +53,11 @@ analog begin
       // -- adjust resistance based on cross section  
       //
       begin 
-      if (CROSS_SECTION == 1) begin
+      if (cross_section == 1) begin
          ch_width_pixels = 14;
          ch_height_layers= 10;
       end
-      else if(CROSS_SECTION == 2) begin
+      else if(cross_section == 2) begin
          ch_width_pixels = 6;
          ch_height_layers= 5;
       end
@@ -66,8 +67,9 @@ analog begin
       H = layer_height*ch_height_layers;
       L = length;
 
-      R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
-
+      R = (12*nu*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      //$display("resistance:");
+      //$display(R);
    end // end initial_model
 
    Qfl(fflow) <+ P(fl_in, fl_out)/R;
@@ -81,8 +83,8 @@ analog begin
 
    cqi_g = gcap*C(cv1) ;
    cqo_g = gcap*C(cv2) ;
-   Ci(cv1, gnd) <+ ddt(cqi_g) ;
-   Ci(cv2, gnd) <+ ddt(cqo_g) ;
+   Ci(cv1, gnd_C) <+ ddt(cqi_g) ;
+   Ci(cv2, gnd_C) <+ ddt(cqo_g) ;
 end
 
 endmodule

@@ -8,6 +8,8 @@ PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 PYTHON3 ?= python3
 
+OPENVAF ?= openvaf
+
 # Shell Setup for make
 SHELL		= /bin/bash
 .SHELLFLAGS 	= -o pipefail -c
@@ -42,10 +44,16 @@ P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 ## Verilog A targets
 
 VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
+NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
+#<<<<<<< HEAD
+#export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
+#=======
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
+#>>>>>>> origin/lib_0.0.2
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
@@ -82,9 +90,22 @@ clean_all: clean_va clean_scad clean_lef
 $(VERILOGA_BUILD_DIR):
 	mkdir -p $@
 
+$(NGSPICE_BUILD_DIR):
+	mkdir -p $@
+
 
 export VA_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
+
+
+export VA_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES)))
+export VAMS_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
+
+export VA_COPIES_NG = $(addsuffix .xyce ,$(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES))))
+export VAMS_COPIES_NG = $(addsuffix .xyce, $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES))))
+
+OSDI_FILES = $(patsubst %.va, %.osdi, $(VA_NG_CONV))
+NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
 
 copy: $(VA_COPIES) $(VAMS_COPIES)
 
@@ -93,6 +114,29 @@ $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 
 $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VAMS_FILES) $(VERILOGA_BUILD_DIR)
+
+# -- NGSPICE
+
+VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
+
+echo_vpath:
+	echo $(VPATH)
+
+$(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
+	cp $^ $@
+
+$(VAMS_COPIES_NG):  $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
+	cp $^ $@
+
+copy_ng: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
+
+$(VA_NG_CONV): %: %.xyce
+	sed 's/@(initial_instance)/\/\/@(initial_instance)/g' $^ > $@
+
+$(VAMS_NG_CONV): %: %.xyce
+	sed 's/continuous/continous/g' $^ > $@
+
+conv_ng: $(VA_NG_CONV) $(VAMS_NG_CONV)
 
 export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 
@@ -103,10 +147,36 @@ export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 $(VERILOGA_BUILD_DIR)/Makefile: $(COMPONENT_DIR)/xyce.mk
 	cp $< $@
 
+echo_va_copies_ng:
+	echo $(VA_COPIES_NG)
+	echo $(VAMS_COPIES_NG)
+
+copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
+
+echo_osdi:
+	echo $(OSDI_FILES)
+
+$(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
+	$(OPENVAF) $^
+
+NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
+
+$(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
+	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
+
+echo_ng_lib:
+	echo $(NG_LIB_FILES)
+
+#$(OPENVAF) $^
+
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
 	cd $(VERILOGA_BUILD_DIR) && make
 
 build_va: $(XYCE_LIB)
+
+build_osdi: $(OSDI_FILES)
+
+build_ng_lib: $(NG_LIB_FILES)
 
 clean_va:
 	rm -rf $(VERILOGA_BUILD_DIR)
@@ -127,6 +197,7 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
+# needs update
 export TECH_LEF = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.tlef
 export LIB_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.lib
 export GDS_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds

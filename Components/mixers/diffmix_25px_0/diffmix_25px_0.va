@@ -36,7 +36,8 @@ real co ;
 real ca ;
 real cb ;
 
-ground gnd;
+concentration gnd_C ;
+ground gnd_C ;
 
 
 analog begin
@@ -92,10 +93,10 @@ analog begin
    //Concentration signals
 
    if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i1, gnd) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
+      C(c_out, gnd_C) <+ C(c_i1, gnd_C) * (P(fl_i1, int_1)/R1) / (P(int_1, fl_out)/R3);
 
    if (P(int_1, fl_out) > 0) 
-      C(c_out, gnd) <+ C(c_i2, gnd) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
+      C(c_out, gnd_C) <+ C(c_i2, gnd_C) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
 
    co = ddt(C(c_out, gnd)) * g_ccap ;
    ca = ddt(C(c_i1, gnd)) * g_ccap ;

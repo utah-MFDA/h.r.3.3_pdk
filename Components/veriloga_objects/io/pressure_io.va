@@ -1,0 +1,49 @@
+
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module pressure_io(fl_out);
+
+// vector test
+//parameter integer vec_size = 1;
+
+output fl_out;
+
+fluidDynamics fl_out;
+
+(*desc="input-pressure", type="instance"*) parameter real pressure_psi=0;
+(*desc="input-pressure", type="instance"*) parameter real pressure_pa=0;
+
+fluidDynamics gnd_fl;
+ground gnd_fl;
+
+real pressure ;
+
+//integer i;
+
+analog begin
+
+   @(initial_instance)
+   begin : initial_instance
+
+     begin
+     if (pressure_psi != 0) begin
+       pressure = pressure_psi * 6895 ;  // psi -> pa
+     end
+     else if (pressure_pa != 0) begin 
+       pressure = pressure_pa ;
+     end
+     else begin
+       pressure = 0 ;
+     end
+     end
+
+   end
+
+   P(fl_out, gnd_fl) <+ pressure;
+   
+end
+
+endmodule
