@@ -48,13 +48,14 @@ NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+#export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
 #<<<<<<< HEAD
 #export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 #=======
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
 #>>>>>>> origin/lib_0.0.2
 
-LEF_SRC_DIR = $(GENERAL_SRC_DIR)
+LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
 SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
@@ -65,11 +66,12 @@ SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)
 # 	these will be copied in build_scad
 SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
 
-LEF_SCAD_EXTRACT = $(ROOT_DIR)/directional_reserviors \
-									$(ROOT_DIR)/inline_reserviors \
-									$(ROOT_DIR)/valves \
-									$(ROOT_DIR)/pumps \
-									$(ROOT_DIR)/optical_measure
+LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
+									$(PDK_ROOT_DIR)/inline_reserviors \
+									$(PDK_ROOT_DIR)/valves \
+									$(PDK_ROOT_DIR)/pumps \
+									$(PDK_ROOT_DIR)/optical_measure \
+									$(COMPONENT_DIR)/capillary
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
@@ -106,6 +108,9 @@ OSDI_FILES = $(patsubst %.va, %.osdi, $(VA_NG_CONV))
 NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
 
 copy: $(VA_COPIES) $(VAMS_COPIES)
+
+echo_va_cp:
+	echo $(VA_COPIES)
 
 $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VA_FILES) $(VERILOGA_BUILD_DIR)
@@ -154,7 +159,7 @@ copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
 echo_osdi:
 	echo $(OSDI_FILES)
 
-$(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_COV) $(VA_NG_CONV)
+$(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 	$(OPENVAF) $^
 
 NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
