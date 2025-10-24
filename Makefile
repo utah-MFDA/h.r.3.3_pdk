@@ -48,7 +48,7 @@ NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
+#export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
 #<<<<<<< HEAD
 #export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 #=======
@@ -108,6 +108,9 @@ OSDI_FILES = $(patsubst %.va, %.osdi, $(VA_NG_CONV))
 NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
 
 copy: $(VA_COPIES) $(VAMS_COPIES)
+
+echo_va_cp:
+	echo $(VA_COPIES)
 
 $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VA_FILES) $(VERILOGA_BUILD_DIR)

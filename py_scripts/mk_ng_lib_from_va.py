@@ -4,7 +4,7 @@ import re
 module_re = r'module\s+(\w+)\(((?:\w+\s*,\s*)*\s*\w+)\)\s*;'
 # within_module_re = r'module([\S\s]*?)endmodule'
 within_modele_re = r'module\s+(\w+)([\S\s]*?)endmodule'
-parameter_re = r'(\(\*(?:\s*\w+\=\"[^\n\"]+\"\s*,?)+\*\))\s+parameter\s+(?:real)\s+(\w+)\s*\=\s*([\w\.]+)\s*;'
+parameter_re = r'(?:^|[\n])[\t ]*(\(\*(?:\s*\w+\=\"[^\n\"]+\"\s*,?)+\*\))\s+parameter\s+(?:real)\s+(\w+)\s*\=\s*([\w\.]+)\s*;'
 
 
 def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
@@ -31,16 +31,15 @@ def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
 
         for ind, m_body in enumerate(module_body):
             if only_if_module_is_file and va_file_basename.replace('.va', '') == m_body[0]:
-                print(ind)
                 num_ports = len(va_signatures[ind][1].split(','))
                 mod_parameters = re.findall(parameter_re, m_body[1])
             elif not only_if_module_is_file:
-                pass
+                print("pass module")
             else:
-                pass
+                print("pass module")
 
         with open(lib_file, 'w+') as lib_write:
-            #lib_write.write(f'{va_file_module_basename}' + '\n')
+            # lib_write.write(f'{va_file_module_basename}' + '\n')
             lib_write.write('\n')
             lib_write.write('.control\n')
             lib_write.write(
@@ -60,7 +59,7 @@ def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
             lib_write.write(' '.join(
                 [chr(97 + a) for a in range(0, num_ports)]
             ))
-            #lib_write.write(' PARAMS:')
+            # lib_write.write(' PARAMS:')
             lib_write.write(' params:')
             for p in mod_parameters:
                 lib_write.write(f' {p[1]}={p[2]}')
