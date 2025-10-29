@@ -1,0 +1,133 @@
+(footprint "valve_40px_1"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 6.323 1.7272 0)
+		(layer "F.SilkS")
+		(uuid "ce22e984-c57e-4732-a7ea-68e37487235a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Value" "valve_40px_1"
+		(at 8.32 -6.32 0)
+		(layer "F.SilkS")
+		(uuid "824372b7-0366-4156-9067-7d4c45982ffe")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0.1 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3a036992-6579-4774-a844-5dabc8e97f33")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0.1 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8d95ad7b-ddc9-4384-8d75-2feef94b5e09")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 1.92 -1.92)
+		(end 15.5 -15.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "506d1902-6cdb-4f30-9ab8-4be7b9046d00")
+	)
+	(fp_text user "in_fluid"
+		(at 4.82 -10.82 0)
+		(layer "F.SilkS")
+		(uuid "5f7d2557-bd7e-4fb6-a166-6675fce0332c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(fp_text user "out_fluid"
+		(at 12.32 -10.82 0)
+		(layer "F.SilkS")
+		(uuid "9a82c92d-080e-4d2d-a34e-c39942927a4b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(fp_text user "out_air"
+		(at 12.82 -13.32 0)
+		(layer "F.SilkS")
+		(uuid "b349c49c-ff00-4085-998f-39130d7e9910")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(fp_text user "in_air"
+		(at 12.32 -3.82 0)
+		(layer "F.SilkS")
+		(uuid "caf976d2-3e3d-49bf-b654-4e7e987e72a6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 3.22 -8.82)
+		(size 2.2 2.2)
+		(layers "B.Cu")
+		(uuid "41c93a7d-b7f8-42bf-bc1b-c24963f06bbf")
+	)
+	(pad "2" smd rect
+		(at 14.22 -8.82)
+		(size 2.2 2.2)
+		(layers "B.Cu")
+		(uuid "48f12b64-7398-4daa-8ab4-0cec46555ea5")
+	)
+	(pad "3" smd rect
+		(at 8.62 -3.12)
+		(size 2.2 2.2)
+		(layers "B.Cu")
+		(uuid "31f9d6d7-ccac-4657-bb24-b8ed502e845b")
+	)
+	(pad "4" smd rect
+		(at 8.62 -14.22)
+		(size 2.2 2.2)
+		(layers "B.Cu")
+		(uuid "848dbdd0-d4d4-4555-ba9c-3189ba23d7a8")
+	)
+	(embedded_fonts no)
+)

@@ -1,4 +1,4 @@
-(footprint "serpentine_200px_0"
+(footprint "serpentine_100px_0F"
 	(version 20241229)
 	(generator "pcbnew")
 	(generator_version "9.0")
@@ -6,7 +6,7 @@
 	(property "Reference" "${REFERENCE}EF"
 		(at 6 1 0)
 		(layer "F.SilkS")
-		(uuid "9bbe6d60-8dda-456e-bd74-da6e7345c67b")
+		(uuid "df06fa53-1958-49cd-8505-a683aff79a38")
 		(effects
 			(font
 				(size 1 1)
@@ -14,10 +14,10 @@
 			)
 		)
 	)
-	(property "Value" "serpentine_200px_0"
-		(at 15.5448 -31.4706 0)
+	(property "Value" "serpentine_100px_0F"
+		(at 9.1694 -19.1262 0)
 		(layer "F.SilkS")
-		(uuid "9ddd8087-46ba-466a-bc87-4a1ae957c327")
+		(uuid "cc9059e1-8c4b-4cac-89e0-6b523ebfcfc1")
 		(effects
 			(font
 				(size 1 1)
@@ -29,7 +29,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "da991d81-c04c-407e-a4b5-09a3de5f7080")
+		(uuid "445a8659-d771-4b7a-8000-8d3f90313927")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -41,7 +41,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "25a75e61-70a7-40e1-9931-2cad69d987da")
+		(uuid "80eedafe-5d77-4805-9517-c450f15f8502")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -51,20 +51,20 @@
 	)
 	(attr through_hole)
 	(fp_rect
-		(start 0 0)
-		(end 30 -30)
+		(start 0.1 -0.1)
+		(end 17.9 -17.9)
 		(stroke
 			(width 0.12)
 			(type solid)
 		)
 		(fill no)
 		(layer "F.CrtYd")
-		(uuid "7d1d4455-30b0-4937-b1b8-9a4c56d592a5")
+		(uuid "547268f8-4363-4225-a4ab-702d1e5109a0")
 	)
-	(fp_text user "in_fluid"
-		(at 3.5 -5 0)
+	(fp_text user "out_fluid"
+		(at 4 -6 0)
 		(layer "F.SilkS")
-		(uuid "32865b1b-8948-461b-96a5-bf3fc081811e")
+		(uuid "5e284cd9-7e56-447d-bd04-9c2fc1bf9b19")
 		(effects
 			(font
 				(size 1 1)
@@ -72,10 +72,10 @@
 			)
 		)
 	)
-	(fp_text user "out_fluid"
-		(at 26.5 -5 0)
+	(fp_text user "in_fluid"
+		(at 14.5 -6 0)
 		(layer "F.SilkS")
-		(uuid "52a3baa9-2aaa-4431-a267-4367fab4ff8f")
+		(uuid "b1a4fb4c-f5d2-4d14-9cf7-e667b203eebc")
 		(effects
 			(font
 				(size 1 1)
@@ -84,22 +84,22 @@
 		)
 	)
 	(pad "1" smd rect
+		(at 15 -3)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "a238560e-f23c-450a-bb4a-17f411a00035")
+	)
+	(pad "2" smd rect
 		(at 3 -3)
 		(size 2 2)
 		(layers "B.Cu")
-		(uuid "68954126-a6b5-4a10-bce4-56283ba33ab2")
-	)
-	(pad "2" smd rect
-		(at 27 -3)
-		(size 2 2)
-		(layers "B.Cu")
-		(uuid "c757f9c1-a10f-435f-a81b-d8f6c12efb9c")
+		(uuid "62e1ac69-d487-483a-b56c-d2693aff7ded")
 	)
 	(zone
 		(net 0)
 		(net_name "")
 		(layer "B.Cu")
-		(uuid "ed2c38db-b8c2-4a99-a184-2eb8779adbe0")
+		(uuid "8efe9dbf-13f5-43e4-a395-28b2077dc3ae")
 		(hatch edge 0.1)
 		(connect_pads
 			(clearance 0)
@@ -123,7 +123,7 @@
 		)
 		(polygon
 			(pts
-				(xy -0.089245 -6.28383) (xy -0.1524 -29.845) (xy 30.1752 -29.9466) (xy 30 -6.3)
+				(xy 0.5 -5.2) (xy 0.5 -17.5) (xy 17.5 -17.5) (xy 17.5 -5)
 			)
 		)
 	)

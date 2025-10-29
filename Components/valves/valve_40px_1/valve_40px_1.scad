@@ -44,3 +44,12 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
 }
 
 valve_40px_1(0,0,0,"N", ren_lef=true) ;//, px=1, pitch=0) ;
+
+px = 7.6e-3;
+
+echo("SIZE") ;
+echo(180*7.6e-3) ;
+echo("PORT1", 30*px,  90*px) ;
+echo("PORT2", 150*px, 90*px) ;
+echo("PORT3", 90*px,  30*px) ;
+echo("PORT4", 90*px, 150*px) ;

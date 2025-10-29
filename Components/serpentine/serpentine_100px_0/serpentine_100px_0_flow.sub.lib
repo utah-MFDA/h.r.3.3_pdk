@@ -1,0 +1,9 @@
+
+.control
+pre_osdi ./channel_flow.osdi
+.endc
+
+.model channel_flow_mod channel_flow
+.subckt serpentine_100px_0 a b
+N1 a b channel_flow_mod lenght=4.56m crosssection=1 nu=0.0010016
+.ends

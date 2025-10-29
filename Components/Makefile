@@ -1,6 +1,17 @@
-ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+#ROOT_DIR = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+ifeq ($(PDK_DIR),)
+ifeq ($(MAKEFILE_LIST),)
+PDK_ROOT_DIR ?= $(dir $(realpath ./))
+else
+PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+endif
 
-PY_SCRIPTS_DIR = $(realpath $(ROOT_DIR)/../py_scripts)
+else # PDK_DIR defined
+PDK_ROOT_DIR = $(PDK_DIR)
+
+endif
+
+PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/../py_scripts)
 # Shell Setup for make
 SHELL		= /bin/bash
 .SHELLFLAGS 	= -o pipefail -c
@@ -20,37 +31,37 @@ KIT_NAME = h.r.3.3
 #GENERAL_SRC_DIR = valves serpentine mixers
 #
 #=======
-GENERAL_SRC_DIR = $(ROOT_DIR)/serpentine \
-									$(ROOT_DIR)/mixers \
-									$(ROOT_DIR)/directional_reserviors \
-									$(ROOT_DIR)/inline_reserviors \
-									$(ROOT_DIR)/valves \
-									$(ROOT_DIR)/pumps \
-									$(ROOT_DIR)/optical_measure
+GENERAL_SRC_DIR = $(PDK_ROOT_DIR)/serpentine \
+									$(PDK_ROOT_DIR)/mixers \
+									$(PDK_ROOT_DIR)/directional_reserviors \
+									$(PDK_ROOT_DIR)/inline_reserviors \
+									$(PDK_ROOT_DIR)/valves \
+									$(PDK_ROOT_DIR)/pumps \
+									$(PDK_ROOT_DIR)/optical_measure
 
-PCELL_SRC = $(ROOT_DIR)/p_serpentine
+PCELL_SRC = $(PDK_ROOT_DIR)/p_serpentine
 #valves
 #>>>>>>> master
 ## Verilog A targets
 
-VERILOGA_BUILD_DIR = $(ROOT_DIR)/verilogA_build
+VERILOGA_BUILD_DIR = $(PDK_ROOT_DIR)/verilogA_build
 
-VA_SRC_DIR = $(GENERAL_SRC_DIR) $(PCELL_SRC) $(ROOT_DIR)/veriloga_objects 
-VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
+VA_SRC_DIR = $(GENERAL_SRC_DIR) $(PCELL_SRC) $(PDK_ROOT_DIR)/veriloga_objects 
+export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR)
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(PCELL_SRC) $(ROOT_DIR)/scad_objects/interfaces
-SCAD_BUILD_DIR = $(ROOT_DIR)/scad_build
-SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(ROOT_DIR)/scad_objects/*.scad)
+SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(PCELL_SRC) $(PDK_ROOT_DIR)/scad_objects/interfaces
+SCAD_BUILD_DIR = $(PDK_ROOT_DIR)/scad_build
+SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(PDK_ROOT_DIR)/scad_objects/*.scad)
 
-SCAD_2_LEF_SRC_DIR = $(ROOT_DIR)/directional_reserviors \
-									$(ROOT_DIR)/inline_reserviors \
-									$(ROOT_DIR)/valves \
-									$(ROOT_DIR)/pumps \
-									$(ROOT_DIR)/optical_measure
+SCAD_2_LEF_SRC_DIR = $(PDK_ROOT_DIR)/directional_reserviors \
+									$(PDK_ROOT_DIR)/inline_reserviors \
+									$(PDK_ROOT_DIR)/valves \
+									$(PDK_ROOT_DIR)/pumps \
+									$(PDK_ROOT_DIR)/optical_measure
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(SCAD_2_LEF_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad))
 
@@ -87,7 +98,7 @@ export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 # $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES)
 # 	cd $(VERILOGA_BUILD_DIR) && $(BUILD_$(BUILD_COMMAND) -o $(MF_LIB) $(notdir $(VA_COPIES)) ./
 
-$(VERILOGA_BUILD_DIR)/Makefile: $(ROOT_DIR)/xyce.mk
+$(VERILOGA_BUILD_DIR)/Makefile: $(PDK_ROOT_DIR)/xyce.mk
 	cp $< $@
 
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
@@ -106,7 +117,7 @@ clean_va:
 # |_____|_____|_|
 #
 ################################################################
-export SC_LEF = $(ROOT_DIR)/$(KIT_NAME)_merged.lef
+export SC_LEF = $(PDK_ROOT_DIR)/$(KIT_NAME)_merged.lef
 $(SC_LEF): $(LEF_FILES)
 	echo "VERSION 5.7 ;" > $@
 	echo 'BUSBITCHARS "[]" ;' >> $@
@@ -114,9 +125,9 @@ $(SC_LEF): $(LEF_FILES)
 	cut -b 1- $^ >> $@
 	echo "END LIBRARY" >> $@
 
-export TECH_LEF = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
-export LIB_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
-export GDS_FILES = $(ROOT_DIR)/../distrib/1.0.0/h.r.3.3.gds
+export TECH_LEF = $(PDK_ROOT_DIR)/../distrib/1.0.0/h.r.3.3.tlef
+export LIB_FILES = $(PDK_ROOT_DIR)/../distrib/1.0.0/h.r.3.3.lib
+export GDS_FILES = $(PDK_ROOT_DIR)/../distrib/1.0.0/h.r.3.3.gds
 
 SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
 SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
@@ -145,7 +156,7 @@ $(SCAD_BUILD_DIR):
 	mkdir -p $@
 
 export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
+export SCAD_ROUTING_LIBRARY = $(PDK_ROOT_DIR)/../distrib/1.0.0/routing_181220.scad
 $(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
 	cut -b 1- $^ | python3 $(CLEAN_SCAD_SCRIPT) --stream > $@
 # cat scad_header.scad > $@	
@@ -177,7 +188,7 @@ check_library:
 ################################################################
 #>>>>>>> master
 #DOCKER_IMAGE = bgoenner/mfda_xyce:latest
-DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
+#DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
 
 DOCKER_LOCAL_COMP_DIR = ./
 

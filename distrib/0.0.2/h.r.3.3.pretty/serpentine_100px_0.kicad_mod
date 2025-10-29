@@ -1,7 +1,7 @@
 (footprint "serpentine_100px_0"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "${REFERENCE}EF"
 		(at 6 1 0)
@@ -22,18 +22,6 @@
 			(font
 				(size 1 1)
 				(thickness 0.015)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "3160a7d2-80a7-4753-bb6e-2298e053cc7b")
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.15)
 			)
 		)
 	)
@@ -63,18 +51,18 @@
 	)
 	(attr through_hole)
 	(fp_rect
-		(start 0 0)
-		(end 18 -18)
+		(start 0.1 -0.1)
+		(end 17.9 -17.9)
 		(stroke
 			(width 0.12)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "547268f8-4363-4225-a4ab-702d1e5109a0")
 	)
 	(fp_text user "out_fluid"
-		(at 13.4874 -12.0142 0)
+		(at 14 -6 0)
 		(layer "F.SilkS")
 		(uuid "5e284cd9-7e56-447d-bd04-9c2fc1bf9b19")
 		(effects
@@ -85,7 +73,7 @@
 		)
 	)
 	(fp_text user "in_fluid"
-		(at 5.1816 -5.207 0)
+		(at 4.5 -6 0)
 		(layer "F.SilkS")
 		(uuid "b1a4fb4c-f5d2-4d14-9cf7-e667b203eebc")
 		(effects
@@ -102,7 +90,7 @@
 		(uuid "a238560e-f23c-450a-bb4a-17f411a00035")
 	)
 	(pad "2" smd rect
-		(at 13 -15)
+		(at 15 -3)
 		(size 2 2)
 		(layers "B.Cu")
 		(uuid "62e1ac69-d487-483a-b56c-d2693aff7ded")
@@ -125,14 +113,19 @@
 			(copperpour not_allowed)
 			(footprints not_allowed)
 		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
 		(fill
 			(thermal_gap 0.5)
 			(thermal_bridge_width 0.5)
 		)
 		(polygon
 			(pts
-				(xy 6.7 -4.7) (xy 5.7 -14.4) (xy 12.8 -11.8) (xy 13.4 -2.8)
+				(xy 0.5 -5.2) (xy 0.5 -17.5) (xy 17.5 -17.5) (xy 17.5 -5)
 			)
 		)
 	)
+	(embedded_fonts no)
 )
