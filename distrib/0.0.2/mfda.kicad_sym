@@ -10288,7 +10288,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_100px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_100px_0_flow.lib"
 			(at -0.254 -4.318 0)
 			(effects
 				(font
@@ -10443,7 +10443,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_150px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_150px_0_flow.lib"
 			(at 0 0 0)
 			(effects
 				(font
@@ -10598,7 +10598,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/bg/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_200px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_200px_0_flow.lib"
 			(at 0 -3.81 0)
 			(effects
 				(font
@@ -10754,7 +10754,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/bg/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_200px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_200px_0_flow.lib"
 			(at 0 -3.81 0)
 			(effects
 				(font
@@ -10910,7 +10910,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/bg/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_200px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_200px_0_flow.lib"
 			(at 0 -3.81 0)
 			(effects
 				(font
@@ -11066,7 +11066,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/home/bg/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/serpentine_200px_0_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/serpentine_200px_0_flow.lib"
 			(at 0 -3.81 0)
 			(effects
 				(font
@@ -11495,7 +11495,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/valve_40px_1_flow.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/valve_40px_1_flow.lib"
 			(at 0.508 -4.572 0)
 			(effects
 				(font
@@ -11522,7 +11522,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" "1=fl_in 2=fl_out 3=pn_in"
+		(property "Sim.Pins" "1=fl_in 2=fl_out 3=pn_in 4=pn_out"
 			(at 0.254 -6.858 0)
 			(effects
 				(font

@@ -257,7 +257,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/pressure_io.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_io.lib"
 			(at 0 0 0)
 			(effects
 				(font
@@ -621,7 +621,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/pressure_io.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_io.lib"
 			(at -0.762 8.636 0)
 			(effects
 				(font
@@ -804,7 +804,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" "1=plus 2=minus"
+		(property "Sim.Pins" "1=fl_plus 2=fl_minus"
 			(at 0 0 0)
 			(effects
 				(font
@@ -823,7 +823,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/Users/snelgrov/kicad/verilogA_build/pressure_source.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_source.lib"
 			(at 0 0 0)
 			(effects
 				(font
@@ -832,7 +832,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Name" "pressure_src"
+		(property "Sim.Name" "pressure_source_sp"
 			(at 0 0 0)
 			(effects
 				(font
