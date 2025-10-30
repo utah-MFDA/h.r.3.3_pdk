@@ -1,0 +1,9 @@
+
+.control
+pre_osdi $(MFDA_SPICE)/valve_40px_1_flow.osdi
+.endc
+
+.model valve_40px_1_flow_model valve_40px_1_flow valve_diameter_px=200 L=0.1 CROSS_SECTION=1 nu=0.0010016 mem_th=2 fl_gnd_cap=100p pn_gnd_cap=100p
+.subckt valve_40px_1_flow_sp fl_in fl_out pn_in pn_out params: valve_diameter_px=200 L=0.1 CROSS_SECTION=1 nu=0.0010016 mem_th=2 fl_gnd_cap=100p pn_gnd_cap=100p
+N1 fl_in fl_out pn_in pn_out valve_40px_1_flow_model valve_diameter_px=valve_diameter_px L=L CROSS_SECTION=CROSS_SECTION nu=nu mem_th=mem_th fl_gnd_cap=fl_gnd_cap pn_gnd_cap=pn_gnd_cap
+.ends

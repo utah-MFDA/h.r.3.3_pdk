@@ -103,14 +103,14 @@ analog begin
       //P_lin = 0.5; 
       P_lin = 20k ; 
       P_lin_start = threshold_pressure_kPa - P_lin;     
-      $display("Pressure switch: ", P_lin_start) ;
+      // $display("Pressure switch: ", P_lin_start) ;
     end // end initial_instance
 
     norm_sw = 1 - ((P(pn_in)-P_lin_start)/(P_lin)) ;
 
     // Pressure above theshold
-    $display("P_in:", P(pn_in));
-    $display("norm sw:", norm_sw);
+    // $display("P_in:", P(pn_in));
+    // $display("norm sw:", norm_sw);
     if (P(pn_in) > threshold_pressure_kPa) begin
         Qfl(flm_i) <+ 0;
     end else if (threshold_pressure_kPa - P(pn_in) <= P_lin) begin

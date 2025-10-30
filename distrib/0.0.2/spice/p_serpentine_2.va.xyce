@@ -39,6 +39,7 @@ real ch_height_layers;
 real cqi, cqo ;
 //real cq ;
 
+concentration gnd;
 ground gnd;
 
 analog begin

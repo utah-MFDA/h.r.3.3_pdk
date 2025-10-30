@@ -14,7 +14,7 @@ concentration gnd_C ;
 ground gnd_C ;
 
 (*desc="length", type="instance"*) parameter real length=9.576m;
-(*desc="length", type="instance"*) parameter real cross_section=1;
+(*desc="length", type="instance"*) parameter integer cross_section=1;
 // dynamic viscosity @ 20 C
 (*desc="length", type="instance"*) parameter real nu=0.0010005;
 

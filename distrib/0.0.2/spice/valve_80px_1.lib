@@ -1,0 +1,9 @@
+
+.control
+pre_osdi $(MFDA_SPICE)/valve_80px_1.osdi
+.endc
+
+.model valve_80px_1_model valve_80px_1 valve_diameter_px=200 CROSS_SECTION=2 nu=0.0010016 threshold_pressure_kPa=103e3 transition_pressure_kPa=6.8e3 w0_m=1.1 CROSS_SECTION_PN=2 mem_th=20u mem_Emod=7.7 mem_v=0.3 m_fit=0.41795 N_fit=1.6020 fl_ch_h=20u pn_ch_h=100u
+.subckt valve_80px_1_sp fl_in fl_out pn_in params: valve_diameter_px=200 CROSS_SECTION=2 nu=0.0010016 threshold_pressure_kPa=103e3 transition_pressure_kPa=6.8e3 w0_m=1.1 CROSS_SECTION_PN=2 mem_th=20u mem_Emod=7.7 mem_v=0.3 m_fit=0.41795 N_fit=1.6020 fl_ch_h=20u pn_ch_h=100u
+N1 fl_in fl_out pn_in valve_80px_1_model valve_diameter_px=valve_diameter_px CROSS_SECTION=CROSS_SECTION nu=nu threshold_pressure_kPa=threshold_pressure_kPa transition_pressure_kPa=transition_pressure_kPa w0_m=w0_m CROSS_SECTION_PN=CROSS_SECTION_PN mem_th=mem_th mem_Emod=mem_Emod mem_v=mem_v m_fit=m_fit N_fit=N_fit fl_ch_h=fl_ch_h pn_ch_h=pn_ch_h
+.ends

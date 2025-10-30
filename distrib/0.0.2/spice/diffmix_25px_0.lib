@@ -1,9 +1,9 @@
 
 .control
-pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/diffmix_25px_0.osdi
+pre_osdi $(MFDA_SPICE)/diffmix_25px_0.osdi
 .endc
 
-.model diffmix_25px_0_model diffmix_25px_0 CROSS_SECTION=1 NU=0.001006
-.subckt diffmix_25px_0_sp a b c d e f params: CROSS_SECTION=1 NU=0.001006
-N1 a b c d e f diffmix_25px_0_model CROSS_SECTION=CROSS_SECTION NU=NU
+.model diffmix_25px_0_model diffmix_25px_0 CROSS_SECTION=1 NU=0.001006 g_ccap=100n
+.subckt diffmix_25px_0_sp fl_i1 fl_i2 fl_out c_i1 c_i2 c_out params: CROSS_SECTION=1 NU=0.001006 g_ccap=100n
+N1 fl_i1 fl_i2 fl_out c_i1 c_i2 c_out diffmix_25px_0_model CROSS_SECTION=CROSS_SECTION NU=NU g_ccap=g_ccap
 .ends

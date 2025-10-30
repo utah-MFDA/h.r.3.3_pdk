@@ -1,9 +1,9 @@
 
 .control
-pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/generic_io.osdi
+pre_osdi $(MFDA_SPICE)/generic_io.osdi
 .endc
 
 .model generic_io_model generic_io pressure_psi=0 pressure_pa=0
-.subckt generic_io_sp a params: pressure_psi=0 pressure_pa=0
-N1 a generic_io_model pressure_psi=pressure_psi pressure_pa=pressure_pa
+.subckt generic_io_sp fl_out params: pressure_psi=0 pressure_pa=0
+N1 fl_out generic_io_model pressure_psi=pressure_psi pressure_pa=pressure_pa
 .ends

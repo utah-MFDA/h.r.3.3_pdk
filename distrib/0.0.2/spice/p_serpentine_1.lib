@@ -1,9 +1,9 @@
 
 .control
-pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/p_serpentine_1.osdi
+pre_osdi $(MFDA_SPICE)/p_serpentine_1.osdi
 .endc
 
 .model p_serpentine_1_model p_serpentine_1 CROSS_SECTION=2 NU=0.0010005 lpv=20 L1=200 L2=50 turns=5 ccap=100n
-.subckt p_serpentine_1_sp a b c d params: CROSS_SECTION=2 NU=0.0010005 lpv=20 L1=200 L2=50 turns=5 ccap=100n
-N1 a b c d p_serpentine_1_model CROSS_SECTION=CROSS_SECTION NU=NU lpv=lpv L1=L1 L2=L2 turns=turns ccap=ccap
+.subckt p_serpentine_1_sp fl_in fl_out c_in c_out params: CROSS_SECTION=2 NU=0.0010005 lpv=20 L1=200 L2=50 turns=5 ccap=100n
+N1 fl_in fl_out c_in c_out p_serpentine_1_model CROSS_SECTION=CROSS_SECTION NU=NU lpv=lpv L1=L1 L2=L2 turns=turns ccap=ccap
 .ends

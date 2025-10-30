@@ -1,9 +1,9 @@
 
 .control
-pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/channel_flow_hr.osdi
+pre_osdi $(MFDA_SPICE)/channel_flow_hr.osdi
 .endc
 
 .model channel_flow_hr_model channel_flow_hr length=5m crosssection=1 nu=0.0010016
-.subckt channel_flow_hr_sp a b params: length=5m crosssection=1 nu=0.0010016
-N1 a b channel_flow_hr_model length=length crosssection=crosssection nu=nu
+.subckt channel_flow_hr_sp fl_in fl_out params: length=5m crosssection=1 nu=0.0010016
+N1 fl_in fl_out channel_flow_hr_model length=length crosssection=crosssection nu=nu
 .ends

@@ -1,9 +1,9 @@
 
 .control
-pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/pressure_source.osdi
+pre_osdi $(MFDA_SPICE)/pressure_source.osdi
 .endc
 
 .model pressure_source_model pressure_source pressure=34k
-.subckt pressure_source_sp a b params: pressure=34k
-N1 a b pressure_source_model pressure=pressure
+.subckt pressure_source_sp fl_plus fl_minus params: pressure=34k
+N1 fl_plus fl_minus pressure_source_model pressure=pressure
 .ends

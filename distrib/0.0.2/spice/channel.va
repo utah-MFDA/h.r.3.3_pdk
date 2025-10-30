@@ -79,7 +79,6 @@ analog begin
 
    Qfl(fl_br) <+ P(fl_br)/R;
 
-    // chem
    C(cv1, cv2) <+ 0 ;
    cqi = ccap*C(c_in,  cv1) ;
    cqo = ccap*C(c_out, cv2);
@@ -90,7 +89,6 @@ analog begin
    cqo_g = gcap*C(cv2) ;
    Ci(cv1, gnd) <+ ddt(cqi_g) ;
    Ci(cv2, gnd) <+ ddt(cqo_g) ;
-
 end
 
 endmodule
