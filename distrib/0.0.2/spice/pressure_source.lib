@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/pressure_source.osdi
+pre_osdi $MFDA_SPICE/pressure_source.osdi
 .endc
 
 .model pressure_source_model pressure_source pressure=34k

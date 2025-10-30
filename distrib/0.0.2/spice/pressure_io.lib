@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/pressure_io.osdi
+pre_osdi $MFDA_SPICE/pressure_io.osdi
 .endc
 
 .model pressure_io_model pressure_io pressure_psi=0 pressure_pa=0

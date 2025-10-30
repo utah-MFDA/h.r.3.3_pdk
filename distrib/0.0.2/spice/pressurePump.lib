@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/pressurePump.osdi
+pre_osdi $MFDA_SPICE/pressurePump.osdi
 .endc
 
 .model pressurePump_model pressurePump pressure=34k chemConcentration=0

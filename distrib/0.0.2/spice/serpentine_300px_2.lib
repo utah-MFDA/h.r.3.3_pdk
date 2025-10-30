@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/serpentine_300px_2.osdi
+pre_osdi $MFDA_SPICE/serpentine_300px_2.osdi
 .endc
 
 .model serpentine_300px_2_model serpentine_300px_2 length=106.724m cross_section=1 nu=0.0010005 ccap=100u gcap=100n

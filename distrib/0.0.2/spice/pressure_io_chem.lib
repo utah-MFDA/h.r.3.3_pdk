@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/pressure_io_chem.osdi
+pre_osdi $MFDA_SPICE/pressure_io_chem.osdi
 .endc
 
 .model pressure_io_chem_model pressure_io_chem pressure_psi=0 pressure_pa=0 chemConcentration=0

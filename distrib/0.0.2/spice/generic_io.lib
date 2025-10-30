@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/generic_io.osdi
+pre_osdi $MFDA_SPICE/generic_io.osdi
 .endc
 
 .model generic_io_model generic_io pressure_psi=0 pressure_pa=0

@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/optical_measure_300_5ch.osdi
+pre_osdi $MFDA_SPICE/optical_measure_300_5ch.osdi
 .endc
 
 .model optical_measure_300_5ch_model optical_measure_300_5ch length=3m CROSS_SECTION=1 NU=0.0010005 ch0_NU=0.5 ccap=100u

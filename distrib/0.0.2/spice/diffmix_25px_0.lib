@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/diffmix_25px_0.osdi
+pre_osdi $MFDA_SPICE/diffmix_25px_0.osdi
 .endc
 
 .model diffmix_25px_0_model diffmix_25px_0 CROSS_SECTION=1 NU=0.001006 g_ccap=100n

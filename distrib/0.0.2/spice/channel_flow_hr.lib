@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/channel_flow_hr.osdi
+pre_osdi $MFDA_SPICE/channel_flow_hr.osdi
 .endc
 
 .model channel_flow_hr_model channel_flow_hr length=5m crosssection=1 nu=0.0010016
