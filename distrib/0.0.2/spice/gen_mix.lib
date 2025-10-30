@@ -1,0 +1,9 @@
+
+.control
+pre_osdi $(MFDA_SPICE)/gen_mix.osdi
+.endc
+
+.model gen_mix_model gen_mix CROSS_SECTION=1 NU=0.001006 g_ccap=100n g_ccapa=100n g_ccapb=100n g_ccapc=100n
+.subckt gen_mix_sp a_fluid b_fluid c_fluid c_a c_b c_c params: CROSS_SECTION=1 NU=0.001006 g_ccap=100n g_ccapa=100n g_ccapb=100n g_ccapc=100n
+N1 a_fluid b_fluid c_fluid c_a c_b c_c gen_mix_model CROSS_SECTION=CROSS_SECTION NU=NU g_ccap=g_ccap g_ccapa=g_ccapa g_ccapb=g_ccapb g_ccapc=g_ccapc
+.ends

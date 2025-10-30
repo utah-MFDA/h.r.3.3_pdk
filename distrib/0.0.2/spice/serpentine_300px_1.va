@@ -11,7 +11,7 @@ concentration cv1, cv2;
 fluidDynamics fl_in, fl_out;
 
 (*desc="length", type="instance"*) parameter real length=71.146m;
-(*desc="length", type="instance"*) parameter real cross_section=1;
+(*desc="length", type="instance"*) parameter integer cross_section=1;
 (*desc="length", type="instance"*) parameter real nu=0.0010005;
 
 (*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;

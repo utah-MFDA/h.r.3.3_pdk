@@ -45,7 +45,7 @@ def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
             lib_write.write('\n')
             lib_write.write('.control\n')
             lib_write.write(
-                f'pre_osdi {va_file.replace(".va", ".osdi")}' + '\n')
+                f'pre_osdi $(MFDA_SPICE)/{os.path.basename(va_file.replace(".va", ".osdi"))}' + '\n')
             lib_write.write('.endc\n')
             lib_write.write('\n')
 
@@ -71,7 +71,7 @@ def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
             lib_write.write('N1 ')
             lib_write.write(' '.join(
                 [str(p).strip() for p in ports]
-                #[chr(97 + a) for a in range(0, num_ports)]
+                # [chr(97 + a) for a in range(0, num_ports)]
             ))
             lib_write.write(f' {va_file_module_basename}_model')
             for p in mod_parameters:

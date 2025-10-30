@@ -17,6 +17,8 @@ fluidDynamics int_1;
 (*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
 (*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
 
+(*desc="concentraion delay", type="instance"*) parameter real g_ccap = 100n;
+
 real LENGTH1;
 real LENGTH2;
 real LENGTH3;
@@ -29,6 +31,10 @@ real ch_height_layers, ch_width_pixels;
 
 real pixel_width;// = 7.6u;
 real layer_height;// = 10u;
+
+real co ;
+real ca ;
+real cb ;
 
 concentration gnd_C ;
 ground gnd_C ;
@@ -91,6 +97,14 @@ analog begin
 
    if (P(int_1, fl_out) > 0) 
       C(c_out, gnd_C) <+ C(c_i2, gnd_C) * (P(fl_i2, int_1)/R2) / (P(int_1, fl_out)/R3);
+
+   co = ddt(C(c_out, gnd_C)) * g_ccap ;
+   ca = ddt(C(c_i1, gnd_C)) * g_ccap ;
+   cb = ddt(C(c_i2, gnd_C)) * g_ccap ;
+
+   Ci(c_out, gnd_C)  <+ co ;
+   Ci(c_i1,  gnd_C)  <+ ca ;
+   Ci(c_i2,  gnd_C)  <+ cb ;
 
 end
 
