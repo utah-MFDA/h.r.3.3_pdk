@@ -379,7 +379,7 @@
 			)
 		)
 		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#sec_Independent_Sources_for"
-			(at 0 0 0)
+			(at 3.302 -6.096 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -388,7 +388,7 @@
 			)
 		)
 		(property "Description" "Volume source, constant"
-			(at 0 0 0)
+			(at -13.208 -8.128 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -397,7 +397,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=plus 2=minus"
-			(at 0 0 0)
+			(at -15.24 -3.556 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -406,7 +406,7 @@
 			)
 		)
 		(property "Sim.Device" "SUBCKT"
-			(at 0 0 0)
+			(at -12.7 -10.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -415,19 +415,21 @@
 			)
 		)
 		(property "Sim.Library" "/Users/snelgrov/kicad/verilogA_build/flow_source.lib"
-			(at 0 0 0)
+			(at -1.524 14.224 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Sim.Name" "flow_src"
-			(at 0 0 0)
+			(at -9.398 -1.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "ki_keywords" "simulation"
@@ -611,7 +613,7 @@
 			)
 		)
 		(property "Description" "Pressure flow input"
-			(at -5.08 0 0)
+			(at -13.462 -2.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -620,7 +622,7 @@
 			)
 		)
 		(property "Sim.Library" "$(HOME)/.local/share/kicad/9.0/spice/h.r.3.3_0.0.2/pressure_io.lib"
-			(at 0 0 0)
+			(at -0.762 8.636 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -629,7 +631,7 @@
 			)
 		)
 		(property "Sim.Name" "pressure_io_sp"
-			(at 0 0 0)
+			(at -4.572 -6.858 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -638,7 +640,7 @@
 			)
 		)
 		(property "Sim.Device" "SUBCKT"
-			(at 0 0 0)
+			(at -0.508 -3.048 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -647,12 +649,20 @@
 			)
 		)
 		(property "Sim.Pins" "1=fl_out"
-			(at 0 0 0)
+			(at -4.064 -5.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Sim.Params" "pressure_psi=0"
+			(at -7.62 2.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(symbol "pressure_io_0_1"
@@ -671,6 +681,42 @@
 			(polyline
 				(pts
 					(xy -1.905 1.016) (xy 0 0.635) (xy 0 -0.635) (xy -1.905 -0.889)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 0) (xy 0 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 0) (xy -0.635 0.635)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 0) (xy -0.635 -0.635)
 				)
 				(stroke
 					(width 0)
