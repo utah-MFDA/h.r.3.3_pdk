@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/diffmix_flow.osdi
+pre_osdi $MFDA_SPICE/diffmix_flow.osdi
 .endc
 
 .model diffmix_flow_model diffmix_flow NU=0.001006

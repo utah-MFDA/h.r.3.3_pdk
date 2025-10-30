@@ -45,7 +45,7 @@ def mk_ng_lib_from_va(va_file, only_if_module_is_file=True):
             lib_write.write('\n')
             lib_write.write('.control\n')
             lib_write.write(
-                f'pre_osdi $(MFDA_SPICE)/{os.path.basename(va_file.replace(".va", ".osdi"))}' + '\n')
+                f'pre_osdi $MFDA_SPICE/{os.path.basename(va_file.replace(".va", ".osdi"))}' + '\n')
             lib_write.write('.endc\n')
             lib_write.write('\n')
 

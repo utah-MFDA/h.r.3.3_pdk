@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/valve_40px_1.osdi
+pre_osdi $MFDA_SPICE/valve_40px_1.osdi
 .endc
 
 .model valve_40px_1_model valve_40px_1 valve_diameter_px=200 L=0.1 CROSS_SECTION=1 nu=0.0010016 mem_th=2 ccap=100n gcap=100n

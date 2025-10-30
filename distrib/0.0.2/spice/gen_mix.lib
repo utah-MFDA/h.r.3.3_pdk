@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/gen_mix.osdi
+pre_osdi $MFDA_SPICE/gen_mix.osdi
 .endc
 
 .model gen_mix_model gen_mix CROSS_SECTION=1 NU=0.001006 g_ccap=100n g_ccapa=100n g_ccapb=100n g_ccapc=100n

@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/channel_flow.osdi
+pre_osdi $MFDA_SPICE/channel_flow.osdi
 .endc
 
 .model channel_flow_model channel_flow length=5m crosssection=1 nu=0.0010016

@@ -1,6 +1,6 @@
 
 .control
-pre_osdi $(MFDA_SPICE)/syringePump.osdi
+pre_osdi $MFDA_SPICE/syringePump.osdi
 .endc
 
 .model syringePump_model syringePump fluidflow=34 chemConcentration=0
