@@ -1,14 +1,18 @@
 #ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 #PDK_ROOT_DIR ?= $(dir $(realpath ./))
-PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+PDK_ROOT_DIR = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+
+echo_makefile_list:
+	echo $(MAKEFILE_LIST)
+	echo $(lastword $(MAKEFILE_LIST))
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
 SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
-PYTHON3 ?= python3
+export PYTHON3 ?= python3
 
-OPENVAF ?= openvaf
+export OPENVAF ?= openvaf
 
 # Shell Setup for make
 SHELL		= /bin/bash
@@ -43,10 +47,13 @@ P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 #>>>>>>> master
 ## Verilog A targets
 
-VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
-NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
+echo_pdk_root:
+	echo $(PDK_ROOT_DIR)
 
-VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
+VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
+NGSPICE_BUILD_DIR ?= $(COMPONENT_DIR)/verilogA_build_ng
+
+export VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 #export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
 #<<<<<<< HEAD
@@ -125,6 +132,9 @@ VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
 echo_vpath:
 	echo $(VPATH)
 
+echo_va:
+	echo $(VA_FILES)
+
 $(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
 	cp $^ $@
 
@@ -164,8 +174,14 @@ $(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 
 NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
 
+ifneq ($(USE_REL_PATH),)
+$(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
+	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^ \
+		--use_relative_path
+else
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
+endif
 
 echo_ng_lib:
 	echo $(NG_LIB_FILES)
@@ -313,6 +329,6 @@ clean_xyce_build: clean_va_build
 make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
 
 # if util exists
-ifneq (,$(wildcard ./util.mk))
-include util.mk
-endif
+# ifneq (,$(wildcard ./util.mk))
+# include util.mk
+# endif
