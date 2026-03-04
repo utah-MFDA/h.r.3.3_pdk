@@ -11,25 +11,25 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         r_ch=20, i_depth=10, d_depth=5, d_ch_distance=10, num_of_ch=5, init_path_len=27,
         px=px, layer=layer, lpv=lpv, pitch=pitch, fn=30, offset_layer=offset_layer,
        chan=[10, 10, 14], shape="cube", center_chambers=true, flip_z=false) ;
-        
+
         chan_sz = [chan[0]*px, chan[1]*px, chan[2]*layer] ;
-        
+
         translate([xpos*px, ypos*px, zpos*layer])
         translate([29*px,120/2*px,(lpv*4-5)*layer])
         cube(chan_sz, center=true) ;
-        
+
         translate([xpos*px, ypos*px, zpos*layer])
         translate([331*px,120/2*px,(lpv*4-5)*layer])
         cube(chan_sz, center=true) ;
     }
-    
+
     translate([0,0,-lpv*layer])
     obj() ;
-    
+
     module lef()
     {
         lef_size(360, 120) ;
-        
+
         lef_layer("met1")
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met2")
@@ -48,10 +48,10 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
         lef_obs("RECT", [30, 30, 330, 90]) ;
         lef_layer("met9")
         lef_obs("RECT", [30, 30, 330, 90]) ;
-        
+
         lef_layer("met4")
         lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
-        
+
         lef_layer("met4")
         lef_port("out_fluid", "OUTPUT", "RECT", [323, 53, 337, 67]) ;
     }

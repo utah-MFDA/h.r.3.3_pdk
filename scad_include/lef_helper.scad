@@ -1,4 +1,3 @@
-// TODO there are two copies of this file.
 include <lef_scad_config.scad>
 
 ren_th = 0.1 ;
@@ -62,15 +61,15 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
 {
     if(port_name=="" || direction=="" || geometry=="" || pts==false)
         echo("module def: lef_port(port_name, direction, geom, pts)") ;
-    
+
     port_center = (
       len(pts)==4 ? [
         (pts[0]+pts[2])/2, ///2-get_config("via_w")/2,
         (pts[1]+pts[3])/2, ///2-get_config("via_w")/2,
         (pts[0]+pts[2])/2, ///2+get_config("via_w")/2,
         (pts[1]+pts[3])/2 ///2+get_config("via_w")/2
-      ] : (len(pts)==2 ? 
-        (!is_num(pts[0]) ? 
+      ] : (len(pts)==2 ?
+        (!is_num(pts[0]) ?
           [
             (pts[0][0]+pts[1][0])/2,
             (pts[0][1]+pts[1][1])/2,
@@ -95,7 +94,7 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
             -get_config("chan_def")[0]/2,
             get_config("chan_def")[0]/2,
             get_config("chan_def")[0]/2,
-          ] : 
+          ] :
           [
             get_config("chan_def")[0],
             get_config("chan_def")[0]
@@ -106,19 +105,19 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
     echo(len(pts)) ;
     echo(port_center) ;
     echo(chan_centered) ;
-    
+
     if(geometry=="RECT" || geometry=="rect")
     {
         if(len(pts)==4){
         color(port_clr1)
         lef_rect(
             (port_center + chan_centered
-            )*(px!=0?px:get_config("px")), 
+            )*(px!=0?px:get_config("px")),
             (layer_h!=0?layer_h:get_config("chan_def")[1])*get_config("layer") // get channel height
             ) ;
         color(port_clr2, 0.6)
             lef_rect(
-            pts*(px!=0?px:get_config("px")), 
+            pts*(px!=0?px:get_config("px")),
             //(layer_h!=0?layer_h:get_config("layer")) * (get_config("lpv")-1)) ;
             (layer_h!=0?layer_h:get_config("layer")) * (get_config("lpv")-1)
             ) ;
@@ -127,7 +126,7 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
               //(pts[1]+pts[3])/2-get_config("via_w")/2,
               //(pts[0]+pts[2])/2+get_config("via_w")/2,
               //(pts[1]+pts[3])/2+get_config("via_w")/2
-            //] 
+            //]
         }
         if(len(pts)==2)
         {
@@ -135,14 +134,14 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
             color(port_clr1)
             lef_rect(
                 (pts
-                )*(px!=0?px:get_config("px")), 
+                )*(px!=0?px:get_config("px")),
                 (layer_h!=0?layer_h:get_config("chan_def")[1])*get_config("layer"), // get channel height
                 center=center
                 ) ;
             color(port_clr2, 0.6)
             lef_rect(
                 (pts
-                ) * (px!=0?px:get_config("px")), 
+                ) * (px!=0?px:get_config("px")),
                 (layer_h!=0?layer_h:get_config("layer"))*(get_config("lpv")-1),
                 center=center
                 ) ;
@@ -150,7 +149,7 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
             color(port_clr1)
             lef_rect(
                 (port_center + chan_centered
-                )*(px!=0?px:get_config("px")), 
+                )*(px!=0?px:get_config("px")),
                 (layer_h!=0?layer_h:get_config("chan_def")[1])*get_config("layer"), // get channel height
                 center=center
                 ) ;
@@ -158,13 +157,13 @@ module lef_port(port_name="", direction="", geometry="", pts=false, px=0, layer_
         lef_rect(
             [pts[0],pts[1],
             pts[0]+get_config("via_w"),
-            pts[1]+get_config("via_w")]*(px!=0?px:get_config("px")), 
+            pts[1]+get_config("via_w")]*(px!=0?px:get_config("px")),
                 (layer_h!=0?layer_h:get_config("layer"))*(get_config("lpv")-1),
                 center=center
                 ) ;
           }
         }
-    } 
+    }
 }
 
 module lef_rect(pts, th=ren_th, center=true)
@@ -187,14 +186,14 @@ module lef_rect(pts, th=ren_th, center=true)
         (len(pts)==4?abs(pts[1]):0));
 
     echo(ox, oy) ;
-    translate([ox, oy, 0]) 
+    translate([ox, oy, 0])
         cube([w, h, th]) ;
 }
 
 module lef_layer(layer_name)
 {
     l_off = get_config("layer") * get_config("lpv") * get_layer_index(layer_name) ;
-    
+
     translate([0,0,l_off])
         children() ;
 }
