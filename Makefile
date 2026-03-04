@@ -1,5 +1,3 @@
-#ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-#PDK_ROOT_DIR ?= $(dir $(realpath ./))
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
@@ -23,12 +21,6 @@ DATE = $(date '+%Y-%m-%d')
 
 KIT_NAME = h.r.3.3
 
-#<<<<<<< HEAD
-#KIT_NAME = h.r.3.3
-#
-#GENERAL_SRC_DIR = valves serpentine mixers
-#
-#=======
 GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/mixers \
 									$(COMPONENT_DIR)/directional_reserviors \
@@ -39,21 +31,13 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/pumps
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
-#valves
-#>>>>>>> master
 ## Verilog A targets
-
 VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
 NGSPICE_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-#export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
-#<<<<<<< HEAD
-#export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
-#=======
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
-#>>>>>>> origin/lib_0.0.2
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
@@ -257,10 +241,6 @@ check_library:
 # |_| \_\___|_| |_| |_|\___/ \__\___|
 #
 ################################################################
-#>>>>>>> master
-#DOCKER_IMAGE = bgoenner/mfda_xyce:latest
-#DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
-
 DOCKER_LOCAL_COMP_DIR = ./
 
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
