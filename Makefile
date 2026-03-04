@@ -109,9 +109,6 @@ NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
 
 copy: $(VA_COPIES) $(VAMS_COPIES)
 
-echo_va_cp:
-	echo $(VA_COPIES)
-
 $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VA_FILES) $(VERILOGA_BUILD_DIR)
 
@@ -121,9 +118,6 @@ $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 # -- NGSPICE
 
 VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
-
-echo_vpath:
-	echo $(VPATH)
 
 $(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
 	cp $^ $@
@@ -150,14 +144,7 @@ export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 $(VERILOGA_BUILD_DIR)/Makefile: $(COMPONENT_DIR)/xyce.mk
 	cp $< $@
 
-echo_va_copies_ng:
-	echo $(VA_COPIES_NG)
-	echo $(VAMS_COPIES_NG)
-
 copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
-
-echo_osdi:
-	echo $(OSDI_FILES)
 
 $(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 	$(OPENVAF) $^
@@ -166,9 +153,6 @@ NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
 
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
-
-echo_ng_lib:
-	echo $(NG_LIB_FILES)
 
 #$(OPENVAF) $^
 
