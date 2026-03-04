@@ -10,40 +10,40 @@ MACRO valve_40px_1
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met1 ;
-        RECT 29.5 89.5 30.5 90.5 ;
+      LAYER met2 ;
+        RECT 23 83 37 97 ;
     END
   END in_fluid
   PIN out_fluid
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met1 ;
-        RECT 149.5 89.5 150.5 90.5 ;
+      LAYER met2 ;
+        RECT 143 83 157 97 ;
     END
   END out_fluid
   PIN in_air
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
-        RECT 89.5 29.5 90.5 30.5 ;
+      LAYER met4 ;
+        RECT 83 23 97 37 ;
     END
   END in_air
   PIN out_air
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
-        RECT 89.5 149.5 90.5 150.5 ;
+      LAYER met4 ;
+        RECT 83 143 97 157 ;
     END
   END out_air
   OBS
-    LAYER met1 ;
-      RECT 30 30 150 150 ;
     LAYER met2 ;
       RECT 30 30 150 150 ;
     LAYER met3 ;
+      RECT 30 30 150 150 ;
+    LAYER met4 ;
       RECT 30 30 150 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;

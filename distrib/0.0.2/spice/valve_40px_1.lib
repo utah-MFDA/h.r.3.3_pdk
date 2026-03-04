@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/valve_40px_1.osdi
+.endc
+
+.model valve_40px_1_model valve_40px_1 valve_diameter_px=200 L=0.1 CROSS_SECTION=1 nu=0.0010016 mem_th=2 ccap=100n gcap=100n
+.subckt valve_40px_1_sp a b c d e f params: valve_diameter_px=200 L=0.1 CROSS_SECTION=1 nu=0.0010016 mem_th=2 ccap=100n gcap=100n
+N1 a b c d e f valve_40px_1_model valve_diameter_px=valve_diameter_px L=L CROSS_SECTION=CROSS_SECTION nu=nu mem_th=mem_th ccap=ccap gcap=gcap
+.ends

@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/diffmix_flow.osdi
+.endc
+
+.model diffmix_flow_model diffmix_flow NU=0.001006
+.subckt diffmix_flow_sp a b c params: NU=0.001006
+N1 a b c diffmix_flow_model NU=NU
+.ends

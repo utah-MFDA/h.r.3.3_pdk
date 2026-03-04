@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/serpentine_300px_4.osdi
+.endc
+
+.model serpentine_300px_4_model serpentine_300px_4 length=177.88m cross_section=1 nu=0.0010005 ccap=100u gcap=100n
+.subckt serpentine_300px_4_sp a b c d params: length=177.88m cross_section=1 nu=0.0010005 ccap=100u gcap=100n
+N1 a b c d serpentine_300px_4_model length=length cross_section=cross_section nu=nu ccap=ccap gcap=gcap
+.ends

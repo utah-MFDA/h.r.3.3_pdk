@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/p_serpentine_2.osdi
+.endc
+
+.model p_serpentine_2_model p_serpentine_2 length=5m CROSS_SECTION=1 NU=0.0010016 ccap=100u L1=200 L2=50 turns=5
+.subckt p_serpentine_2_sp a b c d params: length=5m CROSS_SECTION=1 NU=0.0010016 ccap=100u L1=200 L2=50 turns=5
+N1 a b c d p_serpentine_2_model length=length CROSS_SECTION=CROSS_SECTION NU=NU ccap=ccap L1=L1 L2=L2 turns=turns
+.ends

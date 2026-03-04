@@ -1,0 +1,165 @@
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module valve_40px_1(fl_in, fl_out, pn_in, pn_out, c_in, c_out);
+
+inout fl_in;
+inout fl_out;
+inout c_in;
+inout c_out;
+inout pn_in;
+inout pn_out;
+
+fluidDynamics fl_in, fl_out;
+fluidDynamics fl_m ;
+fluidDynamics pn_in, pn_out;
+
+concentration c_in, c_out;
+concentration cv1, cv2 ;
+
+branch (fl_in, fl_m)  flm_i ;
+branch (fl_out, fl_m) flm_o ;
+
+concentration gnd ;
+ground gnd ;
+
+branch (c_in,  cv1) cci ;
+branch (c_out, cv2) cco ;
+branch (cv1, cv2)   cintern ;
+branch (cv1, gnd)   cg1 ;
+branch (cv2, gnd)   cg2 ;
+
+(*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
+(*desc="length", type="instance"*)         parameter real L = 0.1;
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION = 1;
+(*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
+(*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100n ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
+
+real pixel_size; 
+real layer_height;
+real threshold_pressure_kPa;
+
+real H_layer, W_px;
+real Hm, Wm, Lm;
+//real dia_m ;
+//real mem_th_m;
+real Ri_valve;
+real Ro_valve;
+
+real P_lin, P_lin_start;
+
+real cqi ;
+real cqo ;
+real cqi_g ;
+real cqo_g ;
+
+// debugging var
+real norm_sw ;
+
+analog begin
+
+    @(initial_instance) 
+    begin : initial_instance
+      pixel_size = 7.6u;
+      layer_height = 10u;
+
+      threshold_pressure_kPa = 103k;
+      
+      begin
+        if (CROSS_SECTION == 1) begin
+          // standard 1 
+          H_layer = 5;
+          W_px = 6;
+        end
+        else if (CROSS_SECTION == 2) begin
+          // standard 2
+          H_layer = 8;
+          W_px = 14; 
+        end
+        else begin
+          H_layer = 8;
+          W_px = 14; 
+        end
+      end // end if
+
+      // Valve standard size 20px
+      //dia_m = pixel_size*valve_diameter_px; 
+      //mem_th_m = pixel_size*mem_th;
+
+
+      // converts the channel size to meters
+      Lm = L;
+      Hm = H_layer*layer_height; 
+      Wm = W_px*pixel_size;
+
+      Ri_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+      Ro_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+
+      // linear region of valve transition
+      //P_lin = 0.5; 
+      P_lin = 20k ; 
+      P_lin_start = threshold_pressure_kPa - P_lin;     
+      $display("Pressure switch: ", P_lin_start) ;
+    end // end initial_instance
+
+    norm_sw = 1 - ((P(pn_in)-P_lin_start)/(P_lin)) ;
+
+    // Pressure above theshold
+    $display("P_in:", P(pn_in));
+    $display("norm sw:", norm_sw);
+    if (P(pn_in) > threshold_pressure_kPa) begin
+        Qfl(flm_i) <+ 0;
+    end else if (threshold_pressure_kPa - P(pn_in) <= P_lin) begin
+        Qfl(flm_i) <+ P(flm_i) / Ri_valve * \
+              (1 - ((P(pn_in) - P_lin_start) / (P_lin)));
+              //(1 - ((P(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start)));
+    end else begin
+        Qfl(flm_i) <+ P(flm_i) / Ri_valve;
+    end 
+
+    Qfl(flm_o) <+ P(flm_o) / Ro_valve ;
+
+    //  ----------------------------
+    // Concentration calcs
+
+    // merge node cv1 with cv2
+    C(cintern) <+ 0 ;
+
+    // cap between cv1 cin
+    cqi = ccap*C(cci) ;
+    Ci(cci) <+ ddt(cqi) ;
+    // ground cv1
+    cqi_g = gcap*C(cg1) ;
+    Ci(cg1) <+ ddt(cqi_g) ;
+
+    // cap between cv2 cout
+    cqo = ccap*C(cco);
+    Ci(cco) <+ ddt(cqo) ;
+    // ground cv2
+    cqo_g = gcap*C(cg2) ;
+    Ci(cg2) <+ ddt(cqo_g) ;
+
+
+    //if (P(pn_in) >= threshold_pressure_PSI)
+    //    targ_q = P(fl_in, fl_out)/R_valve;
+    //else 
+    //    targ_q = 0 ;
+
+    //else if (threshold_pressure_PSI - P(pn_in) <= 2) 
+    //    Q(fl_in, fl_out) <+ P(fl_in, fl_out)/R_valve - P(fl_in, fl_out)/R_valve*((P(pn_in)-13)/(threshold_pressure_PSI-13));
+    
+
+    //Q(fl_in, fl_out) <+ ddt(targ_q - q_prev);
+
+    //q_prev    = q_present;
+    //q_present = ddt(targ_q - q_prev);
+     
+
+    
+end // end analog
+
+endmodule

@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/syringePump.osdi
+.endc
+
+.model syringePump_model syringePump fluidflow=34 chemConcentration=0
+.subckt syringePump_sp a b params: fluidflow=34 chemConcentration=0
+N1 a b syringePump_model fluidflow=fluidflow chemConcentration=chemConcentration
+.ends

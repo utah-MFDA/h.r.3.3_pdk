@@ -1,0 +1,278 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module capillary_expansion(fl_in, fl_out);
+
+inout fl_in, fl_out;
+fluidDynamics fl_in, fl_out;
+fluidDynamics fl_e1;
+fluidDynamics fl_e2;
+branch (fl_in, fl_e1) fl_br_i ;
+branch (fl_e1, fl_e2) fl_br_e ;
+branch (fl_e2, fl_out) fl_br_o ;
+
+fluidDynamics fl_e1_sur ;
+
+//fluidDynamics fl_gnd ;
+//branch (fl_e1_sur, fl_gnd) surr_t_max ;
+//ground fl_gnd ;
+
+branch (fl_e1, fl_e1_sur) surr_t_chan ;
+branch (fl_e1_sur, fl_e2) surr_t_max ;
+
+// volume nodes
+//fluidDynamics vol_total ;
+//fluidDynamics vol_cur ;
+//fluidDynamics vol_gnd ;
+
+//output vol_cur ;
+//ground vol_gnd ;
+//branch (vol_total, vol_gnd) chan_vol ;
+//branch (vol_total, vol_cur) chan_vol_cur ;
+//branch (vol_cur,   vol_gnd) chan_vol_holding ;
+
+// *-----*====*-----*
+// in    e1   e2    out
+
+//inout c_in, c_out;
+//concentration c_in, c_out;
+//concentration c_v;
+//concentration cv1, cv2;
+//branch (c_in, c_out) chem ;
+
+(*desc="cross-section", type="instance"*) parameter real length=5m;
+(*desc="cross-section 1", type="instance"*) parameter real CROSS_SECTION1=1; 
+(*desc="cross-section 2", type="instance"*) parameter real CROSS_SECTION2=4; 
+(*desc="fluid viscosity", type="instance"*) parameter real NU=0.0010016;
+(*desc="surface tension parameter", type="instance"*) parameter real S=71.78m; // N m^-1
+
+(*desc="blocked", type="instance"*) parameter real block=0 ;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
+//(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
+
+real pixel_size;
+real layer_height;
+real W1, H1, L1;
+real W2, H2, L2;
+real Ri;
+real Re;
+real Ro;
+real ch_width_pixels_1;
+real ch_height_layers_1;
+real ch_width_pixels_2;
+real ch_height_layers_2;
+
+// -- volume calc testing
+real flow_expan ;
+real in_flow ;
+real exp_vol ; // total vol
+
+//real exp_flow ; // flow into volume
+//real exp_fl_vol ; // flow "charging" into volume
+
+real theta_h2o ; // contact angle
+
+real P_small ;
+real P_large ;
+real P_p_vol ;
+
+real cqi ;
+real cqo ;
+real cqi_g ;
+real cqo_g ;
+//real cq ;
+
+real exp_inter ;
+
+//ground gnd;
+
+analog begin
+
+   //@(initial_instance) 
+   begin : initial_instance
+      pixel_size = 7.6u; 
+      layer_height = 10u;
+   
+   
+      begin 
+      if (CROSS_SECTION1 == 1) begin
+         ch_width_pixels_1 = 14;
+         ch_height_layers_1= 10;
+      end
+      else if(CROSS_SECTION1 == 2) begin
+         ch_width_pixels_1 = 6;
+         ch_height_layers_1= 5;
+      end
+      else if(CROSS_SECTION1 == 3) begin
+         ch_width_pixels_1 = 28;
+         ch_height_layers_1= 20;
+      end
+      else if(CROSS_SECTION1 == 4) begin
+         ch_width_pixels_1 = 42;
+         ch_height_layers_1= 30;
+      end
+      else if(CROSS_SECTION1 == 5) begin
+         ch_width_pixels_1 = 70;
+         ch_height_layers_1= 50;
+      end
+      end
+
+      begin 
+      if (CROSS_SECTION2 == 1) begin
+         ch_width_pixels_2 = 14;
+         ch_height_layers_2= 10;
+      end
+      else if(CROSS_SECTION2 == 2) begin
+         ch_width_pixels_2 = 6;
+         ch_height_layers_2= 5;
+      end
+      else if(CROSS_SECTION2 == 3) begin
+         ch_width_pixels_2 = 28;
+         ch_height_layers_2= 20;
+      end
+      else if(CROSS_SECTION2 == 4) begin
+         ch_width_pixels_2 = 42;
+         ch_height_layers_2= 30;
+      end
+      else if(CROSS_SECTION2 == 5) begin
+         ch_width_pixels_2 = 70;
+         ch_height_layers_2= 50;
+      end
+      end
+
+      W1 = pixel_size * ch_width_pixels_1;
+      H1 = layer_height*ch_height_layers_1;
+      L1 = length;
+
+      W2 = pixel_size * ch_width_pixels_2;
+      H2 = layer_height*ch_height_layers_2;
+      L2 = length;
+
+      Ri = (12*NU*L1) / (1 - 0.63*(H1/W1)) * 1/(H1*H1*H1*W1);
+      Re = (12*NU*L2) / (1 - 0.63*(H2/W2)) * 1/(H2*H2*H2*W2);
+      Ro = (12*NU*L1) / (1 - 0.63*(H1/W1)) * 1/(H1*H1*H1*W1);
+
+      // -- vol
+
+      exp_vol = W2 * H2 * L2 ;
+      
+      theta_h2o = 70 * 3.141 / 180 ;
+
+      // dP = 2 nu * (1/W + 1/H) cos(theta) ;
+      P_small = 2 * S * (1/W1 + 1/H1) * cos(theta_h2o) ;
+      P_large = 2 * S * (1/W2 + 1/H2) * cos(theta_h2o) ;
+
+      P_p_vol = exp_vol / (P_small - P_large)  ;
+
+      $display("Small: ", P_small) ;
+      $display("Large: ", P_large) ;
+      $display("Exp total: ", exp_vol) ;
+      $display("Cap: ", P_p_vol) ;
+   end
+
+
+
+   //begin
+   //if (block == 0) begin
+     //flow_expan = P(fl_br_e)/Re ;
+   //end
+   //else begin
+     //flow_expan = 0 ;
+   //end
+   //end
+
+   in_flow = P(fl_br_i)/Ri ;
+
+   begin
+   if (block == 0) begin
+      Qfl(surr_t_chan) <+ 0 ;
+      flow_expan = P(fl_br_e)/Re ;
+   end
+   else begin
+      // sm_pr < pr < lg_pr
+      //
+      //  -- * --||--- * -- PN -- * --
+      //
+      //     surr_chan   sur_max
+      //
+
+      //exp_inter = tanh(P(surr_t_chan)) * (exp_vol/10) ;
+      begin
+      if ((P(surr_t_chan) < (P_small - P_large) && in_flow < 0) || \
+        (P(surr_t_chan) >= 0 && in_flow >= 0) ) begin
+        //exp_inter = P_p_vol * P(surr_t_chan) ;
+        flow_expan = P(fl_br_e)/Re ;
+      end
+      else begin
+        //exp_inter = 0 ;
+        flow_expan = 0 ;
+      end
+      end
+
+      exp_inter = P_p_vol * P(surr_t_chan) ;
+
+      Qfl(surr_t_chan) <+ ddt(exp_inter) ;
+
+      P(surr_t_max) <+ - P_small ;
+      //P(surr_t_chan) <+ P_small ;
+      //flow_expan = 0 ;
+
+      $display("flow: ", in_flow) ;
+      $display("Chan: ", P(surr_t_chan)) ;
+      $display("Max:  ", P(surr_t_max)) ;
+   end
+   end
+
+   Qfl(fl_br_i) <+ in_flow;
+   Qfl(fl_br_e) <+ flow_expan;
+   Qfl(fl_br_o) <+ P(fl_br_o)/Ro;
+
+
+   // ------------------
+   // -- vol stuff
+
+   //V(chan_vol) <+ exp_vol ;
+
+   //begin
+   //if (P(chan_vol_holding) < exp_vol) begin
+     //Qfl(chan_vol_cur) <+ in_flow ;
+     //exp_fl_vol = ddt(P(chan_vol_holding)) ;
+
+     //$display("Flow in: ", in_flow) ;
+     //$display("Flow exp: ", exp_flow) ;
+     //$display("Flow cap: ", exp_fl_vol) ;
+     //$display("Pr chan vol", P(chan_vol_holding)) ;
+   //end
+   //else begin
+     ////exp_flow = 0 ;
+     //Qfl(chan_vol_cur) <+ 0 ;
+     //exp_fl_vol = 0 ;
+   //end
+   //end
+
+   //$display("Vol P", P(chan_vol_cur)) ;
+   //Qfl(chan_vol_holding) <+ exp_fl_vol ;
+
+   // ------------------
+
+
+
+    // chem
+   //C(cv1, cv2) <+ 0 ;
+   //cqi = ccap*C(c_in,  cv1) ;
+   //cqo = ccap*C(c_out, cv2);
+   //Ci(c_in,  cv1) <+ ddt(cqi) ;
+   //Ci(c_out, cv2) <+ ddt(cqo) ;
+
+   //cqi_g = gcap*C(cv1) ;
+   //cqo_g = gcap*C(cv2) ;
+   //Ci(cv1, gnd) <+ ddt(cqi_g) ;
+   //Ci(cv2, gnd) <+ ddt(cqo_g) ;
+
+end
+
+endmodule

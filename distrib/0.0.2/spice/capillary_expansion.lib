@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/capillary_expansion.osdi
+.endc
+
+.model capillary_expansion_model capillary_expansion length=5m CROSS_SECTION1=1 CROSS_SECTION2=4 NU=0.0010016 S=71.78m block=0 ccap=100u gcap=100n
+.subckt capillary_expansion_sp a b params: length=5m CROSS_SECTION1=1 CROSS_SECTION2=4 NU=0.0010016 S=71.78m block=0 ccap=100u gcap=100n
+N1 a b capillary_expansion_model length=length CROSS_SECTION1=CROSS_SECTION1 CROSS_SECTION2=CROSS_SECTION2 NU=NU S=S block=block ccap=ccap gcap=gcap
+.ends

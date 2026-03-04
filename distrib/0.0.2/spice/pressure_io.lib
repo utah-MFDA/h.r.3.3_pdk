@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/pressure_io.osdi
+.endc
+
+.model pressure_io_model pressure_io pressure_psi=0 pressure_pa=0
+.subckt pressure_io_sp a params: pressure_psi=0 pressure_pa=0
+N1 a pressure_io_model pressure_psi=pressure_psi pressure_pa=pressure_pa
+.ends

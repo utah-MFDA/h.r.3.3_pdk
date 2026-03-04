@@ -1,0 +1,9 @@
+
+.control
+pre_osdi /home/u1146591/MFDA/h.r.3.3_devel/Components/verilogA_build_ng/pressurePump.osdi
+.endc
+
+.model pressurePump_model pressurePump pressure=34k chemConcentration=0
+.subckt pressurePump_sp a b params: pressure=34k chemConcentration=0
+N1 a b pressurePump_model pressure=pressure chemConcentration=chemConcentration
+.ends

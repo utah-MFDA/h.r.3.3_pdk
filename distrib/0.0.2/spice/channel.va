@@ -1,0 +1,96 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module channel(fl_in, fl_out, c_in, c_out);
+
+inout fl_in, fl_out;
+fluidDynamics fl_in, fl_out;
+branch (fl_in, fl_out) fl_br ;
+
+inout c_in, c_out;
+concentration c_in, c_out;
+//concentration c_v;
+concentration cv1, cv2;
+//branch (c_in, c_out) chem ;
+
+(*desc="channel length", type="instance"*) parameter real length=5m;
+(*desc="cross-section", type="instance"*) parameter real cross_section=1; 
+(*desc="viscosity", type="instance"*) parameter real nu=0.0010016;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+(*desc="capacitance ground", type="instance"*) parameter real gcap=100n ;
+//(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
+
+real pixel_size;
+real layer_height;
+real W, H, L;
+real R;
+real ch_width_pixels;
+real ch_height_layers;
+
+real cqi ;
+real cqo ;
+real cqi_g ;
+real cqo_g ;
+//real cq ;
+
+concentration gnd;
+ground gnd;
+
+analog begin
+
+   //@(initial_instance) 
+   begin : initial_instance
+      pixel_size = 7.6u; 
+      layer_height = 10u;
+   
+   
+      begin 
+      if (cross_section == 1) begin
+         ch_width_pixels = 14;
+         ch_height_layers= 10;
+      end
+      else if(cross_section == 2) begin
+         ch_width_pixels = 6;
+         ch_height_layers= 5;
+      end
+      else if(cross_section == 3) begin
+         ch_width_pixels = 28;
+         ch_height_layers= 20;
+      end
+      else if(cross_section == 4) begin
+         ch_width_pixels = 42;
+         ch_height_layers= 30;
+      end
+      else if(cross_section == 5) begin
+         ch_width_pixels = 70;
+         ch_height_layers= 50;
+      end
+      end
+
+      W = pixel_size * ch_width_pixels;
+      H = layer_height*ch_height_layers;
+      L = length;
+
+      R = (12*nu*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   end
+
+   Qfl(fl_br) <+ P(fl_br)/R;
+
+    // chem
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
+
+   cqi_g = gcap*C(cv1) ;
+   cqo_g = gcap*C(cv2) ;
+   Ci(cv1, gnd) <+ ddt(cqi_g) ;
+   Ci(cv2, gnd) <+ ddt(cqo_g) ;
+
+end
+
+endmodule

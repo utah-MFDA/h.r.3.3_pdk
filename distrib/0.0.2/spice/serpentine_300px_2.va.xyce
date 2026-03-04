@@ -1,0 +1,81 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module serpentine_300px_2(fl_in, fl_out, c_in, c_out);
+
+inout fl_in, fl_out, c_in, c_out;
+concentration c_in, c_out;
+concentration cv1, cv2;
+fluidDynamics fl_in, fl_out;
+
+(*desc="length", type="instance"*) parameter real length=106.724m;
+(*desc="length", type="instance"*) parameter real cross_section=1;
+// dynamic viscosity @ 20 C
+(*desc="length", type="instance"*) parameter real nu=0.0010005;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
+
+real pixel_size;
+real layer_height;
+real W, H, L;
+real R;
+real ch_width_pixels, ch_height_layers;
+real cqi, cqo;
+real cqi_g ;
+real cqo_g ;
+
+concentration gnd ;
+ground gnd;
+
+analog begin
+
+   @(initial_instance) 
+   begin : initial_instance
+      
+      //
+      // -- print resolution definitions
+      //
+      pixel_size = 7.6u;
+      layer_height = 10u;
+
+      //
+      // -- adjust resistance based on cross section  
+      //
+      begin 
+      if (cross_section == 1) begin
+         ch_width_pixels = 14;
+         ch_height_layers= 10;
+      end
+      else if(cross_section == 2) begin
+         ch_width_pixels = 6;
+         ch_height_layers= 5;
+      end
+      end
+
+      W = pixel_size * ch_width_pixels;
+      H = layer_height*ch_height_layers;
+      L = length;
+
+      R = (12*nu*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+   end //end initial_instance
+
+   Qfl(fl_in, fl_out) <+ P(fl_in, fl_out)/R;
+   //C(c_in, c_out) <+ 0 ;
+   //C(c_out, gnd) <+ C(c_in, gnd);
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
+
+   cqi_g = gcap*C(cv1) ;
+   cqo_g = gcap*C(cv2) ;
+   Ci(cv1, gnd) <+ ddt(cqi_g) ;
+   Ci(cv2, gnd) <+ ddt(cqo_g) ;
+end
+
+endmodule
