@@ -1,10 +1,8 @@
 use <../../../scad_include/routing.scad>
 
-px = 7.6e-3;
-layer = 10e-3;
 
-module junction_25px_0(xpos, ypos, zpos, orientation){
-      
+module junction_25px_0(xpos, ypos, zpos, orient, px = 7.6e-3, layer = 10e-3 ){
+
     // Channel Dimensions
     hchan = 10*layer;
     Wchan = 14*px;
@@ -43,31 +41,12 @@ module junction_25px_0(xpos, ypos, zpos, orientation){
                      ["+x", pf_3, 0]
                     ];
         rotate(45)
-        routing(pi_3, connect_3, dim);  
-        
+        routing(pi_3, connect_3, dim);
+
     }
-    
-    if (orientation == "FN"){
-        translate([25*px + xpos*px, 25*px + ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "N"){
-        mirror()
-        translate([-2*25*px - xpos*px, 25*px + ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "S"){
-        mirror([0, 1, 0])
-        translate([25*px + xpos*px, -2*25*px - ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "FS"){
-        mirror()
-        mirror([0, 1, 0])
-        translate([-2*25*px - xpos*px, -2*25*px - ypos*px, zpos*layer])
-        obj();
-    }
-    
+    translate([xpos*px, ypos*px, zpos*layer])
+		orientation(25*px, 25*px, orient)
+    obj();
 }
 
 junction_25px_0(0,0,0,"N");

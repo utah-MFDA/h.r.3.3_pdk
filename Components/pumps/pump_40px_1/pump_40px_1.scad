@@ -1,11 +1,9 @@
 //use <routing_181220.scad>
 use <routing.scad>
 
-px = 7.6e-3;
-layer = 10e-3;
 
-module pump_40px_1(xpos, ypos, zpos, orientation){
-    
+module pump_40px_1(xpos, ypos, zpos, orient, px = 7.6e-3,layer = 10e-3) {
+
     // Parameters
     d_DC = 40*px;       // DC diameter
     t_m_DC = layer;     // DC membrane thickness (2 layers of 5 um in JSON FILE)
@@ -19,7 +17,7 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
     dist_v2chan = 5*layer; // distance between valves bottom and horizontal connection channel
 
     // Channel Dimensions
-    xychan0 = 6*px;  
+    xychan0 = 6*px;
     hchan = 10*layer;
     wchan = 12*px;
     xychan = 12*px;
@@ -105,32 +103,11 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
         connect_5 = [["+yz", [-16*px, -4*layer], [1, 5]]];
         routing(pi_5, connect_5, dim);
     }
-    
-    if (orientation == "N"){
-        rotate(a = 270)
-        translate([-75*px - ypos*px, 100*px + xpos*px, 13*layer + zpos*layer])
-        obj();
-    }
-        if (orientation == "FN"){
-        mirror()
-        rotate(a = 270)
-        translate([-75*px - ypos*px, -100*px - xpos*px, 13*layer + zpos*layer])
-        obj();
-    }
-    if (orientation == "FS"){
-        mirror([0, 1, 0])
-        rotate(a = 270)
-        translate([75*px + ypos*px, 100*px + xpos*px, 13*layer + zpos*layer])
-        obj();
-    }
-    if (orientation == "S"){
-        mirror()
-        mirror([0, 1, 0])
-        rotate(a = 270)
-        translate([75*px + ypos*px, -100*px - xpos*px, 13*layer + zpos*layer])
-        obj();
-    }
-    
+
+    translate([ypos*px, xpos*px, 13*layer + zpos*layer])
+    orientation([75*px, 100*px, orient])
+    obj();
+
 }
 
 pump_40px_1(0,0,0,"N");

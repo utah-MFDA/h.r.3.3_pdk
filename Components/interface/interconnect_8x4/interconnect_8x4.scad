@@ -1,4 +1,6 @@
-module interconnect_8x4(xpos, ypos, zpos, orient) {
+module interconnect_8x4(xpos, ypos, zpos, orient,
+
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false) {
     gasket_side_length = 40*px;
     gasket_aperture_length = 20*px;
     gasket_height = 1*layer;

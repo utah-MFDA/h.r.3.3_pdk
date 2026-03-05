@@ -1,7 +1,7 @@
-module pinhole_320px_0(xpos, ypos, zpos, orient, d=140, l=260, h=67){
-    d_pin   = d*px;
-    l_pin   = l*px;
-    h_cone  = h*px;
+module pinhole_320px_0(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, d=140, l=260, h=67){
+    d_pin   = d;
+    l_pin   = l;
+    h_cone  = h;
 
     module obj() {
         translate([0, d_pin/2, 0])
@@ -13,8 +13,9 @@ module pinhole_320px_0(xpos, ypos, zpos, orient, d=140, l=260, h=67){
             cylinder(d = d_pin, h = l_pin);
         };
     }
-    translate([xpos*px, ypos*px, zpos*layer])
-    orientation(l_pin+h_cone, d_pin, orient)
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    orient(l_pin+h_cone, d_pin, orientation)
     obj();
 
 }

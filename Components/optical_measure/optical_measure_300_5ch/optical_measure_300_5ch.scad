@@ -24,6 +24,7 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
     }
 
     translate([0, 15*px, -lpv*layer])
+    orientation(600*px, 150*px, orient)
     obj() ;
 
     module lef()

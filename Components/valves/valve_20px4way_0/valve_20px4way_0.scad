@@ -1,12 +1,7 @@
 use <../../../scad_include/routing.scad>
 
-px    = 7.6*10^-3;
-layer = 10*10^-3;
+module valve_20px4way_0(xpos, ypos, zpos, orient, px=7.6e-3, layer=10e-3){
 
-$fn = 20;
-
-module valve_20px4way_0(xpos, ypos, zpos, orientation){
-    
     // Parameteres
     h_fluid = 2*layer;
     t_memb = layer;
@@ -92,32 +87,9 @@ module valve_20px4way_0(xpos, ypos, zpos, orientation){
         color("Blue")
         routing(pt_air_flush,pt_air_flush_next, dimm);
     }
-    
-    if (orientation == "N"){
-        rotate(270)
-        translate([-25*px*2 - ypos*px, 25*px*2 + xpos*px, 4*layer + zpos*layer])
-        obj();
-    }
-    if (orientation == "FN"){
-        mirror([1, 0 , 0])
-        rotate(270)
-        translate([-25*px*2 - ypos*px, -25*px*2 - xpos*px, 4*layer + zpos*layer])
-        obj();
-    }
-    if (orientation == "FS"){
-        mirror([0, 1, 0])
-        rotate(270)
-        translate([25*px*2 + ypos*px, 25*px*2 + xpos*px, 4*layer + zpos*layer])
-        obj();
-    }
-    if (orientation == "S"){
-        mirror([0, 1, 0])
-        mirror([1, 0 , 0])
-        rotate(270)
-        translate([25*px*2 + ypos*px, -25*px*2 - xpos*px, 4*layer + zpos*layer])
-        obj();
-    }
-    
+    translate([xpos*px, ypos*px, 4*layer+zpos*layer])
+    orientation([25*px*2, 25*px*2, orient])
+    obj();
 }
 
  valve_20px4way_0(0,0,0,"N");

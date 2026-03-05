@@ -2,7 +2,7 @@
 use <../../../scad_include/lef_helper.scad>
 use <../../../scad_include/scad_objects/optical_view.scad>
 
-module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
+module optical_measure_100_5ch(xpos, ypos, zpos, orient,
     px=7.6e-3, layer=10e-3, pitch=30, lpv=20, fn=30, offset_layer=0, chan=[14, 14, 10], ren_lef=false)
 {
     module obj() {
@@ -24,6 +24,7 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
     }
 
     translate([0,0,-lpv*layer])
+    orientation([330*px, 90*px, orient])
     obj() ;
 
     module lef()
