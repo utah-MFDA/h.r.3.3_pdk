@@ -1,4 +1,4 @@
-use <./../../../scad_include/scad_objects/reservoir.scad>
+use <openmfda/objects/reservoir.scad>
 
 module bidirectional_res_1000ul(xpos, ypos, zpos, orientation)
 {

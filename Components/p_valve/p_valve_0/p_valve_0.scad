@@ -1,6 +1,6 @@
 
-use <../../../scad_include/scad_objects/p_valve.scad>
-use <../../../scad_include/lef_helper.scad>
+use <openmfda/objects/p_valve.scad>
+use <openmfda/lef_helper.scad>
 
 module p_valve_0(xpos, ypos, zpos, orientation,
     D,

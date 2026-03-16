@@ -1,4 +1,4 @@
-use <../../../scad_include/routing.scad>
+use <openmfda/routing.scad>
 
 px    = 7.6*10^-3;
 layer = 10*10^-3;

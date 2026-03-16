@@ -14,11 +14,11 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
     chan_in_l  = 30*px;
     chan_out_l = 30*px;
 
-    
+
     module obj(){
         translate([0,(chm_l-chm_l_s1)/2*px,0])
-        cube([chm_w, 
-            chm_l_s1*px, 
+        cube([chm_w,
+            chm_l_s1*px,
             chm_h*layer], center=true) ;
         translate([chm_w/2-chan_w/2*px, chm_l/2*px, 0])
             for(i = [0:num_inputs-1])
@@ -33,10 +33,10 @@ module multi_in_chamber(xpos, ypos, zpos, orientation,
         translate([0,-chm_l*px/2-chan_out_l/2, 0])
             cube([chan_w*px, chan_out_l, chan_h*layer], center=true);
     }
-    
+
     x_off = chm_w/2;
     y_off = chan_out_l+chm_l*px/2;
-    
+
     translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,0])
         translate([(rot?y_off:x_off),(rot?x_off:y_off),chm_h*layer/2])
             rotate([0,0,(rot?-90:0)])

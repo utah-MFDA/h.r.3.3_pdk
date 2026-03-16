@@ -1,5 +1,5 @@
-use <./../../../scad_include/scad_objects/reservoir.scad>
-use <./../../../scad_include/lef_helper.scad>
+use <openmfda/objects/reservoir.scad>
+use <openmfda/lef_helper.scad>
 
 module bidirectional_res_600ul(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
 {

@@ -1,6 +1,6 @@
 
-use <../../../scad_include/scad_objects/p_valve.scad>
-use <../../../scad_include/lef_helper.scad>
+use <openmfda/objects/p_valve.scad>
+use <openmfda/lef_helper.scad>
 
 module valve_40px_1(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
