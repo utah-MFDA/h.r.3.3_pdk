@@ -1,51 +1,66 @@
 use <../polychannel_v2.scad>
+use <../orientation.scad>
 
+/**
+ * xpos, ypos: position in pixels.
+ * zpos: position in layers
+ * orientation: string enum, see orient module.
+ * chm_r: chamber radius in pixels.
+ * chm_h: chamber depth in layers.
+ * chm_len: chamber length between radius in pixels.
+ * mem_th: membrane thickness in layers.
+ * conn_ch_w: width of input/output channel in pixels.
+ * conn_ch_h: depth of input/output channel in layers.
+ * conn_ch_l: length of input/output channel in pixels.
+ * px: millimeters per pixel
+ * layer: millimeters per layer
+ * chan_h: channel height in layers.
+ * chan_w: channel width in pixels.
+ * shape: channel shape, see polychannel.
+ * pitch: distance between channels, in pixels
+*/
 module p_chamber(xpos, ypos, zpos, orientation,
     chm_r, chm_h, chm_len=0,
     conn_ch_w=14, conn_ch_h=10, conn_ch_l=20,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10, $fn=50,
-    rot=false, no_obj=false, floor_area=false)
-    {
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10, $fn=50)
+{
 
-        module obj(){
-        //$fn=30;
-        c_px_len = chm_len*px;
-        c_px_r   = chm_r*px;
-        c_lay_h  = chm_h*layer;
+    module obj(){
 
         real_conn_h = (conn_ch_h>chm_h?chm_h:conn_ch_h);
 
         if(chm_len > 2*chm_r)
         {
 
-            translate([c_px_len/2-c_px_r, 0, 0])
-                cylinder(c_lay_h, r=c_px_r, center= true) ;
-            translate([-c_px_len/2+c_px_r, 0, 0])
-                cylinder(c_lay_h, r=c_px_r, center= true) ;
-            cube([c_px_len-c_px_r*2, c_px_r*2, c_lay_h], center= true) ;
+            translate([chm_len/2-chm_r, 0, 0])
+                cylinder(chm_h, r=chm_r, center= true) ;
+            translate([-chm_len/2+chm_r, 0, 0])
+                cylinder(chm_h, r=chm_r, center= true) ;
+            cube([chm_len-chm_r*2, chm_r*2, chm_h], center= true) ;
         }
         else{
-            cylinder(chm_h*px, r=chm_r*px, center= true) ;
+            cylinder(chm_h, r=chm_r, center= true) ;
         }
-        translate([-c_px_len/2-conn_ch_l*px/2+c_px_r/2, 0, 0])
-            cube([conn_ch_l*px+c_px_r, conn_ch_w*px, real_conn_h*layer], center=true);
-        translate([c_px_len/2+conn_ch_l*px/2-c_px_r/2, 0, 0])
-            cube([conn_ch_l*px+c_px_r, conn_ch_w*px, real_conn_h*layer], center=true);
+        translate([-chm_len/2-conn_ch_l/2+chm_r/2, 0, 0])
+            cube([conn_ch_l+chm_r, conn_ch_w, real_conn_h], center=true);
+        translate([chm_len/2+conn_ch_l/2-chm_r/2, 0, 0])
+            cube([conn_ch_l+chm_r, conn_ch_w, real_conn_h], center=true);
 
-        }
+    }
 
-        x_off = chm_len/2*px+conn_ch_l*px ;
-        y_off = chm_r*px ;
+    width = chm_len + 2*conn_ch_l;
+    height = 2*chm_r ;
+    pitch_offset = pitch - chan_w;
 
-        translate([xpos*px, ypos*px, zpos*layer])
-        translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
-        translate([(rot?y_off:x_off), (rot?x_off:y_off), chm_h/2*layer])
-        rotate([0,0,(rot?90:0)])
-            mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
-            mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    translate([pitch_offset/2, pitch_offset/2, 0])
+    orient([width, height], orientation)
+    translate([width/2, height/2, chm_h/2])
             obj();
 
     }
 
 
-p_chamber(1,0,0,"N", 100, 10, chm_len=800);
+p_chamber(0, 0, 0, "E", 100, 10, chm_len=800);

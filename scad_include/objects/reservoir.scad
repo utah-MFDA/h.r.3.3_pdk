@@ -1,60 +1,64 @@
 use <../polychannel_v2.scad>
+use <../orientation.scad>
 
-$fa = 1;
-$fs = 0.04;
-layer = 0.010;
-px = 0.0076;
-edge_rounding = 0.5;
-cube_x = 500*px;
-cube_y = 500*px;
-cube_z = 380*layer;
-
+/**
+ * xpos, ypos: position in pixels.
+ * zpos: position in layers
+ * orientation: string enum, see orient module.
+ * size: dimensions of the chamber in [px, px, layer]
+ * ports: list of ports. Format is [ direction, lenght, offset ] where direction is one of /[xyz][+-]/ length is in pixels or layers, and offset is a tuple.
+ * edge_rounding: rounding radius, in pixels.
+ * clr: color to apply to the inner chamber geometry.
+ * px: millimeters per pixel
+ * layer: millimeters per layer
+ * chan_h: channel height in layers.
+ * chan_w: channel width in pixels.
+ * shape: channel shape, see polychannel.
+ * pitch: distance between channels, in pixels
+*/
 module p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="z+", p2_dir="z+", port_len1=50, port_len2=-1, p1_offset=[0,0], p2_offset=[0,0],
+    ports =[ ["z+", 50, [-140, 0]] ],
     size=[300, 300, 250], edge_rounding=0.5,
     center=true, clr="gray",
-    px=0.0076, layer=0.010, chan_w=14, chan_h=10, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1)
+    px=0.0076, layer=0.010, pitch = 30,
+    chan_w=14, chan_h=10, $fs=0.04, $fa=1)
 {
+    // TODO this doesn't account for any extensions of the ports beyond the chamber
     n_size = [size[0]*px, size[1]*px, size[2]*layer];
-
     translate([xpos*px, ypos*px, zpos*layer])
-    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, layer_offset*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, 0])
+    orient(n_size, orientation)
     translate(n_size/2)
-    rotate([0,0,(rot?90:0)])
-    mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
-    mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
         reservoir(size=size, edge_rounding=edge_rounding,
-    p1_dir=p1_dir, p2_dir=p2_dir, port_len1=port_len1, port_len2=port_len2, p1_offset=p1_offset, p2_offset=p2_offset,
-    chan_w=chan_w, chan_h=chan_h,
-    center=center, clr=clr, px=px, layer=layer, $fs=$fs, $fa=$fa) ;
+        ports=ports,
+        chan_w=chan_w, chan_h=chan_h,
+        center=center, clr=clr, px=px, layer=layer, $fs=$fs, $fa=$fa) ;
 }
 
-module reservoir(size=[300, 300, 250], edge_rounding=0.5, center=true, clr="gray",
-    p1_dir="z+", p2_dir="z+", port_len1=50, port_len2=-1,
-    p1_offset=[0,0], p2_offset=[0,0],
+module reservoir(size=[300, 300, 250], ports=[], edge_rounding=0.5, center=true, clr="gray",
     chan_w=14, chan_h=10,
     px=0.0076, layer=0.010, $fs=0.04, $fa=1) {
 	module obj() {
         n_size = [size[0]*px, size[1]*px, size[2]*layer];
         translate = (center == false) ?
-		[edge_rounding, edge_rounding, edge_rounding] :
-		[
-			edge_rounding - (n_size[0] / 2),
-			edge_rounding - (n_size[1] / 2),
-			edge_rounding - (n_size[2] / 2)
-	];
+    		[edge_rounding, edge_rounding, edge_rounding] :
+    		[
+    			edge_rounding - (n_size[0] / 2),
+    			edge_rounding - (n_size[1] / 2),
+    			edge_rounding - (n_size[2] / 2)
+    	];
 
-    color(clr){
-        translate(v = translate)
-        minkowski() {
-            cube(size = [
-                n_size[0] - (edge_rounding * 2),
-                n_size[1] - (edge_rounding * 2),
-                n_size[2] - (edge_rounding * 2)
-            ]);
-            sphere(r = edge_rounding);
+        color(clr){
+            translate(v = translate)
+            minkowski() {
+                cube(size = [
+                    n_size[0] - (edge_rounding * 2),
+                    n_size[1] - (edge_rounding * 2),
+                    n_size[2] - (edge_rounding * 2)
+                ]);
+                sphere(r = edge_rounding);
+            }
         }
-    }
     }
     module port (side, port_len=50, from_center=true, x_off=0, y_off=0)
     {
@@ -96,15 +100,17 @@ module reservoir(size=[300, 300, 250], edge_rounding=0.5, center=true, clr="gray
             ], clr="crimson");
 
     }
-        %obj() ;
-        port(p1_dir, port_len=port_len1, x_off=p1_offset[0], y_off=p1_offset[1]) ;
-        if(port_len2 >= 0)
-            port(p2_dir, port_len=port_len2, x_off=p2_offset[0],  y_off=p2_offset[1]) ;
-        else
-            port(p2_dir, port_len=port_len1, x_off=p2_offset[0],  y_off=p2_offset[1]) ;
 
-        //port(p1_dir, x_off=-size[0]/4/px, y_off=0) ;
-        //port(p2_dir, x_off=size[0]/4/px, y_off=0) ;
+    obj() ;
+    for(p = ports) {
+        dir = p[0];
+        len = p[1];
+        offset = p[2];
+        port(dir, port_len=len, x_off=offset[0], y_off=offset[1]);
+    }
 }
 
-p_reservoir(0,0,0,"N",size=[300, 300, 280], edge_rounding=edge_rounding, p1_dir="z+", p2_dir="x+", port_len1=50, p1_offset=[-140,0], p2_offset=[0,-270/2], clr="lightblue");
+port_a = ["z+", 50, [-140, 0]];
+port_b = ["x+", 50, [0, -270/2]];
+p_reservoir(0,0,0,"N",size=[300, 300, 280], edge_rounding=0.5, ports=[port_a, port_b], clr="lightblue");
+

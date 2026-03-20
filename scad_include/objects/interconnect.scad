@@ -1,21 +1,29 @@
-module interconnect_32channel(xpos, ypos, zpos){
-    gasket_side_length = 40*px;
-    gasket_aperture_length = 20*px;
-    gasket_height = 1*layer;
+use <../orientation.scad>
 
-    gasket_grid = [2, 2];
-    block_gasket_offset = 155*px;
-    block_height_default = 200*layer;
-    block_long_side = 600*px;
-    block_short_side = 399*px;
-    gasket_offset = 50*px;
+module interconnect_grid(
+    xpos = 0,
+    ypos = 0,
+    zpos = 0,
+    orientation = "N",
+    gasket_side_length = 40,
+    gasket_aperture_length = 20,
+    gasket_height = 1,
 
-    pedestal_x = 780*px;
-    pedestal_y = 380*px;
-    pedestal_height = 100*px;
+    gasket_grid = [4, 8],
+    block_gasket_offset = 155,
+    block_height_default = 200,
+    block_long_side = 600,
+    block_short_side = 399,
+    gasket_offset = 50,
 
-    channel_width_thick = 20 * px;
-    channel_width_default = 12*px;
+    pedestal_x = 780,
+    pedestal_y = 380,
+    pedestal_height = 100,
+
+    channel_width_thick = 20 ,
+    channel_width_default = 12,
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30 )
+{
 
     module zchan(l, xy = channel_width_default) {
         color("lightblue")
@@ -29,8 +37,8 @@ module interconnect_32channel(xpos, ypos, zpos){
     }
 
     module gasket(
-        gasket_side_length=gasket_side_length, 
-        aperture_side_length=gasket_aperture_length, 
+        gasket_side_length=gasket_side_length,
+        aperture_side_length=gasket_aperture_length,
         height=gasket_height
         ){
 
@@ -44,8 +52,8 @@ module interconnect_32channel(xpos, ypos, zpos){
 
     module interconnect(
         gasket_grid=gasket_grid,
-        gasket_side_length=gasket_side_length, 
-        aperture_side_length=gasket_aperture_length, 
+        gasket_side_length=gasket_side_length,
+        aperture_side_length=gasket_aperture_length,
         gasket_height=gasket_height,
         gasket_offset = gasket_offset,
         block_gasket_offset=block_gasket_offset,
@@ -64,7 +72,7 @@ module interconnect_32channel(xpos, ypos, zpos){
         }
         else {
             flip_angle = for_interface_chip ? 180:0;
-            diff_interface_blocks = for_interface_chip ? 0:50*layer;
+            diff_interface_blocks = for_interface_chip ? 0:50;
             rotate([flip_angle, 0, 0]){
                 // Gasket grid
                 translate([-x_centering_offset, -y_centering_offset, 0]){
@@ -118,11 +126,17 @@ module interconnect_32channel(xpos, ypos, zpos){
         }
 
         translate([0, 0, pedestal_height])
-            interconnect(gasket_grid=[4, 8], for_interface_chip=false);
-        }
-
-    translate([xpos*px, ypos*px, zpos*layer]){
-        obj();
+            interconnect(gasket_grid=gasket_grid, for_interface_chip=false);
     }
-        
+    width = block_short_side*2 + pedestal_x + block_gasket_offset + gasket_offset;
+    height = block_long_side;
+
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    orient([width, height], orientation)
+    translate([width, height, 0]/2)
+    obj();
+
 }
+
+interconnect_grid();

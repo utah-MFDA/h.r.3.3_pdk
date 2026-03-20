@@ -1,33 +1,49 @@
 use <../polychannel_v2.scad>
+use <../orientation.scad>
 
+/**
+ * xpos, ypos: position in pixels.
+ * zpos: position in layers
+ * orientation: string enum, see orient module.
+ * mem_r: membrane radius in pixels.
+ * mem_th: membrane thickness in layers.
+ * lf_out_len: length of channels extending outside of valve radius in pixels
+ * extra_sp: extra center spacing if needed when inport_center=false in pixels
+ * fl_chm_h, pn_chm_h: fluid and pneumatic chamber depths, in layers
+ * px: millimeters per pixel
+ * layer: millimeters per layer
+ * chan_h: channel height in layers.
+ * chan_w: channel width in pixels.
+ * shape: channel shape, see polychannel.
+ * pitch: distance between channels, in pixels
+*/
 module p_tall_mixer(xpos, ypos, zpos, orientation,
     mix_l, mix_w, mix_h,
     chan_io_len=20, chan_tran_len=10, mix_z_offset=0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30,
-    no_obj=false, floor_area=false)
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30,
+    chan_h=10, chan_w=14, shape="cube")
 {
-    chan_io_dimm = [px, chan_w*px, chan_h*layer];
-    chan_mix_dimm= [px, mix_w*px, mix_h*layer] ;
-    //chan_io_len  = 20 ;
-    //chan_tran_len = 5;
+    chan_io_dimm = [1, chan_w, chan_h];
+    chan_mix_dimm= [1, mix_w, mix_h] ;
 
-    init_l_offset = (chan_io_len+chan_tran_len+mix_l/2);
+    width = 2*(chan_io_len+chan_tran_len)+mix_l;
+    init_l_offset = width/2;
+    height = chan_w;
+    pitch_offset = pitch - chan_w;
 
-    module obj() {
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    translate([pitch_offset/2, pitch_offset/2, 0])
+    orient([width, height], orientation)
+    translate([width/2, height/2,mix_h/2])
         polychannel([
-        ["cube", chan_io_dimm, [-init_l_offset*px, 0, 0], [0,[0,0,1]]],
-        ["cube", chan_io_dimm, [chan_io_len*px, 0, 0], [0,[0,0,1]]],
-        ["cube", chan_mix_dimm,[chan_tran_len*px, 0, mix_z_offset*layer], [0,[0,0,1]]],
-        ["cube", chan_mix_dimm,[mix_l*px, 0, 0], [0,[0,0,1]]],
-        ["cube", chan_io_dimm, [chan_tran_len*px, 0, -mix_z_offset*layer], [0,[0,0,1]]],
-        ["cube", chan_io_dimm, [chan_io_len*px, 0, 0], [0,[0,0,1]]],
+        ["cube", chan_io_dimm, [-init_l_offset, 0, 0], [0,[0,0,1]]],
+        ["cube", chan_io_dimm, [chan_io_len, 0, 0], [0,[0,0,1]]],
+        ["cube", chan_mix_dimm,[chan_tran_len, 0, mix_z_offset], [0,[0,0,1]]],
+        ["cube", chan_mix_dimm,[mix_l, 0, 0], [0,[0,0,1]]],
+        ["cube", chan_io_dimm, [chan_tran_len, 0, -mix_z_offset], [0,[0,0,1]]],
+        ["cube", chan_io_dimm, [chan_io_len, 0, 0], [0,[0,0,1]]],
         ]) ;
     }
 
-    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, 0])
-        translate([init_l_offset*px, chan_w/2*px, mix_h/2*layer])
-            obj();
-
-}
-
-p_tall_mixer(0,0,0,"N", 100, 6, 50, mix_z_offset=10);
+p_tall_mixer(0, 0, 0, "E", 100, 6, 50, mix_z_offset=10);
