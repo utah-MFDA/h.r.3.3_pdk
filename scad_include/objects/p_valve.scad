@@ -25,7 +25,7 @@ use <../orientation.scad>
  * shape: channel shape, see polychannel.
  * pitch: distance between channels, in pixels
 */
-module p_pvalve(xpos, ypos, zpos, orientation,
+module p_valve(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false,
     // length of channels extending outside of valve radius
     fl_out_len=20, pn_out_len=20,
@@ -150,4 +150,4 @@ module p_pvalve(xpos, ypos, zpos, orientation,
         obj();
 }
 
-p_pvalve(0, 0, 0, "E", 100, 5, 10, 15);
+p_valve(0, 0, 0, "E", 100, 5, 10, 15);
