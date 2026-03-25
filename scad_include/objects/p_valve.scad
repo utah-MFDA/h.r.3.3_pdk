@@ -170,10 +170,10 @@ module p_valve(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, $fn=30)
 {
     // If the channels are inline, pick the biggest
-    height = rot_pn
+    width = rot_pn
             ? 2*valve_r
             : 2*(valve_r + fl_out_len);
-    width = rot_pn
+    height = rot_pn
             ? 2*(valve_r + max(pn_out_len, fl_out_len))
             : 2*(valve_r + pn_out_len);
 
