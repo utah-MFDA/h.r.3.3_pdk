@@ -1,5 +1,5 @@
 use <../polychannel_v2.scad>
-use <p_pvalve.scad>
+use <./p_valve.scad>
 use<../orientation.scad>
 
 module p_pump(xpos, ypos, zpos, orientation,
@@ -19,88 +19,79 @@ module p_pump(xpos, ypos, zpos, orientation,
 
         dimm  = [chan_w,chan_w,chan_h] ;
         dimmp = [port_chan_w,port_chan_w,port_chan_h] ;
-        pt0_0 = [chan_w/2,(r_max-chan_w/2+pn_out_len),chan_h/2] ;
+        pt0_0 = [chan_w/2,0,chan_h/2] ;
         pt0_1 = [ends_ex_len,0,0] ;
 
         pt1_0 = [
-            (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len+chan_w/2),
-            (r_max-chan_w/2+pn_out_len),
+            (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len),
+            0,
             chan_h/2] ;
         pt1_1 = [ends_ex_len,0,0] ;
         // check 1
-        // translate([(ends_ex_len+chan_w), 0,0]){
-            // translate([0,0,0])
-                p_pvalve(0,0,0,"N",
-                valve_r=r1,
-                mem_th=th1,
-                fl_extra_sp=fl_extra_sp,
-                fl_chm_h=fl_h1,
-                pn_chm_h=pn_h1,
-                inport_center=true,
-                pitch=0,
-                fl_out_len=len_sp/2,
-                pn_out_len=r_max-r1+pn_out_len,
-                rot_pn=false,
-                flip_fl=true,
-                pn_extra_sp=pn_extra_sp,
-                fl_out_h=fl_out_h,
-                px=px,
-                layer=layer,
-                chan_h=chan_h, chan_w=chan_w,
-                dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w);
+        translate([(ends_ex_len+chan_w), 0, 2*chan_h]){
+            translate([r1, 0,0])
+                valve(
+                    valve_r=r1,
+                    mem_th=th1,
+                    fl_extra_sp=fl_extra_sp,
+                    fl_chm_h=fl_h1,
+                    pn_chm_h=pn_h1,
+                    inport_center=true,
+                    fl_out_len=len_sp/2,
+                    pn_out_len=r_max-r1+pn_out_len,
+                    rot_pn=false,
+                    flip_fl=true,
+                    pn_extra_sp=pn_extra_sp,
+                    fl_out_h=fl_out_h,
+                    chan_h=chan_h, chan_w=chan_w,
+                    dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w);
             // pump
-            // translate([(r1*2+len_sp),0,0])
-    //             p_pvalve(0,0,0,"N",
-    //             valve_r=r2,
-    //             mem_th=th2,
-    //             fl_chm_h=fl_h2,
-    //             pn_chm_h=pn_h2,
-    //             inport_center=false,
-    //             pitch=0,
-    //             fl_out_len=len_sp/2,
-    //             pn_out_len=r_max-r2+pn_out_len,
-    //             rot_pn=false,
-    //             fl_extra_sp="fill",
-    //             pn_extra_sp=pn_extra_sp,
-    //             fl_out_h=fl_out_h,
-    //             px=px,
-    //             layer=layer,
-    //             chan_h=chan_h, chan_w=chan_w,
-    //             dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w)
-    //         // check 2
-    //         translate([((r1*2+len_sp)+(r2*2+len_sp)),0,0])
-    //             p_pvalve(0,0,0,"N",
-    //             valve_r=r3,
-    //             mem_th=th3,
-    //             fl_extra_sp=fl_extra_sp,
-    //             fl_chm_h=fl_h3,
-    //             pn_chm_h=pn_h3,
-    //             inport_center=true,
-    //             pitch=0,
-    //             fl_out_len=len_sp/2,
-    //             pn_out_len=r_max-r3+pn_out_len,
-    //             rot_pn=false,
-    //             pn_extra_sp=pn_extra_sp,
-    //             fl_out_h=fl_out_h,
-    //             px=px,
-    //             layer=layer,
-    //             chan_h=chan_h, chan_w=chan_w,
-    //             dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w);
-    //     }
-    //     polychannel(
-    //         [[shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt0_0, [0,[0,0,1]]],
-    //         [shape, dimm, pt0_1, [0,[0,0,1]]],]) ;
-    //     polychannel(
-    //         [[shape, dimm, pt1_0, [0,[0,0,1]]],
-    //         [shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt1_1, [0,[0,0,1]]],]) ;
+            translate([(r1*2+len_sp+r2),0,0])
+                valve(
+                    valve_r=r2,
+                    mem_th=th2,
+                    fl_chm_h=fl_h2,
+                    pn_chm_h=pn_h2,
+                    inport_center=false,
+                    fl_out_len=len_sp/2,
+                    pn_out_len=r_max-r2+pn_out_len,
+                    rot_pn=false,
+                    fl_extra_sp=fl_extra_sp,
+                    pn_extra_sp=pn_extra_sp,
+                    fl_out_h=fl_out_h,
+                    chan_h=chan_h, chan_w=chan_w,
+                    dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w);
+            // check 2
+            translate([(r1*2+r2*2+2*len_sp+r3),0,0])
+                valve(
+                    valve_r=r3,
+                    mem_th=th3,
+                    fl_extra_sp=fl_extra_sp,
+                    fl_chm_h=fl_h3,
+                    pn_chm_h=pn_h3,
+                    inport_center=true,
+                    fl_out_len=len_sp/2,
+                    pn_out_len=r_max-r3+pn_out_len,
+                    rot_pn=false,
+                    pn_extra_sp=pn_extra_sp,
+                    fl_out_h=fl_out_h,
+                    chan_h=chan_h, chan_w=chan_w,
+                    dwn_chan_h=dwn_chan_h, dwn_chan_w=dwn_chan_w);
+        }
+        polychannel(
+            [[shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt0_0, [0,[0,0,1]]],
+            [shape, dimm, pt0_1, [0,[0,0,1]]],]) ;
+        polychannel(
+            [[shape, dimm, pt1_0, [0,[0,0,1]]],
+            [shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt1_1, [0,[0,0,1]]],]) ;
     }
-
-//    width = 42;
-//    height = 42; //TODO
-//    scale([px, px, layer])
-//    translate([xpos, ypos, zpos])
-//    translate([(pitch-chan_w/2), (pitch-chan_w/2), offset_layers])
-//    orient(width, height, orientation)
+    width = r1*2+r2*2+r3*2+len_sp*3+ends_ex_len;
+    height = 2*max(r1, r2, r3) + 2*pn_out_len;
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    translate([(pitch-chan_w/2), (pitch-chan_w/2), 0])
+    orient([width, height], orientation)
+    translate([0, height/2, 0])
         obj() ;
 }
 
