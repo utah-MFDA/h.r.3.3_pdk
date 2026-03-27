@@ -1,6 +1,6 @@
 use <openmfda/lef_helper.scad>
 use <valve_40px_1.scad>
-
+use <openmfda/orientation.scad>
 module valve_40px_1_lef ()
 {
     color("blue")
@@ -23,10 +23,11 @@ module valve_40px_1_lef ()
     lef_layer("met4")
     lef_obs("RECT", [30, 30, 150, 150]) ;
 }
-
+orient(7.6e-3*[180,180], "E")
 valve_40px_1_lef();
 
-valve_40px_1(0, 0, 0, "N");
+valve_40px_1(0, 0, 0, "E");
+
 
 
 
