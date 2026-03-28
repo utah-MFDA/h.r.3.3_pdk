@@ -10,8 +10,6 @@ use <../orientation.scad>
  * pn_pad: pneumatic channel connection size in pixels.
  * pn_len: length of pneumatic connection in pixels.
  * pn_bttm_chm_h: pneumatic chamber height in layers.
- * no_out_transition: boolean, if set dimensions change between squeeze and output.
- * no_in_transition: boolean, same for input.
  * chan_h: height of channel in layers.
  * chan_w: width of channel in pixels.
  * shape: shape of channel. see polychannel
@@ -22,9 +20,7 @@ module squeeze_valve(
     fl_ext_len=30, fl_tran_len=5, fl_ext_th_len=4,
     // pneumatic channel parameters
     pn_ch_w=14, pn_pad = 10, pn_len = 30, pn_bttm_chm_h=20,
-    // set if transition state
-    no_out_transition=false, no_in_transition=false,
-    chan_h=10, chan_w=14, shape="cube")
+    chan_h=10, in_chan_h=10, out_chan_h=10, chan_w=14, shape="cube")
 {
     no_rot = [0,[0,0,1]];
 
@@ -32,9 +28,9 @@ module squeeze_valve(
     pn_chm_offset= (mem_th*2+fl_chm_h);
     pn_chm_h = pn_bttm_chm_h;
 
-    //fl_ext_len  = 30;
-    //fl_tran_len = 5;
-    ifl_chan_dimm = [1, chan_w, chan_h] ;
+
+    out_fl_chan_dimm = [1, chan_w, out_chan_h] ;
+    in_fl_chan_dimm = [1, chan_w, in_chan_h] ;
     fl_chan_dimm  = [1, chan_w, fl_chm_h] ;
 
 
@@ -57,12 +53,12 @@ module squeeze_valve(
     fl_pt_1 = (fl_ext_len-fl_tran_len-pn_ch_w/2-fl_ext_th_len) ;
 
     polychannel([
-        [shape, (no_in_transition?fl_chan_dimm:ifl_chan_dimm), [-fl_ext_len, 0, -fl_z_offset], no_rot],
-        [shape, (no_in_transition?fl_chan_dimm:ifl_chan_dimm), [fl_pt_1, 0,0], no_rot],
+        [shape, in_fl_chan_dimm, [-fl_ext_len, 0, -fl_z_offset], no_rot],
+        [shape, in_fl_chan_dimm, [fl_pt_1, 0,0], no_rot],
         [shape, fl_chan_dimm, [fl_tran_len, 0,0], no_rot],
         [shape, fl_chan_dimm, [(pn_ch_w+fl_ext_th_len*2), 0,0], no_rot],
-        [shape, (no_out_transition?fl_chan_dimm:ifl_chan_dimm), [fl_tran_len, 0,0], no_rot],
-        [shape, (no_out_transition?fl_chan_dimm:ifl_chan_dimm), [fl_pt_1, 0,0], no_rot],
+        [shape, out_fl_chan_dimm, [fl_tran_len, 0,0], no_rot],
+        [shape, out_fl_chan_dimm, [fl_pt_1, 0,0], no_rot],
 
     ]);
 }
@@ -74,18 +70,9 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
     // pneumatic channel parameters
     pn_ch_w=14, pn_pad = 10, pn_len = 30, pn_bttm_chm_h=20,
     // set if transition state
-    no_out_transition=false, no_in_transition=false,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30)
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30,
+    chan_h = 10, in_chan_h=10, out_chan_h=10, chan_w=14, shape="cube")
 {
-    no_rot = [0,[0,0,1]];
-
-    pn_chan_dimm = [pn_ch_w, chan_w, chan_h];
-    pn_chm_offset= (mem_th*2+fl_chm_h);
-    pn_chm_h = pn_bttm_chm_h;
-
-    ifl_chan_dimm = [1, chan_w, chan_h] ;
-    fl_chan_dimm  = [1, chan_w, fl_chm_h] ;
-
     z_offset = (chan_h/2+mem_th*2+fl_chm_h+pn_bttm_chm_h) ;
     x_off = (fl_ext_len+0.5) ;
     y_off = (pn_len+chan_w/2) ;
@@ -100,8 +87,7 @@ module p_squeeze_valve(xpos, ypos, zpos, orientation,
         mem_th, fl_chm_h,
         fl_ext_len, fl_tran_len,fl_ext_th_len,
         pn_ch_w, pn_pad, pn_len, pn_bttm_chm_h,
-        no_out_transition, no_in_transition,
-         chan_h, chan_w, shape);
+        chan_h, in_chan_h, out_chan_h, chan_w, shape);
 }
 
 p_squeeze_valve(0,0,0,"N",4,8);

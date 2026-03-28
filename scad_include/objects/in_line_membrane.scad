@@ -1,6 +1,35 @@
 use <../polychannel_v2.scad>
 use <../orientation.scad>
 
+module in_line_membrane(
+    mem_r, mem_th, fl_chm_h, pn_chm_h,
+    fl_out_len  = 30, pn_out_len=30,
+    chan_h=10, chan_w=14, shape="cube", $fn=30)
+{
+    chan_dimm = [chan_w, chan_w, chan_h];
+    width = 2*(mem_r + fl_out_len);
+    height = 2*(mem_r + pn_out_len);
+    translate([width, height,0]/2) {
+
+        // Fluid chamber
+        translate([0,0,fl_chm_h/2])
+            cylinder(fl_chm_h, r=mem_r, center=true);
+        // Pneumatic chamber
+        translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)])
+                cylinder(pn_chm_h, r=mem_r, center=true);
+        // Fluid channel
+        polychannel([
+            ["cube", chan_dimm, [-width/2, 0, chan_h/2], [0,[0,0,1]] ],
+            ["cube", chan_dimm, [width, 0, 0], [0,[0,0,1]], ]]);
+
+        z_chan_offset = (fl_chm_h+pn_chm_h+mem_th-chan_h/2);
+        // Pneumatic channel
+        polychannel([
+            ["cube", chan_dimm, [0, -width/2, z_chan_offset], [0,[0,0,1]] ],
+            ["cube", chan_dimm, [0, width, 0], [0,[0,0,1]], ]]);
+    }
+}
+
 /**
  * xpos, ypos: position in pixels.
  * zpos: position in layers
@@ -17,43 +46,24 @@ use <../orientation.scad>
  * shape: channel shape, see polychannel.
  * pitch: distance between channels, in pixels
 */
-module in_line_membrane(xpos, ypos, zpos, orientation,
-    mem_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false,
+module p_in_line_membrane(xpos, ypos, zpos, orientation,
+    mem_r, mem_th, fl_chm_h, pn_chm_h,
     fl_out_len  = 30, pn_out_len=30,
-    extra_sp = 0,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, $fn=30)
 {
-    chan_dimm = [chan_w, chan_w, chan_h];
     width = 2*(mem_r + fl_out_len);
     height = 2*(mem_r + pn_out_len);
     // No calculations mix px and layer units.
-    module obj()
-    {
-        translate([0,0,fl_chm_h/2])
-            cylinder(fl_chm_h, r=mem_r, center=true);
-        translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)])
-            cylinder(pn_chm_h, r=mem_r, center=true);
-
-        polychannel([
-        ["cube", chan_dimm, [-width/2, 0, chan_h/2], [0,[0,0,1]] ],
-        ["cube", chan_dimm, [width, 0, 0], [0,[0,0,1]], ]]);
-
-        z_chan_offset = (fl_chm_h+pn_chm_h+mem_th-chan_h/2);
-
-        polychannel([
-        ["cube", chan_dimm, [0, -width/2, z_chan_offset], [0,[0,0,1]] ],
-        ["cube", chan_dimm, [0, width, 0], [0,[0,0,1]], ]]);
-    }
-
     pitch_offset = pitch - chan_w;
 
     scale([px, px, layer])
     translate([xpos, ypos, zpos])
     translate([pitch_offset/2, pitch_offset/2, 0])
     orient([width, height], orientation)
-    translate([width/2, height/2,0])
-        obj();
+    in_line_membrane(mem_r, mem_th, fl_chm_h, pn_chm_h,
+                    fl_out_len, pn_out_len, chan_h, chan_w, shape);
+
 }
 
-in_line_membrane(0,0,0,"N",
+p_in_line_membrane(0,0,0,"N",
     50, 10, 20, 40);

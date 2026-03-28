@@ -18,7 +18,7 @@ use <../orientation.scad>
  * shape: channel shape, see polychannel.
  * pitch: distance between channels, in pixels
 */
-module optical_view(xpos, ypos, zpos, orientation,
+module optical_view_centered(xpos, ypos, zpos, orientation,
     r_ch=20, i_depth=10, d_depth=6, d_ch_distance=10, num_of_ch=5, init_path_len=27,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, fn=30,
    chan_w=10, chan_h=14, shape="cube")
@@ -35,14 +35,14 @@ module optical_view(xpos, ypos, zpos, orientation,
         // Create cylinders, with the first centered on the origin.
         for(i = [0:num_of_ch-1])
         {
-            translate([i*(2*r_ch+d_ch_distance),0,0)])
+            translate([i*(2*r_ch+d_ch_distance),0,-d_depth*i/2])
             cylinder(r=r_ch, h=i_depth+d_depth*i, $fn=fn) ;
 
             d1  = [i_dimm[0], i_dimm[1], i_depth+d_depth*i] ;
             d2  = [i_dimm[0], i_dimm[1], i_depth+d_depth*(i+1)] ;
 
-            pt1 = [ r_ch+i*(2*r_ch+d_ch_distance)+cc, 0, i_dimm[2]/2+d_depth/2*i)] ;
-            pt2 = [ d_ch_distance+i_dimm[0]/2-cc, 0, d_depth/2] ;
+            pt1 = [ r_ch+i*(2*r_ch+d_ch_distance)+cc, 0, i_dimm[2]/2]
+            pt2 = [ d_ch_distance+i_dimm[0]/2-cc, 0, 0] ;
 
             if(i < num_of_ch-1)
                 polychannel([
@@ -53,11 +53,10 @@ module optical_view(xpos, ypos, zpos, orientation,
 
         // Inlet
         f_dimm = [i_dimm[0], i_dimm[1], i_dimm[2]+(num_of_ch-1)*d_depth] ;
-            f_pt =
-             [(r_ch*2+d_ch_distance)*(num_of_ch-1)+r_ch-i_dimm[0]/2, 0, f_dimm[2]/2] ;
+            f_pt = [(r_ch*2+d_ch_distance)*(num_of_ch-1)+r_ch-i_dimm[0]/2, 0, i_dimm[2]/2] ;
 
             polychannel([[shape, f_dimm, f_pt, nr],
-             [shape, i_dimm, [init_path_len/2, 0, (-f_dimm[2]/2+i_dimm[2]/2)], nr],
+             [shape, i_dimm, [init_path_len/2, 0, 0)], nr],
              [shape, i_dimm, [init_path_len/2, 0, 0], nr]]) ;
         // Outlet
         polychannel([[shape, i_dimm, [-r_ch,0,i_dimm[2]/2], nr],
@@ -77,4 +76,4 @@ module optical_view(xpos, ypos, zpos, orientation,
 
 }
 
-optical_view(0,0,0,"E") ;
+optical_view_centered(0,0,0,"E") ;
