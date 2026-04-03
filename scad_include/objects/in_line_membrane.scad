@@ -1,7 +1,7 @@
 use <../polychannel_v2.scad>
 use <../orientation.scad>
 
-module in_line_membrane(
+module in_line_membrane(orientation,
     mem_r, mem_th, fl_chm_h, pn_chm_h,
     fl_out_len  = 30, pn_out_len=30,
     chan_h=10, chan_w=14, shape="cube", $fn=30)
@@ -9,6 +9,8 @@ module in_line_membrane(
     chan_dimm = [chan_w, chan_w, chan_h];
     width = 2*(mem_r + fl_out_len);
     height = 2*(mem_r + pn_out_len);
+
+    orient([width, height], orientation)
     translate([width, height,0]/2) {
 
         // Fluid chamber
@@ -51,16 +53,13 @@ module p_in_line_membrane(xpos, ypos, zpos, orientation,
     fl_out_len  = 30, pn_out_len=30,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, $fn=30)
 {
-    width = 2*(mem_r + fl_out_len);
-    height = 2*(mem_r + pn_out_len);
     // No calculations mix px and layer units.
     pitch_offset = pitch - chan_w;
 
     scale([px, px, layer])
     translate([xpos, ypos, zpos])
     translate([pitch_offset/2, pitch_offset/2, 0])
-    orient([width, height], orientation)
-    in_line_membrane(mem_r, mem_th, fl_chm_h, pn_chm_h,
+    in_line_membrane(orientation, mem_r, mem_th, fl_chm_h, pn_chm_h,
                     fl_out_len, pn_out_len, chan_h, chan_w, shape);
 
 }

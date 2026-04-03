@@ -18,9 +18,39 @@ use <../orientation.scad>
  * shape: channel shape, see polychannel.
  * pitch: distance between channels, in pixels
 */
-module optical_view(xpos, ypos, zpos, orientation,
+module p_optical_view(xpos, ypos, zpos, orientation,
     r_ch=20, i_depth=10, d_depth=6, d_ch_distance=10, num_of_ch=5, init_path_len=27,
-    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, fn=30,
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30,
+   chan_w=10, chan_h=14, shape="cube")
+{
+    pitch_offset = pitch - chan_w;
+    scale([px, px, layer])
+    translate([xpos, ypos, zpos])
+    translate([pitch_offset/2, pitch_offset/2, 0])
+    optical_view(orientation,
+        r_ch, i_depth, d_depth, d_ch_distance, num_of_ch, init_path_len,
+       chan_w, chan_h, shape);
+}
+
+/**
+ * xpos, ypos: position in pixels.
+ * zpos: position in layers
+ * orientation: string enum, see orient module.
+ * r_ch: radius of chambers in pixels.
+ * i_depth: in layers
+ * d_depth: in layers
+ * d_ch_distance: in layers
+ * num_of_ch: number of chambers, scalar
+ * init_path_len: length of input channel, in pixels.
+ * px: millimeters per pixel
+ * layer: millimeters per layer
+ * chan_h: channel height in layers.
+ * chan_w: channel width in pixels.
+ * shape: channel shape, see polychannel.
+ * pitch: distance between channels, in pixels
+*/
+module optical_view(orientation,
+    r_ch=20, i_depth=10, d_depth=6, d_ch_distance=10, num_of_ch=5, init_path_len=27,
    chan_w=10, chan_h=14, shape="cube")
 {
     // path defs
@@ -35,13 +65,13 @@ module optical_view(xpos, ypos, zpos, orientation,
         // Create cylinders, with the first centered on the origin.
         for(i = [0:num_of_ch-1])
         {
-            translate([i*(2*r_ch+d_ch_distance),0,0)])
-            cylinder(r=r_ch, h=i_depth+d_depth*i, $fn=fn) ;
+            translate([i*(2*r_ch+d_ch_distance),0,0])
+                cylinder(r=r_ch, h=i_depth+d_depth*i) ;
 
             d1  = [i_dimm[0], i_dimm[1], i_depth+d_depth*i] ;
             d2  = [i_dimm[0], i_dimm[1], i_depth+d_depth*(i+1)] ;
 
-            pt1 = [ r_ch+i*(2*r_ch+d_ch_distance)+cc, 0, i_dimm[2]/2+d_depth/2*i)] ;
+            pt1 = [ r_ch+i*(2*r_ch+d_ch_distance)+cc, 0, i_dimm[2]/2+d_depth/2*i] ;
             pt2 = [ d_ch_distance+i_dimm[0]/2-cc, 0, d_depth/2] ;
 
             if(i < num_of_ch-1)
@@ -66,15 +96,10 @@ module optical_view(xpos, ypos, zpos, orientation,
 
     width = num_of_ch*r_ch*2 + (num_of_ch - 1)*d_ch_distance + init_path_len*2 + i_dimm[0]/2;
     height = 2*r_ch;
-    pitch_offset = pitch - chan_w;
 
-    scale([px, px, layer])
-    translate([xpos, ypos, zpos])
-    translate([pitch_offset/2, pitch_offset/2, 0])
     orient([width, height], orientation)
     translate([init_path_len+r_ch+i_dimm[0]/2, r_ch, 0])
     obj();
-
 }
 
-optical_view(0,0,0,"E") ;
+p_optical_view(0,0,0,"E") ;
