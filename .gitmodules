@@ -1,0 +1,6 @@
+[submodule "openscad_for_microfluidics"]
+	path = openscad_libraries2
+	url = git@github.com:utah-MFDA/openscad_for_microfluidics.git
+[submodule "openscad_libraries/openmfda"]
+	path = openscad_libraries/openmfda
+	url = git@github.com:utah-MFDA/openscad_for_microfluidics.git
