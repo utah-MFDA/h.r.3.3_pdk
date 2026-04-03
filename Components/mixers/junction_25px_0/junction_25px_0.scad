@@ -1,9 +1,9 @@
-use <openmfda/routing.scad>
+use <openmfda/polychannel/routing.scad>
+use <openmfda/components/orientation.scad>
 
-px = 7.6e-3;
-layer = 10e-3;
 
-module junction_25px_0(xpos, ypos, zpos, orientation){
+module junction_25px_0(xpos, ypos, zpos, orientation, px = 7.6e-3,
+layer = 10e-3){
       
     // Channel Dimensions
     hchan = 10*layer;
@@ -47,26 +47,10 @@ module junction_25px_0(xpos, ypos, zpos, orientation){
         
     }
     
-    if (orientation == "FN"){
-        translate([25*px + xpos*px, 25*px + ypos*px, zpos*layer])
+    translate([xpos*px, ypos*px, zpos*layer])
+    translate([30*px, 30*px, 0])
+    orient([30, 30]*px/2, orientation)
         obj();
-    }
-    if (orientation == "N"){
-        mirror()
-        translate([-2*25*px - xpos*px, 25*px + ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "S"){
-        mirror([0, 1, 0])
-        translate([25*px + xpos*px, -2*25*px - ypos*px, zpos*layer])
-        obj();
-    }
-    if (orientation == "FS"){
-        mirror()
-        mirror([0, 1, 0])
-        translate([-2*25*px - xpos*px, -2*25*px - ypos*px, zpos*layer])
-        obj();
-    }
     
 }
 

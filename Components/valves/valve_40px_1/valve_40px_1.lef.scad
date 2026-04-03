@@ -1,6 +1,6 @@
-use <openmfda/lef_helper.scad>
+use <openmfda/components/lef_helper.scad>
 use <valve_40px_1.scad>
-use <openmfda/orientation.scad>
+use <openmfda/components/orientation.scad>
 module valve_40px_1_lef ()
 {
     color("blue")

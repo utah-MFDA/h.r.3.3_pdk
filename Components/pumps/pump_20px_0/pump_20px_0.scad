@@ -1,7 +1,7 @@
 
-use <openmfda/polychannel_v2.scad>
-use <openmfda/objects/p_pump.scad>
-use <openmfda/lef_helper.scad>
+use <openmfda/polychannel/polychannel.scad>
+use <openmfda/components/pump.scad>
+use <openmfda/components/lef_helper.scad>
 
 module pump_20px_0(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, offset_layers=10,ren_lef=false)
@@ -15,8 +15,7 @@ module pump_20px_0(xpos, ypos, zpos, orientation,
     len_sp=30, ends_ex_len=22,
     pn_out_len=22, 
     fl_extra_sp=10, pn_extra_sp="fill-edge", 
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=offset_layers,
-    rot=false, no_obj=false, floor_area=false) ;
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30) ;
     
     
     module lef()

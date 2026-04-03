@@ -1,5 +1,5 @@
 
-use <polychannel_v2_testing.scad>
+use <openmfda/polychannel/polychannel.scad>
 
 module mixer_test (xpos, ypos, zpos, orientation, 
     sw_scale=1, stl_dir="./",

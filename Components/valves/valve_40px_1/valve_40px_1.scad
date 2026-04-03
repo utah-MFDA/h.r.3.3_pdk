@@ -1,4 +1,4 @@
-use <openmfda/objects/p_valve.scad>
+use <openmfda/components/valve.scad>
 
 
 module valve_40px_1(xpos, ypos, zpos, orientation,
@@ -6,10 +6,10 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
 {
     translate([1*px,0,1.2*lpv*layer])
     p_valve(xpos, ypos, zpos, orientation,
-        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=false,
+        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6,
         fl_out_len=43, fl_extra_sp = 2, dwn_chan_h=10,
         pn_out_len=43,
-        pn_extra_sp="fill", rot_pn=false,
+        pn_extra_sp="fill",
         px=px, layer=layer, lpv=lpv, chan_h=6, chan_w=8, shape="cube", pitch=pitch);
 }
 
