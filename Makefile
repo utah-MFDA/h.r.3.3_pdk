@@ -55,12 +55,12 @@ NGSPICE_BUILD_DIR ?= $(COMPONENT_DIR)/verilogA_build_ng
 
 export VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-#export VA_FILES += $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*_flow.va))
-#<<<<<<< HEAD
-#export VAMS_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*.vams))
-#=======
+
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
-#>>>>>>> origin/lib_0.0.2
+
+export XYCE_SUBCIR_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR)
+export XYCE_SUBCIRS = $(foreach XYCE_SUB_DIR, $(XYCE_SUBCIR_DIR), $(wildcard $(XYCE_SUB_DIR)/*/*.cir))
+
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
@@ -83,6 +83,7 @@ LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
 export MF_LIB = MFXyce
+export MERGED_XYCE_SUBCIR = $(VERILOGA_BUILD_DIR)/xyce_subckt_merged.cir
 
 .PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
 clean_all: clean_va clean_scad clean_lef
@@ -104,7 +105,6 @@ $(NGSPICE_BUILD_DIR):
 export VA_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
-
 export VA_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
@@ -124,6 +124,13 @@ $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 
 $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VAMS_FILES) $(VERILOGA_BUILD_DIR)
+
+.PHONY: build_xyce_subckt
+
+build_xyce_subckt: $(MERGED_XYCE_SUBCIR)
+
+$(MERGED_XYCE_SUBCIR): $(XYCE_SUBCIRS)
+	cut -b 1- $^ >> $@	
 
 # -- NGSPICE
 

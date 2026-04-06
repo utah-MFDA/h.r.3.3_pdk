@@ -2,12 +2,18 @@
 use <../polychannel_v2.scad>
 
 module p_valve(xpos, ypos, zpos, orientation,
-    valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false,
+    valve_r, mem_th, fl_chm_h, pn_chm_h,
+    inport_center=false,
     // length of channels extending outside of valve radius
-    out_len=30, fl_extra_sp = "fill", fl_chan_down_layers=30, pn_extra_sp="fill", pn_chan_up_layers=30, rot_pn=false,
+    out_len=30, fl_extra_sp = "fill", 
+    fl_chan_down_layers=30, pn_extra_sp="fill",
+    pn_chan_up_layers=30, rot_pn=false, split_pn=0,
+    pn_out_len=30,
     // extra center spacing if needed when inport_center=false
     extra_sp = 0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
+    fl_chan_init=[14, 14, 10],
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14,
+    shape="cube", pitch=30, offset_layers=10,
     rot=false, no_obj=false, floor_area=false)
 {
 
@@ -15,6 +21,13 @@ module p_valve(xpos, ypos, zpos, orientation,
     {
         $fn=30;
         chan_dimm = [chan_w*px, chan_w*px, chan_h*layer];
+
+        fl_chan_dimm_init = (fl_chan_init?
+          [fl_chan_init[0]*px, fl_chan_init[1]*px, fl_chan_init[2]*layer]
+          :chan_dimm);
+
+        init_z_delta = fl_chan_dimm_init[2] - chan_h*layer ;
+
         translate([0,0,fl_chm_h/2*layer])
             cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
         translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)*layer])
@@ -24,7 +37,8 @@ module p_valve(xpos, ypos, zpos, orientation,
         
         inp_pos = (inport_center?
             0:
-            (fl_extra_sp=="fill"?-(valve_r-chan_w/2-1)*px:-((valve_r/4+fl_extra_sp)*px)));
+            (fl_extra_sp=="fill"?
+              -(valve_r-chan_w/2-1)*px : -((valve_r/4+fl_extra_sp)*px)));
         outp_pos= (inport_center?
             (valve_r-chan_w/2+fl_extra_sp)*px:
             -inp_pos);
@@ -37,9 +51,15 @@ module p_valve(xpos, ypos, zpos, orientation,
             (out_len-chan_w/4-fl_extra_sp)*px:
             (fl_extra_sp=="fill"?(out_len+1)*px:(valve_r*3/4-chan_w/2-extra_sp+out_len)*px));
         
+        echo(fl_chan_dimm_init)
+        echo("IZ", init_z_delta)
+        // fluid channel
         polychannel(
-            [[shape, chan_dimm, [inp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-fl_chan_down_layers*layer], [0,[0,0,1]]],
+            [[shape,fl_chan_dimm_init, 
+              [inp_pos, 0, -fl_chan_dimm_init[2]/2], [0,[0,0,1]]],
+            [shape, fl_chan_dimm_init, 
+              [0,0,init_z_delta-fl_chan_down_layers*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,0], [0,[0,0,1]]],
             [shape, chan_dimm, [-fl_len_0,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
@@ -50,21 +70,23 @@ module p_valve(xpos, ypos, zpos, orientation,
         
         // pneumatic channel definitions
         init_z_off = (fl_chm_h+mem_th+pn_chm_h+chan_h/2)*layer;
-        pn_pos_lat = (pn_extra_sp=="fill"?(valve_r-chan_w/2-1)*px:(valve_r/4+chan_w/2)*px);
-        pn_len     = (pn_extra_sp=="fill"?(out_len+1)*px:(valve_r*3/4-chan_w+out_len)*px);
+        pn_pos_lat = (pn_extra_sp=="fill"?
+          (split_pn+valve_r-chan_w/2-1)*px : (split_pn+valve_r/4+chan_w/2)*px);
+        pn_len     = (pn_extra_sp=="fill"?
+          (pn_out_len+1)*px : (valve_r*3/4-chan_w+pn_out_len)*px);
         
         rotate([0,0,(rot_pn?90:0)])
         {
-        polychannel(
-            [[shape, chan_dimm, [0,pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,pn_len,0], [0,[0,0,1]]]
-        ]);
-        polychannel(
-            [[shape, chan_dimm, [0,-pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,-pn_len,0], [0,[0,0,1]]]
-        ]);
+          polychannel(
+              [[shape,chan_dimm, [0,pn_pos_lat,init_z_off], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,pn_len,0], [0,[0,0,1]]]
+          ]);
+          polychannel(
+              [[shape,chan_dimm, [0,-pn_pos_lat,init_z_off], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,-pn_len,0], [0,[0,0,1]]]
+          ]);
         }
     }
     
