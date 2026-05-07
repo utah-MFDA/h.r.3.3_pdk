@@ -17,7 +17,7 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
     h_c_v = 4*layer;    // height of control chamber (valves) (3.5 layers in JSON FILE)
     dist_v2v = d_DC + d_v + 40*px; // distance between valves centers
     dist_v2chan = 5*layer; // distance between valves bottom and horizontal connection channel
-    
+
     // Channel Dimensions
     xychan0 = 6*px;  
     hchan = 10*layer;
@@ -35,39 +35,39 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
             [[-xychan/2, xychan/2], [-xychan/2, xychan/2], [0, 0]],     // 2
             [[-xychan0/2, xychan0/2], [-xychan0/2, xychan0/2], [0, 0]], // 3
             [[-wchan/2, wchan/2], [0, 0], [0, hchan2]],                 // 4
-            [[-Wchan/2, Wchan/2], [-Wchan/2, Wchan/2], [0, 0]],         // 5           
+            [[-Wchan/2, Wchan/2], [-Wchan/2, Wchan/2], [0, 0]],         // 5
            ];
-    
+
     // Submodules
-    module valve(d, h_bot, h_top, t_memb){ 
+    module valve(d, h_bot, h_top, t_memb){
         /*
         d :         diameter of the valve
         h_bot:      bottom chamber height
         h_top:      top chamber height
         t_memb:     membrane thickness
-        */    
-        
+        */
+
         // Bottom chamber
         color("SteelBlue")
         cylinder(d = d, h = h_bot, $fn = 100);
-        
+
         // Top chamber
         color("CadetBlue")
         translate([0, 0, h_bot+t_memb])
-        cylinder(d = d, h = h_top, $fn = 100);    
+        cylinder(d = d, h = h_top, $fn = 100);
     }
-    
+
     module obj(){
         //build DC
         valve(d_DC, h_f_DC, h_c_DC, t_m_DC);
-        
+
         for (j = [0:1]){
             mirror([0, j, 0]){
                 translate([0, dist_v2v/2, 0])
-                
+
                 // inlet and outlet 20 px valves
                 valve(d_v, h_f_v, h_c_v, t_m_v);
-                
+
                 // fluid connection between valves and DC
                 pi_0 = [0 , d_DC/2 - xychan/2, 0];
                 pf_0 = [0, dist_v2v/2, 0];
@@ -77,30 +77,30 @@ module pump_40px_1(xpos, ypos, zpos, orientation){
                             ];
                 routing(pi_0, connect_0, dim);
             }
-        
+
         }
         pi_1_0 = [0, 50*px, 7*layer];
         connect_1_0 = [["+x", -57*px, 0]];
         color("Red")
         routing(pi_1_0, connect_1_0, dim);
-        
+
         pi_1_1 = [0, 50*px, 7*layer];
         connect_1_1 = [["+x", 57*px, 0]];
         color("Blue")
         routing(pi_1_1, connect_1_1, dim);
-        
+
         pi_2 = [-57*px, -50*px, 7*layer];
         connect_2 = [["+x", 114*px, 0]];
         routing(pi_2, connect_2, dim);
-        
+
         pi_3 = [-57*px, 0, 10*layer];
         connect_3 = [["+x", 114*px, 0]];
         routing(pi_3, connect_3, dim);
-        
+
         pi_4 = [0, 59*px, -9*layer];
         connect_4 = [["+yz", [16*px, -4*layer], [1, 5]]];
         routing(pi_4, connect_4, dim);
-        
+
         pi_5 = [0, -59*px, -9*layer];
         connect_5 = [["+yz", [-16*px, -4*layer], [1, 5]]];
         routing(pi_5, connect_5, dim);

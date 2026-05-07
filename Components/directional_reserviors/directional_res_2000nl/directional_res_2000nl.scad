@@ -1,6 +1,6 @@
-use <./../../../scad_include/scad_objects/reservoir.scad>
-use <./../../../scad_include/polychannel_v2.scad>
-use <./../../../scad_include/lef_helper.scad>
+use <openmfda/objects/reservoir.scad>
+use <openmfda/polychannel_v2.scad>
+use <openmfda/lef_helper.scad>
 
 
 module directional_res_2000nl(xpos, ypos, zpos, orientation,

@@ -1,0 +1,47 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module channel(fl_in, fl_out, c_in, c_out);
+
+inout fl_in, fl_out;
+fluidDynamics fl_in, fl_out;
+branch (fl_in, fl_out) fl_br ;
+
+inout c_in, c_out;
+concentration c_in, c_out;
+concentration cv1, cv2;
+
+(*desc="cross-section", type="instance"*) parameter real length=5m;
+(*desc="cross-section", type="instance"*) parameter real width=5m;
+(*desc="cross-section", type="instance"*) parameter real height=5m;
+(*desc="cross-section", type="instance"*) parameter real NU=0.0010016;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+
+real W, H, L;
+real R;
+
+real cqi, cqo ;
+//real cq ;
+
+analog begin
+
+   @(initial_step)
+   begin : initial_instance
+      W = width;
+      H = height;
+      L = length;
+
+      R = (12*NU*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+   end
+   Qfl(fl_br) <+ P(fl_br)/R;
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
+end
+
+endmodule

@@ -367,4 +367,48 @@ MACRO diffmix_25px_0
   PROPERTY CatenaDesignType "deviceLevel" ;
 END diffmix_25px_0
 
+MACRO pinhole_325px_0
+  CLASS PAD ;
+  ORIGIN 0 0 ;
+  FOREIGN pinhole_325px_0 ;
+  SIZE 330 BY 140 ;
+  SYMMETRY X Y R90 ;
+  PIN connection
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 310 60 330 80 ;
+    END
+  END connection
+  PIN pad
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met9 ;
+        RECT 0 60 20 80 ;
+    END
+  END pad
+  OBS
+    LAYER met1 ;
+      RECT 20 0 310 140 ;
+    LAYER met2 ;
+      RECT 20 0 310 140 ;
+    LAYER met3 ;
+      RECT 20 0 310 140 ;
+    LAYER met4 ;
+      RECT 20 0 310 140 ;
+    LAYER met5 ;
+      RECT 20 0 310 140 ;
+    LAYER met6 ;
+      RECT 20 0 310 140 ;
+    LAYER met7 ;
+      RECT 20 0 310 140 ;
+    LAYER met8 ;
+      RECT 20 0 310 140 ;
+    LAYER met9 ;
+      RECT 20 0 310 140 ;
+  END
+END pinhole_325px_0
+
 END LIBRARY
