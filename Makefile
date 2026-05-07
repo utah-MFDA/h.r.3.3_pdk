@@ -164,8 +164,14 @@ $(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 
 NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
 
+ifneq ($(USE_REL_PATH),)
+$(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
+	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^ \
+		--use_relative_path
+else
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
+endif
 
 echo_ng_lib:
 	echo $(NG_LIB_FILES)
@@ -273,10 +279,6 @@ check_library:
 # |_| \_\___|_| |_| |_|\___/ \__\___|
 #
 ################################################################
-#>>>>>>> master
-#DOCKER_IMAGE = bgoenner/mfda_xyce:latest
-#DOCKER_IMAGE = bgoenner/mfda_xyce:2.0.1
-
 DOCKER_LOCAL_COMP_DIR = ./
 
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
@@ -314,5 +316,5 @@ make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
 
 # if util exists
 ifneq (,$(wildcard ./util.mk))
-include util.mk
+#include util.mk
 endif

@@ -511,6 +511,50 @@ MACRO directional_res_1000nl
   PROPERTY CatenaDesignType "deviceLevel" ;
 END directional_res_1000nl
 
+MACRO directional_res_2000nl
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN directional_res_2000nl 0 0 ;
+  SIZE 360 BY 150 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met8 ;
+        RECT 23 66 37 80 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 331 66 345 80 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 20 338 130 ;
+    LAYER met2 ;
+      RECT 30 20 338 130 ;
+    LAYER met3 ;
+      RECT 30 20 338 130 ;
+    LAYER met4 ;
+      RECT 30 20 338 130 ;
+    LAYER met5 ;
+      RECT 30 20 338 130 ;
+    LAYER met6 ;
+      RECT 30 20 338 130 ;
+    LAYER met7 ;
+      RECT 30 20 338 130 ;
+    LAYER met8 ;
+      RECT 30 20 338 130 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END directional_res_2000nl
+
 MACRO directional_res_400nl
   CLASS CORE ;
   ORIGIN  0 0 ;
@@ -770,40 +814,40 @@ MACRO valve_40px_1
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met1 ;
-        RECT 29.5 89.5 30.5 90.5 ;
+      LAYER met2 ;
+        RECT 23 83 37 97 ;
     END
   END in_fluid
   PIN out_fluid
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met1 ;
-        RECT 149.5 89.5 150.5 90.5 ;
+      LAYER met2 ;
+        RECT 143 83 157 97 ;
     END
   END out_fluid
   PIN in_air
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
-        RECT 89.5 29.5 90.5 30.5 ;
+      LAYER met4 ;
+        RECT 83 23 97 37 ;
     END
   END in_air
   PIN out_air
     DIRECTION OUTPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met3 ;
-        RECT 89.5 149.5 90.5 150.5 ;
+      LAYER met4 ;
+        RECT 83 143 97 157 ;
     END
   END out_air
   OBS
-    LAYER met1 ;
-      RECT 30 30 150 150 ;
     LAYER met2 ;
       RECT 30 30 150 150 ;
     LAYER met3 ;
+      RECT 30 30 150 150 ;
+    LAYER met4 ;
       RECT 30 30 150 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
@@ -924,6 +968,98 @@ MACRO valve_80px_4way_0
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END valve_80px_4way_0
+
+MACRO optical_measure_100_5ch
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN optical_measure_100_5ch 0 0 ;
+  SIZE 360 BY 120 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT 23 53 37 67 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT 323 53 337 67 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 330 90 ;
+    LAYER met2 ;
+      RECT 30 30 330 90 ;
+    LAYER met3 ;
+      RECT 40 30 320 90 ;
+    LAYER met4 ;
+      RECT 30 30 330 90 ;
+    LAYER met5 ;
+      RECT 40 30 320 90 ;
+    LAYER met6 ;
+      RECT 30 30 330 90 ;
+    LAYER met7 ;
+      RECT 30 30 330 90 ;
+    LAYER met8 ;
+      RECT 30 30 330 90 ;
+    LAYER met9 ;
+      RECT 30 30 330 90 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END optical_measure_100_5ch
+
+MACRO optical_measure_300_5ch
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN optical_measure_300_5ch 0 0 ;
+  SIZE 600 BY 150 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT 23 68 37 82 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met4 ;
+        RECT 563 68 577 82 ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 30 30 570 120 ;
+    LAYER met2 ;
+      RECT 30 30 570 120 ;
+    LAYER met3 ;
+      RECT 40 30 560 120 ;
+    LAYER met4 ;
+      RECT 30 30 570 120 ;
+    LAYER met5 ;
+      RECT 40 30 560 120 ;
+    LAYER met6 ;
+      RECT 30 30 570 120 ;
+    LAYER met7 ;
+      RECT 30 30 570 120 ;
+    LAYER met8 ;
+      RECT 30 30 570 120 ;
+    LAYER met9 ;
+      RECT 30 30 570 120 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END optical_measure_300_5ch
 
 MACRO pump_20_40_20px_0
   CLASS CORE ;
@@ -1170,96 +1306,4 @@ MACRO pump_40px_0
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END pump_40px_0
-
-MACRO optical_measure_100_5ch
-  CLASS CORE ;
-  ORIGIN  0 0 ;
-  FOREIGN optical_measure_100_5ch 0 0 ;
-  SIZE 360 BY 120 ;
-  SYMMETRY X Y ;
-  SITE CoreSite ;
-  PIN in_fluid
-    DIRECTION INPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met4 ;
-        RECT 23 53 37 67 ;
-    END
-  END in_fluid
-  PIN out_fluid
-    DIRECTION OUTPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met4 ;
-        RECT 323 53 337 67 ;
-    END
-  END out_fluid
-  OBS
-    LAYER met1 ;
-      RECT 30 30 330 90 ;
-    LAYER met2 ;
-      RECT 30 30 330 90 ;
-    LAYER met3 ;
-      RECT 40 30 320 90 ;
-    LAYER met4 ;
-      RECT 30 30 330 90 ;
-    LAYER met5 ;
-      RECT 40 30 320 90 ;
-    LAYER met6 ;
-      RECT 30 30 330 90 ;
-    LAYER met7 ;
-      RECT 30 30 330 90 ;
-    LAYER met8 ;
-      RECT 30 30 330 90 ;
-    LAYER met9 ;
-      RECT 30 30 330 90 ;
-  END
-  PROPERTY CatenaDesignType "deviceLevel" ;
-END optical_measure_100_5ch
-
-MACRO optical_measure_300_5ch
-  CLASS CORE ;
-  ORIGIN  0 0 ;
-  FOREIGN optical_measure_300_5ch 0 0 ;
-  SIZE 600 BY 150 ;
-  SYMMETRY X Y ;
-  SITE CoreSite ;
-  PIN in_fluid
-    DIRECTION INPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met4 ;
-        RECT 23 68 37 82 ;
-    END
-  END in_fluid
-  PIN out_fluid
-    DIRECTION OUTPUT ;
-    USE SIGNAL ;
-    PORT
-      LAYER met4 ;
-        RECT 563 68 577 82 ;
-    END
-  END out_fluid
-  OBS
-    LAYER met1 ;
-      RECT 30 30 570 120 ;
-    LAYER met2 ;
-      RECT 30 30 570 120 ;
-    LAYER met3 ;
-      RECT 40 30 560 120 ;
-    LAYER met4 ;
-      RECT 30 30 570 120 ;
-    LAYER met5 ;
-      RECT 40 30 560 120 ;
-    LAYER met6 ;
-      RECT 30 30 570 120 ;
-    LAYER met7 ;
-      RECT 30 30 570 120 ;
-    LAYER met8 ;
-      RECT 30 30 570 120 ;
-    LAYER met9 ;
-      RECT 30 30 570 120 ;
-  END
-  PROPERTY CatenaDesignType "deviceLevel" ;
-END optical_measure_300_5ch
 END LIBRARY
