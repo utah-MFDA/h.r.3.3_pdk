@@ -73,11 +73,11 @@ SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)
 # 	these will be copied in build_scad
 SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
 
-LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
-									$(PDK_ROOT_DIR)/inline_reserviors \
-									$(PDK_ROOT_DIR)/valves \
-									$(PDK_ROOT_DIR)/pumps \
-									$(PDK_ROOT_DIR)/optical_measure \
+LEF_SCAD_EXTRACT = $(COMPONENT_DIR)/directional_reserviors \
+									$(COMPONENT_DIR)/inline_reserviors \
+									$(COMPONENT_DIR)/valves \
+									$(COMPONENT_DIR)/pumps \
+									$(COMPONENT_DIR)/optical_measure \
 									$(COMPONENT_DIR)/capillary
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
@@ -230,6 +230,9 @@ export GDS_FILES = $(PDK_ROOT_DIR)/distrib/1.0.0/h.r.3.3.gds
 
 SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
 SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
+
+.PHONY: build_lef_from_scad
+build_lef_from_scad: $(SCAD_2_LEF_TRG)
 
 $(SCAD_2_LEF_TRG): %.lef: %.scad
 	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
