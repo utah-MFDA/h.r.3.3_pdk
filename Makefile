@@ -1,7 +1,7 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
-PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
+PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/scripts)
 
 PYTHON3 ?= python3
 
@@ -163,10 +163,10 @@ export LIB_FILES = $(BUILD_DIR)/h.r.3.3.lib
 export GDS_FILES = $(BUILD_DIR)/h.r.3.3.gds
 
 %.lef.scad: %.lef
-	${PYTHON3} ./py_scripts/render_lef_scad.py --tlef ${TECH_LEF} --lef $< --output $@
+	${PYTHON3} ./scripts/render_lef_scad.py --tlef ${TECH_LEF} --lef $< --output $@
 
 %.kicad_mod: %.lef
-	${PYTHON3} ./py_scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output $@
+	${PYTHON3} ./scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output $@
 
 clean_lef:
 	rm -f $(SC_LEF)
@@ -184,6 +184,9 @@ build_lef: $(SC_LEF)
 ${SCAD_BUILD_DIR}:
 	mkdir -p $@
 
+$(BUILD_DIR)/scad_libraries:
+	mkdir -p $@
+
 $(SCAD_BUILD_DIR)/components.scad: ${SCAD_TARGETS} | $(SCAD_BUILD_DIR)
 	echo "${SCAD_NAMES}" | sed 's/> />\n/g' > $@
 
@@ -191,7 +194,7 @@ $(SCAD_BUILD_DIR)/%.scad: ${COMPONENT_DIR}/%.scad | $(SCAD_BUILD_DIR)
 	mkdir -p ${@D}
 	cp -r $< $@
 
-$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda
+$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda | $(BUILD_DIR)/scad_libraries
 	cp -r $< $@
 
 build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmfda ${SCAD_TARGETS}
