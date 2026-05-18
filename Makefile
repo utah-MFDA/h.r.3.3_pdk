@@ -1,11 +1,6 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
-
-$(BUILD_DIR):
-	mkdir -p $@
-
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
-SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 PYTHON3 ?= python3
@@ -48,23 +43,10 @@ export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.v
 LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
-# TODO move to build directory
-SCAD_BUILD_DIR = $(BUILD_DIR)
-SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
-
-# Noncomponent files in scad_include
-# 	these will be copied in build_scad
-SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
-
-LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
-									$(PDK_ROOT_DIR)/inline_reserviors \
-									$(PDK_ROOT_DIR)/valves \
-									$(PDK_ROOT_DIR)/pumps \
-									$(PDK_ROOT_DIR)/optical_measure \
-									$(COMPONENT_DIR)/capillary
-
-SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
+SCAD_BUILD_DIR = $(BUILD_DIR)/scad_libraries/$(KIT_NAME)
+SCAD_FILES = $(foreach DIR,${GENERAL_SRC_DIR},$(wildcard ${DIR}/*/*.scad))
+SCAD_TARGETS = $(patsubst ${COMPONENT_DIR}/%.scad,$(SCAD_BUILD_DIR)/%.scad,${SCAD_FILES})
+SCAD_NAMES = $(patsubst ${COMPONENT_DIR}/%.scad,include <%.scad>,${SCAD_FILES})
 
 export MF_LIB = MFXyce
 
@@ -146,8 +128,6 @@ NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
 
-#$(OPENVAF) $^
-
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
 	cd $(VERILOGA_BUILD_DIR) && make
 
@@ -169,8 +149,6 @@ clean_va:
 #
 ################################################################
 export SC_LEF = $(BUILD_DIR)/$(KIT_NAME)_merged.lef
-debug:
-	echo $(LEF_FILES)
 
 $(SC_LEF): $(LEF_FILES) | $(BUILD_DIR)
 	echo "VERSION 5.7 ;" > $@
@@ -184,11 +162,11 @@ export TECH_LEF = $(BUILD_DIR)/h.r.3.3.tlef
 export LIB_FILES = $(BUILD_DIR)/h.r.3.3.lib
 export GDS_FILES = $(BUILD_DIR)/h.r.3.3.gds
 
-SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
-SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
+%.lef.scad: %.lef
+	${PYTHON3} ./py_scripts/render_lef_scad.py --tlef ${TECH_LEF} --lef $< --output $@
 
-$(SCAD_2_LEF_TRG): %.lef: %.scad
-	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
+%.kicad_mod: %.lef
+	${PYTHON3} ./py_scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output $@
 
 clean_lef:
 	rm -f $(SC_LEF)
@@ -203,44 +181,23 @@ build_lef: $(SC_LEF)
 # |____/ \____/_/   \_\____/
 #
 ################################################################
-SCAD_COMPONENT_HEADER = $(PY_SCRIPTS_DIR)/scad_header.scad
-CLEAN_SCAD_SCRIPT = $(PY_SCRIPTS_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
-
-$(SCAD_BUILD_DIR):
+${SCAD_BUILD_DIR}:
 	mkdir -p $@
 
-export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(BUILD_DIR)/routing_181220.scad
-$(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | $(PYTHON3) $(CLEAN_SCAD_SCRIPT) --stream > $@
+$(SCAD_BUILD_DIR)/components.scad: ${SCAD_TARGETS} | $(SCAD_BUILD_DIR)
+	echo "${SCAD_NAMES}" | sed 's/> />\n/g' > $@
 
-SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
-SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_lib/%, $(SCAD_USE_FILES))
-$(SCAD_USE_BUILD): $(SCAD_USE_FILES)
-	cp $^ ./scad_lib
+$(SCAD_BUILD_DIR)/%.scad: ${COMPONENT_DIR}/%.scad | $(SCAD_BUILD_DIR)
+	mkdir -p ${@D}
+	cp -r $< $@
 
-SCAD_LIB_INCLUDES_CP = $(patsubst $(SCAD_PDK_INCLUDE)/%, ./scad_lib/%, $(SCAD_LIB_INCLUDES))
-$(SCAD_LIB_INCLUDES_CP): $(SCAD_LIB_INCLUDES)
-	cp $^ ./scad_lib
+$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda
+	cp -r $< $@
 
-cp_scad: $(SCAD_USE_BUILD)
-
-build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) $(SCAD_LIB_INCLUDES_CP)
-
-install: install_scad_library
-
-# Deprecated  - use `install`
-# install the SCAD library to base system
-install_scad_library: build_scad
-	$(PYTHON3) ./install_scad_library.py
-install_scad_library_unmerged: build_scad
-	$(PYTHON3) ./install_scad_library.py --unmerged
+build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmfda ${SCAD_TARGETS}
 
 clean_scad:
-	rm -f $(SCAD_COMPONENT_LIBRARY)
-
-check_library:
-	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
+	rm -rf $(SCAD_BUILD_DIR)
 
 ################################################################
 #  ____                      _
@@ -252,7 +209,7 @@ check_library:
 ################################################################
 DOCKER_LOCAL_COMP_DIR = ./
 
-DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
+DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/${COMPONENT_DIR}
 DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
 # change to lib
