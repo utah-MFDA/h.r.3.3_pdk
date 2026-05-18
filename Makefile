@@ -47,6 +47,7 @@ SCAD_BUILD_DIR = $(BUILD_DIR)/scad_libraries/$(KIT_NAME)
 SCAD_FILES = $(foreach DIR,${GENERAL_SRC_DIR},$(wildcard ${DIR}/*/*.scad))
 SCAD_TARGETS = $(patsubst ${COMPONENT_DIR}/%.scad,$(SCAD_BUILD_DIR)/%.scad,${SCAD_FILES})
 SCAD_NAMES = $(patsubst ${COMPONENT_DIR}/%.scad,include <%.scad>,${SCAD_FILES})
+KICAD_FOOTPRINT_FILES = $(patsubst $(COMPONENT_DIR)/%.lef,$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod,$(LEF_FILES))
 
 export MF_LIB = MFXyce
 
@@ -162,16 +163,18 @@ export TECH_LEF = $(BUILD_DIR)/h.r.3.3.tlef
 export LIB_FILES = $(BUILD_DIR)/h.r.3.3.lib
 export GDS_FILES = $(BUILD_DIR)/h.r.3.3.gds
 
+
 %.lef.scad: %.lef
 	${PYTHON3} ./scripts/render_lef_scad.py --tlef ${TECH_LEF} --lef $< --output $@
 
-%.kicad_mod: %.lef
-	${PYTHON3} ./scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output $@
+
+${TECH_LEF}:
+	${PYTHON3} ./scripts/generators/generate_tlef.py 10 6 > $@
 
 clean_lef:
 	rm -f $(SC_LEF)
 
-build_lef: $(SC_LEF)
+build_lef: $(SC_LEF) $(TECH_LEF)
 
 ################################################################
 #  ____   ____    _    ____
@@ -201,6 +204,40 @@ build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmf
 
 clean_scad:
 	rm -rf $(SCAD_BUILD_DIR)
+################################################################
+#  _  ___  ____    _    ____
+# | |/ (_)/ ___|  / \  |  _ \
+# | ' /| | |     / _ \ | | | |
+# | . \| | |___ / ___ \| |_| |
+# |_|\_\_|\____/_/   \_\____/
+################################################################
+
+$(BUILD_DIR)/h.r.3.3.pretty:
+	mkdir $@
+
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.kicad_mod | $(BUILD_DIR)/h.r.3.3.pretty
+	mkdir -p ${@D}
+	cp $< $@
+
+# Previous rule should hold priority if a kicad_mod file is explicitly defined
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.lef | $(BUILD_DIR)/h.r.3.3.pretty
+	mkdir -p ${@D}
+	${PYTHON3} ./scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output ${@D}
+
+$(BUILD_DIR)/mfda.kicad_sym: Components/kicad_symbols/mfda.kicad_sym
+	cp $< $@
+
+$(BUILD_DIR)/mfda_spice.kicad_sym: Components/kicad_symbols/mfda_spice.kicad_sym
+	cp $< $@
+
+build_kicad: $(KICAD_FOOTPRINT_FILES) $(BUILD_DIR)/mfda_spice.kicad_sym $(BUILD_DIR)/mfda.kicad_sym
+debug:
+	echo $(KICAD_FOOTPRINT_FILES)
+
+clean_kicad:
+	rm -rf $(BUILD_DIR)/h.r.3.3.pretty
+	rm -rf $(BUILD_DIR)/mfda_spice.kicad_sym
+	rm -rf $(BUILD_DIR)/mfda.kicad_sym
 
 ################################################################
 #  ____                      _

@@ -68,7 +68,7 @@ class LefToFootprint:
                             position = Position(X=(mx+w)/2, Y=my+self.default_font.font.height),
                             layer="F.SilkS")
         outline = FpRect(start=Position(X=mx, Y=my), end=Position(X=(mx+w), Y=(my-h)), layer="Margin")
-        footprint = Footprint(libraryNickname="mfda",
+        footprint = Footprint(
                               entryName=master.getConstName(),
                               generator="openmfda",
                               position = Position(X=mx, Y=my, angle=angle),
@@ -132,12 +132,10 @@ class LefToFootprint:
         self.extract_footprints()
         print("Extraction done")
 
-    def dump(self, path, name):
-        lib = f"{path}/{name}.pretty"
-        os.makedirs(lib, exist_ok=True)
+    def dump(self, path):
         for footprint in self.footprints:
 
-            ffile = f"{lib}/{footprint.entryName}.kicad_mod"
+            ffile = f"{path}/{footprint.entryName}.kicad_mod"
             footprint.to_file(ffile)
 
 def extract_macro_names(files):
@@ -157,7 +155,6 @@ if __name__ == "__main__":
     ap.add_argument('--lef', '-l', metavar='<path>', action='append', dest='lef_files', type=str, required=True,
                     help="Path to .lef file.")
     ap.add_argument('--output', '-o', metavar='<path>', type=str, help="Path to output footprint files.", dest="output", required=True)
-    ap.add_argument('--name', '-n', type=str, help="Library name.", dest="name", required=True)
     args = ap.parse_args()
     db = odb.dbDatabase.create()
     masters = extract_macro_names(args.lef_files)
@@ -167,4 +164,4 @@ if __name__ == "__main__":
         odb.read_lef(db, lef_file)
     t = LefToFootprint(db, masters)
     t.extract()
-    t.dump(args.output, args.name)
+    t.dump(args.output)
