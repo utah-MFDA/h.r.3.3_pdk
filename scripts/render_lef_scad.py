@@ -42,13 +42,7 @@ class LefToScad:
         obs = solid2.union()(list(self.extract_obs()))
         ports = solid2.union()(list(self.extract_ports()))
         child = obs + ports + size
-        name = self.master.getName()
-        mod = solid2.scad_inline(f"module {name}_lef() {{") + child + solid2.scad_inline("}")
-        solid2.scad_render_to_file(mod, path)
-        # print(f"module {name}", file=f)
-        # print("{", file=f)
-        # print("\tlef_size({x}, {y});")
-        # print("}", file=f)
+        solid2.scad_render_to_file(child, path)
 
 def extract_macro_names(files):
     pattern = r"MACRO (\S+)"
