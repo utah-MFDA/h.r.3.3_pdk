@@ -16,7 +16,7 @@ BUILD_COMMAND = buildxyceplugin -d
 # Default target when invoking without a specific target
 .DEFAULT_GOAL := all
 
-all: build_va build_lef build_scad
+all: build_va build_lef build_scad build_kicad
 
 DATE = $(date '+%Y-%m-%d')
 
@@ -40,20 +40,18 @@ VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_obje
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
 
-LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
-LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
-
+LEF_FILES = $(foreach LEF_DIR, $(GENERAL_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
 SCAD_BUILD_DIR = $(BUILD_DIR)/scad_libraries/$(KIT_NAME)
 SCAD_FILES = $(foreach DIR,${GENERAL_SRC_DIR},$(wildcard ${DIR}/*/*.scad))
 SCAD_TARGETS = $(patsubst ${COMPONENT_DIR}/%.scad,$(SCAD_BUILD_DIR)/%.scad,${SCAD_FILES})
 SCAD_NAMES = $(patsubst ${COMPONENT_DIR}/%.scad,include <%.scad>,${SCAD_FILES})
-KICAD_FOOTPRINT_FILES = $(patsubst $(COMPONENT_DIR)/%.lef,$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod,$(LEF_FILES))
+KICAD_FOOTPRINT_FILES = $(patsubst ${COMPONENT_DIR}/%.lef,$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod,${LEF_FILES})
 
 export MF_LIB = MFXyce
 
-.PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
+.PHONY: clean_all clean_va clean_scad clean_lef clean_kicad build_va build_scad build_lef build_kicad
 clean: clean_all
-clean_all: clean_va clean_scad clean_lef
+clean_all: clean_va clean_scad clean_lef clean_kicad
 ################################################################
 # __     __        _ _
 # \ \   / /__ _ __(_) | ___   __ _
@@ -212,16 +210,17 @@ clean_scad:
 # |_|\_\_|\____/_/   \_\____/
 ################################################################
 
-$(BUILD_DIR)/h.r.3.3.pretty:
-	mkdir $@
+$(BUILD_DIR)/h.r.3.3.pretty: ${KICAD_FOOTPRINT_FILES}
+	mkdir -p $@
+	cp $^ $@
 
-$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.kicad_mod | $(BUILD_DIR)/h.r.3.3.pretty
-	mkdir -p ${@D}
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.kicad_mod
+	@ mkdir -p ${@D}
 	cp $< $@
 
 # Previous rule should hold priority if a kicad_mod file is explicitly defined
-$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.lef | $(BUILD_DIR)/h.r.3.3.pretty
-	mkdir -p ${@D}
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.lef ${TECH_LEF}
+	@ mkdir -p ${@D}
 	${PYTHON3} ./scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output ${@D}
 
 $(BUILD_DIR)/mfda.kicad_sym: Components/kicad_symbols/mfda.kicad_sym
@@ -230,9 +229,9 @@ $(BUILD_DIR)/mfda.kicad_sym: Components/kicad_symbols/mfda.kicad_sym
 $(BUILD_DIR)/mfda_spice.kicad_sym: Components/kicad_symbols/mfda_spice.kicad_sym
 	cp $< $@
 
-build_kicad: $(KICAD_FOOTPRINT_FILES) $(BUILD_DIR)/mfda_spice.kicad_sym $(BUILD_DIR)/mfda.kicad_sym
+build_kicad: $(BUILD_DIR)/h.r.3.3.pretty $(BUILD_DIR)/mfda_spice.kicad_sym $(BUILD_DIR)/mfda.kicad_sym
 debug:
-	echo $(KICAD_FOOTPRINT_FILES)
+	@ echo ${KICAD_FOOTPRINT_FILES} | tr ' ' '\n'
 
 clean_kicad:
 	rm -rf $(BUILD_DIR)/h.r.3.3.pretty
