@@ -1,4 +1,4 @@
-
+*_merged.*
 *.sw*
 *.tr*
 *.valog
@@ -12,11 +12,15 @@ sxcmd.*
 *.nfs*
 *.so
 *.cir.log
+*.va.adms
+
+.lib_test
 
 *.prn
 VerilogA/xyce_lib/*
 VerilogA/Elibrary/xyce_lib/*
 VerilogA/xyce_testing/basicTest/lib/*
+verilogA_build
 
 *remoteComFiles
 

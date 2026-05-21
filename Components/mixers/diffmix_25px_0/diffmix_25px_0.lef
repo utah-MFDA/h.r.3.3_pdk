@@ -31,9 +31,9 @@ MACRO diffmix_25px_0
   END out_fluid
   OBS
     LAYER met1 ;
-      RECT 30 30 60 60 ;
+      RECT 37 37 53 53 ;
     LAYER met2 ;
-      RECT 30 30 60 60 ;
+      RECT 37 37 53 53 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END diffmix_25px_0

@@ -1,9 +1,8 @@
+use <openmfda/objects/p_valve.scad>
 
-use <../../../scad_include/scad_objects/p_valve.scad>
-use <../../../scad_include/lef_helper.scad>
 
 module valve_40px_1(xpos, ypos, zpos, orientation,
-    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30)
 {
     translate([6*px,6*px,1*lpv*layer])
     p_valve(xpos, ypos, zpos, orientation,
@@ -50,7 +49,7 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
     
 }
 
-valve_40px_1(0,0,0,"N", ren_lef=true) ;//, px=1, pitch=0) ;
+valve_40px_1(0,0,0,"N");
 
 px = 7.6e-3;
 

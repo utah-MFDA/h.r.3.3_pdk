@@ -1,4 +1,3 @@
- 
 MACRO serpentine_100px_0
   CLASS CORE ;
   ORIGIN  0 0 ;
@@ -24,7 +23,7 @@ MACRO serpentine_100px_0
   END out_fluid
   OBS
     LAYER met1 ;
-      RECT 30 30 150 150 ;
+      RECT 37 37 143 143 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END serpentine_100px_0

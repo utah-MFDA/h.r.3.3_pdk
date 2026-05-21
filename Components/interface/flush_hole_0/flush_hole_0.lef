@@ -1,0 +1,21 @@
+MACRO flush_hole_0
+  CLASS PAD ;
+  SIZE 40 BY 40 ;
+  ORIGIN 0 0 ;
+  PIN connection
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met9 ;
+        RECT 20 10 40 30 ;
+    END
+  END connection
+  PIN pad
+    DIRECTION INOUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met10 ;
+        RECT 20 10 40 30 ;
+    END
+  END pad
+END flush_hole_0
