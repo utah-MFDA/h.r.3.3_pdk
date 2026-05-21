@@ -19,7 +19,9 @@ platform_config = [
 ["layer", 10e-3],
 ["pitch", 30],
 ["via_w", 14],
-["bottom_layers", 20]] ;
+["bottom_layers", 20],
+["chan_def", [14, 10]]
+] ;
 
 io_loc_layer = [
   [[960, 660, "met9"],[1050, 660, "met9"],[1140, 660, "met9"],[1230, 660, "met9"],[1320, 660, "met9"],

@@ -1005,207 +1005,329 @@ module mixer_test (xpos, ypos, zpos, orientation,
         
 }
 module directional_res_1000nl(xpos, ypos, zpos, orientation,
-  px=0.0076, layer=0.01
+  px=0.0076, layer=0.01, lpv=20, pitch=30, ren_lef=false
 )
 {
     
-    res_h = 140 ;
+    module obj() {
+      res_h = 140 ;
+      port_len = 25 ;
+      y_offs = 17 ;
+      chan_h = 10 ;
+      chan_w = 14 ;
+      pch_sz = [chan_w*px, chan_w*px, chan_h*layer] ;
+      pch_shp = "cube" ;
 
-    translate([37*px,0,0])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="x-", p2_dir="x+",
-    p1_offset=[0,(res_h-10)/2], p2_offset=[0,-(res_h-10)/2], 
-    port_len1=30,
-    size=[124, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1,
-    ren_lef=false
-    ) ;
+      translate([37*px,y_offs*px,1*lpv*layer])
+      p_reservoir(xpos, ypos, zpos, orientation,
+          p1_dir="x-", p2_dir="z-",
+          p1_offset=[0,(res_h-10)/2], p2_offset=[0, 0], 
+          port_len1=30, port_len2=lpv-chan_h/2,
+          size=[124, 100, res_h ], edge_rounding=0.2, 
+          center=true, clr="gray",
+          px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1
+          ) ;
+      polychannel([
+        [ pch_shp, pch_sz, 
+          [(pitch)*px,(3+pitch+chan_w/2+100/2)*px,(lpv*8-chan_h/2)*layer],
+          no_rot() ],
+        [ pch_shp, pch_sz, [0,0,(chan_h-lpv)*layer], no_rot() ]
+        ]) ;
 
-    module lef()
-    {
-        lef_size(245, 150) ;
-        lef_layer("met1")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met2")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met3")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met4")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met5")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met6")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met7")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        lef_layer("met8")
-        lef_obs("RECT", [30, 20, 215, 130]) ;
-        
-        lef_layer("met8")
-        lef_port("in_fluid", "INPUT", "RECT", [23, 66, 37, 80]) ;
-        lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [208, 66, 222, 80]) ;
-    }
-    if (ren_lef)
-        lef() ;
+      res_ct_z = [
+        (124/2+pitch+port_len+5)*px,
+        (100/2+pitch+chan_w/2+3)*px,
+        chan_h/2*layer] ;
+      polychannel([
+        [pch_shp, pch_sz, res_ct_z, no_rot()],
+        [pch_shp, pch_sz, [(124/2+port_len)*px,0,0], no_rot()]
+        ]) ;
+  }
+
+  module lef()
+  {
+      lef_size(245, 180) ;
+      lef_layer("met1")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met2")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met3")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met4")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met5")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met6")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met7")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met8")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      lef_layer("met9")
+      lef_obs("RECT", [30, 30, 215, 150]) ;
+      
+      lef_layer("met8")
+      lef_port("in_fluid", "INPUT", "RECT", [23, 83, 37, 97]) ;
+      lef_layer("met1")
+      lef_port("out_fluid", "OUTPUT", "RECT", [208, 83, 222, 97]) ;
+  }
+  obj() ;
+  if (ren_lef)
+      lef() ;
 }
 module directional_res_2000nl(xpos, ypos, zpos, orientation,
-  px=0.0076, layer=0.01
+  px=0.0076, layer=0.01, lpv=20, pitch=30, ren_lef=false
 )
 {
     
-    res_h = 140 ;
+    module obj() {
+      res_h = 140 ;
+      port_len = 24 ;
+      y_offs = 17 ;
+      chan_h = 10 ;
+      chan_w = 14 ;
+      pch_sz = [chan_w*px, chan_w*px, chan_h*layer] ;
+      pch_shp = "cube" ;
 
-    translate([37*px,0,0])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="x-", p2_dir="x+", p1_offset=[0,(res_h-10)/2],
-    p2_offset=[0,-(res_h-10)/2], 
-    port_len1 = 30,
-    size=[248, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=10, $fs=0.04, $fa=1,
-    ren_lef=false
-) ;
+      translate([37*px,y_offs*px,1*lpv*layer])
+      p_reservoir(xpos, ypos, zpos, orientation,
+          p1_dir="x-", p2_dir="z-",
+          p1_offset=[0,(res_h-10)/2], p2_offset=[0, 0], 
+          port_len1 = port_len, port_len2=lpv-chan_h/2,
+          size=[248, 100, res_h ], edge_rounding=0.2, 
+          center=true, clr="gray",
+          px=px, layer=layer, rot=false, pitch=pitch, 
+          layer_offset=0, $fs=0.04, $fa=1
+      ) ;
+
+      polychannel([
+        [ pch_shp, pch_sz, 
+          [(pitch)*px,(3+pitch+chan_w/2+100/2)*px,(lpv*8-chan_h/2)*layer],
+          no_rot() ],
+        [ pch_shp, pch_sz, [0,0,(chan_h-lpv)*layer], no_rot() ]
+        ]) ;
+
+      res_ct_z = [
+        (248/2+pitch+port_len+6)*px,
+        (100/2+pitch+chan_w/2+3)*px,
+        chan_h/2*layer] ;
+      polychannel([
+        [pch_shp, pch_sz, res_ct_z, no_rot()],
+        [pch_shp, pch_sz, [(248/2+port_len-2)*px,0,0], no_rot()]
+        ]) ;
+    }
 
     module lef()
     {
-        lef_size(360, 150) ;
+        lef_size(360, 180) ;
         lef_layer("met1")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met4")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met6")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met7")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         lef_layer("met8")
-        lef_obs("RECT", [30, 20, 338, 130]) ;
+        lef_obs("RECT", [30, 30, 330, 150]) ;
+        lef_layer("met9")
+        lef_obs("RECT", [30, 30, 330, 150]) ;
         
         lef_layer("met8")
-        lef_port("in_fluid", "INPUT", "RECT", [23, 66, 37, 80]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 83, 37, 97]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [331, 66, 345, 80]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [323, 83, 337, 97]) ;
     }
+    obj() ;
     if (ren_lef)
         lef() ;
 }
-module directional_res_400nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
+module directional_res_400nl(xpos, ypos, zpos, orientation, 
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
     
-    res_h = 70 ;
-    port_len = 25 ;
-    translate([(port_len+7)*px,0,0])
-    p_reservoir(xpos, ypos, zpos, orientation,
-        p1_dir="x-", p2_dir="x+", port_len1=port_len,
-        p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
-        size=[100, 100, res_h ], edge_rounding=0.2, 
-        center=true, clr="gray",
-        px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+    module obj() {
+      res_h = 70 ;
+      port_len = 25 ;
+      y_offs = 17 ;
+      chan_h = 10 ;
+      chan_w = 14 ;
+      pch_sz = [chan_w*px, chan_w*px, chan_h*layer] ;
+      pch_shp = "cube" ;
+
+      
+      translate([(port_len+7)*px,y_offs*px,1*lpv*layer])
+      p_reservoir(xpos, ypos, zpos, orientation,
+          p1_dir="x-", p2_dir="z-", port_len1=port_len, port_len2=lpv-chan_h/2,
+          p1_offset=[0,(res_h-10)/2], p2_offset=[0,0], 
+          size=[100, 100, res_h ], edge_rounding=0.2, 
+          center=true, clr="gray",
+          px=px, layer=layer, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+
+      res_ct_z = [
+        (100/2+pitch+port_len)*px,
+        (100/2+pitch+chan_w/2+3)*px,
+        chan_h/2*layer] ;
+      polychannel([
+        [pch_shp, pch_sz, res_ct_z, no_rot()],
+        [pch_shp, pch_sz, [(100/2+port_len)*px,0,0], no_rot()]
+        ]) ;
+    }
     
     module lef()
     {
-        lef_size(210, 150) ;
+        lef_size(210, 180) ;
         lef_layer("met1")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met4")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
+        lef_layer("met5")
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         
-        lef_layer("met4")
-        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
+        lef_layer("met5")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 83, 37, 97]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 83, 187, 97]) ;
     }
     if (ren_lef)
         lef() ;
 }
-module directional_res_600nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
+module directional_res_600nl(xpos, ypos, zpos, orientation, 
+  px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
     
     module obj() {
       res_h = 104 ;
       port_len = 25 ;
-      translate([(port_len+7)*px,0,0])
+      y_offs = 17 ;
+      chan_h = 10 ;
+      chan_w = 14 ;
+      pch_sz = [chan_w*px, chan_w*px, chan_h*layer] ;
+      pch_shp = "cube" ;
+
+      translate([(port_len+7)*px,y_offs*px,1*lpv*layer])
       p_reservoir(xpos, ypos, zpos, orientation,
-        p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2],
-        p2_offset=[13,-(res_h-10)/2], size=[100, 100, res_h ], edge_rounding=0.2, 
+        p1_dir="x-", p2_dir="z-", port_len1=port_len, port_len2=lpv-chan_h/2,
+        p1_offset=[0,(res_h-10)/2], p2_offset=[0,0],
+        size=[100, 100, res_h ], edge_rounding=0.2, 
         center=true, clr="gray",
         px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
-    }
 
+      res_ct_z = [
+        (100/2+pitch+port_len)*px,
+        (100/2+pitch+chan_w/2+3)*px,
+        chan_h/2*layer] ;
+      polychannel([
+        [pch_shp, pch_sz, res_ct_z, no_rot()],
+        [pch_shp, pch_sz, [(100/2+port_len)*px,0,0], no_rot()]
+        ]) ;
+    }
     obj() ;
     
     module lef()
     {
         lef_size(210, 150) ;
         lef_layer("met1")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met4")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met6")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
+        lef_layer("met7")
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         
-        lef_layer("met6")
-        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
+        lef_layer("met7")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 83, 37, 97]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 83, 187, 97]) ;
     }
     if (ren_lef)
         lef() ;
 }
-module directional_res_800nl(xpos, ypos, zpos, orientation, px=7.6e-3, layer=10e-3, ren_lef=false)
+module directional_res_800nl(xpos, ypos, zpos, orientation, 
+  px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
     
-    res_h = 140 ;
-    port_len = 25 ;
-translate([(port_len+7)*px, 0, 0])
-p_reservoir(xpos, ypos, zpos, orientation,
-    p1_dir="x-", p2_dir="x+", port_len1=port_len, p1_offset=[13,(res_h-10)/2], p2_offset=[13,-(res_h-10)/2], 
-    size=[100, 100, res_h ], edge_rounding=0.2, 
-    center=true, clr="gray",
-    px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
-    
+    module obj() {
+      res_h = 140 ;
+      port_len = 25 ;
+      y_offs = 17 ;
+      chan_h = 10 ;
+      chan_w = 14 ;
+      pch_sz = [chan_w*px, chan_w*px, chan_h*layer] ;
+      pch_shp = "cube" ;
+      translate([(port_len+7)*px, y_offs*px, 1*lpv*layer])
+      p_reservoir(xpos, ypos, zpos, orientation,
+          p1_dir="x-", p2_dir="z-", 
+          port_len1=port_len, port_len2=lpv-chan_h/2,
+          p1_offset=[0,(res_h-10)/2], p2_offset=[0, 0], 
+          size=[100, 100, res_h ], edge_rounding=0.2, 
+          center=true, clr="gray",
+          px=0.0076, layer=0.010, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+
+      polychannel([
+        [ pch_shp, pch_sz, 
+          [(pitch)*px,(3+pitch+chan_w/2+100/2)*px,(lpv*8-chan_h/2)*layer],
+          no_rot() ],
+        [ pch_shp, pch_sz, [0,0,(chan_h-lpv)*layer], no_rot() ]
+        ]) ;
+
+      res_ct_z = [
+        (100/2+pitch+port_len)*px,
+        (100/2+pitch+chan_w/2+3)*px,
+        chan_h/2*layer] ;
+      polychannel([
+        [pch_shp, pch_sz, res_ct_z, no_rot()],
+        [pch_shp, pch_sz, [(100/2+port_len)*px,0,0], no_rot()]
+        ]) ;
+
+  }    
     module lef()
     {
-        lef_size(210, 150) ;
+        lef_size(210, 180) ;
         lef_layer("met1")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met2")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met3")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met4")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met5")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met6")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met7")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         lef_layer("met8")
-        lef_obs("RECT", [30, 30, 180, 120]) ;
+        lef_obs("RECT", [30, 30, 180, 150]) ;
+        lef_layer("met9")
+        lef_obs("RECT", [30, 30, 180, 150]) ;
         
         lef_layer("met8")
-        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
+        lef_port("in_fluid", "INPUT", "RECT", [23, 83, 37, 97]) ;
         lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [173, 53, 187, 67]) ;
+        lef_port("out_fluid", "OUTPUT", "RECT", [173, 83, 187, 97]) ;
     }
+
+    obj() ;
+
     if (ren_lef)
         lef() ;
 }
@@ -1343,6 +1465,46 @@ module inline_res_80nl(xpos, ypos, zpos, orientation,
     if(ren_lef)
         lef() ;
 }
+module valve_40px_1(xpos, ypos, zpos, orientation,
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
+{
+    translate([12*px,11*px,1*lpv*layer])
+    p_valve(xpos, ypos, zpos, orientation,
+        valve_r=10, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=true,
+        out_len=43, fl_extra_sp = 6, fl_chan_down_layers=10, 
+        pn_extra_sp="fill", pn_chan_up_layers=12,
+        rot_pn=false, split_pn=5,
+        extra_sp = 0, 
+        fl_chan_init=[4, 4, 6],
+        px=px, layer=layer, lpv=lpv, chan_h=6, chan_w=8, shape="cube", pitch=pitch, 
+        offset_layers=5, no_obj=false, floor_area=false) ;
+    
+    module lef()
+    {
+        color("blue")
+        lef_size(180, 180);
+        
+        lef_layer("met2")
+        lef_port("in_fluid", "INPUT", "RECT",  [23, 83, 37, 97]) ;
+        lef_layer("met2")
+        lef_port("out_fluid", "OUTPUT", "RECT", [143, 83, 157, 97]) ;
+        
+        lef_layer("met4")
+        lef_port("in_air", "INPUT", "RECT", [83, 23, 97, 37]) ;
+        lef_layer("met4")
+        lef_port("out_air", "OUTPUT", "RECT", [83, 143, 97, 157]) ;
+        
+        lef_layer("met2")
+        lef_obs("RECT", [30, 30, 150, 150]) ;
+        lef_layer("met3")
+        lef_obs("RECT", [30, 30, 150, 150]) ;
+        lef_layer("met4")
+        lef_obs("RECT", [30, 30, 150, 150]) ;
+    }
+    if (ren_lef)
+        lef() ;
+    
+}
 module valve_20px4way_0(xpos, ypos, zpos, orientation){
     
     h_fluid = 2*layer;
@@ -1444,9 +1606,10 @@ module valve_20px4way_0(xpos, ypos, zpos, orientation){
 module valve_40px_1(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
 {
+    translate([1*px,0,1*lpv*layer])
     p_valve(xpos, ypos, zpos, orientation,
-        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=true,
-        out_len=44, fl_extra_sp = 4, fl_chan_down_layers=10, 
+        valve_r=20, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=false,
+        out_len=43, fl_extra_sp = 2, fl_chan_down_layers=10, 
         pn_extra_sp="fill", pn_chan_up_layers=12, rot_pn=false,
         extra_sp = 0, 
         px=px, layer=layer, lpv=lpv, chan_h=6, chan_w=8, shape="cube", pitch=pitch, 
@@ -1457,21 +1620,21 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
         color("blue")
         lef_size(180, 180);
         
-        lef_layer("met1")
-        lef_port("in_fluid", "INPUT", "RECT",  [29.5, 89.5, 30.5, 90.5]) ;
-        lef_layer("met1")
-        lef_port("out_fluid", "OUTPUT", "RECT", [149.5, 89.5, 150.5, 90.5]) ;
+        lef_layer("met2")
+        lef_port("in_fluid", "INPUT", "RECT",  [23, 83, 37, 97]) ;
+        lef_layer("met2")
+        lef_port("out_fluid", "OUTPUT", "RECT", [143, 83, 157, 97]) ;
         
-        lef_layer("met3")
-        lef_port("in_air", "INPUT", "RECT", [89.5, 29.5, 90.5, 30.5]) ;
-        lef_layer("met3")
-        lef_port("out_air", "OUTPUT", "RECT", [89.5, 149.5, 90.5, 150.5]) ;
+        lef_layer("met4")
+        lef_port("in_air", "INPUT", "RECT", [83, 23, 97, 37]) ;
+        lef_layer("met4")
+        lef_port("out_air", "OUTPUT", "RECT", [83, 143, 97, 157]) ;
         
-        lef_layer("met1")
-        lef_obs("RECT", [30, 30, 150, 150]) ;
         lef_layer("met2")
         lef_obs("RECT", [30, 30, 150, 150]) ;
         lef_layer("met3")
+        lef_obs("RECT", [30, 30, 150, 150]) ;
+        lef_layer("met4")
         lef_obs("RECT", [30, 30, 150, 150]) ;
     }
     if (ren_lef)
@@ -1719,13 +1882,60 @@ module pump_20_40_20px_0(xpos, ypos, zpos, orientation,
 module pump_20px_0(xpos, ypos, zpos, orientation,
     px=7.6e-3, layer=10e-3, offset_layers=10,ren_lef=false)
 {
-    translate([0,-0*px,0])
+    translate([0,7*px,0])
     p_pump (xpos, ypos, zpos, orientation,
     r1=20, r2=20, r3=20,
     th1=0.6, th2=0.6, th3=0.6,
     fl_h1=3.1, fl_h2=3.1, fl_h3=3.1,
     pn_h1=4, pn_h2=4, pn_h3=4,
     len_sp=30, ends_ex_len=22,
+    pn_out_len=22, 
+    fl_extra_sp=10, pn_extra_sp="fill-edge", 
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=offset_layers,
+    rot=false, no_obj=false, floor_area=false) ;
+    
+    
+    module lef()
+    {
+        lef_size(300, 130) ;
+        lef_layer("met1")
+        lef_obs("rect",  [30,30,270,100]);
+        lef_layer("met2")
+        lef_obs("rect",  [30,30,270,100]);
+        lef_layer("met3")
+        lef_obs("rect",  [30,30,270,100]);
+        
+        lef_layer("met1")
+        lef_port("fluid_in", "INPUT", "rect", [29.5,64.5,30.5,65.5]) ;
+        lef_layer("met1")
+        lef_port("fluid_out", "OUTPUT", "rect", [269.5,64.5,270.5,65.5]) ;
+        
+        lef_layer("met3")
+        lef_port("air_out_a", "OUTPUT", "rect", [79.5,99.5,80.5,100.5]) ;
+        lef_layer("met3")
+        lef_port("air_out_b", "OUTPUT", "rect", [149.5,99.5,150.5,100.5]) ;
+        lef_layer("met3")
+        lef_port("air_out_c", "OUTPUT", "rect", [219.5,99.5,220.5,100.5]) ;
+        lef_layer("met3")
+        lef_port("air_in_a", "INPUT", "rect", [79.5,29.5,80.5,30.5]) ;
+        lef_layer("met3")
+        lef_port("air_in_b", "INPUT", "rect", [149.5,29.5,150.5,30.5]) ;
+        lef_layer("met3")
+        lef_port("air_in_c", "INPUT", "rect", [219.5,29.5,220.5,30.5]) ;
+    }
+    if(ren_lef)
+        lef();
+}
+module pump_20px_0(xpos, ypos, zpos, orientation,
+    px=7.6e-3, layer=10e-3, offset_layers=10,ren_lef=false)
+{
+    translate([0,7*px,0])
+    p_pump (xpos, ypos, zpos, orientation,
+    r1=20, r2=20, r3=20,
+    th1=0.6, th2=0.6, th3=0.6,
+    fl_h1=3.1, fl_h2=3.1, fl_h3=3.1,
+    pn_h1=4, pn_h2=4, pn_h3=4,
+    len_sp=30, ends_ex_len=15,
     pn_out_len=22, 
     fl_extra_sp=10, pn_extra_sp="fill-edge", 
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=offset_layers,
@@ -2255,6 +2465,49 @@ module pinhole_325px_0(xpos, ypos, zpos, orientation){
     }
 
 }
+module pinhole_base(xpos, ypos, zpos, orientation,
+  d_pin=140, l_pin=260, h_cone=67,
+  px=7.6e-3, layer=10e-3
+){
+    
+
+    d_pin_px  = d_pin*px ;
+    l_pin_px  = l_pin*px ;
+    h_cone_px = h_cone*px ;
+    
+    module obj(){
+        rotate([-90, 0, 0]){
+            translate([0, 0, l_pin_px]){
+                cylinder(h = h_cone_px, d1 = d_pin_px, d2 = 0);
+            }
+        cylinder(d = d_pin_px, h = l_pin_px);
+        }
+    }
+    
+    if (orientation == "bottom" || orientation == "y+"){
+        translate([xpos*px, ypos*px, zpos*layer + 5 * layer])
+        obj();
+    }
+    
+    if (orientation == "left" || orientation == "x+"){
+        rotate([0, 0, -90])
+        translate([-ypos*px, xpos*px, zpos*layer + 5 * layer])
+        obj();
+    }
+    
+    if (orientation == "top" || orientation == "y-"){
+        rotate([0, 0, -180])
+        translate([-xpos*px, -ypos*px, zpos*layer + 5 * layer])
+        obj();
+    }
+    
+    if (orientation == "right" || orientation == "x-"){
+        rotate([0, 0, 90])
+        translate([ypos*px, -xpos*px, zpos*layer+ 5 * layer])
+        obj();
+    }
+
+}
 module empty_obj(str_obj){
     
 }
@@ -2289,6 +2542,69 @@ module in_line_membrane(xpos, ypos, zpos, orientation,
         translate([(mem_r+fl_out_len+chan_w/2)*px, (mem_r+pn_out_len+chan_w/2)*px, 0])
             obj();
     
+}
+module lefdef_orient(direction, center=[0,0], size=[0,0]) {
+  module centertranslate() {
+    if (center[0] != 0 || center[1] != 0) {
+      if (size[0] > 0 || size[1] > 0)
+        echo("Both center and size defined, center wins") ;
+
+      translate([center[0], center[1], 0])
+        children() ;
+    }
+    else if (size[0] > 0 || size[1] > 0) {
+      translate([size[0]/2, size[1]/2, 0])
+        children() ;
+    }
+    else {
+      children() ;
+    }
+  }
+  if (direction == "N" || direction == "R0") {
+    centertranslate() 
+      children() ;
+  }
+  else if (direction == "S" || direction == "R180") {
+    centertranslate() 
+    rotate(180)
+      children() ;
+  }
+  else if (direction == "FN" || direction == "MX") {
+    centertranslate() 
+    mirror([1,0,0])
+      children() ;
+  }
+  else if (direction == "FS" || direction == "MY") {
+    centertranslate() 
+    mirror([0,1,0])
+      children() ;
+  }
+  else if (direction == "W" || direction == "R180") {
+    centertranslate() 
+    rotate(90)
+      children() ;
+  }
+  else if (direction == "E" || direction == "R180") {
+    centertranslate() 
+    rotate(270)
+      children() ;
+  }
+  else if (direction == "FW" || direction == "MX90") {
+    centertranslate() 
+    mirror([1,0,0])
+    rotate(90) 
+      children() ;
+  }
+  else if (direction == "FE" || direction == "MY90") {
+    centertranslate() 
+    mirror([0,1,0])
+    rotate(90)
+      children() ;
+  }
+  else {
+    echo("Invalid orientation for lefdef_orient ", direction) ;
+    children() ;
+  }
 }
 module marker(xpos, ypos, zpos){
     marker_height = 80*layer;
@@ -2501,6 +2817,117 @@ module pinhole(d=106*layer, l=200*px, orth=0, ychan_z_angle=0) {
                 cylinder(h=300*px, r1=d/4, r2=2*layer, $fn = 100);
         }
     }
+}
+module p_pump2(xpos, ypos, zpos, orientation,
+    r1=46, r2=46, r3=46,
+    th1 = 10, th2 = 10, th3 = 10,
+    fl_h1=10, fl_h2=10, fl_h3=10,
+    pn_h1=14, pn_h2=14, pn_h3=14,
+    len_sp=30, pn_out_len=20, 
+    fl_extra_sp=4, pn_extra_sp="fill",
+    fl_out_h=10, pn_out_h=10, ends_ex_len=10,
+    dwn_chan_h=0, dwn_chan_w=0,
+    port_chan_h=0, port_chan_w=0,
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14,
+    shape="cube", pitch=30, offset_layers=10,
+    rot=false, no_obj=false, floor_area=false){
+    
+    module obj() {
+        r_max = max(r1, r2, r3);
+    
+        
+        dimm  = [chan_w*px,chan_w*px,chan_h*layer] ;
+        dimmp = [port_chan_w*px,port_chan_w*px,port_chan_h*layer] ;
+        pt0_0 = [chan_w/2*px,(r_max-chan_w/2+pn_out_len)*px,chan_h/2*layer] ;
+        pt0_1 = [ends_ex_len*px,0,0] ;
+        
+        pt1_0 = [
+            (r1*2+r2*2+r3*2+len_sp*3+ends_ex_len+chan_w/2)*px,
+            (r_max-chan_w/2+pn_out_len)*px,
+            chan_h/2*layer] ;
+        pt1_1 = [ends_ex_len*px,0,0] ;
+        translate([(ends_ex_len+chan_w)*px, 0,0]){
+        translate([-ends_ex_len*px,-(chan_w+2)*px/2,chan_h*layer/2])
+            p_valve(0,0,0,"FN",
+            valve_r=r1, 
+            mem_th=th1,
+            fl_extra_sp=fl_extra_sp,
+            fl_chm_h=fl_h1, 
+            pn_chm_h=pn_h1, 
+            inport_center=true,
+            fl_chan_down_layers=fl_out_h,
+            pn_chan_up_layers=pn_out_h,
+            pitch=0,
+            fl_out_len=len_sp/2,
+            pn_out_len=r_max-r1+pn_out_len,
+            rot_pn=false,
+            flip_fl=true,
+            pn_extra_sp=pn_extra_sp,
+            fl_out_h=fl_out_h,
+            px=px,
+            layer=layer,
+            chan_h=chan_h, chan_w=chan_w,
+            offset_layers=0
+            );
+        translate(
+          [   (r1*2+len_sp-ends_ex_len-2+chan_w/2)*px,
+              -(chan_w+2)*px/2,
+              chan_h*layer/2
+            ])
+            p_valve(0,0,0,"N",
+            valve_r=r2, 
+            mem_th=th2, 
+            fl_chm_h=fl_h2, 
+            pn_chm_h=pn_h2, 
+            inport_center=false,
+            fl_chan_down_layers=fl_out_h,
+            pn_chan_up_layers=pn_out_h,
+            pitch=0,
+            fl_out_len=len_sp/2,
+            pn_out_len=r_max-r2+pn_out_len,
+            rot_pn=false,
+            fl_extra_sp="fill",
+            pn_extra_sp=pn_extra_sp,
+            fl_out_h=fl_out_h,
+            px=px,
+            layer=layer,
+            chan_h=chan_h, chan_w=chan_w,
+            offset_layers=0);
+        translate(
+          [ ((r1*2+len_sp-ends_ex_len-4+chan_w)+(r2*2+len_sp))*px,
+            -(chan_w+2)*px/2,
+            chan_h*layer/2
+          ])
+            p_valve(0,0,0,"N",
+            valve_r=r3, 
+            mem_th=th3,
+            fl_extra_sp=fl_extra_sp,
+            fl_chm_h=fl_h3, 
+            pn_chm_h=pn_h3, 
+            inport_center=true,
+            fl_chan_down_layers=fl_out_h,
+            pn_chan_up_layers=pn_out_h,
+            pitch=0,
+            fl_out_len=len_sp/2,
+            pn_out_len=r_max-r3+pn_out_len,
+            rot_pn=false,
+            pn_extra_sp=pn_extra_sp,
+            fl_out_h=fl_out_h,
+            px=px,
+            layer=layer,
+            chan_h=chan_h, chan_w=chan_w,
+            offset_layers=0);
+        }
+        polychannel(
+        [[shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt0_0, [0,[0,0,1]]],
+        [shape, dimm, pt0_1, [0,[0,0,1]]],]) ;
+        polychannel(
+        [[shape, dimm, pt1_0, [0,[0,0,1]]],
+        [shape, (port_chan_w==0 || port_chan_h==0?dimm:dimmp), pt1_1, [0,[0,0,1]]],]) ;
+    }
+    translate([xpos*px, ypos*px, zpos*layer])
+    translate([(pitch-chan_w/2)*px, (pitch-chan_w/2)*px, offset_layers*layer])
+        obj() ;
 }
 module p_pump(xpos, ypos, zpos, orientation,
     r1=46, r2=46, r3=46,
@@ -2756,8 +3183,7 @@ module p_serpentine_obj(xpos, ypos, zpos, orientation, L1, L2, turns,
             [shape, [chan_w*px, chan_w*px, chan_h*layer], pts_c[i], [0,[0,0,1]]] ];
         
         rotate([0,0,(rot?90:0)])
-        mirror([(orientation=="FN"||orientation=="FS"?1:0),0,0])
-        mirror([0,(orientation=="S"||orientation=="FS"?1:0), 0])
+        lefdef_orient(orientation)
         translate([-L1*px/2, -L2*px*(turns)/2, 0])
             polychannel(poly_pts, clr=clr) ;
     }
@@ -3017,7 +3443,6 @@ module p_tall_mixer(xpos, ypos, zpos, orientation,
 }
 module p_valve_4way(xpos, ypos, zpos, orientation,
     valve_r, mem_th, fl_chm_h, pn_chm_h, 
-    inport_center=false, 
     out_len=30, fl_out_h=10, fl_out_len=10, pn_out_len=10,
     fl_extra_sp=10, pn_extra_sp=10, pn_up_layers=10, rot_pn=false,
     px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
@@ -3034,28 +3459,14 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
             cylinder(pn_chm_h*layer, r=valve_r*px, center=true);
         
         
+        inp_pos = -((valve_r/4+fl_extra_sp)*px);
         
-        inp_pos = (inport_center?
-            0:
-            (fl_extra_sp=="fill"?
-                -(valve_r-chan_w/2-1)*px:
-                -((valve_r/4+fl_extra_sp)*px)));
-        
-        outp_pos= (inport_center?
-            (valve_r-chan_w/2+fl_extra_sp)*px:
-            -inp_pos);
-        
+        outp_pos= -inp_pos;
         
             
-        fl_len_0 = (inport_center?
-            (valve_r-chan_w/2+fl_out_len)*px:
-                (fl_extra_sp=="fill"?(fl_out_len+1)*px:
-                    (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        fl_len_0 = (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px;
         
-        fl_len_1 = (inport_center?
-            (fl_out_len-fl_extra_sp)*px:
-                (fl_extra_sp=="fill"?(fl_out_len+1)*px:
-                    (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px));
+        fl_len_1 = (valve_r*3/4-chan_w/2-fl_extra_sp+fl_out_len)*px ;
         
         polychannel(
             [[shape, chan_dimm, [inp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
@@ -3105,16 +3516,25 @@ module p_valve_4way(xpos, ypos, zpos, orientation,
     
     tran_offset = (out_len+valve_r)*px;
     
+    
     translate([xpos*px, ypos*px, zpos*layer])
+    
     translate([(pitch-chan_w/2)*px,(pitch-chan_w/2)*px,layer*offset_layers])
     translate([tran_offset,tran_offset,(20+chan_h)*layer])
+    lefdef_orient(orientation)
         obj();
 }
 module p_valve(xpos, ypos, zpos, orientation,
-    valve_r, mem_th, fl_chm_h, pn_chm_h, inport_center=false,
-    out_len=30, fl_extra_sp = "fill", fl_chan_down_layers=30, pn_extra_sp="fill", pn_chan_up_layers=30, rot_pn=false,
+    valve_r, mem_th, fl_chm_h, pn_chm_h,
+    inport_center=false,
+    out_len=30, fl_extra_sp = "fill", 
+    fl_chan_down_layers=30, pn_extra_sp="fill",
+    pn_chan_up_layers=30, rot_pn=false, split_pn=0,
+    pn_out_len=30,
     extra_sp = 0,
-    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14, shape="cube", pitch=30, offset_layers=10,
+    fl_chan_init=[14, 14, 10],
+    px=7.6e-3, layer=10e-3, lpv=20, chan_h=10, chan_w=14,
+    shape="cube", pitch=30, offset_layers=10,
     rot=false, no_obj=false, floor_area=false)
 {
 
@@ -3122,6 +3542,13 @@ module p_valve(xpos, ypos, zpos, orientation,
     {
         $fn=30;
         chan_dimm = [chan_w*px, chan_w*px, chan_h*layer];
+
+        fl_chan_dimm_init = (fl_chan_init?
+          [fl_chan_init[0]*px, fl_chan_init[1]*px, fl_chan_init[2]*layer]
+          :chan_dimm);
+
+        init_z_delta = fl_chan_dimm_init[2] - chan_h*layer ;
+
         translate([0,0,fl_chm_h/2*layer])
             cylinder(fl_chm_h*layer, r=valve_r*px, center=true);
         translate([0,0,(fl_chm_h+mem_th+pn_chm_h/2)*layer])
@@ -3130,7 +3557,8 @@ module p_valve(xpos, ypos, zpos, orientation,
         
         inp_pos = (inport_center?
             0:
-            (fl_extra_sp=="fill"?-(valve_r-chan_w/2-1)*px:-((valve_r/4+fl_extra_sp)*px)));
+            (fl_extra_sp=="fill"?
+              -(valve_r-chan_w/2-1)*px : -((valve_r/4+fl_extra_sp)*px)));
         outp_pos= (inport_center?
             (valve_r-chan_w/2+fl_extra_sp)*px:
             -inp_pos);
@@ -3143,9 +3571,14 @@ module p_valve(xpos, ypos, zpos, orientation,
             (out_len-chan_w/4-fl_extra_sp)*px:
             (fl_extra_sp=="fill"?(out_len+1)*px:(valve_r*3/4-chan_w/2-extra_sp+out_len)*px));
         
+        echo(fl_chan_dimm_init)
+        echo("IZ", init_z_delta)
         polychannel(
-            [[shape, chan_dimm, [inp_pos,0,-chan_h/2*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,-fl_chan_down_layers*layer], [0,[0,0,1]]],
+            [[shape,fl_chan_dimm_init, 
+              [inp_pos, 0, -fl_chan_dimm_init[2]/2], [0,[0,0,1]]],
+            [shape, fl_chan_dimm_init, 
+              [0,0,init_z_delta-fl_chan_down_layers*layer], [0,[0,0,1]]],
+            [shape, chan_dimm, [0,0,0], [0,[0,0,1]]],
             [shape, chan_dimm, [-fl_len_0,0,0], [0,[0,0,1]]]
         ]);
         polychannel(
@@ -3155,21 +3588,23 @@ module p_valve(xpos, ypos, zpos, orientation,
         ]);
         
         init_z_off = (fl_chm_h+mem_th+pn_chm_h+chan_h/2)*layer;
-        pn_pos_lat = (pn_extra_sp=="fill"?(valve_r-chan_w/2-1)*px:(valve_r/4+chan_w/2)*px);
-        pn_len     = (pn_extra_sp=="fill"?(out_len+1)*px:(valve_r*3/4-chan_w+out_len)*px);
+        pn_pos_lat = (pn_extra_sp=="fill"?
+          (split_pn+valve_r-chan_w/2-1)*px : (split_pn+valve_r/4+chan_w/2)*px);
+        pn_len     = (pn_extra_sp=="fill"?
+          (pn_out_len+1)*px : (valve_r*3/4-chan_w+pn_out_len)*px);
         
         rotate([0,0,(rot_pn?90:0)])
         {
-        polychannel(
-            [[shape, chan_dimm, [0,pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,pn_len,0], [0,[0,0,1]]]
-        ]);
-        polychannel(
-            [[shape, chan_dimm, [0,-pn_pos_lat,init_z_off], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
-            [shape, chan_dimm, [0,-pn_len,0], [0,[0,0,1]]]
-        ]);
+          polychannel(
+              [[shape,chan_dimm, [0,pn_pos_lat,init_z_off], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,pn_len,0], [0,[0,0,1]]]
+          ]);
+          polychannel(
+              [[shape,chan_dimm, [0,-pn_pos_lat,init_z_off], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,0,pn_chan_up_layers*layer], [0,[0,0,1]]],
+              [shape, chan_dimm, [0,-pn_len,0], [0,[0,0,1]]]
+          ]);
         }
     }
     
