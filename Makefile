@@ -1,5 +1,6 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
+
+ BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/scripts)
 
@@ -17,7 +18,6 @@ BUILD_COMMAND = buildxyceplugin -d
 .DEFAULT_GOAL := all
 
 all: build_va build_lef build_scad build_kicad
-
 DATE = $(date '+%Y-%m-%d')
 
 KIT_NAME = h.r.3.3
@@ -33,6 +33,7 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 ## Verilog A targets
+
 VERILOGA_BUILD_DIR = $(BUILD_DIR)/verilogA_build
 NGSPICE_BUILD_DIR = $(BUILD_DIR)/verilogA_build_ng
 
@@ -92,6 +93,7 @@ $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 
 VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
 
+
 $(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
 	cp $^ $@
 
@@ -117,6 +119,7 @@ export XYCE_LIB = $(VERILOGA_BUILD_DIR)/$(MF_LIB).so
 $(VERILOGA_BUILD_DIR)/Makefile: $(COMPONENT_DIR)/xyce.mk
 	cp $< $@
 
+
 copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
 
 $(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
@@ -126,6 +129,7 @@ NG_LIB_GEN_SCRIPT = $(PY_SCRIPTS_DIR)/mk_ng_lib_from_va.py
 
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
+
 
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
 	cd $(VERILOGA_BUILD_DIR) && make
@@ -202,6 +206,19 @@ build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmf
 
 clean_scad:
 	rm -rf $(SCAD_BUILD_DIR)
+
+install_scad_lib: build_scad
+	python3 ./install_scad_library.py
+
+# install the SCAD library to base system
+install_scad_library:
+	$(PYTHON3) ./install_scad_library.py
+install_scad_library_unmerged:
+	$(PYTHON3) ./install_scad_library.py --unmerged
+
+clean_scad:
+	rm -f $(SCAD_COMPONENT_LIBRARY)
+
 ################################################################
 #  _  ___  ____    _    ____
 # | |/ (_)/ ___|  / \  |  _ \
@@ -237,7 +254,6 @@ clean_kicad:
 	rm -rf $(BUILD_DIR)/h.r.3.3.pretty
 	rm -rf $(BUILD_DIR)/mfda_spice.kicad_sym
 	rm -rf $(BUILD_DIR)/mfda.kicad_sym
-
 ################################################################
 #  ____                      _
 # |  _ \ ___ _ __ ___   ___ | |_ ___
@@ -246,6 +262,7 @@ clean_kicad:
 # |_| \_\___|_| |_| |_|\___/ \__\___|
 #
 ################################################################
+
 DOCKER_LOCAL_COMP_DIR = ./
 
 DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/${COMPONENT_DIR}
@@ -279,7 +296,7 @@ clean_va_build:
 
 clean_xyce_build: clean_va_build
 
-make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
 
 # if util exists
 ifneq (,$(wildcard ./util.mk))

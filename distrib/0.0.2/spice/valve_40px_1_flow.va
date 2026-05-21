@@ -1,0 +1,109 @@
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module valve_40px_1_flow(fl_in, fl_out, pn_in, pn_out);
+
+inout fl_in;
+inout fl_out;
+inout pn_in;
+inout pn_out;
+
+fluidDynamics fl_in, fl_out;
+fluidDynamics fl_m ;
+fluidDynamics pn_in ;
+fluidDynamics pn_out ;
+
+branch (fl_in, fl_m)  flm_i ;
+branch (fl_out, fl_m) flm_o ;
+
+fluidDynamics fl_gnd ;
+ground fl_gnd ;
+
+(*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
+(*desc="length", type="instance"*)         parameter real L = 0.1;
+(*desc="cross-section", type="instance"*)  parameter integer CROSS_SECTION = 1;
+(*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
+(*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
+
+(*desc="flow ground response, keep low", type="instance"*) parameter real fl_gnd_cap = 100p ;
+(*desc="flow ground response, keep low", type="instance"*) parameter real pn_gnd_cap = 100p ;
+
+real pixel_size; 
+real layer_height;
+real threshold_pressure_kPa;
+
+real H_layer, W_px;
+real Hm, Wm, Lm;
+real Ri_valve;
+real Ro_valve;
+
+real P_lin, P_lin_start;
+
+// debugging var
+real norm_sw ;
+
+analog begin
+
+    //@(initial_instance) 
+    begin : initial_instance
+      pixel_size = 7.6u;
+      layer_height = 10u;
+
+      threshold_pressure_kPa = 103k;
+      
+      begin
+        if (CROSS_SECTION == 1) begin
+          // standard 1 
+          H_layer = 5;
+          W_px = 6;
+        end
+        else if (CROSS_SECTION == 2) begin
+          // standard 2
+          H_layer = 8;
+          W_px = 14; 
+        end
+        else begin
+          H_layer = 8;
+          W_px = 14; 
+        end
+      end // end if
+
+      // converts the channel size to meters
+      Lm = L;
+      Hm = H_layer*layer_height; 
+      Wm = W_px*pixel_size;
+
+      Ri_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+      Ro_valve = (12*nu*Lm)/(1 - 0.63*(Hm/Wm)) * 1/(Hm*Hm*Hm/Wm);
+
+      // linear region of valve transition
+      P_lin = 20k ; 
+      P_lin_start = threshold_pressure_kPa - P_lin;     
+      $display("Pressure switch: ", P_lin_start) ;
+    end // end initial_instance
+
+    norm_sw = 1 - ((P(pn_in)-P_lin_start)/(P_lin)) ;
+
+    // Pressure above theshold
+    if (P(pn_in) > threshold_pressure_kPa) begin
+        Qfl(flm_i) <+ 0;
+    end else if (threshold_pressure_kPa - P(pn_in) <= P_lin) begin
+        Qfl(flm_i) <+ P(flm_i) / Ri_valve * \
+              (1 - ((P(pn_in) - P_lin_start) / (P_lin)));
+              //(1 - ((P(pn_in)-P_lin_start)/(threshold_pressure_kPa-P_lin_start)));
+    end else begin
+        Qfl(flm_i) <+ P(flm_i) / Ri_valve;
+    end 
+
+    Qfl(flm_o) <+ P(flm_o) / Ro_valve ;
+
+    // cap for valve to prevent disconnected circuits
+    Qfl(fl_m, fl_gnd) <+ ddt(P(fl_m, fl_gnd)) * fl_gnd_cap ;
+
+    Qfl(pn_in, fl_gnd) <+ ddt(P(pn_in, fl_gnd)) * pn_gnd_cap ;
+    Qfl(pn_out, fl_gnd) <+ ddt(P(pn_out, fl_gnd)) * pn_gnd_cap ;
+ 
+end // end analog
+
+endmodule

@@ -1,0 +1,34 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+`include "channel_flow.va"
+
+module serpentine_100px_inh_flow(fl_in, fl_out);
+
+inout fl_in, fl_out ;
+//branch (c_in, c_out) chem;
+
+
+fluidDynamics fl_in, fl_out;
+
+
+(*desc="channel length", type="instance"*) parameter real length=4.56m;
+(*desc="cross-section", type="instance"*) parameter real cross_section=1;
+// dynamic viscosity @ 20 C
+(*desc="fluid viscosty", type="instance"*) parameter real nu=0.0010005;
+// (*desc="chemical viscosity param", type="instance"*) parameter real ch0_nu=0.5;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
+
+// real pixel_size;
+// real layer_height;
+// real W, H, L;
+// real R;
+// real ch_width_pixels, ch_height_layers;
+
+channel_flow ch1 (.in_fluid(fl_in), .out_fluid(fl_out)) ; 
+
+
+endmodule

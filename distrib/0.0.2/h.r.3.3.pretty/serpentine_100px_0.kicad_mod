@@ -1,35 +1,131 @@
-(footprint "mfda:serpentine_100px_0" (generator openmfda)
-  (layer "F.Cu")
-  (tedit 67a92297)
-  (at 0.0 -0.0 0)
-  (fp_text user "in_fluid" (at 3.8000000000000003 -4.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "out_fluid" (at 15.799999999999999 -4.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text value "serpentine_100px_0" (at 9.0 -19.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text reference "%REF" (at 9.0 1.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_rect (start 0.0 -0.0) (end 18.0 -18.0) (layer "Margin") (width 0.12))
-  (pad "0" thru_hole rect (at 3.0 -3.0) (size 1.4000000000000004 1.4000000000000004) (layers "B.Cu")
-    (pinfunction "in_fluid"))
-  (pad "1" thru_hole rect (at 15.0 -3.0) (size 1.3999999999999986 1.4000000000000004) (layers "B.Cu")
-    (pinfunction "out_fluid"))
-  (zone (net 0) (net_name "unknown") (layer "B.Cu") (hatch edge 0.0)
-    (connect_pads (clearance 0.254))
-    (min_thickness 0.254)
-    (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed ) (copperpour not_allowed) (footprints not_allowed))
-    (polygon
-      (pts
-        (xy 3.7 -3.7)
-        (xy 3.7 -14.3)
-        (xy 14.3 -14.3)
-        (xy 14.3 -3.7)
-      )
-    )
-  )
+(footprint "serpentine_100px_0"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 6 1 0)
+		(layer "F.SilkS")
+		(uuid "df06fa53-1958-49cd-8505-a683aff79a38")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Value" "serpentine_100px_0"
+		(at 9.1694 -19.1262 0)
+		(layer "F.SilkS")
+		(uuid "cc9059e1-8c4b-4cac-89e0-6b523ebfcfc1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "445a8659-d771-4b7a-8000-8d3f90313927")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "80eedafe-5d77-4805-9517-c450f15f8502")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start 0.1 -0.1)
+		(end 17.9 -17.9)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "547268f8-4363-4225-a4ab-702d1e5109a0")
+	)
+	(fp_text user "out_fluid"
+		(at 14 -6 0)
+		(layer "F.SilkS")
+		(uuid "5e284cd9-7e56-447d-bd04-9c2fc1bf9b19")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(fp_text user "in_fluid"
+		(at 4.5 -6 0)
+		(layer "F.SilkS")
+		(uuid "b1a4fb4c-f5d2-4d14-9cf7-e667b203eebc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.015)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 3 -3)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "a238560e-f23c-450a-bb4a-17f411a00035")
+	)
+	(pad "2" smd rect
+		(at 15 -3)
+		(size 2 2)
+		(layers "B.Cu")
+		(uuid "62e1ac69-d487-483a-b56c-d2693aff7ded")
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layer "B.Cu")
+		(uuid "8efe9dbf-13f5-43e4-a395-28b2077dc3ae")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(filled_areas_thickness no)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 0.5 -5.2) (xy 0.5 -17.5) (xy 17.5 -17.5) (xy 17.5 -5)
+			)
+		)
+	)
+	(embedded_fonts no)
 )

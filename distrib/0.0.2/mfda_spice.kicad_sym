@@ -1,12 +1,16 @@
 (kicad_symbol_lib
-	(version 20231120)
+	(version 20241209)
 	(generator "kicad_symbol_editor")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(symbol "0"
 		(power)
-		(pin_numbers hide)
+		(pin_numbers
+			(hide yes)
+		)
 		(pin_names
-			(offset 0) hide)
+			(offset 0)
+			(hide yes)
+		)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -97,9 +101,250 @@
 				)
 			)
 		)
+		(embedded_fonts no)
+	)
+	(symbol "ATM"
+		(power)
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "#GND"
+			(at 0 -5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "ATM"
+			(at 0 -2.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#subsec_Circuit_elements__device"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "0V reference potential for simulation"
+			(at 0 -7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "simulation"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "ATM_0_1"
+			(polyline
+				(pts
+					(xy -1.27 0) (xy 0 -1.27) (xy 1.27 0) (xy -1.27 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "ATM_1_1"
+			(pin power_in line
+				(at 0 0 0)
+				(length 0)
+				(name "~"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+	(symbol "atm_io"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at -7.366 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Ground reference for MFDA"
+			(at -5.08 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_io.lib"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Name" "pressure_io_sp"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "SUBCKT"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=fl_out"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "atm_io_0_1"
+			(polyline
+				(pts
+					(xy -1.905 1.016) (xy -8.255 1.016) (xy -8.255 -0.889) (xy -1.905 -0.889)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 1.016) (xy 0 0.635) (xy 0 -0.635) (xy -1.905 -0.889)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "atm_io_1_1"
+			(pin passive line
+				(at 2.54 0 180)
+				(length 2.54)
+				(name "connect"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
 	)
 	(symbol "flow_source"
-		(pin_numbers hide)
+		(pin_numbers
+			(hide yes)
+		)
 		(pin_names
 			(offset 0.0254)
 		)
@@ -134,7 +379,7 @@
 			)
 		)
 		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#sec_Independent_Sources_for"
-			(at 0 0 0)
+			(at 3.302 -6.096 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -143,7 +388,7 @@
 			)
 		)
 		(property "Description" "Volume source, constant"
-			(at 0 0 0)
+			(at -13.208 -8.128 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -152,7 +397,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=plus 2=minus"
-			(at 0 0 0)
+			(at -15.24 -3.556 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -161,7 +406,7 @@
 			)
 		)
 		(property "Sim.Device" "SUBCKT"
-			(at 0 0 0)
+			(at -12.7 -10.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -170,19 +415,21 @@
 			)
 		)
 		(property "Sim.Library" "/Users/snelgrov/kicad/verilogA_build/flow_source.lib"
-			(at 0 0 0)
+			(at -1.524 14.224 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Sim.Name" "flow_src"
-			(at 0 0 0)
+			(at -9.398 -1.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "ki_keywords" "simulation"
@@ -247,7 +494,7 @@
 		(symbol "flow_source_0_1"
 			(polyline
 				(pts
-					(xy 0 1.27) (xy 0 2.286)
+					(xy -0.254 1.778) (xy 0 1.27) (xy 0.254 1.778)
 				)
 				(stroke
 					(width 0)
@@ -259,7 +506,7 @@
 			)
 			(polyline
 				(pts
-					(xy -0.254 1.778) (xy 0 1.27) (xy 0.254 1.778)
+					(xy 0 1.27) (xy 0 2.286)
 				)
 				(stroke
 					(width 0)
@@ -319,9 +566,193 @@
 				)
 			)
 		)
+		(embedded_fonts no)
+	)
+	(symbol "pressure_io"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at -7.366 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at -2.54 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Pressure flow input"
+			(at -13.462 -2.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_io.lib"
+			(at -0.762 8.636 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Name" "pressure_io_sp"
+			(at -4.572 -6.858 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "SUBCKT"
+			(at -0.508 -3.048 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=fl_out"
+			(at -4.064 -5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Params" "pressure_psi=0"
+			(at -7.62 2.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "pressure_io_0_1"
+			(polyline
+				(pts
+					(xy -1.905 1.016) (xy -8.255 1.016) (xy -8.255 -0.889) (xy -1.905 -0.889)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 1.016) (xy 0 0.635) (xy 0 -0.635) (xy -1.905 -0.889)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -1.905 0) (xy 0 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 0) (xy -0.635 0.635)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 0) (xy -0.635 -0.635)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "pressure_io_1_1"
+			(pin passive line
+				(at 2.54 0 180)
+				(length 2.54)
+				(name "connect"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
 	)
 	(symbol "pressure_source"
-		(pin_numbers hide)
+		(pin_numbers
+			(hide yes)
+		)
 		(pin_names
 			(offset 0.0254)
 		)
@@ -373,7 +804,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" "1=plus 2=minus"
+		(property "Sim.Pins" "1=fl_plus 2=fl_minus"
 			(at 0 0 0)
 			(effects
 				(font
@@ -392,7 +823,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Library" "/Users/snelgrov/kicad/verilogA_build/pressure_source.lib"
+		(property "Sim.Library" "$(MFDA_SPICE)/pressure_source.lib"
 			(at 0 0 0)
 			(effects
 				(font
@@ -401,7 +832,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Name" "pressure_src"
+		(property "Sim.Name" "pressure_source_sp"
 			(at 0 0 0)
 			(effects
 				(font
@@ -528,5 +959,6 @@
 				)
 			)
 		)
+		(embedded_fonts no)
 	)
 )

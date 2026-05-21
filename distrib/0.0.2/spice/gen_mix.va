@@ -1,0 +1,157 @@
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module gen_mix(a_fluid, b_fluid, c_fluid, c_a, c_b, c_c);
+
+inout a_fluid, b_fluid, c_fluid;
+inout c_a, c_b, c_c;
+
+fluidDynamics a_fluid, b_fluid, c_fluid;
+concentration c_a, c_b, c_c;
+concentration ci_a, ci_b, ci_c;
+
+//internal node
+fluidDynamics fl_int_1;
+branch (a_fluid, fl_int_1) flbr_a ;
+branch (b_fluid, fl_int_1) flbr_b ;
+branch (c_fluid, fl_int_1) flbr_c ;
+
+concentration gnd ;
+ground gnd;
+
+branch (ci_a, gnd) cgia ;
+branch (ci_b, gnd) cgib ;
+branch (ci_c, gnd) cgic ;
+
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
+(*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
+
+(*desc="concentraion delay", type="instance"*) parameter real g_ccap = 100n;
+(*desc="concentraion delay", type="instance"*) parameter real g_ccapa = 100n;
+(*desc="concentraion delay", type="instance"*) parameter real g_ccapb = 100n;
+(*desc="concentraion delay", type="instance"*) parameter real g_ccapc = 100n;
+
+real LENGTH1;
+real LENGTH2;
+real LENGTH3;
+
+real R1_3;
+real R2_3; 
+real R1, R2, R3;
+real W, H, L1, L2, L3;
+real ch_height_layers, ch_width_pixels;
+
+real pixel_width;// = 7.6u;
+real layer_height;// = 10u;
+
+real q1 ;
+real q2 ;
+real q3 ;
+
+real ca ;
+real cb ;
+real cc ;
+
+
+
+analog begin
+
+   //@(initial_instance) 
+   begin : initial_instance
+      
+      pixel_width = 7.6u;
+      layer_height = 10u;
+
+      LENGTH1=0.001m;
+      LENGTH2=0.001m;
+      LENGTH3=0.001m;
+
+      begin
+      if  (CROSS_SECTION == 1) begin
+         ch_height_layers = 10;
+         ch_width_pixels  = 14;
+      end
+      else if(CROSS_SECTION== 2) begin
+         ch_height_layers = 5;
+         ch_width_pixels  = 6;
+      end
+      end
+
+      W  = ch_width_pixels * pixel_width;
+      H  = ch_height_layers* layer_height;
+      L1 = LENGTH1;
+      L2 = LENGTH2;
+      L3 = LENGTH3;
+
+      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+      R1_3 = R1 + R3;
+      R2_3 = R2 + R3;
+
+   end // end initial_step
+
+   q1 = P(flbr_a)/R1;
+   q2 = P(flbr_b)/R2;
+   q3 = P(flbr_c)/R3;
+
+
+   Qfl(flbr_a) <+ q1 ;
+   Qfl(flbr_b) <+ q2 ;
+
+   Qfl(flbr_c) <+ q3 ;
+
+   //Concentration signals
+
+   if (P(flbr_c) > 0) begin
+      C(c_c, gnd) <+ C(c_a, gnd) * (P(flbr_a)/R1) / (P(flbr_c)/R3);
+      C(c_c, gnd) <+ C(c_b, gnd) * (P(flbr_b)/R2) / (P(flbr_c)/R3);
+   end
+
+   //Concentration signals logic
+   begin
+   if (q1 > 0 && q2 < 0 && q3 < 0) begin
+      C(cgib) <+ C(cgia) ;//* (P(flbr_a)/R1) / (P(flbr_c)/R3);
+      C(cgic) <+ C(cgia) ;//* (P(flbr_b)/R2) / (P(flbr_c)/R3);
+   end // end if
+   else if (q2 > 0 && q1 < 0 && q3 < 0) begin
+      C(cgia) <+ C(cgib) ;
+      C(cgic) <+ C(cgib) ;
+   end // end if
+   else if (q3 > 0 && q2 < 0 && q1 < 0) begin
+      C(cgia) <+ C(cgic) ;
+      C(cgib) <+ C(cgic) ;
+   end // end if
+   else if (q1 > 0 && q2 > 0 && q3 < 0) begin
+      C(cgic) <+ C(c_a, gnd) * abs(q1) / abs(q3);
+      C(cgic) <+ C(c_b, gnd) * abs(q2) / abs(q3);
+   end // end if
+   else if (q1 > 0 && q3 > 0 && q2 < 0) begin
+      C(cgib) <+ C(c_a, gnd) * abs(q1) / abs(q2);
+      C(cgib) <+ C(c_c, gnd) * abs(q3) / abs(q2);
+   end // end if
+   else if (q2 > 0 && q3 > 0 && q1 < 0) begin
+      C(cgia) <+ C(c_c, gnd) * abs(q3) / abs(q1);
+      C(cgia) <+ C(c_b, gnd) * abs(q2) / abs(q1);
+   end // end if
+   end
+
+   //else
+      //C(cgia) <+ 0 ;
+      //C(cgib) <+ 0 ;
+      //C(cgic) <+ 0 ;
+   //end
+
+   ca = ddt(C(c_a, gnd)) * g_ccap ;
+   cb = ddt(C(c_b, gnd)) * g_ccap ;
+   cc = ddt(C(c_c, gnd)) * g_ccap ;
+
+   Ci(c_a, gnd) <+ ca ;
+   Ci(c_b, gnd) <+ cb ;
+   Ci(c_c, gnd) <+ cc ;
+
+end // end analog block
+
+endmodule

@@ -10,7 +10,7 @@ fluidDynamics fl_in, fl_out;
 branch (fl_in, fl_out) fl_br ;
 
 (*desc="length", type="instance"*) parameter real length=5m;
-(*desc="cross-section", type="instance"*) parameter real crosssection=1; 
+(*desc="cross-section", type="instance"*) parameter integer crosssection=1; 
 (*desc="viscosity", type="instance"*) parameter real nu=0.0010016;
 
 real pixel_size;
