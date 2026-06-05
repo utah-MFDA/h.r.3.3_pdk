@@ -1,0 +1,142 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module valve_2(
+  fl_in,
+  fl_out,
+  pn_in,
+  pn_out
+  ) ;
+
+  electrical fl_in, fl_out, fl_m ;
+  electrical pn_in, pn_out, pn_mc ;
+  //electrical pn_mr;
+  inout fl_in, fl_out;
+  inout pn_in, pn_out;
+
+  // Conversion reference
+  // 1 L  = 1   dm^3 (e-3)
+  // 1 mL = 1   cm^3 (e-6)
+  // 1 ul = 100 um^3 (e-9)
+  // 1 nl = 10  um^3 (e-12)
+  // 1 pl = 1   um^3 (e-15)
+  //
+
+  (*desc="Cap volume multiplier", type="instance"*) parameter real cvol = 1e-12 ; // L
+  (*desc="Cap delay multiplier", type="instance"*) parameter real ct = 1 ;
+  (*desc="Membrance resistance", type="instance"*) parameter real rt = 0 ;
+
+  // Conversion reference
+  // 1 PSI  = 6.894 kPa (e3)
+  // 10 PSI = 68.94 kPa (e3)
+
+  (*desc="Pressure to close the valve", type="instance"*) parameter real p_th = 70k ; // Pa
+
+  (*desc="fluid viscosty", type="instance"*) parameter real NU=0.0010005;
+
+  (*desc="Lenght at fl_in", type="instance"*) parameter real L1 = 2m ;
+  (*desc="Lenght at fl_out", type="instance"*) parameter real L2 = 2m ;
+  (*desc="Lenght at pn_in", type="instance"*) parameter real L3 = 2m ;
+  (*desc="Lenght at pn_out", type="instance"*) parameter real L4 = 2m ;
+
+  branch (pn_mc, fl_m)  q_cap ;
+  //branch (fl_m, pn_mc)  q_cap ;
+  //branch (pn_mr, pn_mc) r_cap ;
+
+
+  branch (fl_in, fl_m) fl_br_in ;
+  branch (fl_m, fl_out) fl_br_out ;
+
+  //branch (pn_in, pn_mr) pn_br_in ;
+  //branch (pn_mr, pn_out) pn_br_out ;
+  branch (pn_in, pn_mc) pn_br_in ;
+  branch (pn_mc, pn_out) pn_br_out ;
+
+  real p_c; // parameter for branch vol
+  //real p_r; // parameter for branch resisance
+
+  real fl_h;
+  real fl_w;
+
+  real px;
+  real layer;
+
+  // --
+  real W ;
+  real H ;
+
+  // --
+  real R1 ;
+  real R2 ;
+  real R3 ;
+  real R4 ;
+
+  real lin_ramp ;
+  real lin_start;
+
+  real NU_AIR ;
+
+  // debuing
+  real flin_m_delta ;
+
+  analog
+  begin
+
+    @(initial_instance) 
+    begin : initial_instance
+      fl_h = 10;
+      fl_w = 14;
+
+      layer = 10e-6 ;
+      px = 7.6e-6 ;
+
+      NU_AIR = 18.37e-6 ;
+
+      W = fl_w * px;
+      H = fl_h * layer;
+
+      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R4 = (12*NU*L4) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+      lin_ramp = (p_th) * 0.05 ;
+      lin_start = p_th - lin_ramp  ;
+
+    end // end initial_instance
+
+    p_c = tanh(V(q_cap)/ct) * cvol ;
+    
+    // membrane
+    I(q_cap) <+ ddt(p_c) ;
+
+    flin_m_delta = (V(q_cap) - V(fl_br_in)) ;
+
+    // open
+    if (
+        V(q_cap) < lin_start
+      ) begin //------------
+      I(fl_br_in) <+ V(fl_br_in)/R1 ;
+    end
+    // transition
+    else if ( \
+        ( V(q_cap) < p_th && V(q_cap) >= lin_start) \
+        || \
+        (flin_m_delta < p_th && flin_m_delta >= lin_start) \
+        ) begin //------------
+      I(fl_br_in) <+ V(fl_br_in)/R1 * \
+        (1 - ((V(q_cap) - lin_start) / (lin_ramp)));
+    end
+    // closed
+    else begin  //------------
+      I(fl_br_in) <+ 0 ;
+    end
+
+    I(fl_br_out) <+ V(fl_br_out)/R2 ;
+    I(pn_br_in)  <+ V(pn_br_in)/R3 ;
+    I(pn_br_out) <+ V(pn_br_out)/R4 ;
+
+  end
+endmodule
