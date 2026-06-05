@@ -1,0 +1,161 @@
+
+`include "nature_fluid_dynamics.vams"
+//`include "nature_fluid_thermal.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+// viscosity changes due to temperature only
+
+module serpentine_300px_0_ht(fl_in, fl_out, c_in, c_out, t_in, t_out);
+
+inout fl_in, fl_out;
+fluidDynamics fl_in, fl_out;
+branch (fl_in, fl_out) fl_br ;
+
+inout c_in, c_out;
+concentration c_in, c_out;
+
+inout t_in, t_out;
+fluidThermal t_in, t_out;
+
+// concentration cv1, cv2;
+
+(*desc="channel length", type="instance"*) parameter real length=35.568m;
+(*desc="cross-section", type="instance"*) parameter real cross_section=1; 
+// (*desc="viscosity", type="instance"*) parameter real nu=0.0010016;
+
+(*desc="capacitance concentration", type="instance"*) parameter real chem_cap=0.1f ;
+(*desc="capacitance concentration", type="instance"*) parameter real temp_cap=0.1f ;
+(*desc="capacitance ground", type="instance"*) parameter real gcap=100n ;
+//(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
+
+real pixel_size;
+real layer_height;
+real W, H, L;
+real R;
+real ch_width_pixels;
+real ch_height_layers;
+
+real cqi ;
+real cqo ;
+real cqi_g ;
+real cqo_g ;
+//real cq ;
+
+real fluid_flow ;
+
+concentration c_gnd;
+ground c_gnd;
+
+// new variables for viscosity calculations
+
+fluidThermal t_gnd;
+ground t_gnd;
+
+real nu_fl ;
+
+real A ;
+real B ;
+real C ;
+real D ;
+real t_avg;
+
+analog begin
+
+  @(initial_instance) 
+  begin : initial_instance
+    pixel_size = 7.6u; 
+    layer_height = 10u;
+
+
+    begin 
+    if (cross_section == 1) begin
+       ch_width_pixels = 14;
+       ch_height_layers= 10;
+    end
+    else if(cross_section == 2) begin
+       ch_width_pixels = 6;
+       ch_height_layers= 5;
+    end
+    else if(cross_section == 3) begin
+       ch_width_pixels = 28;
+       ch_height_layers= 20;
+    end
+    else if(cross_section == 4) begin
+       ch_width_pixels = 42;
+       ch_height_layers= 30;
+    end
+    else if(cross_section == 5) begin
+       ch_width_pixels = 70;
+       ch_height_layers= 50;
+    end
+    end
+
+    W = pixel_size * ch_width_pixels;
+    H = layer_height*ch_height_layers;
+    L = length;
+
+  end
+
+  //c_avg = (C(c_in) + C(c_out))/2 ;
+
+  // bound the values between values which the model is valid
+
+  begin
+  if (T(t_in) >= 273.25 && T(t_in) < 373.15) begin
+    t_avg = (T(t_in)) ; // - 273.15 ;
+  end
+  else if (T(t_in) < 273.25) begin
+    t_avg = 0.1 + 273.15 ;
+  end
+  else begin
+    t_avg = 100 + 273.15 ;
+  end
+  end
+
+  // extra var calculations
+
+  A = 1.856e-11 ;
+  B = 4209 ;
+  C = 4.527e-2 ;
+  D = -3.376e-5 ;
+
+  // cP or 1e-3 N * s/m^2
+  nu_fl = A * exp(B/t_avg + C*t_avg + D*t_avg*t_avg) ;
+
+  R = (12*nu_fl*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+  fluid_flow = P(fl_br)/R;
+
+  // $display("Flow:", fluid_flow, "C:", C(c_in, c_out), "T:", T(t_in, t_out));
+  // $display("R:", R, "NU:", nu_fl, "T_avg:", t_avg);
+
+  Qfl(fl_br) <+ fluid_flow ;
+
+  // chem representation
+  if(C(c_out) > 0 || (fluid_flow > 0 && C(c_in) > 0)) begin
+    Ci(c_in, c_out) <+ C(c_in, c_out) * fluid_flow ;
+  end
+  // negative fluid flow
+  else if(C(c_in) > 0 || (fluid_flow < 0 && C(c_out) > 0)) begin
+    Ci(c_in, c_out) <+ C(c_in, c_out) * fluid_flow ;
+  end
+
+  Ci(c_in,  c_gnd) <+ ddt(C(c_in, c_gnd) * chem_cap) ;
+  Ci(c_out, c_gnd) <+ ddt(C(c_out, c_gnd) * chem_cap) ;
+
+
+  // temp representation
+  if(T(t_out) > 0 || (fluid_flow > 0 && T(t_in) > 0)) begin
+    Tfl(t_in, t_out) <+ T(t_in, t_out) * fluid_flow ;
+  end
+  else if(T(t_in) > 0 || (fluid_flow < 0 && T(t_out) > 0)) begin
+    Tfl(t_in, t_out) <+ T(t_in, t_out) * fluid_flow ;
+  end
+
+  Tfl(t_in,  t_gnd) <+ ddt(T(t_in, t_gnd) * temp_cap) ;
+  Tfl(t_out, t_gnd) <+ ddt(T(t_out, t_gnd) * temp_cap) ;
+
+end
+
+endmodule
