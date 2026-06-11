@@ -125,7 +125,7 @@ analog begin
   D = -3.376e-5 ;
 
   // cP or 1e-3 N * s/m^2
-  nu_fl = A * exp(B/t_avg + C*t_avg + D*t_avg*t_avg) ;
+  nu_fl = A * exp(B/t_avg + C*t_avg + D*t_avg*t_avg) * 1e-3 ;
 
   R = (12*nu_fl*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 

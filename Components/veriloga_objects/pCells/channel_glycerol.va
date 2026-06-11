@@ -1,6 +1,6 @@
 
 `include "nature_fluid_dynamics.vams"
-`include "nature_fluid_thermal.vams"
+//`include "nature_fluid_thermal.vams"
 `include "disciplines.vams"
 `include "constants.vams"
 
@@ -129,13 +129,14 @@ analog begin
     exp((-1233 - t_avg) * t_avg / \
       (9900 + 70 * t_avg)) ;
 
-  alp = 1 - C_m + (a_c * b_c * (1 - C_m)) / \
+  alp = 1 - C_m + (a_c * b_c * C_m * (1 - C_m)) / \
     (a_c * C_m + b_c * (1 - C_m)) ;
 
-  A = log(mu_w/mu_g) ;
+  // A = log(mu_w/mu_g) ;
+  A = ln(mu_w/mu_g) ;
 
   // cP or 1e-3 N * s/m^2
-  nu_fl = mu_g * exp(A * alp) ;
+  nu_fl = mu_g * exp(A * alp) * 1e-3;
 
   R = (12*nu_fl*L) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
 

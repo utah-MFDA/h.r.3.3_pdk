@@ -3,7 +3,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module channel_chem2(fl_in, fl_out, c_in, c_out);
+module channel_chem(fl_in, fl_out, c_in, c_out);
 
 inout fl_in, fl_out;
 fluidDynamics fl_in, fl_out;
@@ -18,8 +18,8 @@ concentration c_in, c_out;
 (*desc="cross-section", type="instance"*) parameter real cross_section=1; 
 (*desc="viscosity", type="instance"*) parameter real nu=0.0010016;
 
-(*desc="capacitance concentration", type="instance"*) parameter real chem_cap=100n ;
-(*desc="capacitance ground", type="instance"*) parameter real gcap=100n ;
+(*desc="capacitance concentration", type="instance"*) parameter real chem_cap=1f ;
+(*desc="capacitance ground", type="instance"*) parameter real gcap=1f ;
 //(*desc="resistance concentration", type="instance"*) parameter real rcap=100u
 
 real pixel_size;
