@@ -1,0 +1,344 @@
+
+`include "nature_fluid_dynamics.vams"
+//`include "nature_fluid_thermal.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module diffmix_25px_0_ht (
+  fluid_a, fluid_b, fluid_out,
+  chem_a, chem_b, chem_out,
+  temp_a, temp_b, temp_out
+); //, chem_int_1);
+
+inout fluid_a;
+inout fluid_b;
+inout fluid_out;
+
+inout chem_a;
+inout chem_b;
+inout chem_out;
+
+inout temp_a;
+inout temp_b;
+inout temp_out;
+
+fluidDynamics fluid_a; 
+fluidDynamics fluid_b;
+fluidDynamics fluid_out;
+
+concentration chem_a; 
+concentration chem_b;
+concentration chem_out;
+
+fluidThermal temp_a;
+fluidThermal temp_b;
+fluidThermal temp_out;
+// concentration temp_a;
+// concentration temp_b;
+// concentration temp_out;
+
+//internal node
+fluidDynamics fl_int_1;
+concentration chem_int_1;
+fluidThermal  temp_int_1;
+//concentration  temp_int_1;
+
+branch (fluid_a,   fl_int_1) fl_br_a ;
+branch (fluid_b,   fl_int_1) fl_br_b ;
+branch (fl_int_1, fluid_out) fl_br_o ;
+
+// branch (temp_a,   temp_int_1) th_br_a ;
+// branch (temp_b,   temp_int_1) th_br_b ;
+// branch (temp_int_1, temp_out) th_br_out ;
+
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION=1;
+(*desc="viscosity", type="instance"*) parameter real NU = 0.001006;
+
+(*desc="concentraion delay", type="instance"*) parameter real chem_cap = 0.1f;
+(*desc="temperature delay", type="instance"*) parameter real temp_cap = 0.1f;
+
+(*desc="lenght 1", type="instance"*) parameter real length1 = 0.190m;
+(*desc="lenght 2", type="instance"*) parameter real length2 = 0.269m;
+(*desc="lenght 3", type="instance"*) parameter real length3 = 0.190m;
+
+// real LENGTH1;
+// real LENGTH2;
+// real LENGTH3;
+
+// real R1_3;
+// real R2_3; 
+real R1, R2, R3;
+real W, H, L1, L2, L3;
+real ch_height_layers, ch_width_pixels;
+
+real pixel_width;// = 7.6u;
+real layer_height;// = 10u;
+
+real flow_br_a ;
+real flow_br_b ;
+real flow_br_o ;
+
+real co_nd ;
+real ca_nd ;
+real cb_nd ;
+// real c_in ;
+real ch_a_dilute ;
+real ch_b_dilute ;
+real ch_o_dilute ;
+
+concentration gnd_C ;
+ground gnd_C ;
+
+real to ;
+real ta ;
+real tb ;
+real th_a_dilute ;
+real th_b_dilute ;
+real th_o_dilute ;
+
+fluidThermal gnd_T ;
+ground gnd_T ;
+
+analog begin
+
+   @(initial_instance) 
+   begin : initial_instance
+      
+      pixel_width = 7.6u;
+      layer_height = 10u;
+
+      // LENGTH1=0.19m;
+      // LENGTH2=0.269m;
+      // LENGTH3=0.190m;
+
+      begin
+      if  (CROSS_SECTION == 1) begin
+         ch_height_layers = 10;
+         ch_width_pixels  = 14;
+      end
+      else if(CROSS_SECTION== 2) begin
+         ch_height_layers = 5;
+         ch_width_pixels  = 6;
+      end
+      end
+
+      W  = ch_width_pixels * pixel_width;
+      H  = ch_height_layers* layer_height;
+      // L1 = LENGTH1;
+      // L2 = LENGTH2;
+      // L3 = LENGTH3;
+      L1 = length1 ;
+      L2 = length2 ;
+      L3 = length3 ;
+
+      R1 = (12*NU*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*NU*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*NU*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+      $display("resistance Mixer:");
+      $display(R1);
+      $display(R2);
+      $display(R3);
+      $display("test 4");
+
+   end // end initial_step
+
+
+   flow_br_a = P(fl_br_a)/R1;
+   Qfl(fl_br_a) <+ flow_br_a;
+
+   flow_br_b = P(fl_br_b)/R2;
+   Qfl(fl_br_b) <+ flow_br_b;
+
+   flow_br_o = P(fl_br_o)/R3;
+   Qfl(fl_br_o) <+ flow_br_o;
+
+   // $display(P(fl_br_a), P(fl_br_b), P(fl_br_o));
+
+   // concentration behavior =======================
+   // one outlets
+
+   begin
+   if (P(fl_br_o) > 0) begin
+     ch_a_dilute =  C(chem_a) * ((flow_br_a) / (flow_br_o));
+     C(chem_int_1) <+ ch_a_dilute ;
+     ch_b_dilute =  C(chem_b) * ((flow_br_b) / (flow_br_o));
+     C(chem_int_1) <+ ch_b_dilute;
+
+     Ci(chem_int_1, chem_out) <+ C(chem_int_1, chem_out) * flow_br_o ;
+   end
+   else if (P(fl_br_a) < 0) begin  // backflow in a
+     ch_o_dilute =  C(chem_out) * ((flow_br_o) / (flow_br_a));
+     C(chem_int_1) <+ ch_o_dilute ;
+     ch_b_dilute =  C(chem_b) * ((flow_br_b) / (flow_br_a));
+     C(chem_int_1) <+ ch_b_dilute;
+
+     Ci(chem_int_1, chem_a) <+ C(chem_int_1, chem_a) * flow_br_a;
+   end
+   else if (P(fl_br_b) < 0) begin  // backflow in b
+     ch_a_dilute =  C(chem_a) * ((flow_br_a) / (flow_br_b));
+     C(chem_int_1) <+ ch_a_dilute ;
+     ch_o_dilute =  C(chem_out) * ((flow_br_o) / (flow_br_b));
+     C(chem_int_1) <+ ch_o_dilute;
+
+     Ci(chem_int_1, chem_b) <+ C(chem_int_1, chem_b) * flow_br_b;
+   end
+   // two outlet flow ------------------------
+   else if (P(fl_br_o) > 0 && P(fl_br_a) < 0) begin
+     ch_b_dilute =  C(chem_b); // * ((flow_br_o) / (flow_br_b));
+     C(chem_int_1) <+ ch_b_dilute;
+
+     Ci(chem_int_1, chem_out) <+ C(chem_int_1, chem_out) * flow_br_o;
+     Ci(chem_int_1, chem_a)   <+ C(chem_int_1, chem_a)   * flow_br_a;
+   end
+   else if (P(fl_br_o) > 0 && P(fl_br_b) < 0) begin
+     ch_a_dilute =  C(chem_a);
+     C(chem_int_1) <+ ch_a_dilute;
+
+     Ci(chem_int_1, chem_out) <+ C(chem_int_1, chem_out) * flow_br_o;
+     Ci(chem_int_1, chem_b)   <+ C(chem_int_1, chem_b)   * flow_br_b;
+   end
+   else if (P(fl_br_b) < 0 && P(fl_br_a) < 0) begin
+     ch_o_dilute =  C(chem_out);
+     C(chem_int_1) <+ ch_o_dilute;
+
+     Ci(chem_int_1, chem_b) <+ C(chem_int_1, chem_b) * flow_br_b;
+     Ci(chem_int_1, chem_a) <+ C(chem_int_1, chem_a) * flow_br_a;
+   end
+   end
+
+   co_nd = ddt(C(chem_out, gnd_C) * chem_cap );
+   ca_nd = ddt(C(chem_a,   gnd_C) * chem_cap );
+   cb_nd = ddt(C(chem_b,   gnd_C) * chem_cap );
+   // c_in = ddt(C(ch_int_1, gnd_C) * chem_cap );
+
+   Ci(chem_out, gnd_C)  <+ co_nd ;
+   Ci(chem_a,   gnd_C)  <+ ca_nd ;
+   Ci(chem_b,   gnd_C)  <+ cb_nd ;
+   // Ci(ch_int_1, gnd_C)  <+ c_in ;
+
+   // temperature behavior =======================
+
+   begin
+   if (P(fl_br_o) > 0) begin
+     th_a_dilute =  T(temp_a) * ((flow_br_a) / (flow_br_o));
+     T(temp_int_1) <+ th_a_dilute ;
+     th_b_dilute =  T(temp_b) * ((flow_br_b) / (flow_br_o));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o ;
+   end
+   else if (P(fl_br_a) < 0) begin  // backflow in a
+     th_o_dilute =  T(temp_out) * ((flow_br_o) / (flow_br_a));
+     T(temp_int_1) <+ th_o_dilute ;
+     th_b_dilute =  T(temp_b) * ((flow_br_b) / (flow_br_a));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_a) <+ T(temp_int_1, temp_a) * flow_br_a;
+   end
+   else if (P(fl_br_b) < 0) begin  // backflow in b
+     th_a_dilute =  T(temp_a) * ((flow_br_a) / (flow_br_b));
+     T(temp_int_1) <+ th_a_dilute ;
+     th_o_dilute =  T(temp_out) * ((flow_br_o) / (flow_br_b));
+     T(temp_int_1) <+ th_o_dilute;
+
+     Tfl(temp_int_1, temp_b) <+ T(temp_int_1, temp_b) * flow_br_b;
+   end
+   // two outlet flow ------------------------
+   else if (P(fl_br_o) > 0 && P(fl_br_a) < 0) begin
+     th_b_dilute =  T(temp_b); // * ((flow_br_o) / (flow_br_b));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o;
+     Tfl(temp_int_1, temp_a)   <+ T(temp_int_1, temp_a)   * flow_br_a;
+   end
+   else if (P(fl_br_o) > 0 && P(fl_br_b) < 0) begin
+     th_a_dilute =  T(temp_a);
+     T(temp_int_1) <+ th_a_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o;
+     Tfl(temp_int_1, temp_b)   <+ T(temp_int_1, temp_b)   * flow_br_b;
+   end
+   else if (P(fl_br_b) < 0 && P(fl_br_a) < 0) begin
+     th_o_dilute =  T(temp_out);
+     T(temp_int_1) <+ th_o_dilute;
+
+     Tfl(temp_int_1, temp_b) <+ T(temp_int_1, temp_b) * flow_br_b;
+     Tfl(temp_int_1, temp_a) <+ T(temp_int_1, temp_a) * flow_br_a;
+   end
+   end
+
+   to = ddt(T(temp_out, gnd_T) * temp_cap );
+   ta = ddt(T(temp_a,   gnd_T) * temp_cap );
+   tb = ddt(T(temp_b,   gnd_T) * temp_cap );
+
+   Tfl(temp_out, gnd_T)  <+ to ;
+   Tfl(temp_a,   gnd_T)  <+ ta ;
+   Tfl(temp_b,   gnd_T)  <+ tb ;
+
+   // =================
+
+  /*
+   begin
+   if (P(fl_br_o) > 0) begin
+     th_a_dilute =  T(temp_a) * ((flow_br_a) / (flow_br_o));
+     T(temp_int_1) <+ th_a_dilute ;
+     th_b_dilute =  T(temp_b) * ((flow_br_b) / (flow_br_o));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o ;
+   end
+   else if (P(fl_br_a) < 0) begin  // backflow in a
+     th_o_dilute =  T(temp_out) * ((flow_br_o) / (flow_br_a));
+     T(temp_int_1) <+ th_o_dilute ;
+     th_b_dilute =  T(temp_b) * ((flow_br_b) / (flow_br_a));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_a) <+ T(temp_int_1, temp_a) * flow_br_a;
+   end
+   else if (P(fl_br_b) < 0) begin  // backflow in b
+     th_a_dilute =  T(temp_a) * ((flow_br_a) / (flow_br_b));
+     T(temp_int_1) <+ th_a_dilute ;
+     th_o_dilute =  T(temp_out) * ((flow_br_o) / (flow_br_b));
+     T(temp_int_1) <+ th_o_dilute;
+
+     Tfl(temp_int_1, temp_b) <+ T(temp_int_1, temp_b) * flow_br_b;
+   end
+   // two outlet flow ------------------------
+   else if (P(fl_br_o) > 0 && P(fl_br_a) < 0) begin
+     th_b_dilute =  T(temp_b); // * ((flow_br_o) / (flow_br_b));
+     T(temp_int_1) <+ th_b_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o;
+     Tfl(temp_int_1, temp_a)   <+ T(temp_int_1, temp_a)   * flow_br_a;
+   end
+   else if (P(fl_br_o) > 0 && P(fl_br_b) < 0) begin
+     th_a_dilute =  T(temp_a);
+     T(temp_int_1) <+ th_a_dilute;
+
+     Tfl(temp_int_1, temp_out) <+ T(temp_int_1, temp_out) * flow_br_o;
+     Tfl(temp_int_1, temp_b)   <+ T(temp_int_1, temp_b)   * flow_br_b;
+   end
+   else if (P(fl_br_b) < 0 && P(fl_br_a) < 0) begin
+     th_o_dilute =  T(temp_out);
+     T(temp_int_1) <+ th_o_dilute;
+
+     Tfl(temp_int_1, temp_b) <+ T(temp_int_1, temp_b) * flow_br_b;
+     Tfl(temp_int_1, temp_a) <+ T(temp_int_1, temp_a) * flow_br_a;
+   end
+   end
+
+
+   to = ddt(T(temp_out, gnd_T) * temp_cap );
+   ta = ddt(T(temp_a,   gnd_T) * temp_cap );
+   tb = ddt(T(temp_b,   gnd_T) * temp_cap );
+   // c_in = ddt(C(ch_int_1, gnd_C) * chem_cap );
+
+   Tfl(temp_out, gnd_T)  <+ to ;
+   Tfl(temp_a,   gnd_T)  <+ ta ;
+   Tfl(temp_b,   gnd_T)  <+ tb ;
+   */
+
+end
+
+endmodule

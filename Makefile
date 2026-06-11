@@ -1,16 +1,21 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
+BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/2.0.0
 
 $(BUILD_DIR):
 	mkdir -p $@
+	
+echo_makefile_list:
+	echo $(MAKEFILE_LIST)
+	echo $(lastword $(MAKEFILE_LIST))
+	
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
 SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
-PYTHON3 ?= python3
+export PYTHON3 ?= python3
 
-OPENVAF ?= openvaf
+export OPENVAF ?= openvaf
 
 # Shell Setup for make
 SHELL		= /bin/bash
@@ -38,16 +43,27 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 ## Verilog A targets
-VERILOGA_BUILD_DIR = $(BUILD_DIR)/verilogA_build
-NGSPICE_BUILD_DIR = $(BUILD_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 CIR_SRC_DIR = $(GENERAL_SRC_DIR) $(EXTRA_CIR_DIR)
 
 CIR_FILES = $(foreach CIR_DIR, $(CIR_SRC_DIR),$(wildcard $(CIR_DIR)/*/*.cir)) \
 			$(foreach CIR_DIR, $(CIR_SRC_DIR),$(wildcard $(CIR_DIR)/*.cir))
+
+echo_pdk_root:
+	echo $(PDK_ROOT_DIR)
+
+VERILOGA_BUILD_DIR = $(COMPONENT_DIR)/verilogA_build
+NGSPICE_BUILD_DIR ?= $(COMPONENT_DIR)/verilogA_build_ng
+
+export VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
+
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
+
+export XYCE_SUBCIR_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR)
+export XYCE_SUBCIRS = $(foreach XYCE_SUB_DIR, $(XYCE_SUBCIR_DIR), $(wildcard $(XYCE_SUB_DIR)/*/*.cir))
+
 
 LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
 LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
@@ -61,16 +77,17 @@ SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)
 # 	these will be copied in build_scad
 SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
 
-LEF_SCAD_EXTRACT = $(PDK_ROOT_DIR)/directional_reserviors \
-									$(PDK_ROOT_DIR)/inline_reserviors \
-									$(PDK_ROOT_DIR)/valves \
-									$(PDK_ROOT_DIR)/pumps \
-									$(PDK_ROOT_DIR)/optical_measure \
+LEF_SCAD_EXTRACT = $(COMPONENT_DIR)/directional_reserviors \
+									$(COMPONENT_DIR)/inline_reserviors \
+									$(COMPONENT_DIR)/valves \
+									$(COMPONENT_DIR)/pumps \
+									$(COMPONENT_DIR)/optical_measure \
 									$(COMPONENT_DIR)/capillary
 
 SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
 
 export MF_LIB = MFXyce
+export MERGED_XYCE_SUBCIR = $(VERILOGA_BUILD_DIR)/xyce_subckt_merged.cir
 
 .PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
 clean: clean_all
@@ -114,9 +131,22 @@ $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VAMS_FILES) $(VERILOGA_BUILD_DIR)
 
+.PHONY: build_xyce_subckt
+
+build_xyce_subckt: $(MERGED_XYCE_SUBCIR)
+
+$(MERGED_XYCE_SUBCIR): $(XYCE_SUBCIRS)
+	cut -b 1- $^ >> $@	
+
 # -- NGSPICE
 
 VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
+
+echo_vpath:
+	echo $(VPATH)
+
+echo_va:
+	echo $(VA_FILES)
 
 $(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
 	cp $^ $@
@@ -158,6 +188,9 @@ else
 $(NG_LIB_FILES): %.lib: %.va | $(NGSPICE_BUILD_DIR)
 	$(PYTHON3) $(NG_LIB_GEN_SCRIPT) --va_file $^
 endif
+
+echo_ng_lib:
+	echo $(NG_LIB_FILES)
 
 #$(OPENVAF) $^
 
@@ -204,6 +237,9 @@ export GDS_FILES = $(BUILD_DIR)/h.r.3.3.gds
 
 SCAD_2_LEF_PY = $(PY_SCRIPTS_DIR)/extract_lef.py
 SCAD_2_LEF_TRG = $(patsubst %.scad, %.lef, $(SCAD_2_LEF_SRC))
+
+.PHONY: build_lef_from_scad
+build_lef_from_scad: $(SCAD_2_LEF_TRG)
 
 $(SCAD_2_LEF_TRG): %.lef: %.scad
 	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
@@ -304,6 +340,6 @@ clean_xyce_build: clean_va_build
 make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
 
 # if util exists
-ifneq (,$(wildcard ./util.mk))
-#include util.mk
-endif
+# ifneq (,$(wildcard ./util.mk))
+# include util.mk
+# endif

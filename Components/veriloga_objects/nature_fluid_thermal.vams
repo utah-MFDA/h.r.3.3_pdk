@@ -1,0 +1,27 @@
+
+/*
+nature temperature
+  units = "C" ;
+  access = T ;
+endnature
+
+nature tempFlux
+  //units = "W/m2"
+  units = "C/s" ;
+  access = Tfl ;
+endnature
+
+discipline fluidThermal
+  domain continuous;
+  potential temperature;
+  flow tempFlux;
+enddiscipline
+*/
+
+discipline heatTransfer
+  domain continuous;
+  potential temperature;
+  flow tempFlux;
+enddiscipline
+
+

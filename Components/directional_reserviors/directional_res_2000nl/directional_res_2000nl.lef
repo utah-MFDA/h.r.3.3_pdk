@@ -1,9 +1,9 @@
 
-MACRO directional_res_1000nl
+MACRO directional_res_2000nl
   CLASS CORE ;
   ORIGIN  0 0 ;
-  FOREIGN directional_res_1000nl 0 0 ;
-  SIZE 245 BY 180 ;
+  FOREIGN directional_res_2000nl 0 0 ;
+  SIZE 360 BY 180 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
   PIN in_fluid
@@ -19,28 +19,28 @@ MACRO directional_res_1000nl
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 208 83 222 97 ;
+        RECT 323 83 337 97 ;
     END
   END out_fluid
   OBS
     LAYER met1 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met2 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met3 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met4 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met5 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met6 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met7 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met8 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
     LAYER met9 ;
-      RECT 30 30 215 150 ;
+      RECT 30 30 330 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
-END directional_res_1000nl
+END directional_res_2000nl

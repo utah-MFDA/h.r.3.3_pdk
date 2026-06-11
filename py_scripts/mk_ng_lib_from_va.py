@@ -1,9 +1,9 @@
 import os
 import re
 
-module_re = r'module\s+(\w+)\(((?:\w+\s*,\s*)*\s*\w+)\)\s*;'
+module_re = r'module\s+(\w+)\s*\(((?:\s*\w+\s*,\s*)*\s*\w+)\)\s*;'
 # within_module_re = r'module([\S\s]*?)endmodule'
-within_modele_re = r'module\s+(\w+)([\S\s]*?)endmodule'
+within_modele_re = r'module\s+(\w+)\s*([\S\s]*?)endmodule'
 parameter_re = r'(?:^|[\n])[\t ]*(\(\*(?:\s*\w+\=\"[^\n\"]+\"\s*,?)+\*\))\s+parameter\s+(?:real|integer)\s+(\w+)\s*\=\s*([\w\.]+)\s*;'
 
 
