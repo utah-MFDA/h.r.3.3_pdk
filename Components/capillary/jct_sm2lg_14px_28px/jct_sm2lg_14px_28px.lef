@@ -1,0 +1,14 @@
+
+MACRO jct_sm2lg_14px_28px
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN jct_sm2lg_14px_28px 0 0 ;
+  SIZE 150 BY 150 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  OBS
+    LAYER met1 ;
+      RECT 30 30 120 120 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END jct_sm2lg_14px_28px

@@ -1,0 +1,8 @@
+
+.SUBCKT pump_20px_0 10 11 12 13 14 15 16 17 80 81 82 83 84 85 86 87 PARAMS:
+
+Yvalve_2 v1 10 21 12 13 80  821 82 83 cvol=0.3e-12 ct=100k
+Yvalve_2 v2 21 22 14 15 821 822 84 85 cvol=0.3e-12 ct=100k
+Yvalve_2 v3 22 11 16 17 822 81  86 87 cvol=0.3e-12 ct=100k
+
+.ENDS

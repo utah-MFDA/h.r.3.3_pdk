@@ -33,6 +33,7 @@ real R;
 real ch_width_pixels, ch_height_layers;
 real cqi, cqo ;
 
+concentration gnd;
 ground gnd;
 
 analog begin

@@ -1,4 +1,4 @@
-use <./../../scad_use/routing.scad>
+use <../../scad_use/routing.scad>
 
 px    = 7.6*10^-3;
 //px    = 1.0;

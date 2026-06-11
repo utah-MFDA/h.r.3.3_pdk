@@ -1,0 +1,6 @@
+
+.SUBCKT valve_20px_1 1 2 3 4 5 6 7 8 PARAMS:
+
+Yvalve_2 v1 1 2 3 4 5 6 7 8 cvol=0.3e-12 ct=100k
+
+.ENDS

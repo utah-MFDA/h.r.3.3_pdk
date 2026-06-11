@@ -1,0 +1,262 @@
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module valve_20px_1(
+  fl_in,
+  fl_out,
+  pn_in,
+  pn_out,
+  chem_in,
+  chem_out,
+  chem_pn_in,
+  chem_pn_out
+  );
+
+  // Conversion reference
+  // 1 L  = 1   dm^3 (e-3)
+  // 1 mL = 1   cm^3 (e-6)
+  // 1 ul = 100 um^3 (e-9)
+  // 1 nl = 10  um^3 (e-12)
+  // 1 pl = 1   um^3 (e-15)
+  //
+
+inout fl_in;
+inout fl_out;
+inout chem_in;
+inout chem_out;
+inout pn_in;
+inout pn_out;
+inout chem_pn_in;
+inout chem_pn_out;
+
+fluidDynamics fl_in;
+fluidDynamics fl_out;
+fluidDynamics fl_m ;
+
+fluidDynamics pn_in;
+fluidDynamics pn_out;
+fluidDynamics pn_m ;
+
+concentration chem_in;
+concentration chem_out;
+concentration cv1;
+concentration cv2;
+
+concentration chem_pn_in;
+concentration chem_pn_out;
+concentration cv1_pn;
+concentration cv2_pn;
+
+
+// branch (fl_in, fl_m)  flm_i ;
+// branch (fl_out, fl_m) flm_o ;
+branch (fl_in, fl_m)  fl_br_in ;
+branch (fl_m, fl_out) fl_br_out ;
+
+branch (pn_in, pn_m) pn_br_in ;
+branch (pn_m, pn_out) pn_br_out ;
+
+branch (pn_m, fl_m)  q_cap ;
+real p_c; // parameter for branch vol
+
+concentration c_gnd ;
+ground c_gnd ;
+
+branch (chem_in,  cv1) cci ;
+branch (chem_out, cv2) cco ;
+branch (cv1, cv2)   cintern ;
+branch (cv1, c_gnd)   cg1 ;
+branch (cv2, c_gnd)   cg2 ;
+
+branch (chem_pn_in,  cv1_pn) cci_pn ;
+branch (chem_pn_out, cv2_pn) cco_pn ;
+branch (cv1_pn, cv2_pn)   cintern_pn ;
+branch (cv1_pn, c_gnd) cg1_pn ;
+branch (cv2_pn, c_gnd) cg2_pn ;
+
+
+(*desc="valve-diameter", type="instance"*) parameter real valve_diameter_px=200;
+(*desc="length", type="instance"*)         parameter real L = 0.1;
+(*desc="cross-section", type="instance"*)  parameter real CROSS_SECTION = 1;
+(*desc="viscosity", type="instance"*)      parameter real nu=0.0010016;
+(*desc="membrane-thickness", type="instance"*)  parameter real mem_th = 2;
+
+(*desc="Lenght at fl_in", type="instance"*) parameter real L1 = 2m ;
+(*desc="Lenght at fl_out", type="instance"*) parameter real L2 = 2m ;
+(*desc="Lenght at pn_in", type="instance"*) parameter real L3 = 2m ;
+(*desc="Lenght at pn_out", type="instance"*) parameter real L4 = 2m ;
+
+(*desc="Cap volume multiplier", type="instance"*) parameter real cvol = 0.3e-12 ; // L
+(*desc="Cap delay multiplier", type="instance"*) parameter real ct = 100k ;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100n ;
+(*desc="capacitance concentration", type="instance"*) parameter real gcap=100n ;
+
+real pixel_size; 
+real layer_height;
+
+real threshold_pressure_kPa;
+
+real lin_ramp ;
+real lin_start;
+
+real flin_m_delta ;
+
+real W ;
+real H ;
+
+real R1;
+real R2;
+real R3;
+real R4;
+
+// threshold pressure
+//  this is a calculated value
+real p_th; 
+
+// ====================
+real H_layer, W_px;
+real Hm, Wm, Lm;
+//real dia_m ;
+//real mem_th_m;
+real Ri_valve;
+real Ro_valve;
+
+real P_lin, P_lin_start;
+
+real cqi ;
+real cqo ;
+real cqi_g ;
+real cqo_g ;
+
+real cqi_pn ;
+real cqo_pn ;
+real cqi_g_pn ;
+real cqo_g_pn ;
+
+real NU_AIR ;
+
+// debugging var
+real norm_sw ;
+
+analog begin
+
+    @(initial_instance) 
+    begin : initial_instance
+      pixel_size = 7.6u;
+      layer_height = 10u;
+
+      threshold_pressure_kPa = 103k;
+      
+      begin
+        if (CROSS_SECTION == 1) begin
+          // standard 1 
+          H_layer = 5;
+          W_px = 6;
+        end
+        else if (CROSS_SECTION == 2) begin
+          // standard 2
+          H_layer = 8;
+          W_px = 14; 
+        end
+        else begin
+          H_layer = 8;
+          W_px = 14; 
+        end
+      end // end if
+
+      // layer = 10e-6 ;
+      // px = 7.6e-6 ;
+
+      NU_AIR = 18.37e-6 ;
+
+      W = W_px * pixel_size;
+      H = H_layer * layer_height;
+
+      R1 = (12*nu*L1) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R2 = (12*nu*L2) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R3 = (12*nu*L3) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+      R4 = (12*nu*L4) / (1 - 0.63*(H/W)) * 1/(H*H*H*W);
+
+      lin_ramp = (p_th) * 0.05 ;
+      lin_start = p_th - lin_ramp  ;
+
+    end // end initial_instance
+
+    // norm_sw = 1 - ((P(pn_in)-P_lin_start)/(P_lin)) ;
+
+    // displacement volume
+    p_c = tanh(V(q_cap)/ct) * cvol ;
+    I(q_cap) <+ ddt(p_c) ;
+
+    flin_m_delta = (V(q_cap) - V(fl_br_in)) ;
+
+    // open
+    if (
+        V(q_cap) < lin_start
+      ) begin //------------
+      I(fl_br_in) <+ V(fl_br_in)/R1 ;
+    end
+    // transition
+    else if ( \
+        ( V(q_cap) < p_th && V(q_cap) >= lin_start) \
+        || \
+        (flin_m_delta < p_th && flin_m_delta >= lin_start) \
+        ) begin //------------
+      I(fl_br_in) <+ V(fl_br_in)/R1 * \
+        (1 - ((V(q_cap) - lin_start) / (lin_ramp)));
+    end
+    // closed
+    else begin  //------------
+      I(fl_br_in) <+ 0 ;
+    end
+
+    I(fl_br_out) <+ V(fl_br_out)/R2 ;
+    I(pn_br_in)  <+ V(pn_br_in)/R3 ;
+    I(pn_br_out) <+ V(pn_br_out)/R4 ;
+
+
+    //  ----------------------------
+    // Concentration calcs
+
+    // merge node cv1 with cv2
+    C(cintern) <+ 0 ;
+
+    // cap between cv1 cin
+    cqi = ccap*C(cci) ;
+    Ci(cci) <+ ddt(cqi) ;
+    // ground cv1
+    cqi_g = gcap*C(cg1) ;
+    Ci(cg1) <+ ddt(cqi_g) ;
+
+    // cap between cv2 cout
+    cqo = ccap*C(cco);
+    Ci(cco) <+ ddt(cqo) ;
+    // ground cv2
+    cqo_g = gcap*C(cg2) ;
+    Ci(cg2) <+ ddt(cqo_g) ; 
+
+
+    /// pneumatic chem
+    // merge node cv1 with cv2
+    C(cintern_pn) <+ 0 ;
+
+    // cap between cv1 cin
+    cqi_pn = ccap*C(cci_pn) ;
+    Ci(cci_pn) <+ ddt(cqi_pn) ;
+    // ground cv1
+    cqi_g_pn = gcap*C(cg1_pn) ;
+    Ci(cg1_pn) <+ ddt(cqi_g_pn) ;
+
+    // cap between cv2 cout
+    cqo_pn = ccap*C(cco_pn);
+    Ci(cco_pn) <+ ddt(cqo_pn) ;
+    // ground cv2
+    cqo_g_pn = gcap*C(cg2_pn) ;
+    Ci(cg2_pn) <+ ddt(cqo_g_pn) ; 
+
+    
+end // end analog
+
+endmodule
