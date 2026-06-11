@@ -42,6 +42,10 @@ VERILOGA_BUILD_DIR = $(BUILD_DIR)/verilogA_build
 NGSPICE_BUILD_DIR = $(BUILD_DIR)/verilogA_build_ng
 
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
+CIR_SRC_DIR = $(GENERAL_SRC_DIR) $(EXTRA_CIR_DIR)
+
+CIR_FILES = $(foreach CIR_DIR, $(CIR_SRC_DIR),$(wildcard $(CIR_DIR)/*/*.cir)) \
+			$(foreach CIR_DIR, $(CIR_SRC_DIR),$(wildcard $(CIR_DIR)/*.cir))
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
 
@@ -89,12 +93,15 @@ $(NGSPICE_BUILD_DIR):
 export VA_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
-
 export VA_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
 export VA_COPIES_NG = $(addsuffix .xyce ,$(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES))))
 export VAMS_COPIES_NG = $(addsuffix .xyce, $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES))))
+
+CIR_PUT_DIR = ./
+
+MFSUBCRKT_COMP_FILE = $(CIR_PUT_DIR)/mfda_subcrkt.cir
 
 OSDI_FILES = $(patsubst %.va, %.osdi, $(VA_NG_CONV))
 NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
@@ -157,11 +164,16 @@ endif
 $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
 	cd $(VERILOGA_BUILD_DIR) && make
 
+$(MFSUBCRKT_COMP_FILE): $(CIR_FILES)
+	cut -b 1- $^ > $@
+
 build_va: $(XYCE_LIB)
 
 build_osdi: $(OSDI_FILES)
 
 build_ng_lib: $(NG_LIB_FILES)
+
+build_subcrkt: $(MFSUBCRKT_COMP_FILE)
 
 clean_va:
 	rm -rf $(VERILOGA_BUILD_DIR)
