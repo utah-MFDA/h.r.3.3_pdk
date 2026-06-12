@@ -9,7 +9,7 @@
 .PARAM l2=10
 .PARAM via_h=20
 
-Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c1 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
 
 .ENDS
 
@@ -22,9 +22,9 @@ Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
 .PARAM l2=10
 .PARAM via_h=20
 
-Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
-Ychannel 12 13 82 83 length={layer*via_h}
-Ychannel 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c1 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c2 12 13 82 83 length={layer*via_h}
+Ychannel c3 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
 
 .ENDS
 
@@ -37,11 +37,11 @@ Ychannel 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
 .PARAM l2=10
 .PARAM via_h=20
 
-Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
-Ychannel 12 13 82 83 length={layer*via_h}
-Ychannel 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
-Ychannel 14 15 84 85 length={layer*via_h}
-Ychannel 15 16 85 86 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c1 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c2 12 13 82 83 length={layer*via_h}
+Ychannel c3 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel c4 14 15 84 85 length={layer*via_h}
+Ychannel c5 15 16 85 86 length={px*(turns+1)*l1 + px*l2*turns}
 
 .ENDS
 
