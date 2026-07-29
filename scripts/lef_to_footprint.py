@@ -122,7 +122,7 @@ class LefToFootprint:
         zone = Zone(layers=[layer],
                     hatch=Hatch(style="edge"),
                     keepoutSettings=keepOut,
-                    polygons=[polygon])
+                    polygons=[polygon], netname="")
         return zone
 
     def extract(self):
