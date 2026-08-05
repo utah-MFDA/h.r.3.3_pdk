@@ -69,7 +69,7 @@ class LefToFootprint:
                             layer="F.SilkS")
         outline = FpRect(start=Position(X=mx, Y=my), end=Position(X=(mx+w), Y=(my-h)), layer="Margin")
         footprint = Footprint(
-                              entryName=master.getConstName(),
+                              entryName="h.r.3.3:" + master.getConstName(),
                               generator="openmfda",
                               position = Position(X=mx, Y=my, angle=angle),
                               pads=list(pads),
@@ -135,7 +135,7 @@ class LefToFootprint:
     def dump(self, path):
         for footprint in self.footprints:
 
-            ffile = f"{path}/{footprint.entryName}.kicad_mod"
+            ffile = f"{path}/{footprint.entryName[8:]}.kicad_mod"
             footprint.to_file(ffile)
 
 def extract_macro_names(files):
