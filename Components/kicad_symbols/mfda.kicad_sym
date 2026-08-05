@@ -10831,9 +10831,6 @@
 		(embedded_fonts no)
 	)
 	(symbol "valve"
-		(pin_numbers
-			(hide yes)
-		)
 		(pin_names
 			(hide yes)
 		)

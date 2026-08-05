@@ -1,7 +1,52 @@
-(footprint "mfda:valve_80px_4way_0" (generator openmfda)
-  (layer "F.Cu")
-  (tedit 67a92297)
-  (at 0.0 -0.0 0) (stackup
+(footprint "valve_80px_4way_0"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "${REFERENCE}EF"
+		(at 9.5 1 0)
+		(layer "F.SilkS")
+		(uuid "d716db30-0674-4c06-8bc1-2acb07bce063")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(property "Value" "valve_80px_4way_0"
+		(at 9.5 -20 0)
+		(layer "F.SilkS")
+		(uuid "9705990f-65bf-487b-a968-b0b7cfadb231")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cefc7de0-34cf-4fcf-8bc0-8c0bb797784c")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d634d103-7dc3-44e9-98c8-f25aab3a5359")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(stackup
 		(layer "F.Cu")
 		(layer "B.Cu")
 		(layer "In1.Cu")
@@ -15,80 +60,215 @@
 		(layer "In9.Cu")
 		(layer "In10.Cu")
 	)
-  (fp_text user "a_fluid" (at 3.15 -10.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "b_fluid" (at 15.15 -10.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "c_fluid" (at 9.15 -4.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "d_fluid" (at 9.15 -16.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "in_air" (at 9.15 -7.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text user "out_air" (at 9.15 -13.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text value "valve_80px_4way_0" (at 9.5 -20.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_text reference "%REF" (at 9.5 1.0) (layer "F.SilkS")
-    (effects (font (size 1.0 1.0)))
-  )
-  (fp_rect (start 0.0 -0.0) (end 19.0 -19.0) (layer "Margin") (width 0.12))
-  (pad "0" thru_hole rect (at 3.0 -9.0) (size 0.09999999999999964 0.10000000000000142) (layers "B.Cu")
-    (pinfunction "a_fluid"))
-  (pad "1" thru_hole rect (at 15.0 -9.0) (size 0.10000000000000142 0.10000000000000142) (layers "B.Cu")
-    (pinfunction "b_fluid"))
-  (pad "2" thru_hole rect (at 9.0 -3.0) (size 0.10000000000000142 0.09999999999999964) (layers "B.Cu")
-    (pinfunction "c_fluid"))
-  (pad "3" thru_hole rect (at 9.0 -15.0) (size 0.10000000000000142 0.10000000000000142) (layers "B.Cu")
-    (pinfunction "d_fluid"))
-  (pad "4" thru_hole rect (at 9.0 -6.0) (size 0.10000000000000142 0.09999999999999964) (layers "In7.Cu")
-    (pinfunction "in_air"))
-  (pad "5" thru_hole rect (at 9.0 -12.0) (size 0.10000000000000142 0.10000000000000142) (layers "In7.Cu")
-    (pinfunction "out_air"))
-  (zone (net 0) (net_name "") (layer "B.Cu") (hatch edge 0.0)
-    (connect_pads (clearance 0.254))
-    (min_thickness 0.254)
-    (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed ) (copperpour not_allowed) (footprints not_allowed))
-    (polygon
-      (pts
-        (xy 3.0 -3.0)
-        (xy 3.0 -15.0)
-        (xy 15.0 -15.0)
-        (xy 15.0 -3.0)
-      )
-    )
-  )
-  (zone (net 0) (net_name "") (layer "In8.Cu") (hatch edge 0.0)
-    (connect_pads (clearance 0.254))
-    (min_thickness 0.254)
-    (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed ) (copperpour not_allowed) (footprints not_allowed))
-    (polygon
-      (pts
-        (xy 3.0 -3.0)
-        (xy 3.0 -15.0)
-        (xy 15.0 -15.0)
-        (xy 15.0 -3.0)
-      )
-    )
-  )
-  (zone (net 0) (net_name "") (layer "In7.Cu") (hatch edge 0.0)
-    (connect_pads (clearance 0.254))
-    (min_thickness 0.254)
-    (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed ) (copperpour not_allowed) (footprints not_allowed))
-    (polygon
-      (pts
-        (xy 6.0 -6.0)
-        (xy 6.0 -12.0)
-        (xy 12.0 -12.0)
-        (xy 12.0 -6.0)
-      )
-    )
-  )
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start 0 0)
+		(end 19 -19)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "Margin")
+		(uuid "41928dec-f0af-47be-8b7a-d4196ef101dd")
+	)
+	(fp_text user "a_fluid"
+		(at 3.15 -10 0)
+		(layer "F.SilkS")
+		(uuid "2e5a686b-ba28-4c37-a5e2-060575195a62")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(fp_text user "d_fluid"
+		(at 9.15 -16 0)
+		(layer "F.SilkS")
+		(uuid "7ffe84a6-53da-4930-b221-62472d00cf37")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(fp_text user "out_air"
+		(at 9.15 -13 0)
+		(layer "F.SilkS")
+		(uuid "d8f2125e-121c-420f-8997-ae2752800ffc")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(fp_text user "in_air"
+		(at 9.15 -7 0)
+		(layer "F.SilkS")
+		(uuid "6ffc5fcd-b359-499d-9f9e-5663533c3d80")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(fp_text user "c_fluid"
+		(at 9.15 -4 0)
+		(layer "F.SilkS")
+		(uuid "77dd93f6-2ae1-4321-b24c-7994ecbc02ae")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(fp_text user "b_fluid"
+		(at 15.15 -10 0)
+		(layer "F.SilkS")
+		(uuid "929b11bc-db23-4b42-9e8a-721cf1d4e530")
+		(effects
+			(font
+				(size 1 1)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 3 -9)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "B.Cu")
+		(remove_unused_layers no)
+		(uuid "f40bbc05-033c-4b2c-99be-3cd9c1013661")
+	)
+	(pad "2" thru_hole rect
+		(at 15 -9)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "B.Cu")
+		(remove_unused_layers no)
+		(uuid "83a2b4b8-c013-4f53-9926-baf37d35e02a")
+	)
+	(pad "3" thru_hole rect
+		(at 9 -3)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "B.Cu")
+		(remove_unused_layers no)
+		(uuid "ab5b2996-58e9-4710-8cc1-1cdccb1b1764")
+	)
+	(pad "4" thru_hole rect
+		(at 9 -15)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "B.Cu")
+		(remove_unused_layers no)
+		(uuid "16fa1cad-02f4-4bd4-be1a-50799f51d6b6")
+	)
+	(pad "5" thru_hole rect
+		(at 9 -6)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "In7.Cu")
+		(remove_unused_layers no)
+		(uuid "cd4bf3ec-e08d-4a12-a35d-a4aa438e7f1d")
+	)
+	(pad "6" thru_hole rect
+		(at 9 -12)
+		(size 2 2)
+		(drill 0.000001)
+		(layers "In7.Cu")
+		(remove_unused_layers no)
+		(uuid "60827a4a-a81e-4a3f-b19a-9cbebad5e85f")
+	)
+	(zone
+		(layer "B.Cu")
+		(uuid "0db40ba4-86c8-4a0d-8ccf-1e661ac527fd")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy 3 -3) (xy 3 -15) (xy 15 -15) (xy 15 -3)
+			)
+		)
+	)
+	(zone
+		(layer "In7.Cu")
+		(uuid "84b1d9fe-1688-4eef-bfbd-0df980b964c1")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy 6 -6) (xy 6 -12) (xy 12 -12) (xy 12 -6)
+			)
+		)
+	)
+	(zone
+		(layer "In8.Cu")
+		(uuid "612d5156-8379-41f2-9aa7-ff3bdebe7f30")
+		(hatch edge 0.1)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.254)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy 3 -3) (xy 3 -15) (xy 15 -15) (xy 15 -3)
+			)
+		)
+	)
+	(embedded_fonts no)
 )

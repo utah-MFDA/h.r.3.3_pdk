@@ -1,4 +1,4 @@
-(footprint "mfda:serpentine_200px_0" (generator openmfda)
+(footprint "h.r.3.3:serpentine_200px_0" (generator openmfda)
   (layer "F.Cu")
   (tedit 67a92297)
   (at 0.0 -0.0 0) (stackup

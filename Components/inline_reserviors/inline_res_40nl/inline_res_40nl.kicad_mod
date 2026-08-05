@@ -1,4 +1,4 @@
-(footprint "mfda:inline_res_40nl" (generator openmfda)
+(footprint "h.r.3.3:inline_res_40nl" (generator openmfda)
   (layer "F.Cu")
   (tedit 67a92297)
   (at 0.0 -0.0 0) (stackup

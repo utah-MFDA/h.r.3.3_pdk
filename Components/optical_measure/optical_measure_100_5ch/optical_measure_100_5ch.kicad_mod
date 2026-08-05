@@ -1,4 +1,4 @@
-(footprint "mfda:optical_measure_100_5ch" (generator openmfda)
+(footprint "h.r.3.3:optical_measure_100_5ch" (generator openmfda)
   (layer "F.Cu")
   (tedit 67a92297)
   (at 0.0 -0.0 0) (stackup
