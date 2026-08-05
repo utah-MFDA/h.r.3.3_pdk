@@ -29,7 +29,8 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/inline_reserviors \
 									$(COMPONENT_DIR)/valves \
 									$(COMPONENT_DIR)/optical_measure \
-									$(COMPONENT_DIR)/pumps
+									$(COMPONENT_DIR)/pumps \
+									$(COMPONENT_DIR)/interface
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
 ## Verilog A targets
@@ -296,7 +297,7 @@ clean_va_build:
 
 clean_xyce_build: clean_va_build
 
-make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so 
+make_va_default: $(VERILOGA_BUILD_DIR)/lib/$(MF_LIB).so
 
 # if util exists
 ifneq (,$(wildcard ./util.mk))
