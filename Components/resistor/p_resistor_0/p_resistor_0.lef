@@ -1,0 +1,30 @@
+ 
+MACRO p_resistor_0(numblocks.d, wchan.d, hchan.d, w3chan.d, h3chan.d, lenchan.d)
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN p_resistor_0 0 0 ;
+  SIZE #(wchan+10)# BY #((4*numblocks + 1)*lenchan+10)# ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  PIN in_fluid
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT 2.5 2.5 12.5 12.5 ;
+    END
+  END in_fluid
+  PIN out_fluid
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met1 ;
+        RECT #wchan-2.5# #(2.5+lenchan*((4*numblocks + 1)-1))# #(7.5+wchan)# #(12.5+lenchan*((4*numblocks + 1)-1))# ;
+    END
+  END out_fluid
+  OBS
+    LAYER met1 ;
+      RECT 0 0 #(5+wchan)# #(5+(4*numblocks + 1)*lenchan)# ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END p_resistor_0 

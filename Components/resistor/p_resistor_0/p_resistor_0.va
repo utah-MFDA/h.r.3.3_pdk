@@ -1,0 +1,104 @@
+`include "nature_fluid_dynamics.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module p_resistor_0(fl_in, fl_out, c_in, c_out);
+
+inout fl_in, fl_out, c_in, c_out;
+concentration c_in, c_out;
+concentration cv1, cv2;
+branch (c_in, c_out) chem;
+
+
+fluidDynamics fl_in, fl_out;
+branch (fl_in, fl_out) fflow;
+
+// dynamic viscosity @ 20 C
+(*desc="cross-section", type="instance"*) parameter real NU=0.0010005;
+
+(*desc="number of resistor blocks", type="instance"*) parameter real numblocks=1;
+(*desc="dominate cross-section width in px", type="instance"*) parameter real wchan=13;
+(*desc="dominate cross-section width in layers", type="instance"*) parameter real hchan=10;
+(*desc="minor cross-section width in px", type="instance"*) parameter real w3chan=5;
+(*desc="minor cross-section width in layers", type="instance"*) parameter real h3chan=4;
+(*desc="distance of resistor channels in px", type="instance"*) parameter real lenchan=5;
+
+(*desc="capacitance concentration", type="instance"*) parameter real ccap=100u ;
+
+real pixel_size;
+real layer_height;
+real W1, H1, L1;
+real W3, H3, L3;
+real R, R1, R1_2, R3;
+real a, b;
+real cqi, cqo;
+
+ground gnd;
+
+analog begin
+
+   @(initial_instance) 
+   begin : initial_instance
+
+      //
+      // -- print resolution definitions
+      //
+      pixel_size = 7.6u;
+      layer_height = 10u;
+
+      //
+      // -- adjust resistance based on cross section  
+      //
+
+      // dominant channels 
+      W1 = lenchan * pixel_size;
+      H1 = hchan * layer_height;
+      L1 = wchan * pixel_size;
+      begin
+      if  (W1 > H1) begin
+         a = H1;
+         b = W1;
+      end
+      else if(H1 > W1) begin
+         a = W1;
+         b = H1;
+      end
+      end
+      R1 = (12*NU*L1) / (1 - 0.63*(a/b)) * 1/(a*a*a*b);
+      // double R1
+      R1_2 = R1 * 2;
+      
+      
+      // minor channels
+      W3= w3chan * pixel_size;
+      H3 = h3chan * layer_height;
+      L3 = lenchan * pixel_size;
+      begin
+      if  (W3 > H3) begin
+         a = H3;
+         b = W3;
+      end
+      else if(H1 > W1) begin
+         a = W3;
+         b = H3;
+      end
+      end
+      R3 = (12*NU*L3) / (1 - 0.63*(a/b)) * 1/(a*a*a*b);
+      
+      // total resistance
+      R = (R1_2 + 2*R3) * numblocks + R1;
+
+   end //end initial_instance
+
+   Qfl(fflow) <+ P(fl_in, fl_out)/R;
+
+   // chemical concentration calcs 
+   C(cv1, cv2) <+ 0 ;
+   cqi = ccap*C(c_in,  cv1) ;
+   cqo = ccap*C(c_out, cv2);
+   Ci(c_in,  cv1) <+ ddt(cqi) ;
+   Ci(c_out, cv2) <+ ddt(cqo) ;
+
+end
+
+endmodule
