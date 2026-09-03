@@ -1,6 +1,6 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
- BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/1.0.0
+BUILD_DIR ?= $(PDK_ROOT_DIR)/build
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/scripts)
 
