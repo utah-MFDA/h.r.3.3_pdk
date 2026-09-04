@@ -4,3 +4,6 @@
 [submodule "openscad_libraries/openmfda"]
 	path = openscad_libraries/openmfda
 	url = git@github.com:utah-MFDA/openscad_for_microfluidics.git
+[submodule "openscad_libraries/BOSL2"]
+	path = openscad_libraries/BOSL2
+	url = https://github.com/BelfrySCAD/BOSL2.git
