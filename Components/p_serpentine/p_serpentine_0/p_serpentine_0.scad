@@ -9,11 +9,9 @@ module p_serpentine_0(xpos, ypos, zpos, orientation, L1, L2, turns,
     show_lef=false
     )
 {
-  
     p_serpentine(xpos, ypos, zpos+20, orientation,
       L1=L1, L2=L2, turns=turns, chan_layers=1,
       px=px, layer=layer, lpv=lpv, chan_h=chan_h, chan_w=chan_w, pitch=pitch) ;
-  
     
     // this is intentially wrong to prevent from being parsed
     //  keep this as lef_

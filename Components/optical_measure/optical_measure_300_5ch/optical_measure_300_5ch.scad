@@ -10,7 +10,7 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
     module obj() {
         translate([25,20,lpv*3])
         optical_view_centered("N",
-            r_ch=40, i_depth=10, d_depth=5, d_ch_distance=20, num_of_ch=5, init_path_len=27,
+        r_ch=40, i_depth=10, d_depth=5, d_ch_distance=20, num_of_ch=5, init_path_len=27,
             chan_h=10, chan_w=14, shape="cube") ;
 
         translate([29,120/2,(lpv*4-5)])
@@ -18,6 +18,7 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
         translate([571,120/2,(lpv*4-5)])
         cube(chan, center=true) ;
     }
+
     scale([px, px, layer])
     translate([xpos, ypos, zpos])
     orient([600, 150], orientation)
@@ -58,4 +59,3 @@ module optical_measure_300_5ch(xpos, ypos, zpos, orientation,
         lef() ;
 }
 
-optical_measure_300_5ch(0,0,0,"E", ren_lef=true,  offset_layer=0) ;

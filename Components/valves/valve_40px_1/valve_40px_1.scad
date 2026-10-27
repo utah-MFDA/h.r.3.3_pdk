@@ -11,6 +11,6 @@ module valve_40px_1(xpos, ypos, zpos, orientation,
         pn_out_len=43,
         pn_extra_sp="fill",
         px=px, layer=layer, lpv=lpv, chan_h=6, chan_w=8, shape="cube", pitch=pitch);
-}
-
+    }
+    
 valve_40px_1(0,0,0,"E");
