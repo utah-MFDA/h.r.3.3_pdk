@@ -47,5 +47,9 @@ module serpentine_100px_0(xpos, ypos, zpos, orientation){
     
 }
 
+module serpentine_sub_100px(xpos, ypos, zpos, orientation){
+  serpentine_100px_0(xpos, ypos, zpos, orientation);
+}
+
 serpentine_100px_0(0,0,0,"N");
 translate([23*px,23*px,-0.01]) cube([120*px, 120*px, 0.01]);

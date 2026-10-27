@@ -49,4 +49,8 @@ module serpentine_150px_0(xpos, ypos, zpos, orientation){
     
 }
 
+module serpentine_sub_150px(xpos, ypos, zpos, orientation){
+  serpentine_150px_0(xpos, ypos, zpos, orientation);
+}
+
 serpentine_150px_0(0,0,0,"N");

@@ -51,5 +51,9 @@ module serpentine_200px_0(xpos, ypos, zpos, orientation){
     
 }
 
+module serpentine_sub_200px(xpos, ypos, zpos, orientation){
+  serpentine_200px_0(xpos, ypos, zpos, orientation);
+}
+
 serpentine_200px_0(0,0,0,"FS");
 translate([23*px,23*px,-0.01]) cube([200*px, 200*px, 0.01]);
