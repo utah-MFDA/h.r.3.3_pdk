@@ -10,8 +10,8 @@ MACRO directional_res_600nl
     DIRECTION INPUT ;
     USE SIGNAL ;
     PORT
-      LAYER met6 ;
-        RECT 23 53 37 67 ;
+      LAYER met7 ;
+        RECT 23 83 37 97 ;
     END
   END in_fluid
   PIN out_fluid
@@ -19,22 +19,24 @@ MACRO directional_res_600nl
     USE SIGNAL ;
     PORT
       LAYER met1 ;
-        RECT 173 53 187 67 ;
+        RECT 173 83 187 97 ;
     END
   END out_fluid
   OBS
     LAYER met1 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
     LAYER met2 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
     LAYER met3 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
     LAYER met4 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
     LAYER met5 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
     LAYER met6 ;
-      RECT 30 30 180 120 ;
+      RECT 30 30 180 150 ;
+    LAYER met7 ;
+      RECT 30 30 180 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
 END directional_res_600nl

@@ -1,0 +1,43 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "nature_fluid_thermal.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module syringePumpHT(fl_out, c_out, h_out);
+
+
+output fl_out;
+output c_out;
+output h_out;
+
+fluidDynamics fl_out;
+concentration c_out;
+fluidThermal h_out;
+
+(*desc="input-flow", type="instance"*) parameter real fluidflow=34;
+(*desc="input chemical concentration", type="instance"*) parameter real chemConcentration=0;
+(*desc="Pump output temperature", type="instance"*) parameter real temperature=300; // [K]
+
+//integer i;
+
+fluidDynamics gnd_fl ;
+ground gnd_fl ;
+
+concentration gnd_c ;
+ground gnd_c ;
+
+fluidThermal gnd_h;
+ground gnd_h;
+
+analog begin
+   Qfl(fl_out, gnd_fl) <+ fluidflow;
+   C(c_out, gnd_c)  <+ chemConcentration;
+   T(h_out, gnd_h)  <+ temperature;
+   //for (i = vec_size-1; i >= 0; i = i - 1) begin
+   //   V(c_out[i])  <+ chemConcentration;
+   //end // end FOR LOOP
+   
+end
+
+endmodule

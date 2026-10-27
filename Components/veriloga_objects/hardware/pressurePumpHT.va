@@ -1,0 +1,47 @@
+
+`include "nature_fluid_dynamics.vams"
+`include "nature_fluid_thermal.vams"
+`include "disciplines.vams"
+`include "constants.vams"
+
+module pressurePumpHT(fl_out, c_out, h_out);
+
+// vector test
+//parameter integer vec_size = 1;
+
+output fl_out;
+//output [0:vec_size-1] c_out;
+output c_out;
+output h_out;
+
+fluidDynamics fl_out;
+concentration c_out;
+fluidThermal h_out;
+
+(*desc="Pump output pressure", type="instance"*) parameter real pressure=34k;
+(*desc="Pump output chemical concentration", type="instance"*) parameter real chemConcentration=0;
+(*desc="Pump output temperature", type="instance"*) parameter real temperature=300; // [K]
+
+fluidDynamics gnd_fl;
+ground gnd_fl;
+
+concentration gnd_c;
+ground gnd_c;
+
+fluidThermal gnd_h;
+ground gnd_h;
+
+//integer i;
+
+analog begin
+   P(fl_out, gnd_fl) <+ pressure;
+   C(c_out, gnd_c)  <+ chemConcentration;
+   T(h_out, gnd_h)  <+ temperature;
+   //I(c_out)  <+ 0;
+   //for (i = vec_size-1; i >= 0; i = i - 1) begin
+   //   V(c_out[i])  <+ chemConcentration;
+   //end // end FOR LOOP
+   
+end
+
+endmodule

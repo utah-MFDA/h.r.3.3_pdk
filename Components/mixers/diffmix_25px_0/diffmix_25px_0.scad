@@ -8,4 +8,6 @@ module diffmix_25px_0(xpos, ypos, zpos, orientation,
 {
     p_mixer(xpos, yppos, zpos, orientation,
             px=px, layer=layer, pitch=pitch, chan_h=chan_h, chan_w=chan_w);
-}
+        
+    }
+    

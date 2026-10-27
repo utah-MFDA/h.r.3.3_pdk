@@ -1,0 +1,8 @@
+
+* serpentine 150px subcir
+
+.SUBCKT serpentine_sub_150px 11 12 80 82 PARAMS: cross_sect=1
+
+Ychannel 11 12 80 82 length=9.576m cross_section=cross_sect
+
+.ENDS

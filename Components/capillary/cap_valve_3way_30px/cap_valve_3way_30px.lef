@@ -1,0 +1,14 @@
+
+MACRO cap_valve_3way_30px
+  CLASS CORE ;
+  ORIGIN  0 0 ;
+  FOREIGN cap_valve_3way_30px 0 0 ;
+  SIZE 150 BY 180 ;
+  SYMMETRY X Y ;
+  SITE CoreSite ;
+  OBS
+    LAYER met1 ;
+      RECT 30 30 120 150 ;
+  END
+  PROPERTY CatenaDesignType "deviceLevel" ;
+END cap_valve_3way_30px

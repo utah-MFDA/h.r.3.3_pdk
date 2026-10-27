@@ -1,0 +1,47 @@
+
+* base serpentine component
+
+.SUBCKT serpentine_base_0 11 12 81 82
+.PARAM px=7.6u 
+.PARAM layer=10u 
+.PARAM turns=1
+.PARAM l1=30
+.PARAM l2=10
+.PARAM via_h=20
+
+Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+
+.ENDS
+
+
+.SUBCKT serpentine_base_1 11 14 81 84
+.PARAM px=7.6u
+.PARAM layer=10u
+.PARAM turns=1
+.PARAM l1=30
+.PARAM l2=10
+.PARAM via_h=20
+
+Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel 12 13 82 83 length={layer*via_h}
+Ychannel 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
+
+.ENDS
+
+
+.SUBCKT serpentine_base_2 11 16 81 86
+.PARAM px=7.6u
+.PARAM layer=10u
+.PARAM turns=1
+.PARAM l1=30
+.PARAM l2=10
+.PARAM via_h=20
+
+Ychannel 11 12 81 82 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel 12 13 82 83 length={layer*via_h}
+Ychannel 13 14 83 84 length={px*(turns+1)*l1 + px*l2*turns}
+Ychannel 14 15 84 85 length={layer*via_h}
+Ychannel 15 16 85 86 length={px*(turns+1)*l1 + px*l2*turns}
+
+.ENDS
+

@@ -1,7 +1,7 @@
 (footprint "interconnect_4x8"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
 		(at 0 0.5 0)
@@ -20,19 +20,6 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "bf625b2e-02a8-4bf2-a48b-dbbbe12d6770")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "fdacfa74-0c7f-45bb-82e9-83c30d9765e8")
 		(effects
 			(font
 				(size 1 1)
@@ -74,7 +61,7 @@
 			(width 0.05)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "329ec451-d52a-4b26-adf4-25f4c746225d")
 	)
@@ -282,4 +269,5 @@
 		(layers "F.Cu")
 		(uuid "95538018-23a8-4410-b942-611767cd1af2")
 	)
+	(embedded_fonts no)
 )
