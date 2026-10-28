@@ -45,6 +45,8 @@ class LefToFootprint:
     def extract_footprints(self):
         for master_name in self.masters:
             master = self.db.findMaster(master_name)
+            if master == None:
+                raise Exception(f"Master {master_name} not found")
             footprint = self.extract_footprint(master)
             self.footprints.append(footprint)
 
@@ -122,7 +124,7 @@ class LefToFootprint:
         zone = Zone(layers=[layer],
                     hatch=Hatch(style="edge"),
                     keepoutSettings=keepOut,
-                    polygons=[polygon], netname="")
+                    polygons=[polygon], netName="")
         return zone
 
     def extract(self):

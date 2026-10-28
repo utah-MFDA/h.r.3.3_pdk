@@ -3,7 +3,7 @@ PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(PDK_ROOT_DIR)/build
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
-SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
+OPENSCADPATH = $(realpath $(PDK_ROOT_DIR)/openscad_libraries):${OPENSCADPATH}
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 export PYTHON3 ?= python3
@@ -67,6 +67,9 @@ export MERGED_XYCE_SUBCIR = $(VERILOGA_BUILD_DIR)/xyce_subckt_merged.cir
 .PHONY: clean_all clean_va clean_scad clean_lef clean_kicad build_va build_scad build_lef build_kicad
 clean: clean_all
 clean_all: clean_va clean_scad clean_lef clean_kicad
+
+$(BUILD_DIR):
+	mkdir -p $@
 ################################################################
 # __     __        _ _
 # \ \   / /__ _ __(_) | ___   __ _
@@ -111,7 +114,7 @@ $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 build_xyce_subckt: $(MERGED_XYCE_SUBCIR)
 
 $(MERGED_XYCE_SUBCIR): $(XYCE_SUBCIRS)
-	cut -b 1- $^ >> $@	
+	cut -b 1- $^ >> $@
 
 # -- NGSPICE
 
@@ -249,6 +252,7 @@ build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmf
 
 clean_scad:
 	rm -rf $(SCAD_BUILD_DIR)
+	rm -f $(SCAD_COMPONENT_LIBRARY)
 
 install_scad_lib: build_scad
 	python3 ./install_scad_library.py
@@ -259,9 +263,6 @@ install_scad_library:
 	$(PYTHON3) ./install_scad_library.py
 install_scad_library_unmerged:
 	$(PYTHON3) ./install_scad_library.py --unmerged
-
-clean_scad:
-	rm -f $(SCAD_COMPONENT_LIBRARY)
 
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
@@ -275,7 +276,7 @@ check_library:
 
 $(BUILD_DIR)/h.r.3.3.pretty: ${KICAD_FOOTPRINT_FILES}
 	mkdir -p $@
-	cp $^ $@
+	@ ln -s -r -v $^ -t $@
 
 $(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.kicad_mod
 	@ mkdir -p ${@D}
