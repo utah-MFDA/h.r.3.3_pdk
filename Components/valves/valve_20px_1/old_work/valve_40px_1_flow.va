@@ -2,7 +2,7 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module valve_40px_1_flow(fl_in, fl_out, pn_in, pn_out);
+module valve_20px_1_flow(fl_in, fl_out, pn_in, pn_out);
 
 inout fl_in;
 inout fl_out;

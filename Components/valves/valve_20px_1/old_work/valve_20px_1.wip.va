@@ -3,8 +3,8 @@
 `include "disciplines.vams"
 `include "constants.vams"
 
-module valve_40px_1(fl_in, fl_out,  pn_in, pn_out);
-//module valve_40px_1(fl_in, fl_out,  pn_in, pn_out, c_in, c_out);
+module valve_20px_1(fl_in, fl_out,  pn_in, pn_out);
+//module valve_20px_1(fl_in, fl_out,  pn_in, pn_out, c_in, c_out);
 //c_in, c_out,
 
 inout fl_in;
