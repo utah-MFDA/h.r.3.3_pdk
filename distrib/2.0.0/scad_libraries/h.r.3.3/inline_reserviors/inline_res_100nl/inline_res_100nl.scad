@@ -1,0 +1,37 @@
+use <openmfda/components/chamber.scad>
+use <openmfda/components/lef_helper.scad>
+
+module inline_res_100nl(xpos, ypos, zpos, orientation,
+    px=7.6e-3, layer=10e-3, lpv=20, pitch=30, ren_lef=false)
+{
+    /*
+
+
+    */
+    translate([0,7*px,0])
+    p_chamber(xpos, ypos, zpos, orientation,
+        chm_r=30, chm_h=20, chm_len=150,
+        conn_ch_w=14, conn_ch_h=10, conn_ch_l=22,
+        px=px, layer=layer, lpv=lpv, chan_h=10, chan_w=14, shape="cube", pitch=2*pitch, $fn=50) ;
+
+    module lef()
+    {
+        color("blue")
+        lef_size(240, 120) ;
+
+        lef_layer("met1")
+        lef_obs("RECT", [30, 30, 210, 90]) ;
+        lef_layer("met2")
+        lef_obs("RECT", [30, 30, 210, 90]) ;
+
+        lef_layer("met1")
+        lef_port("in_fluid", "INPUT", "RECT", [23, 53, 37, 67]) ;
+        lef_layer("met1")
+        lef_port("out_fluid", "INPUT", "RECT", [203, 53, 217, 67]) ;
+
+    }
+    if(ren_lef)
+        lef() ;
+}
+
+inline_res_100nl(0,0,0,"N", ren_lef=true) ;
