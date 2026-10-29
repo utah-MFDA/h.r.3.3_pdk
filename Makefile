@@ -3,7 +3,7 @@ PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR ?= $(PDK_ROOT_DIR)/build
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
-OPENSCADPATH = $(realpath $(PDK_ROOT_DIR)/openscad_libraries):${OPENSCADPATH}
+OPENSCADPATH = $(realpath $(PDK_ROOT_DIR)/openscad_libraries)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 export PYTHON3 ?= python3
@@ -58,6 +58,7 @@ LEF_FILES = $(foreach LEF_DIR, $(GENERAL_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef)
 SCAD_BUILD_DIR = $(BUILD_DIR)/scad_libraries/$(KIT_NAME)
 SCAD_FILES = $(foreach DIR,${GENERAL_SRC_DIR},$(wildcard ${DIR}/*/*.scad))
 SCAD_TARGETS = $(patsubst ${COMPONENT_DIR}/%.scad,$(SCAD_BUILD_DIR)/%.scad,${SCAD_FILES})
+SCAD_STL_TARGETS = $(patsubst ${COMPONENT_DIR}/%.stl,$(SCAD_BUILD_DIR)/%.stl,${SCAD_FILES})
 SCAD_NAMES = $(patsubst ${COMPONENT_DIR}/%.scad,include <%.scad>,${SCAD_FILES})
 KICAD_FOOTPRINT_FILES = $(patsubst ${COMPONENT_DIR}/%.lef,$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod,${LEF_FILES})
 
@@ -245,10 +246,17 @@ $(SCAD_BUILD_DIR)/%.scad: ${COMPONENT_DIR}/%.scad | $(SCAD_BUILD_DIR)
 	mkdir -p ${@D}
 	cp -r $< $@
 
-$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda | $(BUILD_DIR)/scad_libraries
+$(SCAD_BUILD_DIR)/%.stl: ${COMPONENT_DIR}/%.stl | $(SCAD_BUILD_DIR)
+	mkdir -p ${@D}
 	cp -r $< $@
 
-build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmfda ${SCAD_TARGETS}
+$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda | $(BUILD_DIR)/scad_libraries
+	ln -s -r $< $@
+
+$(BUILD_DIR)/scad_libraries/BOSL2: openscad_libraries/BOSL2 | $(BUILD_DIR)/scad_libraries
+	ln -s -r $< $@
+
+build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmfda $(BUILD_DIR)/scad_libraries/BOSL2 ${SCAD_TARGETS}
 
 clean_scad:
 	rm -rf $(SCAD_BUILD_DIR)

@@ -9,20 +9,15 @@ module optical_measure_100_5ch(xpos, ypos, zpos, orientation,
     module obj() {
         translate([30,40,3*lpv])
         optical_view_centered("N",
-        r_ch=20, i_depth=10, d_depth=5, d_ch_distance=10, num_of_ch=5, init_path_len=27,
-        px=px, layer=layer, lpv=lpv, pitch=pitch, fn=30, offset_layer=offset_layer,
-       chan=[10, 10, 14], shape="cube", center_chambers=true, flip_z=false) ;
-
-            chan_w=10, chan_h=14, shape="cube") ;
-
-        chan_sz = chan;
-
+            r_ch=20, i_depth=10, d_depth=5, d_ch_distance=10, num_of_ch=5, init_path_len=27,
+            px=px, layer=layer, lpv=lpv, pitch=pitch, fn=30, offset_layer=offset_layer,
+            chan=[10, 10, 14], shape="cube", center_chambers=true, flip_z=false);
 
         translate([29,120/2,(lpv*4-5)])
-        cube(chan_sz, center=true) ;
+        cube(chan, center=true) ;
 
         translate([331,120/2,(lpv*4-5)])
-        cube(chan_sz, center=true) ;
+        cube(chan, center=true) ;
     }
 
     scale([px, px, layer])
