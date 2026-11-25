@@ -16,6 +16,8 @@ sxcmd.*
 
 .lib_test
 
+mfda_subcrkt.cir
+
 *.prn
 VerilogA/xyce_lib/*
 VerilogA/Elibrary/xyce_lib/*

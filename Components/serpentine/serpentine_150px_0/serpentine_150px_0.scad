@@ -1,4 +1,4 @@
-use <openmfda/routing.scad>
+use <openmfda/polychannel/routing.scad>
 
 px = 7.6e-3;
 layer = 10e-3;
@@ -47,6 +47,10 @@ module serpentine_150px_0(xpos, ypos, zpos, orientation){
         obj();
     }
     
+}
+
+module serpentine_sub_150px(xpos, ypos, zpos, orientation){
+  serpentine_150px_0(xpos, ypos, zpos, orientation);
 }
 
 serpentine_150px_0(0,0,0,"N");

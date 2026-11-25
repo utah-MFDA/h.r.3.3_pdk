@@ -1,6 +1,6 @@
-use <openmfda/objects/reservoir.scad>
-use <openmfda/polychannel_v2.scad>
-use <openmfda/lef_helper.scad>
+use <openmfda/components/reservoir.scad>
+use <openmfda/polychannel/polychannel.scad>
+use <openmfda/components/lef_helper.scad>
 
 
 module directional_res_400nl(xpos, ypos, zpos, orientation, 
@@ -19,11 +19,11 @@ module directional_res_400nl(xpos, ypos, zpos, orientation,
       
       translate([(port_len+7)*px,y_offs*px,1*lpv*layer])
       p_reservoir(xpos, ypos, zpos, orientation,
-          p1_dir="x-", p2_dir="z-", port_len1=port_len, port_len2=lpv-chan_h/2,
-          p1_offset=[0,(res_h-10)/2], p2_offset=[0,0], 
+          ports = [["x-", port_len, [0,(res_h-10)/2]],
+                   ["z-", lpv-chan_h/2, [0,0]]],
           size=[100, 100, res_h ], edge_rounding=0.2, 
           center=true, clr="gray",
-          px=px, layer=layer, rot=false, pitch=30, layer_offset=0, $fs=0.04, $fa=1) ;
+          px=px, layer=layer, pitch=30, $fs=0.04, $fa=1) ;
 
       // bottom port
       res_ct_z = [

@@ -1,5 +1,5 @@
-use <openmfda/routing.scad>
-use <openmfda/lef_helper.scad>
+use <openmfda/polychannel/routing.scad>
+use <openmfda/components/lef_helper.scad>
 
 px = 7.6e-3;
 layer = 10e-3;

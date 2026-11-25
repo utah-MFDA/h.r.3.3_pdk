@@ -1,6 +1,6 @@
 
-use <openmfda/objects/p_valve.scad>
-use <openmfda/lef_helper.scad>
+use <openmfda/components/valve.scad>
+use <openmfda/components/lef_helper.scad>
 
 module p_valve_0(xpos, ypos, zpos, orientation,
     D,
@@ -14,7 +14,7 @@ module p_valve_0(xpos, ypos, zpos, orientation,
         (2+(D/(pitch*2) - D%(pitch*2)/(pitch*2)))*px, 
         1*lpv*layer])
     p_valve(xpos, ypos, zpos, orientation,
-        valve_r=D/2, mem_th=1, fl_chm_h=3, pn_chm_h=6, inport_center=false,
+        valve_r=D/2, mem_th=1, fl_chm_h=3, pn_chm_h=6,
         // length of channels extending outside of valve radius
         out_len=olen, fl_extra_sp = 4, fl_chan_down_layers=10, 
         pn_extra_sp="fill", pn_chan_up_layers=12, rot_pn=false,

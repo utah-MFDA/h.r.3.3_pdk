@@ -1,8 +1,8 @@
 
-MACRO valve_40px_1
+MACRO valve_20px_1
   CLASS CORE ;
   ORIGIN  0 0 ;
-  FOREIGN valve_40px_1 0 0 ;
+  FOREIGN valve_20px_1 0 0 ;
   SIZE 180 BY 180 ;
   SYMMETRY X Y ;
   SITE CoreSite ;
@@ -47,4 +47,4 @@ MACRO valve_40px_1
       RECT 30 30 150 150 ;
   END
   PROPERTY CatenaDesignType "deviceLevel" ;
-END valve_40px_1
+END valve_20px_1

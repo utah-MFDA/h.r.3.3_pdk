@@ -1,16 +1,9 @@
 PDK_ROOT_DIR ?= $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD_DIR ?= $(PDK_ROOT_DIR)/distrib/2.0.0
 
-$(BUILD_DIR):
-	mkdir -p $@
-	
-echo_makefile_list:
-	echo $(MAKEFILE_LIST)
-	echo $(lastword $(MAKEFILE_LIST))
-	
+BUILD_DIR ?= $(PDK_ROOT_DIR)/build
 
 COMPONENT_DIR = $(realpath $(PDK_ROOT_DIR)/Components)
-SCAD_PDK_INCLUDE = $(realpath $(PDK_ROOT_DIR)/scad_include)
+OPENSCADPATH = $(realpath $(PDK_ROOT_DIR)/openscad_libraries)
 PY_SCRIPTS_DIR = $(realpath $(PDK_ROOT_DIR)/py_scripts)
 
 export PYTHON3 ?= python3
@@ -26,7 +19,7 @@ BUILD_COMMAND = buildxyceplugin -d
 # Default target when invoking without a specific target
 .DEFAULT_GOAL := all
 
-all: build_va build_lef build_scad
+all: build_va build_lef build_scad build_kicad
 
 DATE = $(date '+%Y-%m-%d')
 
@@ -39,11 +32,10 @@ GENERAL_SRC_DIR = $(COMPONENT_DIR)/serpentine \
 									$(COMPONENT_DIR)/inline_reserviors \
 									$(COMPONENT_DIR)/valves \
 									$(COMPONENT_DIR)/optical_measure \
-									$(COMPONENT_DIR)/pumps
+									$(COMPONENT_DIR)/pumps \
+		$(COMPONENT_DIR)/interface
 
 P_CELL_SRC_DIR = $(COMPONENT_DIR)/p_serpentine
-## Verilog A targets
-
 VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 CIR_SRC_DIR = $(GENERAL_SRC_DIR) $(EXTRA_CIR_DIR)
 
@@ -58,40 +50,27 @@ NGSPICE_BUILD_DIR ?= $(COMPONENT_DIR)/verilogA_build_ng
 
 export VA_SRC_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(COMPONENT_DIR)/veriloga_objects
 export VA_FILES = $(foreach VA_DIR, $(VA_SRC_DIR),$(wildcard $(VA_DIR)/*/*.va))
-
 export VAMS_FILES = $(foreach VAMS_DIR, $(VA_SRC_DIR),$(wildcard $(VAMS_DIR)/*.vams))
-
 export XYCE_SUBCIR_DIR = $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR)
 export XYCE_SUBCIRS = $(foreach XYCE_SUB_DIR, $(XYCE_SUBCIR_DIR), $(wildcard $(XYCE_SUB_DIR)/*/*.cir))
 
-
-LEF_SRC_DIR = $(GENERAL_SRC_DIR) $(COMPONENT_DIR)/capillary
-LEF_FILES = $(foreach LEF_DIR, $(LEF_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
-
-SCAD_SRC_DIR= $(GENERAL_SRC_DIR) $(P_CELL_SRC_DIR) $(SCAD_PDK_INCLUDE)/scad_objects/interfaces
-# TODO move to build directory
-SCAD_BUILD_DIR = $(BUILD_DIR)
-SCAD_FILES = $(foreach SCAD_DIR,$(SCAD_SRC_DIR),$(wildcard $(SCAD_DIR)/*/*.scad)) $(wildcard $(SCAD_PDK_INCLUDE)/scad_objects/*.scad)
-
-# Noncomponent files in scad_include
-# 	these will be copied in build_scad
-SCAD_LIB_INCLUDES = $(wildcard $(SCAD_PDK_INCLUDE)/*.scad)
-
-LEF_SCAD_EXTRACT = $(COMPONENT_DIR)/directional_reserviors \
-									$(COMPONENT_DIR)/inline_reserviors \
-									$(COMPONENT_DIR)/valves \
-									$(COMPONENT_DIR)/pumps \
-									$(COMPONENT_DIR)/optical_measure \
-									$(COMPONENT_DIR)/capillary
-
-SCAD_2_LEF_SRC = $(foreach SCAD_DIR,$(LEF_SCAD_EXTRACT),$(wildcard $(SCAD_DIR)/*/*.scad))
+LEF_FILES = $(foreach LEF_DIR, $(GENERAL_SRC_DIR),$(wildcard $(LEF_DIR)/*/*.lef))
+SCAD_BUILD_DIR = $(BUILD_DIR)/scad_libraries/$(KIT_NAME)
+SCAD_FILES = $(foreach DIR,${GENERAL_SRC_DIR},$(wildcard ${DIR}/*/*.scad))
+SCAD_TARGETS = $(patsubst ${COMPONENT_DIR}/%.scad,$(SCAD_BUILD_DIR)/%.scad,${SCAD_FILES})
+SCAD_STL_TARGETS = $(patsubst ${COMPONENT_DIR}/%.stl,$(SCAD_BUILD_DIR)/%.stl,${SCAD_FILES})
+SCAD_NAMES = $(patsubst ${COMPONENT_DIR}/%.scad,include <%.scad>,${SCAD_FILES})
+KICAD_FOOTPRINT_FILES = $(patsubst ${COMPONENT_DIR}/%.lef,$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod,${LEF_FILES})
 
 export MF_LIB = MFXyce
 export MERGED_XYCE_SUBCIR = $(VERILOGA_BUILD_DIR)/xyce_subckt_merged.cir
 
-.PHONY: clean_all clean_va clean_scad clean_lef build_va build_scad build_lef
+.PHONY: clean_all clean_va clean_scad clean_lef clean_kicad build_va build_scad build_lef build_kicad
 clean: clean_all
-clean_all: clean_va clean_scad clean_lef
+clean_all: clean_va clean_scad clean_lef clean_kicad
+
+$(BUILD_DIR):
+	mkdir -p $@
 ################################################################
 # __     __        _ _
 # \ \   / /__ _ __(_) | ___   __ _
@@ -110,6 +89,7 @@ $(NGSPICE_BUILD_DIR):
 export VA_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_COPIES = $(addprefix $(VERILOGA_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
+
 export VA_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VA_FILES)))
 export VAMS_NG_CONV = $(addprefix $(NGSPICE_BUILD_DIR)/,$(notdir $(VAMS_FILES)))
 
@@ -119,37 +99,27 @@ export VAMS_COPIES_NG = $(addsuffix .xyce, $(addprefix $(NGSPICE_BUILD_DIR)/,$(n
 CIR_PUT_DIR = ./
 
 MFSUBCRKT_COMP_FILE = $(CIR_PUT_DIR)/mfda_subcrkt.cir
-
 OSDI_FILES = $(patsubst %.va, %.osdi, $(VA_NG_CONV))
 NG_LIB_FILES = $(patsubst %.osdi, %.lib, $(OSDI_FILES))
 
 copy: $(VA_COPIES) $(VAMS_COPIES)
 
-echo_va_cp:
-	echo $(VA_COPIES)
 
 $(VA_COPIES) &: $(VA_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VA_FILES) $(VERILOGA_BUILD_DIR)
 
 $(VAMS_COPIES) &:  $(VAMS_FILES) | $(VERILOGA_BUILD_DIR)
 	cp $(VAMS_FILES) $(VERILOGA_BUILD_DIR)
-
 .PHONY: build_xyce_subckt
 
 build_xyce_subckt: $(MERGED_XYCE_SUBCIR)
 
 $(MERGED_XYCE_SUBCIR): $(XYCE_SUBCIRS)
-	cut -b 1- $^ >> $@	
+	cut -b 1- $^ >> $@
 
 # -- NGSPICE
 
 VPATH = $(dir $(VA_FILES)) $(dir $(VAMS_FILES))
-
-echo_vpath:
-	echo $(VPATH)
-
-echo_va:
-	echo $(VA_FILES)
 
 $(VA_COPIES_NG): $(NGSPICE_BUILD_DIR)/%.xyce : % | $(NGSPICE_BUILD_DIR)
 	cp $^ $@
@@ -178,9 +148,6 @@ $(VERILOGA_BUILD_DIR)/Makefile: $(COMPONENT_DIR)/xyce.mk
 
 copy_ng_va: $(VA_COPIES_NG) $(VAMS_COPIES_NG)
 
-echo_osdi:
-	echo $(OSDI_FILES)
-
 $(OSDI_FILES): %.osdi: %.va | $(VAMS_NG_CONV) $(VA_NG_CONV)
 	$(OPENVAF) $^
 
@@ -205,13 +172,11 @@ $(XYCE_LIB): $(VA_COPIES) $(VAMS_COPIES) $(VERILOGA_BUILD_DIR)/Makefile
 
 $(MFSUBCRKT_COMP_FILE): $(CIR_FILES)
 	cut -b 1- $^ > $@
-
 build_va: $(XYCE_LIB)
 
 build_osdi: $(OSDI_FILES)
 
 build_ng_lib: $(NG_LIB_FILES)
-
 build_subcrkt: $(MFSUBCRKT_COMP_FILE)
 
 clean_va:
@@ -226,8 +191,6 @@ clean_va:
 #
 ################################################################
 export SC_LEF = $(BUILD_DIR)/$(KIT_NAME)_merged.lef
-debug:
-	echo $(LEF_FILES)
 
 $(SC_LEF): $(LEF_FILES) | $(BUILD_DIR)
 	echo "VERSION 5.7 ;" > $@
@@ -250,10 +213,17 @@ build_lef_from_scad: $(SCAD_2_LEF_TRG)
 $(SCAD_2_LEF_TRG): %.lef: %.scad
 	python3 $(SCAD_2_LEF_PY) --scad $< --ignore_no_lef_module -q
 
+%.lef.scad: %.lef
+	${PYTHON3} ./scripts/render_lef_scad.py --tlef ${TECH_LEF} --lef $< --output $@
+
+
+${TECH_LEF}:
+	${PYTHON3} ./scripts/generators/generate_tlef.py 10 6 > $@
+
 clean_lef:
 	rm -f $(SC_LEF)
 
-build_lef: $(SC_LEF)
+build_lef: $(SC_LEF) $(TECH_LEF)
 
 ################################################################
 #  ____   ____    _    ____
@@ -263,45 +233,82 @@ build_lef: $(SC_LEF)
 # |____/ \____/_/   \_\____/
 #
 ################################################################
-SCAD_COMPONENT_HEADER = $(PY_SCRIPTS_DIR)/scad_header.scad
-CLEAN_SCAD_SCRIPT = $(PY_SCRIPTS_DIR)/cleanScadFile.py --scad_header $(SCAD_COMPONENT_HEADER)
-
-$(SCAD_BUILD_DIR):
+${SCAD_BUILD_DIR}:
 	mkdir -p $@
 
-export SCAD_COMPONENT_LIBRARY = $(SCAD_BUILD_DIR)/$(KIT_NAME)_merged.scad
-export SCAD_ROUTING_LIBRARY = $(BUILD_DIR)/routing_181220.scad
-$(SCAD_COMPONENT_LIBRARY): $(SCAD_FILES) | $(SCAD_BUILD_DIR)
-	cut -b 1- $^ | $(PYTHON3) $(CLEAN_SCAD_SCRIPT) --stream > $@
+$(BUILD_DIR)/scad_libraries:
+	mkdir -p $@
 
-SCAD_USE_FILES = $(wildcard ./scad_use/*.scad)
-SCAD_USE_BUILD = $(patsubst ./scad_use/%, ./scad_lib/%, $(SCAD_USE_FILES))
-$(SCAD_USE_BUILD): $(SCAD_USE_FILES)
-	cp $^ ./scad_lib
+$(SCAD_BUILD_DIR)/components.scad: ${SCAD_TARGETS} | $(SCAD_BUILD_DIR)
+	echo "${SCAD_NAMES}" | sed 's/> />\n/g' > $@
 
-SCAD_LIB_INCLUDES_CP = $(patsubst $(SCAD_PDK_INCLUDE)/%, ./scad_lib/%, $(SCAD_LIB_INCLUDES))
-$(SCAD_LIB_INCLUDES_CP): $(SCAD_LIB_INCLUDES)
-	cp $^ ./scad_lib
+$(SCAD_BUILD_DIR)/%.scad: ${COMPONENT_DIR}/%.scad | $(SCAD_BUILD_DIR)
+	mkdir -p ${@D}
+	cp -r $< $@
 
-cp_scad: $(SCAD_USE_BUILD)
+$(SCAD_BUILD_DIR)/%.stl: ${COMPONENT_DIR}/%.stl | $(SCAD_BUILD_DIR)
+	mkdir -p ${@D}
+	cp -r $< $@
 
-build_scad: $(SCAD_COMPONENT_LIBRARY) $(SCAD_USE_BUILD) $(SCAD_LIB_INCLUDES_CP)
+$(BUILD_DIR)/scad_libraries/openmfda: openscad_libraries/openmfda | $(BUILD_DIR)/scad_libraries
+	ln -s -r $< $@
 
-install: install_scad_library
+$(BUILD_DIR)/scad_libraries/BOSL2: openscad_libraries/BOSL2 | $(BUILD_DIR)/scad_libraries
+	ln -s -r $< $@
+
+build_scad: $(SCAD_BUILD_DIR)/components.scad $(BUILD_DIR)/scad_libraries/openmfda $(BUILD_DIR)/scad_libraries/BOSL2 ${SCAD_TARGETS}
+
+clean_scad:
+	rm -rf $(SCAD_BUILD_DIR)
+	rm -f $(SCAD_COMPONENT_LIBRARY)
+
+install_scad_lib: build_scad
+	python3 ./install_scad_library.py
 
 # Deprecated  - use `install`
 # install the SCAD library to base system
-install_scad_library: build_scad
+install_scad_library:
 	$(PYTHON3) ./install_scad_library.py
-install_scad_library_unmerged: build_scad
+install_scad_library_unmerged:
 	$(PYTHON3) ./install_scad_library.py --unmerged
-
-clean_scad:
-	rm -f $(SCAD_COMPONENT_LIBRARY)
 
 check_library:
 	python3 validateComponents.py --component_dir $(GENERAL_SRC_DIR)
+################################################################
+#  _  ___  ____    _    ____
+# | |/ (_)/ ___|  / \  |  _ \
+# | ' /| | |     / _ \ | | | |
+# | . \| | |___ / ___ \| |_| |
+# |_|\_\_|\____/_/   \_\____/
+################################################################
 
+$(BUILD_DIR)/h.r.3.3.pretty: ${KICAD_FOOTPRINT_FILES}
+	mkdir -p $@
+	@ ln -s -r -v $^ -t $@
+
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.kicad_mod
+	@ mkdir -p ${@D}
+	cp $< $@
+
+# Previous rule should hold priority if a kicad_mod file is explicitly defined
+$(BUILD_DIR)/h.r.3.3.pretty/%.kicad_mod: Components/%.lef ${TECH_LEF}
+	@ mkdir -p ${@D}
+	${PYTHON3} ./scripts/lef_to_footprint.py --tlef ${TECH_LEF} --lef $< --output ${@D}
+
+$(BUILD_DIR)/mfda.kicad_sym: Components/kicad_symbols/mfda.kicad_sym
+	cp $< $@
+
+$(BUILD_DIR)/mfda_spice.kicad_sym: Components/kicad_symbols/mfda_spice.kicad_sym
+	cp $< $@
+
+build_kicad: $(BUILD_DIR)/h.r.3.3.pretty $(BUILD_DIR)/mfda_spice.kicad_sym $(BUILD_DIR)/mfda.kicad_sym
+debug:
+	@ echo ${KICAD_FOOTPRINT_FILES} | tr ' ' '\n'
+
+clean_kicad:
+	rm -rf $(BUILD_DIR)/h.r.3.3.pretty
+	rm -rf $(BUILD_DIR)/mfda_spice.kicad_sym
+	rm -rf $(BUILD_DIR)/mfda.kicad_sym
 ################################################################
 #  ____                      _
 # |  _ \ ___ _ __ ___   ___ | |_ ___
@@ -312,7 +319,7 @@ check_library:
 ################################################################
 DOCKER_LOCAL_COMP_DIR = ./
 
-DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/Components
+DOCKER_REMOTE_COMP_DIR = /mfda_simulation/local/${COMPONENT_DIR}
 DOCKER_REMOTE_VA_BUILD =  $(DOCKER_REMOTE_COMP_DIR)_tmp
 
 # change to lib
